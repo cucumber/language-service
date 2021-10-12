@@ -1,9 +1,9 @@
+import { Expression } from '@cucumber/cucumber-expressions'
+import { Errors } from '@cucumber/gherkin'
+import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
 
-import { Errors } from '@cucumber/gherkin'
-import { Expression } from '@cucumber/cucumber-expressions'
-import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import { parseGherkinDocument } from './parseGherkinDocument'
+import { parseGherkinDocument } from './parseGherkinDocument.js'
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#diagnostic
 export function getGherkinDiagnostics(
@@ -13,7 +13,8 @@ export function getGherkinDiagnostics(
   const lines = gherkinSource.split(/\r?\n/)
   const { gherkinDocument, error } = parseGherkinDocument(gherkinSource)
   const diagnostics: Diagnostic[] = []
-  const errors: Error[] = error instanceof Errors.CompositeParserException ? error.errors : [error]
+  const errors: Error[] =
+    error instanceof Errors.CompositeParserException ? error.errors : error ? [error] : []
   for (const error of errors) {
     if (error instanceof Errors.GherkinException) {
       const line = error.location.line - 1
@@ -52,7 +53,7 @@ export function getGherkinDiagnostics(
       if (inScenarioOutline) {
         return arr
       }
-      if (isUndefined(step.text, expressions)) {
+      if (isUndefined(step.text, expressions) && step.location.column !== undefined) {
         const line = step.location.line - 1
         const character = step.location.column - 1 + step.keyword.length
         const diagnostic: Diagnostic = {

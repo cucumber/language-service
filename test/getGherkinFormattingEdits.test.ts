@@ -1,6 +1,7 @@
 import assert from 'assert'
 import { TextEdit } from 'vscode-languageserver-types'
-import { getGherkinFormattingEdits } from '../src'
+
+import { getGherkinFormattingEdits } from '../src/index.js'
 
 describe('getGherkinFormattingEdits', () => {
   it('returns text edits that prettifies a Gherkin document', () => {
@@ -21,9 +22,9 @@ Given something`
         },
         end: {
           line: 2,
-          character: 15
-        }
-      }
+          character: 15,
+        },
+      },
     }
     assert.deepStrictEqual([expectedTextEdit], textEdits)
   })

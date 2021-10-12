@@ -1,6 +1,11 @@
-import { Expression, ExpressionFactory, ParameterType, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
-import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
+import {
+  Expression,
+  ExpressionFactory,
+  ParameterType,
+  ParameterTypeRegistry,
+} from '@cucumber/cucumber-expressions'
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
+import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
 import { buildStepDocuments, StepDocument } from '@cucumber/suggest'
 
 export type CucumberInfo = {
@@ -42,7 +47,6 @@ export class CucumberInfoBuilder {
       this.expressions.push(expression)
     }
     if (envelope.gherkinDocument) {
-      const stepTexts = this.stepTexts
       this.stepTexts = walkGherkinDocument(envelope.gherkinDocument, this.stepTexts, {
         step(step, arr) {
           return arr.concat(step.text)

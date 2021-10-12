@@ -1,5 +1,6 @@
-import { parseGherkinDocument } from '../src/parseGherkinDocument'
 import assert from 'assert'
+
+import { parseGherkinDocument } from '../src/parseGherkinDocument.js'
 
 describe('parseGherkinDocument', () => {
   it('returns a GherkinDocument for unexpected EOF', () => {
@@ -7,9 +8,9 @@ describe('parseGherkinDocument', () => {
 @tag
 `
     const { gherkinDocument, error } = parseGherkinDocument(source)
-    assert.strictEqual(gherkinDocument.feature.name, 'Hello')
+    assert.strictEqual(gherkinDocument!.feature!.name, 'Hello')
     assert.strictEqual(
-      error.message,
+      error!.message,
       'Parser errors:\n(3:0): unexpected end of file, expected: #TagLine, #RuleLine, #Comment, #Empty'
     )
   })

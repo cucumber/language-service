@@ -1,8 +1,9 @@
-import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
-import assert from 'assert'
-import { StepDocument, bruteForceIndex } from '@cucumber/suggest'
-import { getGherkinCompletionItems } from '../src'
 import { ExpressionFactory, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
+import { bruteForceIndex, StepDocument } from '@cucumber/suggest'
+import assert from 'assert'
+import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
+
+import { getGherkinCompletionItems } from '../src/index.js'
 
 describe('getGherkinCompletionItems', () => {
   it('completes with step text', () => {
@@ -10,12 +11,12 @@ describe('getGherkinCompletionItems', () => {
     const doc1: StepDocument = {
       suggestion: 'I have {int} cukes in my belly',
       segments: ['I have ', ['42', '98'], ' cukes in my belly'],
-      expression: ef.createExpression('I have {int} cukes in my belly')
+      expression: ef.createExpression('I have {int} cukes in my belly'),
     }
     const doc2: StepDocument = {
       suggestion: 'I am a teapot',
       segments: ['I am a teapot'],
-      expression: ef.createExpression('I am a teapot')
+      expression: ef.createExpression('I am a teapot'),
     }
 
     const index = bruteForceIndex([doc1, doc2])
@@ -34,14 +35,14 @@ describe('getGherkinCompletionItems', () => {
           range: {
             start: {
               line: 2,
-              character: 10
+              character: 10,
             },
             end: {
               line: 2,
-              character: 15
-            }
-          }
-        }
+              character: 15,
+            },
+          },
+        },
       },
     ]
     assert.deepStrictEqual(completions, expectedCompletions)

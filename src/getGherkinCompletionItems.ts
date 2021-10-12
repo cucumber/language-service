@@ -1,7 +1,8 @@
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Index, lspCompletionSnippet } from '@cucumber/suggest'
 import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
-import { parseGherkinDocument } from './parseGherkinDocument'
+
+import { parseGherkinDocument } from './parseGherkinDocument.js'
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_completion
 export function getGherkinCompletionItems(
@@ -13,12 +14,12 @@ export function getGherkinCompletionItems(
   if (!gherkinDocument) {
     return []
   }
-  let text: string
+  let text: string | undefined = undefined
   let startCharacter: number
   let endCharacter: number
   walkGherkinDocument(gherkinDocument, undefined, {
     step(step) {
-      if (step.location.line === line + 1) {
+      if (step.location.line === line + 1 && step.location.column !== undefined) {
         text = step.text
         startCharacter = step.location.column + step.keyword.length - 1
         endCharacter = startCharacter + text.length
@@ -40,9 +41,9 @@ export function getGherkinCompletionItems(
         },
         end: {
           line,
-          character: endCharacter
-        }
-      }
-    }
+          character: endCharacter,
+        },
+      },
+    },
   }))
 }
