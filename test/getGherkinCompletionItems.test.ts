@@ -1,9 +1,8 @@
 import { ExpressionFactory, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
-import { bruteForceIndex, StepDocument } from '@cucumber/suggest'
 import assert from 'assert'
 import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
 
-import { getGherkinCompletionItems } from '../src/index.js'
+import { bruteForceIndex, getGherkinCompletionItems, StepDocument } from '../src/index.js'
 
 describe('getGherkinCompletionItems', () => {
   it('completes with step text', () => {

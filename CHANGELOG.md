@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Add code from `@cucumber/suggest` into this module
+
 ## [0.3.0] - 2021-10-12
 ### Changed
 - Upgrade to `@cucumber/cucumber-expressions 14.0.0`

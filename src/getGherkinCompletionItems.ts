@@ -1,7 +1,7 @@
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import { Index, lspCompletionSnippet } from '@cucumber/suggest'
 import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
 
+import { Index, lspCompletionSnippet } from './index.js'
 import { parseGherkinDocument } from './parseGherkinDocument.js'
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_completion
