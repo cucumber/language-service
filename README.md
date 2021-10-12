@@ -1,3 +1,5 @@
+[![test-javascript](https://github.com/cucumber/language-service/actions/workflows/test-javascript.yml/badge.svg)](https://github.com/cucumber/language-service/actions/workflows/test-javascript.yml)
+
 # Cucumber Language Service
 
 This library implements the services used by [Cucumber Language Server](../../language-server/javascript)
