@@ -8,6 +8,9 @@ export type ParseResult = {
   error?: Errors.GherkinException
 }
 
+/**
+ * Incrementally parses a Gherkin Document, allowing some syntax errors to occur.
+ */
 export function parseGherkinDocument(gherkinSource: string): ParseResult {
   const builder = new AstBuilder(uuidFn)
   const matcher = new GherkinClassicTokenMatcher()

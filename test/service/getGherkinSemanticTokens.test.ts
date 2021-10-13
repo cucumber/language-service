@@ -2,7 +2,7 @@ import { CucumberExpression, ParameterTypeRegistry } from '@cucumber/cucumber-ex
 import assert from 'assert'
 import { SemanticTokens } from 'vscode-languageserver-types'
 
-import { getGherkinSemanticTokens } from '../src/index.js'
+import { getGherkinSemanticTokens } from '../../src/service/getGherkinSemanticTokens.js'
 
 describe('getGherkinSemanticTokens', () => {
   it('creates tokens for keywords', () => {

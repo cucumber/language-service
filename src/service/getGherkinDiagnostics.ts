@@ -3,7 +3,7 @@ import { Errors } from '@cucumber/gherkin'
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
 
-import { parseGherkinDocument } from './parseGherkinDocument.js'
+import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#diagnostic
 export function getGherkinDiagnostics(

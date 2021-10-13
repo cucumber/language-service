@@ -5,6 +5,22 @@
 This library implements the services used by [Cucumber Language Server](https://github.com/cucumber/language-server#readme)
 and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
 
+## API
+
+There are two entry-points to the API:
+
+* Tree-Sitter
+* Messages
+
+### Tree-Sitter
+
+This is the mode used by the Cucumber Language Server, where source code (Java, Ruby, TypeScript, JavaScript etc)
+is available to extract auto-complete information.
+
+### Messages
+
+This mode is used when source code isn't available, but a stream of [Cucumber Messages](https://github.com/cucumber/common/tree/main/messages#readme) is.
+
 ## Supported features
 
 - [x] Formatting / pretty printing

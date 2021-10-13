@@ -22,16 +22,17 @@
     "build:esm": "tsc --build tsconfig.build-esm.json",
     "build": "npm run build:cjs && npm run build:esm",
     "test": "mocha && npm run test:cjs",
-    "test:cjs": "npm run build:cjs && mocha --no-config dist/cjs/test",
-    "stryker": "stryker run",
+    "test:cjs": "npm run build:cjs && mocha --no-config --recursive dist/cjs/test",
+    "stryker": "LANGUAGE_SERVICE_FIXTURE_DIR=$(pwd)/test/messages stryker run",
     "prepublishOnly": "npm run build",
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts,tsx --max-warnings 0 src test",
-    "upgrade": "npm-check-updates --upgrade"
+    "upgrade": "npm-check-updates --upgrade",
+    "build-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-java"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/cucumber/common.git"
+    "url": "git://github.com/cucumber/language-service.git"
   },
   "keywords": [
     "cucumber",
@@ -41,11 +42,12 @@
   "author": "Cucumber Limited <cukes@googlegroups.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cucumber/common/issues"
+    "url": "https://github.com/cucumber/language-service/issues"
   },
-  "homepage": "https://github.com/cucumber/common#readme",
+  "homepage": "https://github.com/cucumber/language-service#readme",
   "devDependencies": {
     "@cucumber/cucumber": "7.3.1",
+    "@cucumber/message-streams": "^3.0.0",
     "@stryker-mutator/core": "5.4.1",
     "@stryker-mutator/mocha-runner": "5.4.1",
     "@stryker-mutator/typescript-checker": "^5.4.1",
@@ -53,7 +55,7 @@
     "@types/node": "16.10.3",
     "@typescript-eslint/eslint-plugin": "5.0.0",
     "@typescript-eslint/parser": "5.0.0",
-    "eslint": "8.0.0",
+    "eslint": "7.32.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "2.25.2",
     "eslint-plugin-node": "11.1.0",
@@ -63,6 +65,9 @@
     "npm-check-updates": "11.8.5",
     "prettier": "2.4.1",
     "pretty-quick": "3.1.1",
+    "txtgen": "2.2.8",
+    "tree-sitter-cli": "0.20.0",
+    "tree-sitter-java": "0.19.1",
     "ts-node": "10.3.0",
     "typescript": "4.4.4"
   },
@@ -71,7 +76,10 @@
     "@cucumber/gherkin": "^22.0.0",
     "@cucumber/gherkin-utils": "^7.0.0",
     "@cucumber/messages": "^17.1.1",
-    "@cucumber/suggest": "^0.0.6",
-    "vscode-languageserver-types": "3.17.0-next.4"
+    "@types/js-search": "1.4.0",
+    "fuse.js": "6.4.6",
+    "js-search": "2.0.0",
+    "vscode-languageserver-types": "3.17.0-next.4",
+    "web-tree-sitter": "0.19.4"
   }
 }

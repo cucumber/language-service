@@ -4,11 +4,13 @@ import {
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
-import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
-import { buildStepDocuments, StepDocument } from '@cucumber/suggest'
 
-export type CucumberInfo = {
+import { extractStepTexts } from '../gherkin/extractStepTexts.js'
+import { buildStepDocuments } from '../step-documents/buildStepDocuments.js'
+import { StepDocument } from '../step-documents/types.js'
+
+export type MessagesBuilderResult = {
   stepDocuments: readonly StepDocument[]
   expressions: readonly Expression[]
 }
@@ -16,12 +18,12 @@ export type CucumberInfo = {
 /**
  * Builds CucumberInfo from Cucumber Messages.
  */
-export class CucumberInfoBuilder {
+export class MessagesBuilder {
   private readonly parameterTypeRegistry = new ParameterTypeRegistry()
   private readonly expressionFactory = new ExpressionFactory(this.parameterTypeRegistry)
 
   private readonly expressions: Expression[] = []
-  private stepTexts: string[] = []
+  private stepTexts: readonly string[] = []
 
   processEnvelope(envelope: Envelope): void {
     if (envelope.parameterType) {
@@ -47,15 +49,11 @@ export class CucumberInfoBuilder {
       this.expressions.push(expression)
     }
     if (envelope.gherkinDocument) {
-      this.stepTexts = walkGherkinDocument(envelope.gherkinDocument, this.stepTexts, {
-        step(step, arr) {
-          return arr.concat(step.text)
-        },
-      })
+      this.stepTexts = extractStepTexts(envelope.gherkinDocument, this.stepTexts)
     }
   }
 
-  build(): CucumberInfo {
+  build(): MessagesBuilderResult {
     return {
       stepDocuments: buildStepDocuments(this.stepTexts, this.expressions),
       expressions: this.expressions,
