@@ -1,6 +1,6 @@
 import assert from 'assert'
 
-import { parseGherkinDocument } from '../../../src/service/gherkin/parseGherkinDocument.js'
+import { parseGherkinDocument } from '../../src/gherkin/parseGherkinDocument.js'
 
 describe('parseGherkinDocument', () => {
   it('returns a GherkinDocument for unexpected EOF', () => {

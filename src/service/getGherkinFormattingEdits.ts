@@ -1,7 +1,7 @@
 import { pretty } from '@cucumber/gherkin-utils'
 import { TextEdit } from 'vscode-languageserver-types'
 
-import { parseGherkinDocument } from './gherkin/parseGherkinDocument.js'
+import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_formatting
 export function getGherkinFormattingEdits(gherkinSource: string): TextEdit[] {

@@ -5,8 +5,8 @@ import {
 } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
 
-import { buildStepDocuments } from '../../../src/index/step-documents/buildStepDocuments.js'
-import { StepDocument } from '../../../src/index/step-documents/types.js'
+import { buildStepDocuments } from '../../src/step-documents/buildStepDocuments.js'
+import { StepDocument } from '../../src/step-documents/types.js'
 
 describe('buildStepDocuments', () => {
   it('builds step documents with global choices', () => {

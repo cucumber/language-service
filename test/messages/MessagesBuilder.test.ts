@@ -4,8 +4,8 @@ import fs from 'fs'
 import { pipeline as pipelineCb, Writable } from 'stream'
 import { promisify } from 'util'
 
-import { StepDocument } from '../../src/index/step-documents/types.js'
 import { MessagesBuilderResult } from '../../src/messages/MessagesBuilder.js'
+import { StepDocument } from '../../src/step-documents/types.js'
 import { fixtureDir } from './fixtureDir.js'
 import { MessagesBuilderStream } from './MessagesBuilderStream.js'
 

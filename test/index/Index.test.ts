@@ -3,7 +3,7 @@ import assert from 'assert'
 import * as txtgen from 'txtgen'
 
 import { bruteForceIndex, fuseIndex, Index, jsSearchIndex } from '../../src/index/index.js'
-import { StepDocument } from '../../src/index/step-documents/types.js'
+import { StepDocument } from '../../src/step-documents/types.js'
 
 type BuildIndex = (stepDocuments: readonly StepDocument[]) => Index
 

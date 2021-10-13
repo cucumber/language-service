@@ -3,8 +3,8 @@ import assert from 'assert'
 import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
 
 import { bruteForceIndex } from '../../src/index/index.js'
-import { StepDocument } from '../../src/index/step-documents/types.js'
 import { getGherkinCompletionItems } from '../../src/service/getGherkinCompletionItems.js'
+import { StepDocument } from '../../src/step-documents/types.js'
 
 describe('getGherkinCompletionItems', () => {
   it('completes with step text', () => {

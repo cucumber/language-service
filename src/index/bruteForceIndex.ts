@@ -1,4 +1,4 @@
-import { StepDocument } from './step-documents/types'
+import { StepDocument } from '../step-documents/types'
 import { Index } from './types'
 
 /**

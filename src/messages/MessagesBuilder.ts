@@ -4,11 +4,11 @@ import {
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
-import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
 
-import { buildStepDocuments } from '../index/step-documents/buildStepDocuments.js'
-import { StepDocument } from '../index/step-documents/types.js'
+import { extractStepTexts } from '../gherkin/extractStepTexts.js'
+import { buildStepDocuments } from '../step-documents/buildStepDocuments.js'
+import { StepDocument } from '../step-documents/types.js'
 
 export type MessagesBuilderResult = {
   stepDocuments: readonly StepDocument[]
@@ -23,7 +23,7 @@ export class MessagesBuilder {
   private readonly expressionFactory = new ExpressionFactory(this.parameterTypeRegistry)
 
   private readonly expressions: Expression[] = []
-  private stepTexts: string[] = []
+  private stepTexts: readonly string[] = []
 
   processEnvelope(envelope: Envelope): void {
     if (envelope.parameterType) {
@@ -49,11 +49,7 @@ export class MessagesBuilder {
       this.expressions.push(expression)
     }
     if (envelope.gherkinDocument) {
-      this.stepTexts = walkGherkinDocument(envelope.gherkinDocument, this.stepTexts, {
-        step(step, arr) {
-          return arr.concat(step.text)
-        },
-      })
+      this.stepTexts = extractStepTexts(envelope.gherkinDocument, this.stepTexts)
     }
   }
 
