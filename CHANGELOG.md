@@ -7,8 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.4.0] - 2021-10-13
 ### Added
 - Add code from `@cucumber/suggest` into this module
+
+### Changed
+- Completely changed the API
 
 ## [0.3.0] - 2021-10-12
 ### Changed
@@ -38,7 +42,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.3.0...main
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.4.0...main
+[0.4.0]: https://github.com/cucumber/language-service/compare/v0.3.0...0.4.0
 [0.3.0]: https://github.com/cucumber/language-service/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/cucumber/language-service/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/cucumber/language-service/compare/v0.1.0...v0.1.1
