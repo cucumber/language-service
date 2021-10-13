@@ -6,7 +6,7 @@ import {
 } from '@cucumber/cucumber-expressions'
 import Parser from 'web-tree-sitter'
 
-export function buildExpressions(
+export function buildExpressionsFromJava(
   parser: Parser,
   Java: Parser.Language,
   sources: string[]

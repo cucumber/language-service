@@ -7,10 +7,10 @@ import {
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
 
-import { buildStepDocuments } from './index/step-documents/buildStepDocuments.js'
-import { StepDocument } from './index/step-documents/types.js'
+import { buildStepDocuments } from '../index/step-documents/buildStepDocuments.js'
+import { StepDocument } from '../index/step-documents/types.js'
 
-export type CucumberInfo = {
+export type MessagesBuilderResult = {
   stepDocuments: readonly StepDocument[]
   expressions: readonly Expression[]
 }
@@ -18,7 +18,7 @@ export type CucumberInfo = {
 /**
  * Builds CucumberInfo from Cucumber Messages.
  */
-export class CucumberInfoBuilder {
+export class MessagesBuilder {
   private readonly parameterTypeRegistry = new ParameterTypeRegistry()
   private readonly expressionFactory = new ExpressionFactory(this.parameterTypeRegistry)
 
@@ -57,7 +57,7 @@ export class CucumberInfoBuilder {
     }
   }
 
-  build(): CucumberInfo {
+  build(): MessagesBuilderResult {
     return {
       stepDocuments: buildStepDocuments(this.stepTexts, this.expressions),
       expressions: this.expressions,

@@ -1,7 +1,7 @@
 import assert from 'assert'
 import Parser from 'web-tree-sitter'
 
-import { buildExpressions } from '../../src/tree-sitter/java.js'
+import { buildExpressionsFromJava } from '../../src/tree-sitter/buildExpressionsFromJava.js'
 
 describe('buildExpressions', () => {
   let parser: Parser
@@ -49,7 +49,7 @@ class ParameterTypes {
 }
 `
 
-    const expressions = buildExpressions(parser, Java, [stepdefs, parameterTypes])
+    const expressions = buildExpressionsFromJava(parser, Java, [stepdefs, parameterTypes])
     assert.deepStrictEqual(
       expressions.map((e) => e.source),
       ['I have {int} cukes in my belly', 'you have some time', 'a {iso-date}', 'a {date}']

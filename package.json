@@ -23,7 +23,7 @@
     "build": "npm run build:cjs && npm run build:esm",
     "test": "mocha && npm run test:cjs",
     "test:cjs": "npm run build:cjs && mocha --no-config --recursive dist/cjs/test",
-    "stryker": "stryker run",
+    "stryker": "LANGUAGE_SERVICE_FIXTURE_DIR=$(pwd)/test/messages stryker run",
     "prepublishOnly": "npm run build",
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts,tsx --max-warnings 0 src test",
@@ -47,6 +47,7 @@
   "homepage": "https://github.com/cucumber/language-service#readme",
   "devDependencies": {
     "@cucumber/cucumber": "7.3.1",
+    "@cucumber/message-streams": "^3.0.0",
     "@stryker-mutator/core": "5.4.1",
     "@stryker-mutator/mocha-runner": "5.4.1",
     "@stryker-mutator/typescript-checker": "^5.4.1",
