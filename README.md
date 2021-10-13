@@ -2,8 +2,8 @@
 
 # Cucumber Language Service
 
-This library implements the services used by [Cucumber Language Server](../../language-server/javascript)
-and [Cucumber Monaco](../../monaco/javascript).
+This library implements the services used by [Cucumber Language Server](https://github.com/cucumber/language-server#readme)
+and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
 
 ## Supported features
 
