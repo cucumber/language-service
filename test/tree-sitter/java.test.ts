@@ -1,7 +1,7 @@
 import assert from 'assert'
 import Parser from 'web-tree-sitter'
 
-import { buildExpressions } from '../../src/expressions/java.js'
+import { buildExpressions } from '../../src/tree-sitter/java.js'
 
 describe('buildExpressions', () => {
   let parser: Parser

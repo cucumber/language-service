@@ -1,7 +1,7 @@
 import assert from 'assert'
 import { TextEdit } from 'vscode-languageserver-types'
 
-import { getGherkinFormattingEdits } from '../src/index.js'
+import { getGherkinFormattingEdits } from '../../src/service/getGherkinFormattingEdits.js'
 
 describe('getGherkinFormattingEdits', () => {
   it('returns text edits that prettifies a Gherkin document', () => {

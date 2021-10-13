@@ -7,8 +7,8 @@ import {
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
 
-import { buildStepDocuments } from './buildStepDocuments.js'
-import { StepDocument } from './types.js'
+import { buildStepDocuments } from './index/step-documents/buildStepDocuments.js'
+import { StepDocument } from './index/step-documents/types.js'
 
 export type CucumberInfo = {
   stepDocuments: readonly StepDocument[]

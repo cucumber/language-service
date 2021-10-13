@@ -3,7 +3,7 @@ import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import * as messages from '@cucumber/messages'
 import { SemanticTokens, SemanticTokenTypes } from 'vscode-languageserver-types'
 
-import { parseGherkinDocument } from './parseGherkinDocument.js'
+import { parseGherkinDocument } from './gherkin/parseGherkinDocument.js'
 
 export const semanticTokenTypes: SemanticTokenTypes[] = [
   SemanticTokenTypes.keyword, // Feature, Scenario, Given etc

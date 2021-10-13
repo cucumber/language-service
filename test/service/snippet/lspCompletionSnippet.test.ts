@@ -1,6 +1,7 @@
 import assert from 'assert'
 
-import { lspCompletionSnippet, StepSegments } from '../src/index.js'
+import { StepSegments } from '../../../src/index/step-documents/types.js'
+import { lspCompletionSnippet } from '../../../src/service/snippet/lspCompletionSnippet.js'
 
 describe('lspCompletionSnippet', () => {
   it('converts StepSegments to an LSP snippet', () => {

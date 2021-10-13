@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js'
 
-import { StepDocument } from '../types'
-import { Index } from './types'
+import { StepDocument } from './step-documents/types.js'
+import { Index } from './types.js'
 
 type Doc = {
   text: string

@@ -2,7 +2,7 @@ import { CucumberExpression, ParameterTypeRegistry } from '@cucumber/cucumber-ex
 import assert from 'assert'
 import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
 
-import { getGherkinDiagnostics } from '../src/index.js'
+import { getGherkinDiagnostics } from '../../src/service/getGherkinDiagnostics.js'
 
 describe('getGherkinDiagnostics', () => {
   it('returns no diagnostics for valid document', () => {

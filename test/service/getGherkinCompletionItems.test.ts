@@ -2,7 +2,9 @@ import { ExpressionFactory, ParameterTypeRegistry } from '@cucumber/cucumber-exp
 import assert from 'assert'
 import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
 
-import { bruteForceIndex, getGherkinCompletionItems, StepDocument } from '../src/index.js'
+import { bruteForceIndex } from '../../src/index/index.js'
+import { StepDocument } from '../../src/index/step-documents/types.js'
+import { getGherkinCompletionItems } from '../../src/service/getGherkinCompletionItems.js'
 
 describe('getGherkinCompletionItems', () => {
   it('completes with step text', () => {
