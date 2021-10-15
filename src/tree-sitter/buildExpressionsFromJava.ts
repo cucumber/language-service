@@ -8,12 +8,12 @@ import Parser from 'web-tree-sitter'
 
 export function buildExpressionsFromJava(
   parser: Parser,
-  Java: Parser.Language,
+  language: Parser.Language,
   sources: string[]
 ): readonly Expression[] {
   let matches: Parser.QueryMatch[] = []
   for (const source of sources) {
-    matches = matches.concat(queryMethodAnnotations(parser, Java, source))
+    matches = matches.concat(queryMethodAnnotations(parser, language, source))
   }
   const parameterTypeRegistry = new ParameterTypeRegistry()
 
@@ -37,13 +37,13 @@ export function buildExpressionsFromJava(
 
 function queryMethodAnnotations(
   parser: Parser,
-  Java: Parser.Language,
+  language: Parser.Language,
   source: string
 ): readonly Parser.QueryMatch[] {
-  parser.setLanguage(Java)
+  parser.setLanguage(language)
   const tree = parser.parse(source)
   // See https://github.com/tree-sitter/tree-sitter/issues/1392
-  const methodAnnotationQuery = Java.query(`
+  const methodAnnotationQuery = language.query(`
 (method_declaration 
   (modifiers 
     (annotation 

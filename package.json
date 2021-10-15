@@ -28,7 +28,9 @@
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts,tsx --max-warnings 0 src test",
     "upgrade": "npm-check-updates --upgrade",
-    "build-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-java"
+    "build-java-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-java",
+    "build-typescript-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/typescript",
+    "build-tsx-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/tsx"
   },
   "repository": {
     "type": "git",
@@ -68,6 +70,7 @@
     "txtgen": "2.2.8",
     "tree-sitter-cli": "0.20.0",
     "tree-sitter-java": "0.19.1",
+    "tree-sitter-typescript": "0.19.0",
     "ts-node": "10.3.0",
     "typescript": "4.4.4"
   },

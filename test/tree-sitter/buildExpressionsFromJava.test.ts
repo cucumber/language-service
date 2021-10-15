@@ -3,25 +3,25 @@ import Parser from 'web-tree-sitter'
 
 import { buildExpressionsFromJava } from '../../src/tree-sitter/buildExpressionsFromJava.js'
 
-describe('buildExpressions', () => {
+describe('buildExpressionsFromJava', () => {
   let parser: Parser
-  let Java: Parser.Language
+  let language: Parser.Language
 
   beforeEach(async () => {
     await Parser.init()
     parser = new Parser()
-    Java = await Parser.Language.load('tree-sitter-java.wasm')
-    parser.setLanguage(Java)
+    language = await Parser.Language.load('tree-sitter-java.wasm')
+    parser.setLanguage(language)
   })
 
-  it('builds expressions from .java source', async () => {
+  it('builds expressions from Java source', async () => {
     const stepdefs = `
 class StepDefinitions {
     @Given("I have {int} cukes in my belly"  )
     void method1() {
     }
 
-    @When(  "you have some time")
+    @When("you have some time")
     void method2() {
     }
 
@@ -49,7 +49,7 @@ class ParameterTypes {
 }
 `
 
-    const expressions = buildExpressionsFromJava(parser, Java, [stepdefs, parameterTypes])
+    const expressions = buildExpressionsFromJava(parser, language, [stepdefs, parameterTypes])
     assert.deepStrictEqual(
       expressions.map((e) => e.source),
       ['I have {int} cukes in my belly', 'you have some time', 'a {iso-date}', 'a {date}']
