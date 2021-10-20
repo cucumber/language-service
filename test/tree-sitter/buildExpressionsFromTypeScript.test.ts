@@ -2,8 +2,7 @@ import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expres
 import assert from 'assert'
 import Parser from 'web-tree-sitter'
 
-import { buildExpressions } from '../../src/tree-sitter/buildExpressions.js'
-import { typeScriptQueries } from '../../src/tree-sitter/typeScriptQueries.js'
+import { buildExpressions, typeScriptQueries } from '../../src/index.js'
 
 describe('buildExpressionsFromTypeScript', () => {
   let parser: Parser
