@@ -1,4 +1,4 @@
-export * from './getGherkinCompletionItems'
+export * from './getGherkinCompletionItems.js'
 export * from './getGherkinDiagnostics.js'
-export * from './getGherkinFormattingEdits'
-export * from './getGherkinSemanticTokens'
+export * from './getGherkinFormattingEdits.js'
+export * from './getGherkinSemanticTokens.js'

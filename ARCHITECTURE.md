@@ -2,8 +2,8 @@
 
 The Cucumber Language Service library has two APIs:
 
-* **Extraction API**
-* **Language Service API**, which is used by [Cucumber Language Server](https://github.com/cucumber/language-server/#readme)
+- **Extraction API**
+- **Language Service API**, which is used by [Cucumber Language Server](https://github.com/cucumber/language-server/#readme)
   and [Cucumber Monaco](https://github.com/cucumber/monaco/#readme)
 
 The Extraction API provides data structures that are passed as input to the Language Service API.
@@ -41,7 +41,7 @@ that are consumed by the Language Service API.
                          |
                  +-------v-------+
                  |     Index     |
-                 +-------^-------+    
+                 +-------^-------+
 ```
 
 [Cucumber Expressions](https://github.com/cucumber/cucumber-expressions/#readme) and Regular Expressions are extracted
@@ -54,8 +54,8 @@ a (search) `Index`.
 
 ## Language Service API
 
-The Language Service API provides [LSP](https://microsoft.github.io/language-server-protocol/) services.  
+The Language Service API provides [LSP](https://microsoft.github.io/language-server-protocol/) services.
 
-The *expressions* and *index* objects are used in the various `getXxx` functions that provide the
-"editor" API. This API is used by both [Cucumber Language Server](https://github.com/cucumber/language-server/#readme) 
+The _expressions_ and _index_ objects are used in the various `getXxx` functions that provide the
+"editor" API. This API is used by both [Cucumber Language Server](https://github.com/cucumber/language-server/#readme)
 and [Cucumber Monaco](https://github.com/cucumber/monaco/#readme).
