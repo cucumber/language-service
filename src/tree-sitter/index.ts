@@ -1,2 +1,3 @@
+export * from './buildExpressions.js'
 export * from './buildExpressionsFromJava.js'
-export * from './buildExpressionsFromTypeScript'
+export * from './typeScriptQueries.js'

@@ -2,7 +2,8 @@ import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expres
 import assert from 'assert'
 import Parser from 'web-tree-sitter'
 
-import { buildExpressionsFromTypeScript } from '../../src/tree-sitter/buildExpressionsFromTypeScript.js'
+import { buildExpressions } from '../../src/tree-sitter/buildExpressions.js'
+import { typeScriptQueries } from '../../src/tree-sitter/typeScriptQueries.js'
 
 describe('buildExpressionsFromTypeScript', () => {
   let parser: Parser
@@ -45,7 +46,10 @@ defineParameterType({
 })
 `
 
-    const expressions = buildExpressionsFromTypeScript(parser, language, [stepdefs, parameterTypes])
+    const expressions = buildExpressions(parser, language, typeScriptQueries, [
+      stepdefs,
+      parameterTypes,
+    ])
     assert.deepStrictEqual(
       expressions.map((e) =>
         e instanceof CucumberExpression ? e.source : (e as RegularExpression).regexp
