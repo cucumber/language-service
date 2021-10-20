@@ -30,7 +30,9 @@
     "upgrade": "npm-check-updates --upgrade",
     "build-java-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-java",
     "build-typescript-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/typescript",
-    "build-tsx-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/tsx"
+    "build-tsx-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/tsx",
+    "prepare": "husky install",
+    "pretty-quick-staged": "pretty-quick --staged"
   },
   "repository": {
     "type": "git",
@@ -63,6 +65,7 @@
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "4.0.0",
     "eslint-plugin-simple-import-sort": "7.0.0",
+    "husky": "7.0.2",
     "mocha": "9.1.2",
     "npm-check-updates": "11.8.5",
     "prettier": "2.4.1",
