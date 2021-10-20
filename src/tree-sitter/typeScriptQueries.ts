@@ -1,7 +1,8 @@
 import { TreeSitterQueries } from './buildExpressions.js'
 
 export const typeScriptQueries: TreeSitterQueries = {
-  defineParameterTypeQuery: `
+  defineParameterTypeQueries: [
+    `
 (call_expression
   function: (identifier) @function-name
   arguments: (arguments
@@ -9,21 +10,21 @@ export const typeScriptQueries: TreeSitterQueries = {
       [
         (
           (pair
-            key: (property_identifier) @string-key
+            key: (property_identifier) @name-key
             value: (string) @name
           )
           (pair
-            key: (property_identifier) @regex-key
-            value: (regex) @regexp
+            key: (property_identifier) @regexp-key
+            value: [(regex) (string)] @expression
           )
         )
         (
           (pair
-            key: (property_identifier) @regex-key
-            value: (regex) @regexp
+            key: (property_identifier) @regexp-key
+            value: [(regex) (string)] @expression
           )
           (pair
-            key: (property_identifier) @string-key
+            key: (property_identifier) @name-key
             value: (string) @name
           )
         )
@@ -31,20 +32,23 @@ export const typeScriptQueries: TreeSitterQueries = {
     )
   )
   (#eq? @function-name "defineParameterType")
-  (#eq? @string-key "name")
-  (#eq? @regex-key "regexp")
+  (#eq? @name-key "name")
+  (#eq? @regexp-key "regexp")
 )
 `,
-  defineStepDefinitionQuery: `
+  ],
+  defineStepDefinitionQueries: [
+    `
 (call_expression
   function: (identifier) @function-name
   arguments: (arguments
     [
-      (string) @cucumber-expression
-      (regex) @regular-expression
+      (string) @expression
+      (regex) @expression
     ]
   )
   (#match? @function-name "Given|When|Then")
 )
 `,
+  ],
 }

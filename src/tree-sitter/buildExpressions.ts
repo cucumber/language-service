@@ -5,14 +5,14 @@ import {
 } from '@cucumber/cucumber-expressions'
 import Parser from 'web-tree-sitter'
 
-import { makeParameterType, recordFromMatch, unquote } from './helpers.js'
+import { makeParameterType, recordFromMatch, toString, toStringOrRegExp } from './helpers.js'
 
-const defineStepDefinitionQueryKeys = <const>['cucumber-expression', 'regular-expression']
-const defineParameterTypeKeys = <const>['name', 'regexp']
+const defineStepDefinitionQueryKeys = <const>['expression']
+const defineParameterTypeKeys = <const>['name', 'expression']
 
 export type TreeSitterQueries = {
-  defineParameterTypeQuery: string
-  defineStepDefinitionQuery: string
+  defineParameterTypeQueries: readonly string[]
+  defineStepDefinitionQueries: readonly string[]
 }
 
 export function buildExpressions(
@@ -27,33 +27,31 @@ export function buildExpressions(
 
   for (const source of sources) {
     const tree = parser.parse(source)
-    const matches = language
-      .query(treeSitterQueries.defineParameterTypeQuery)
-      .matches(tree.rootNode)
-    const records = matches.map((match) => recordFromMatch(match, defineParameterTypeKeys))
-    for (const record of records) {
-      const name = record['name']
-      const regexp = record['regexp']
-      if (name && regexp) {
-        parameterTypeRegistry.defineParameterType(makeParameterType(unquote(name), unquote(regexp)))
+    for (const defineParameterTypeQuery of treeSitterQueries.defineParameterTypeQueries) {
+      const matches = language.query(defineParameterTypeQuery).matches(tree.rootNode)
+      const records = matches.map((match) => recordFromMatch(match, defineParameterTypeKeys))
+      for (const record of records) {
+        const name = record['name']
+        const regexp = record['expression']
+        if (name && regexp) {
+          parameterTypeRegistry.defineParameterType(
+            makeParameterType(toString(name), toStringOrRegExp(regexp))
+          )
+        }
       }
     }
   }
 
   for (const source of sources) {
     const tree = parser.parse(source)
-    const matches = language
-      .query(treeSitterQueries.defineStepDefinitionQuery)
-      .matches(tree.rootNode)
-    const records = matches.map((match) => recordFromMatch(match, defineStepDefinitionQueryKeys))
-    for (const record of records) {
-      const cucumberExpression = record['cucumber-expression']
-      if (cucumberExpression) {
-        expressions.push(expressionFactory.createExpression(unquote(cucumberExpression)))
-      }
-      const regularExpression = record['regular-expression']
-      if (regularExpression) {
-        expressions.push(expressionFactory.createExpression(new RegExp(unquote(regularExpression))))
+    for (const defineStepDefinitionQuery of treeSitterQueries.defineStepDefinitionQueries) {
+      const matches = language.query(defineStepDefinitionQuery).matches(tree.rootNode)
+      const records = matches.map((match) => recordFromMatch(match, defineStepDefinitionQueryKeys))
+      for (const record of records) {
+        const expression = record['expression']
+        if (expression) {
+          expressions.push(expressionFactory.createExpression(toStringOrRegExp(expression)))
+        }
       }
     }
   }
