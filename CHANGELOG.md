@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.7.1] - 2021-10-21
 ### Fixed
 - Include wasm files in npm module
 
@@ -60,7 +62,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.7.1...HEAD
+[0.7.1]: https://github.com/cucumber/language-service/compare/v0.7.0...0.7.1
 [0.7.0]: https://github.com/cucumber/language-service/compare/v0.6.0...0.7.0
 [0.6.0]: https://github.com/cucumber/language-service/compare/v0.5.0...0.6.0
 [0.5.0]: https://github.com/cucumber/language-service/compare/v0.4.0...0.5.0
