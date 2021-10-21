@@ -4,8 +4,8 @@ import assert from 'assert'
 import { ExpressionBuilder, WasmUrls } from '../../src/index.js'
 
 const wasmUrls: WasmUrls = {
-  java: 'src/tree-sitter/tree-sitter-java.wasm',
-  typescript: 'src/tree-sitter/tree-sitter-typescript.wasm',
+  java: 'tree-sitter-java.wasm',
+  typescript: 'tree-sitter-typescript.wasm',
 }
 
 describe('ExpressionBuilder', () => {

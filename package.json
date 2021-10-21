@@ -7,7 +7,8 @@
   "types": "dist/cjs/src/index.d.ts",
   "files": [
     "dist/cjs",
-    "dist/esm"
+    "dist/esm",
+    "*.wasm"
   ],
   "module": "dist/esm/src/index.js",
   "jsnext:main": "dist/esm/src/index.js",
@@ -28,8 +29,8 @@
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts,tsx --max-warnings 0 src test",
     "upgrade": "npm-check-updates --upgrade",
-    "build-java-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-java && mv tree-sitter-java.wasm src/tree-sitter",
-    "build-typescript-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/typescript && mv tree-sitter-typescript.wasm src/tree-sitter",
+    "build-java-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-java",
+    "build-typescript-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/typescript",
     "prepare": "husky install",
     "pretty-quick-staged": "pretty-quick --staged"
   },
