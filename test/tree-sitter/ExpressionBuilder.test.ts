@@ -1,19 +1,16 @@
 import assert from 'assert'
-import Parser from 'web-tree-sitter'
-
-import { buildExpressions, javaQueries, typeScriptQueries } from '../../src/index.js'
 import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
+import { ExpressionBuilder } from '../../src/tree-sitter/ExpressionBuilder.js'
 
-describe('buildExpressions', () => {
-  let parser: Parser
-  let java: Parser.Language
-  let typescript: Parser.Language
+describe('ExpressionBuilder', () => {
+  const expressionBuilder = new ExpressionBuilder()
+  let initialized = false
 
   beforeEach(async () => {
-    await Parser.init()
-    if (!parser) parser = new Parser()
-    if (!java) java = await Parser.Language.load('tree-sitter-java.wasm')
-    if (!typescript) typescript = await Parser.Language.load('tree-sitter-typescript.wasm')
+    if (!initialized) {
+      await expressionBuilder.init()
+      initialized = true
+    }
   })
 
   it('builds expressions from Java source', async () => {
@@ -51,7 +48,7 @@ class ParameterTypes {
 }
 `
 
-    const expressions = buildExpressions(parser, java, javaQueries, [stepdefs, parameterTypes])
+    const expressions = expressionBuilder.build('java', [stepdefs, parameterTypes])
     assert.deepStrictEqual(
       expressions.map((e) => e.source),
       ['I have {int} cukes in my belly', 'you have some time', 'a {iso-date}', 'a {date}']
@@ -88,10 +85,7 @@ defineParameterType({
 })
 `
 
-    const expressions = buildExpressions(parser, typescript, typeScriptQueries, [
-      stepdefs,
-      parameterTypes,
-    ])
+    const expressions = expressionBuilder.build('typescript', [stepdefs, parameterTypes])
     assert.deepStrictEqual(
       expressions.map((e) =>
         e instanceof CucumberExpression ? e.source : (e as RegularExpression).regexp

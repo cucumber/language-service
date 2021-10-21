@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Set language in buildExpressions
+- Add ExpressionBuilder
 
 ## [0.6.0] - 2021-10-20
 ### Added
