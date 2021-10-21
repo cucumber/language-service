@@ -21,6 +21,7 @@ export function buildExpressions(
   treeSitterQueries: TreeSitterQueries,
   sources: string[]
 ): readonly Expression[] {
+  parser.setLanguage(language)
   const expressions: Expression[] = []
   const parameterTypeRegistry = new ParameterTypeRegistry()
   const expressionFactory = new ExpressionFactory(parameterTypeRegistry)
