@@ -13,11 +13,10 @@ jobs:
       fail-fast: false
       matrix:
         os:
+          - macos-latest
           - ubuntu-latest
-        node-version: ['12.x', '14.x', '16.x', '17.x']
-        include:
-          - os: macos-latest
-            node-version: ['16.x', '17.x']
+        # 16.12.0 has broken ESM support
+        node-version: ['12.x', '14.x', '16.11.x', '17.x']
 
     steps:
       - name: set git core.autocrlf to 'input'
