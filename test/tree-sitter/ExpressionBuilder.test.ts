@@ -1,5 +1,6 @@
-import assert from 'assert'
 import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
+import assert from 'assert'
+
 import { ExpressionBuilder, WasmUrls } from '../../src/index.js'
 
 const wasmUrls: WasmUrls = {

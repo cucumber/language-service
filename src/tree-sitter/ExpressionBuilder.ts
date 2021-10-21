@@ -1,4 +1,5 @@
 import Parser, { Language } from 'web-tree-sitter'
+
 import { buildExpressions, TreeSitterQueries } from './buildExpressions.js'
 import { javaQueries } from './javaQueries.js'
 import { typeScriptQueries } from './typeScriptQueries.js'
