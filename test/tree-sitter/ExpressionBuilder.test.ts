@@ -1,6 +1,11 @@
 import assert from 'assert'
 import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
-import { ExpressionBuilder } from '../../src/tree-sitter/ExpressionBuilder.js'
+import { ExpressionBuilder, WasmUrls } from '../../src/index.js'
+
+const wasmUrls: WasmUrls = {
+  java: 'src/tree-sitter/tree-sitter-java.wasm',
+  typescript: 'src/tree-sitter/tree-sitter-typescript.wasm',
+}
 
 describe('ExpressionBuilder', () => {
   const expressionBuilder = new ExpressionBuilder()
@@ -8,7 +13,7 @@ describe('ExpressionBuilder', () => {
 
   beforeEach(async () => {
     if (!initialized) {
-      await expressionBuilder.init()
+      await expressionBuilder.init(wasmUrls)
       initialized = true
     }
   })

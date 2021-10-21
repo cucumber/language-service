@@ -28,9 +28,8 @@
     "eslint-fix": "eslint --ext ts,tsx --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts,tsx --max-warnings 0 src test",
     "upgrade": "npm-check-updates --upgrade",
-    "build-java-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-java",
-    "build-typescript-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/typescript",
-    "build-tsx-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/tsx",
+    "build-java-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-java && mv tree-sitter-java.wasm src/tree-sitter",
+    "build-typescript-wasm": "npx tree-sitter build-wasm node_modules/tree-sitter-typescript/typescript && mv tree-sitter-typescript.wasm src/tree-sitter",
     "prepare": "husky install",
     "pretty-quick-staged": "pretty-quick --staged"
   },

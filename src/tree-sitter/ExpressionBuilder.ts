@@ -10,16 +10,18 @@ const treeSitterQueriesByLanguageName: Record<LanguageName, TreeSitterQueries> =
 
 export type LanguageName = 'java' | 'typescript'
 
+export type WasmUrls = Record<LanguageName, string>
+
 export class ExpressionBuilder {
   private parser: Parser
   private languages: Record<LanguageName, Language>
 
-  async init() {
+  async init(wasmUrls: WasmUrls) {
     await Parser.init()
     this.parser = new Parser()
     this.languages = {
-      java: await Parser.Language.load('tree-sitter-java.wasm'),
-      typescript: await Parser.Language.load('tree-sitter-typescript.wasm'),
+      java: await Parser.Language.load(wasmUrls['java']),
+      typescript: await Parser.Language.load(wasmUrls['typescript']),
     }
   }
 
