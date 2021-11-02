@@ -86,6 +86,8 @@
     "fuse.js": "6.4.6",
     "js-search": "2.0.0",
     "vscode-languageserver-types": "3.17.0-next.4",
+    "vscode-languageserver": "7.0.0",
+    "vscode-languageserver-textdocument": "1.0.2",
     "web-tree-sitter": "0.19.4"
   }
 }
