@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.9.0] - 2021-11-04
 ### Added
 - Add optional error handler to `MessageBuilder#processMessage`
 
@@ -68,7 +70,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - First release
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/cucumber/language-service/compare/v0.8.0...0.9.0
 [0.8.0]: https://github.com/cucumber/language-service/compare/v0.7.1...0.8.0
 [0.7.1]: https://github.com/cucumber/language-service/compare/v0.7.0...0.7.1
 [0.7.0]: https://github.com/cucumber/language-service/compare/v0.6.0...0.7.0
