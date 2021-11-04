@@ -1,0 +1,1 @@
+{"stepDefinition":{"id":"546ac0e7-2dca-496f-ba93-403d4d7303d4","pattern":{"source":"the following Gherkin\\step texts exist:","type":"CUCUMBER_EXPRESSION"},"sourceReference":{"uri":"features/step_definitions/steps.ts","location":{"line":9}}}}

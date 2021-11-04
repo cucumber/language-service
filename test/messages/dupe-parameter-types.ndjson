@@ -1,0 +1,2 @@
+{"parameterType":{"id":"bdb25c42-bfb1-4f5c-bbc7-1f3c940ba6c5","name":"ordinal","preferForRegularExpressionMatch":false,"regularExpressions":["(\\d+)(?:st|nd|rd|th)"],"useForSnippets":true}}
+{"parameterType":{"id":"adb25c42-bfb1-4f5c-bbc7-1f3c940ba6c5","name":"ordinal","preferForRegularExpressionMatch":false,"regularExpressions":["(\\d+)(?:st|nd|rd|th)"],"useForSnippets":true}}

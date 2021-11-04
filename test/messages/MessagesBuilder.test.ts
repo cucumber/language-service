@@ -12,6 +12,43 @@ import { MessagesBuilderStream } from './MessagesBuilderStream.js'
 const pipeline = promisify(pipelineCb)
 
 describe('MessagesBuilder', () => {
+  it('does not fail on duplicate parameter types', async () => {
+    const readStream = fs.createReadStream(`${fixtureDir}/dupe-parameter-types.ndjson`, 'utf-8')
+    let receivedError
+    await pipeline(
+      readStream,
+      new NdjsonToMessageStream(),
+      new MessagesBuilderStream((err) => (receivedError = err)),
+      new Writable({
+        objectMode: true,
+        write(_result: MessagesBuilderResult, encoding, callback) {
+          callback()
+        },
+      })
+    )
+    assert(receivedError)
+  })
+
+  it('does not fail on cucumber expression syntax errors', async () => {
+    const readStream = fs.createReadStream(
+      `${fixtureDir}/syntax-error-cucumber-expression.ndjson`,
+      'utf-8'
+    )
+    let receivedError
+    await pipeline(
+      readStream,
+      new NdjsonToMessageStream(),
+      new MessagesBuilderStream((err) => (receivedError = err)),
+      new Writable({
+        objectMode: true,
+        write(_result: MessagesBuilderResult, encoding, callback) {
+          callback()
+        },
+      })
+    )
+    assert(receivedError)
+  })
+
   it('builds MessagesBuilder from a message stream with parameter types', async () => {
     const readStream = fs.createReadStream(`${fixtureDir}/messages.ndjson`, 'utf-8')
     let result: MessagesBuilderResult

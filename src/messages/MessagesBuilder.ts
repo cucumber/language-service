@@ -25,28 +25,36 @@ export class MessagesBuilder {
   private readonly expressions: Expression[] = []
   private stepTexts: readonly string[] = []
 
-  processEnvelope(envelope: Envelope): void {
+  processEnvelope(envelope: Envelope, errorHandler: (err: Error) => void = () => undefined): void {
     if (envelope.parameterType) {
       const { name, regularExpressions, useForSnippets, preferForRegularExpressionMatch } =
         envelope.parameterType
-      this.parameterTypeRegistry.defineParameterType(
-        new ParameterType(
-          name,
-          regularExpressions,
-          Object,
-          () => undefined,
-          useForSnippets,
-          preferForRegularExpressionMatch
+      try {
+        this.parameterTypeRegistry.defineParameterType(
+          new ParameterType(
+            name,
+            regularExpressions,
+            Object,
+            () => undefined,
+            useForSnippets,
+            preferForRegularExpressionMatch
+          )
         )
-      )
+      } catch (err) {
+        errorHandler(err)
+      }
     }
     if (envelope.stepDefinition) {
       const expr =
         envelope.stepDefinition.pattern.type === StepDefinitionPatternType.CUCUMBER_EXPRESSION
           ? envelope.stepDefinition.pattern.source
           : new RegExp(envelope.stepDefinition.pattern.source)
-      const expression = this.expressionFactory.createExpression(expr)
-      this.expressions.push(expression)
+      try {
+        const expression = this.expressionFactory.createExpression(expr)
+        this.expressions.push(expression)
+      } catch (err) {
+        errorHandler(err)
+      }
     }
     if (envelope.gherkinDocument) {
       this.stepTexts = extractStepTexts(envelope.gherkinDocument, this.stepTexts)
