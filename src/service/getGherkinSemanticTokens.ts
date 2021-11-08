@@ -5,12 +5,13 @@ import { SemanticTokens, SemanticTokenTypes } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 
+// The default vs theme can only highlight certain tokens. See the list of those tokens in
+// https://microsoft.github.io/monaco-editor/monarch.html
 export const semanticTokenTypes: SemanticTokenTypes[] = [
   SemanticTokenTypes.keyword, // Feature, Scenario, Given etc
   SemanticTokenTypes.parameter, // step parameters
-  SemanticTokenTypes.string, // DocString content and ``` delimiter
-  SemanticTokenTypes.type, // DocString ```type
-  SemanticTokenTypes.class, // @tags
+  SemanticTokenTypes.string, // DocString content and ``` delimiter, table cells (except example table header rows)
+  SemanticTokenTypes.type, // @tags and DocString ```type
   SemanticTokenTypes.variable, // step <placeholder>
   SemanticTokenTypes.property, // examples table header row
 ]
@@ -66,7 +67,7 @@ export function getGherkinSemanticTokens(
 
   const data = walkGherkinDocument<number[]>(gherkinDocument, [], {
     tag(tag, arr) {
-      return makeLocationToken(tag.location, tag.name, SemanticTokenTypes.class, arr)
+      return makeLocationToken(tag.location, tag.name, SemanticTokenTypes.type, arr)
     },
     feature(feature, arr) {
       return makeLocationToken(feature.location, feature.keyword, SemanticTokenTypes.keyword, arr)
@@ -155,7 +156,7 @@ export function getGherkinSemanticTokens(
       return arr
     },
     tableRow(tableRow, arr) {
-      const type = inExamples ? SemanticTokenTypes.property : SemanticTokenTypes.parameter
+      const type = inExamples ? SemanticTokenTypes.property : SemanticTokenTypes.string
       for (const cell of tableRow.cells) {
         arr = makeLocationToken(cell.location, cell.value, type, arr)
       }

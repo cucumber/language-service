@@ -35,6 +35,8 @@ Feature: a
     )
 
     const semanticTokens = getGherkinSemanticTokens(gherkinSource, [expression])
+    // TODO: Rather than expecting a long line of ints here, parse it (as vscode would), and derive a list of "highlighted tokens"
+    // like [["@foo", "type"], ["@bar", "type"], ["Feature", "keyword"], ...]
     const expectedSemanticTokens: SemanticTokens = {
       // See https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_semanticTokens
       // for details about how tokens are encoded
@@ -42,12 +44,12 @@ Feature: a
         1,
         0,
         4,
-        4,
+        3,
         0, // @foo
         0,
         5,
         4,
-        4,
+        3,
         0, // @bar
         1,
         0,
@@ -107,22 +109,22 @@ Feature: a
         1,
         8,
         1,
-        1,
+        2,
         0, // a
         0,
         5,
         3,
-        1,
+        2,
         0, // bbb
         1,
         8,
         2,
-        1,
+        2,
         0, // cc
         0,
         6,
         2,
-        1,
+        2,
         0, // dd
         2,
         2,
@@ -137,12 +139,12 @@ Feature: a
         0,
         8,
         5,
-        5,
+        4,
         0, // <foo>
         0,
         10,
         5,
-        5,
+        4,
         0, // <bar>
         2,
         4,
@@ -152,22 +154,22 @@ Feature: a
         1,
         8,
         3,
-        6,
+        5,
         0, // foo
         0,
         6,
         3,
-        6,
+        5,
         0, // bar
         1,
         8,
         1,
-        1,
+        2,
         0, // a
         0,
         6,
         1,
-        1,
+        2,
         0, // b
       ],
     }
