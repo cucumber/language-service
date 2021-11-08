@@ -30,6 +30,7 @@ export class MessagesBuilder {
       const { name, regularExpressions, useForSnippets, preferForRegularExpressionMatch } =
         envelope.parameterType
       try {
+        // TODO: Check if the type exists before registering. Because Cucumber-JVM emits them several times
         this.parameterTypeRegistry.defineParameterType(
           new ParameterType(
             name,
@@ -45,6 +46,7 @@ export class MessagesBuilder {
       }
     }
     if (envelope.stepDefinition) {
+      // TODO: Register Cucumber-JVM parameter types if they haven't already been defined
       const expr =
         envelope.stepDefinition.pattern.type === StepDefinitionPatternType.CUCUMBER_EXPRESSION
           ? envelope.stepDefinition.pattern.source
