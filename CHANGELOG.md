@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Generate semantic tokens that are supported by the Monaco / Visual Studio Code `vs` theme. ([#12](https://github.com/cucumber/language-service/pull/12)).
+
 ## [0.10.0] - 2021-11-08
 ### Removed
 - Move `tree-sitter` functionality to `@cucumber/language-server`
