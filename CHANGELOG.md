@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Removed
+- Move `tree-sitter` functionality to `@cucumber/language-server`
+
 ## [0.9.0] - 2021-11-04
 ### Added
 - Add optional error handler to `MessageBuilder#processMessage`
