@@ -67,6 +67,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.1.0] - 2021-09-07
 ### Added
+- First release
 - Add `CucumberInfoBuilder` and `CucumberInfo`
 ([#1734](https://github.com/cucumber/common/pull/1734)
 [aslakhellesoy](https://github.com/aslakhellesoy))
@@ -74,22 +75,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-## [0.0.1] - 2021-09-02
-### Added
-- First release
-
 [Unreleased]: https://github.com/cucumber/language-service/compare/v0.10.1...HEAD
-[0.10.1]: https://github.com/cucumber/language-service/compare/v0.10.0...0.10.1
-[0.10.0]: https://github.com/cucumber/language-service/compare/v0.9.0...0.10.0
-[0.9.0]: https://github.com/cucumber/language-service/compare/v0.8.0...0.9.0
-[0.8.0]: https://github.com/cucumber/language-service/compare/v0.7.1...0.8.0
-[0.7.1]: https://github.com/cucumber/language-service/compare/v0.7.0...0.7.1
-[0.7.0]: https://github.com/cucumber/language-service/compare/v0.6.0...0.7.0
-[0.6.0]: https://github.com/cucumber/language-service/compare/v0.5.0...0.6.0
-[0.5.0]: https://github.com/cucumber/language-service/compare/v0.4.0...0.5.0
-[0.4.0]: https://github.com/cucumber/language-service/compare/v0.3.0...0.4.0
+[0.10.1]: https://github.com/cucumber/language-service/compare/v0.10.0...v0.10.1
+[0.10.0]: https://github.com/cucumber/language-service/compare/v0.9.0...v0.10.0
+[0.9.0]: https://github.com/cucumber/language-service/compare/v0.8.0...v0.9.0
+[0.8.0]: https://github.com/cucumber/language-service/compare/v0.7.1...v0.8.0
+[0.7.1]: https://github.com/cucumber/language-service/compare/v0.7.0...v0.7.1
+[0.7.0]: https://github.com/cucumber/language-service/compare/v0.6.0...v0.7.0
+[0.6.0]: https://github.com/cucumber/language-service/compare/v0.5.0...v0.6.0
+[0.5.0]: https://github.com/cucumber/language-service/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/cucumber/language-service/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/cucumber/language-service/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/cucumber/language-service/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/cucumber/language-service/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/cucumber/language-service/compare/v0.0.1...v0.1.0
-[0.0.1]: https://github.com/cucumber/language-service/tree/v0.0.1
+[0.1.0]: https://github.com/cucumber/language-service/tree/v0.1.0
