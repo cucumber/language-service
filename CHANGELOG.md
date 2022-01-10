@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.11.0] - 2022-01-10
 ### Changed
 - Upgrade to `@cucumber/cucumber-expressions` version `15.0.1`
 
@@ -78,7 +79,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.10.1...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/cucumber/language-service/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/cucumber/language-service/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/cucumber/language-service/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/cucumber/language-service/compare/v0.8.0...v0.9.0
