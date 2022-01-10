@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Upgrade to `@cucumber/cucumber-expressions` version `15.0.1`
+
 ## [0.10.1] - 2021-11-08
 ### Fixed
 - Generate semantic tokens that are supported by the Monaco / Visual Studio Code `vs` theme. ([#12](https://github.com/cucumber/language-service/pull/12), [#6](https://github.com/cucumber/language-service/issues/6)).
