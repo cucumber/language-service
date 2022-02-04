@@ -75,6 +75,6 @@
     "@types/js-search": "1.4.0",
     "fuse.js": "6.5.3",
     "js-search": "2.0.0",
-    "vscode-languageserver-types": "3.17.0-next.6"
+    "vscode-languageserver-types": "3.17.0-next.7"
   }
 }
