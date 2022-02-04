@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.12.1] - 2022-02-04
+### Fixed
+- Add wasm files to npm module
+
 ## [0.12.0] - 2022-02-04
 ### Added
 - Add tree-sitter functionality (`ExpressionBuilder`)
@@ -83,7 +87,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.12.1...HEAD
+[0.12.1]: https://github.com/cucumber/language-service/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/cucumber/language-service/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/cucumber/language-service/compare/v0.10.1...v0.11.0
 [0.10.1]: https://github.com/cucumber/language-service/compare/v0.10.0...v0.10.1

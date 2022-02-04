@@ -1,13 +1,14 @@
 {
   "name": "@cucumber/language-service",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "Cucumber Language Service",
   "type": "module",
   "main": "dist/cjs/src/index.js",
   "types": "dist/cjs/src/index.d.ts",
   "files": [
     "dist/cjs",
-    "dist/esm"
+    "dist/esm",
+    "*.wasm"
   ],
   "module": "dist/esm/src/index.js",
   "jsnext:main": "dist/esm/src/index.js",
