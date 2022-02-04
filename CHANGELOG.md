@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Add tree-sitter functionality (`ExpressionBuilder`)
+
 ## [0.11.0] - 2022-01-10
 ### Changed
 - Upgrade to `@cucumber/cucumber-expressions` version `15.0.1`
