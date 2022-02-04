@@ -48,43 +48,46 @@ function verifyIndexContract(name: string, buildIndex: BuildIndex) {
       })
     })
 
-    describe('performance / fuzz', () => {
-      it('matches how quickly exactly?', () => {
-        const ef = new ExpressionFactory(new ParameterTypeRegistry())
-        for (let i = 0; i < 100; i++) {
-          const length = 100
-          const stepDocuments: StepDocument[] = Array(length)
-            .fill(0)
-            .map(() => {
-              const sentence = txtgen.sentence()
-              return {
-                suggestion: sentence,
-                segments: [sentence],
-                expression: ef.createExpression(sentence),
+    if (!process.env.CI) {
+      describe('performance / fuzz', () => {
+        it('matches how quickly exactly?', () => {
+          const ef = new ExpressionFactory(new ParameterTypeRegistry())
+          for (let i = 0; i < 100; i++) {
+            const length = 100
+            const stepDocuments: StepDocument[] = Array(length)
+              .fill(0)
+              .map(() => {
+                const sentence = txtgen.sentence()
+                return {
+                  suggestion: sentence,
+                  segments: [sentence],
+                  expression: ef.createExpression(sentence),
+                }
+              })
+            const index = buildIndex(stepDocuments)
+
+            const sentence = stepDocuments[Math.floor(length / 2)].segments[0] as string
+            const words = sentence.split(' ')
+            // Find a word longer than 5 letters (fall back to the middle word if there are none)
+            const word =
+              words.find((word) => word.length > 5) || words[Math.floor(words.length / 2)]
+            const term = word.replace(/[.?!;,']/g, '').toLowerCase()
+
+            const suggestions = index(term)
+            if (suggestions.length === 0) {
+              console.error(`WARNING: ${name} - no hits for "${term}"`)
+            }
+            for (const suggestion of suggestions) {
+              const s = (suggestion.segments[0] as string).toLowerCase()
+              if (!s.includes(term)) {
+                // console.log(JSON.stringify(stepDocuments, null, 2))
+                console.error(`WARNING: ${name} - "${s}" does not include "${term}"`)
               }
-            })
-          const index = buildIndex(stepDocuments)
-
-          const sentence = stepDocuments[Math.floor(length / 2)].segments[0] as string
-          const words = sentence.split(' ')
-          // Find a word longer than 5 letters (fall back to the middle word if there are none)
-          const word = words.find((word) => word.length > 5) || words[Math.floor(words.length / 2)]
-          const term = word.replace(/[.?!;,']/g, '').toLowerCase()
-
-          const suggestions = index(term)
-          if (suggestions.length === 0) {
-            console.error(`WARNING: ${name} - no hits for "${term}"`)
-          }
-          for (const suggestion of suggestions) {
-            const s = (suggestion.segments[0] as string).toLowerCase()
-            if (!s.includes(term)) {
-              // console.log(JSON.stringify(stepDocuments, null, 2))
-              console.error(`WARNING: ${name} - "${s}" does not include "${term}"`)
             }
           }
-        }
+        })
       })
-    })
+    }
   })
 }
 
