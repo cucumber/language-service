@@ -1,5 +1,6 @@
 {
   "loader": "ts-node/esm",
   "extension": ["ts"],
-  "recursive": true
+  "recursive": true,
+  "timeout": 5000
 }
