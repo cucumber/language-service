@@ -81,7 +81,7 @@
     "tree-sitter-cli": "0.20.4",
     "tree-sitter-java": "0.19.1",
     "tree-sitter-typescript": "0.19.0",
-    "vscode-languageserver-types": "3.17.0-next.7",
+    "vscode-languageserver-types": "3.17.0-next.8",
     "web-tree-sitter": "0.20.3"
   }
 }
