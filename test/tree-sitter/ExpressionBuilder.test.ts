@@ -110,4 +110,17 @@ defineParameterType({
       ['a {uuid}', 'a {date}', /a regexp/]
     )
   })
+
+  it('builds expressions from C# source', async () => {
+    const stepdefs: Source = {
+      language: 'c-sharp',
+      content: ` `,
+    }
+
+    const expressions = expressionBuilder.build([stepdefs], [])
+    assert.deepStrictEqual(
+      expressions.map((e) => e.source),
+      []
+    )
+  })
 })
