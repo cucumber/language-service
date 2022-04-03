@@ -6,6 +6,7 @@ import { ExpressionBuilder, Source, WasmUrls } from '../../src/index.js'
 const wasmUrls: WasmUrls = {
   java: 'tree-sitter-java.wasm',
   typescript: 'tree-sitter-typescript.wasm',
+  csharp: 'tree-sitter-c_sharp.wasm',
 }
 
 describe('ExpressionBuilder', () => {
@@ -113,11 +114,83 @@ defineParameterType({
 
   it('builds expressions from C# source', async () => {
     const stepdefs: Source = {
-      language: 'c-sharp',
-      content: ` `,
+      language: 'csharp',
+      content: `
+namespace Bowling.SpecFlow.StepDefinitions
+{
+    [Binding]
+    public class BowlingSteps
+    {
+        private readonly BowlingDriver _bowlingDriver;
+
+        public BowlingSteps(BowlingDriver bowlingDriver)
+        {
+            _bowlingDriver = bowlingDriver;
+        }
+
+        [Given(@"a new bowling game")]
+        public void GivenANewBowlingGame()
+        {
+            _bowlingDriver.NewGame();
+        }
+
+        [When(@"all of my balls are landing in the gutter")]
+        public void WhenAllOfMyBallsAreLandingInTheGutter()
+        {
+            _bowlingDriver.Roll(0, 20);
+        }
+
+        [Then(@"my total score should be (\\d+)")]
+        public void ThenMyTotalScoreShouldBe(int score)
+        {
+            _bowlingDriver.CheckScore(score);
+        }
+
+        [StepDefinition(@"I roll (\\d+) and (\\d+)")]
+        public void WhenIRoll(int pins1, int pins2)
+        {
+            _bowlingDriver.Roll(pins1, pins2, 1);
+        }
+
+        [When(@"I roll the following series:(.*)")]
+        public void WhenIRollTheFollowingSeries(string series)
+        {
+            _bowlingDriver.RollSeries(series);
+        }
+
+        [When(@"I roll")]
+        public void WhenIRoll(Table rolls)
+        {
+            _bowlingDriver.RollSeries(rolls);
+        }
+    }
+}
+`,
     }
 
-    const expressions = expressionBuilder.build([stepdefs], [])
+    const parameterTypes: Source = {
+      language: 'typescript',
+      content: `
+[Binding]
+public class Transforms
+{
+    [StepArgumentTransformation(@"in (\\d+) days?")]
+    public DateTime InXDaysTransform(int days)
+    {
+      return DateTime.Today.AddDays(days);
+    }
+
+    [StepArgumentTransformation]
+    public XmlDocument XmlTransform(string xml)
+    {
+       XmlDocument result = new XmlDocument();
+       result.LoadXml(xml);
+       return result;
+    }
+}`,
+    }
+
+    const expressions = expressionBuilder.build([stepdefs, parameterTypes], [])
     assert.deepStrictEqual(
       expressions.map((e) => e.source),
       []

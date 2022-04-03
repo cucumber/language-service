@@ -1,6 +1,6 @@
 export type ParameterTypeMeta = { name: string; regexp: string }
 
-export type LanguageName = 'java' | 'typescript' | 'c-sharp'
+export type LanguageName = 'java' | 'typescript' | 'csharp'
 
 export type Source = {
   language: LanguageName

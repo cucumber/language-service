@@ -5,6 +5,7 @@ import {
 } from '@cucumber/cucumber-expressions'
 import Parser, { Language } from 'web-tree-sitter'
 
+import { csharpQueries } from './csharpQueries.js'
 import { makeParameterType, recordFromMatch, toString, toStringOrRegExp } from './helpers.js'
 import { javaQueries } from './javaQueries.js'
 import { LanguageName, ParameterTypeMeta, Source, TreeSitterQueries, WasmUrls } from './types.js'
@@ -13,6 +14,7 @@ import { typeScriptQueries } from './typeScriptQueries.js'
 const treeSitterQueriesByLanguageName: Record<LanguageName, TreeSitterQueries> = {
   java: javaQueries,
   typescript: typeScriptQueries,
+  csharp: csharpQueries,
 }
 
 const defineStepDefinitionQueryKeys = <const>['expression']
@@ -28,6 +30,7 @@ export class ExpressionBuilder {
     this.languages = {
       java: await Parser.Language.load(wasmUrls['java']),
       typescript: await Parser.Language.load(wasmUrls['typescript']),
+      csharp: await Parser.Language.load(wasmUrls['csharp']),
     }
   }
 
