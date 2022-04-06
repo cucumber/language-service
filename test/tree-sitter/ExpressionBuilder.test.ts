@@ -6,7 +6,7 @@ import { ExpressionBuilder, Source, WasmUrls } from '../../src/index.js'
 const wasmUrls: WasmUrls = {
   java: 'tree-sitter-java.wasm',
   typescript: 'tree-sitter-typescript.wasm',
-  csharp: 'tree-sitter-c_sharp.wasm',
+  c_sharp: 'tree-sitter-c_sharp.wasm',
 }
 
 describe('ExpressionBuilder', () => {
@@ -114,7 +114,7 @@ defineParameterType({
 
   it('builds expressions from C# source', async () => {
     const stepdefs: Source = {
-      language: 'csharp',
+      language: 'c_sharp',
       content: `
 namespace Bowling.SpecFlow.StepDefinitions
 {
@@ -169,7 +169,7 @@ namespace Bowling.SpecFlow.StepDefinitions
     }
 
     const parameterTypes: Source = {
-      language: 'typescript',
+      language: 'c_sharp',
       content: `
 [Binding]
 public class Transforms
@@ -193,7 +193,7 @@ public class Transforms
     const expressions = expressionBuilder.build([stepdefs, parameterTypes], [])
     assert.deepStrictEqual(
       expressions.map((e) => e.source),
-      []
+      ['I have {int} cukes in my belly', 'you have some time', 'a {iso-date}', 'a {date}']
     )
   })
 })

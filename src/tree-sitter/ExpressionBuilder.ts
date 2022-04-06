@@ -14,7 +14,7 @@ import { typeScriptQueries } from './typeScriptQueries.js'
 const treeSitterQueriesByLanguageName: Record<LanguageName, TreeSitterQueries> = {
   java: javaQueries,
   typescript: typeScriptQueries,
-  csharp: csharpQueries,
+  c_sharp: csharpQueries,
 }
 
 const defineStepDefinitionQueryKeys = <const>['expression']
@@ -30,7 +30,7 @@ export class ExpressionBuilder {
     this.languages = {
       java: await Parser.Language.load(wasmUrls['java']),
       typescript: await Parser.Language.load(wasmUrls['typescript']),
-      csharp: await Parser.Language.load(wasmUrls['csharp']),
+      c_sharp: await Parser.Language.load(wasmUrls['c_sharp']),
     }
   }
 

@@ -4,71 +4,48 @@ export const csharpQueries: TreeSitterQueries = {
   defineParameterTypeQueries: [
     `
 (method_declaration
-  (modifiers
-    (annotation
-      name: (identifier) @annotation-name
-      arguments: (annotation_argument_list
-        [
-          (string_literal) @expression
-        ]
+  (attribute_list
+    [
+      (attribute
+        name: (identifier) @annotation-name
+        (attribute_argument_list
+          (attribute_argument
+            (verbatim_string_literal) @expression
+          )
+        )
       )
-    )
+      (attribute
+        name: (identifier) @annotation-name
+      )
+    ]
   )
   name: (identifier) @name
-  (#eq? @annotation-name "ParameterType")
-)
-    `,
-    `
-(method_declaration
-  (modifiers
-    (annotation
-      name: (identifier) @annotation-name
-      arguments: (annotation_argument_list
-        [
-          (
-            (element_value_pair
-              key: (identifier) @name-key
-              value: (string_literal) @name
-            )
-            (element_value_pair
-              key: (identifier) @value-key
-              value: (string_literal) @expression
-            )
-          )
-          (
-            (element_value_pair
-              key: (identifier) @value-key
-              value: (string_literal) @expression
-            )
-            (element_value_pair
-              key: (identifier) @name-key
-              value: (string_literal) @name
-            )
-          )
-        ]
+  parameters: (parameter_list
+    [
+      (parameter
+        type: (predefined_type)
+        name: (identifier)
       )
-    )
+    ]
   )
-  (#eq? @annotation-name "ParameterType")
-  (#eq? @name-key "name")
-  (#eq? @value-key "value")
+  (#eq? @annotation-name "StepArgumentTransformation")
 )
 `,
   ],
   defineStepDefinitionQueries: [
     `
 (method_declaration
-  (modifiers
-    (annotation
+  (attribute_list
+    (attribute
       name: (identifier) @annotation-name
-      arguments: (annotation_argument_list
-        [
-          (string_literal) @expression
-        ]
+      (attribute_argument_list
+        (attribute_argument
+          (verbatim_string_literal)
+        )
       )
     )
   )
-  (#match? @annotation-name "Given|When|Then")
+  (#match? @annotation-name "Given|When|Then|And|But|StepDefinition")
 )
 `,
   ],
