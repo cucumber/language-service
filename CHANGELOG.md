@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - Support for tree-sitter web bindings have been removed. It can be added back in a later relase by implementing a `WebParserAdapter`.
+- Support for Node.js 17 removed - see [tree-sitter/tree-sitter#1503](https://github.com/tree-sitter/tree-sitter/issues/1503)
 
 ## [0.12.1] - 2022-02-04
 ### Fixed
