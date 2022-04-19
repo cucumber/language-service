@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- The `ExpressionBuilder` constructor has changed. Consumers must provide a `ParserAdpater` - currently a `NodeParserAdapter` is the only implementation.
+
+### Removed
+- Support for tree-sitter web bindings have been removed. It can be added back in a later relase by implementing a `WebParserAdapter`.
+
 ## [0.12.1] - 2022-02-04
 ### Fixed
 - Add wasm files to npm module
