@@ -1,5 +1,5 @@
 import { ParameterType } from '@cucumber/cucumber-expressions'
-import Parser from 'web-tree-sitter'
+import Parser from 'tree-sitter'
 
 export function recordFromMatch<T extends string>(
   match: Parser.QueryMatch,
