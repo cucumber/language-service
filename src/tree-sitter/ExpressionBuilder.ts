@@ -4,20 +4,20 @@ import {
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 
-import { makeParameterType, recordFromMatch, toString, toStringOrRegExp } from './helpers.js'
-import { javaQueries } from './javaQueries.js'
+import { makeParameterType, recordFromMatch, toString } from './helpers.js'
+import { javaLanguage } from './javaLanguage.js'
 import {
   LanguageName,
   ParameterTypeMeta,
   ParserAdpater,
   Source,
-  TreeSitterQueries,
+  TreeSitterLanguage,
 } from './types.js'
-import { typeScriptQueries } from './typeScriptQueries.js'
+import { typescriptLanguage } from './typescriptLanguage.js'
 
-const treeSitterQueriesByLanguageName: Record<LanguageName, TreeSitterQueries> = {
-  java: javaQueries,
-  typescript: typeScriptQueries,
+const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
+  java: javaLanguage,
+  typescript: typescriptLanguage,
 }
 
 const defineStepDefinitionQueryKeys = <const>['expression']
@@ -44,8 +44,8 @@ export class ExpressionBuilder {
       this.parserAdpater.setLanguage(source.language)
       const tree = this.parserAdpater.parser.parse(source.content)
 
-      const treeSitterQueries = treeSitterQueriesByLanguageName[source.language]
-      for (const defineParameterTypeQuery of treeSitterQueries.defineParameterTypeQueries) {
+      const treeSitterLanguage = treeSitterLanguageByName[source.language]
+      for (const defineParameterTypeQuery of treeSitterLanguage.defineParameterTypeQueries) {
         const query = this.parserAdpater.query(defineParameterTypeQuery)
         const matches = query.matches(tree.rootNode)
         const records = matches.map((match) => recordFromMatch(match, defineParameterTypeKeys))
@@ -54,7 +54,7 @@ export class ExpressionBuilder {
           const regexp = record['expression']
           if (name && regexp) {
             parameterTypeRegistry.defineParameterType(
-              makeParameterType(toString(name), toStringOrRegExp(regexp))
+              makeParameterType(toString(name), treeSitterLanguage.toStringOrRegExp(regexp))
             )
           }
         }
@@ -65,8 +65,8 @@ export class ExpressionBuilder {
       this.parserAdpater.setLanguage(source.language)
       const tree = this.parserAdpater.parser.parse(source.content)
 
-      const treeSitterQueries = treeSitterQueriesByLanguageName[source.language]
-      for (const defineStepDefinitionQuery of treeSitterQueries.defineStepDefinitionQueries) {
+      const treeSitterLanguage = treeSitterLanguageByName[source.language]
+      for (const defineStepDefinitionQuery of treeSitterLanguage.defineStepDefinitionQueries) {
         const query = this.parserAdpater.query(defineStepDefinitionQuery)
         const matches = query.matches(tree.rootNode)
         const records = matches.map((match) =>
@@ -75,7 +75,9 @@ export class ExpressionBuilder {
         for (const record of records) {
           const expression = record['expression']
           if (expression) {
-            expressions.push(expressionFactory.createExpression(toStringOrRegExp(expression)))
+            expressions.push(
+              expressionFactory.createExpression(treeSitterLanguage.toStringOrRegExp(expression))
+            )
           }
         }
       }
