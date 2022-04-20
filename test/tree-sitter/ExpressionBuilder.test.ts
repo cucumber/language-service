@@ -1,12 +1,11 @@
 import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
-import Parser from 'tree-sitter'
 
 import { ExpressionBuilder, Source } from '../../src/index.js'
 import { NodeParserAdapter } from '../../src/tree-sitter/NodeParserAdapter.js'
 
 describe('ExpressionBuilder', () => {
-  const expressionBuilder = new ExpressionBuilder(new NodeParserAdapter(new Parser()))
+  const expressionBuilder = new ExpressionBuilder(new NodeParserAdapter())
 
   it('builds expressions from Java source', async () => {
     const stepdefs: Source = {

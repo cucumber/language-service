@@ -7,7 +7,7 @@ import TypeScript from 'tree-sitter-typescript'
 import { LanguageName, ParserAdpater } from './types'
 
 export class NodeParserAdapter implements ParserAdpater {
-  constructor(readonly parser: Parser) {}
+  readonly parser = new Parser()
 
   query(source: string): Parser.Query {
     return new Query(this.parser.getLanguage(), source)
