@@ -1,10 +1,11 @@
 import {
   Expression,
   ExpressionFactory,
+  ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
+import Parser from 'tree-sitter'
 
-import { makeParameterType, recordFromMatch, toString } from './helpers.js'
 import { javaLanguage } from './javaLanguage.js'
 import {
   LanguageName,
@@ -85,4 +86,25 @@ export class ExpressionBuilder {
 
     return expressions
   }
+}
+
+function toString(s: string): string {
+  const match = s.match(/^['"](.*)['"]$/)
+  if (!match) return s
+  return match[1]
+}
+
+function recordFromMatch<T extends string>(
+  match: Parser.QueryMatch,
+  keys: readonly T[]
+): Record<T, string | undefined> {
+  const values = keys.map((name) => match.captures.find((c) => c.name === name)?.node?.text)
+  return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]])) as Record<
+    T,
+    string | undefined
+  >
+}
+
+function makeParameterType(name: string, regexp: string | RegExp) {
+  return new ParameterType(name, regexp, Object, () => undefined, false, false)
 }
