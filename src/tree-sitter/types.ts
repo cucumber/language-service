@@ -9,9 +9,10 @@ export type Source = {
   content: string
 }
 
-export type TreeSitterQueries = {
+export type TreeSitterLanguage = {
   defineParameterTypeQueries: readonly string[]
   defineStepDefinitionQueries: readonly string[]
+  toStringOrRegExp(expression: string): string | RegExp
 }
 
 /**
