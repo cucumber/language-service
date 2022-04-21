@@ -1,6 +1,6 @@
-import { TreeSitterQueries } from './types.js'
+import { TreeSitterLanguage } from './types.js'
 
-export const javaQueries: TreeSitterQueries = {
+export const javaLanguage: TreeSitterLanguage = {
   defineParameterTypeQueries: [
     `
 (method_declaration 
@@ -72,4 +72,10 @@ export const javaQueries: TreeSitterQueries = {
 )
 `,
   ],
+
+  toStringOrRegExp(s: string): string | RegExp {
+    const match = s.match(/^"(\^.*\$)"$/)
+    if (match) return new RegExp(match[1])
+    return s.substring(1, s.length - 1)
+  },
 }
