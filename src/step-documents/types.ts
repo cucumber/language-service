@@ -34,3 +34,5 @@ export type StepSegments = readonly StepSegment[]
 type Text = string
 type Choices = readonly string[]
 export type StepSegment = Text | Choices
+
+export type ParameterChoices = Record<string, readonly string[]>

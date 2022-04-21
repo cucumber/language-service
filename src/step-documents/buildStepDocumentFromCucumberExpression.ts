@@ -6,7 +6,7 @@ import {
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 
-import { StepDocument, StepSegments } from './types'
+import { ParameterChoices, StepDocument, StepSegments } from './types'
 
 export function buildStepDocumentFromCucumberExpression(
   expression: CucumberExpression,
@@ -22,7 +22,6 @@ export function buildStepDocumentFromCucumberExpression(
 }
 
 type CompileResult = string | readonly CompileResult[]
-type ParameterChoices = Record<string, readonly string[]>
 
 function flatten(cr: CompileResult): StepSegments {
   if (typeof cr === 'string') return [cr]
