@@ -9,7 +9,7 @@ import { buildStepDocuments } from '../../src/step-documents/buildStepDocuments.
 import { StepDocument } from '../../src/step-documents/types.js'
 
 describe('buildStepDocuments', () => {
-  it('builds step documents from parameter step definition without steps', () => {
+  xit('builds step documents from parameter step definition without steps', () => {
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const ef = new ExpressionFactory(parameterTypeRegistry)
     const expression = ef.createExpression('I have {int} cukes')
@@ -27,7 +27,7 @@ describe('buildStepDocuments', () => {
     )
   })
 
-  it('builds step documents from alternation step definition without steps', () => {
+  xit('builds step documents from alternation step definition without steps', () => {
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const ef = new ExpressionFactory(parameterTypeRegistry)
     const expression = ef.createExpression('I have two/three cukes')

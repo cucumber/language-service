@@ -1,16 +1,17 @@
 import {
-  AbstractCompiler,
   CucumberExpression,
   Expression,
+  Node,
+  NodeType,
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 
 import { StepDocument } from './types.js'
 
-type TextOrParameterTypeNameExpression = TextOrParameterTypeNameSegment[]
-type TextOrParameterTypeNameSegment = string | ParameterTypeData
-type ParameterTypeData = { name: string; regexpStrings: string }
+type TextOrParameterTypeNameExpression = TextOrOption[]
+type TextOrOption = string | Option
+type Option = { type: 'parameter-type' | 'optional'; visualName: string; key: string }
 
 /**
  * Builds an array of {@link StepDocument} from steps and step definitions.
@@ -27,7 +28,7 @@ export function buildStepDocuments(
   maxChoices = 10
 ): readonly StepDocument[] {
   const jsonTextOrParameterTypeNameExpression = new Set<string>()
-  const choicesByParameterTypeRegexpStrings = new Map<string, Set<string>>()
+  const choicesByOptionKey = new Map<string, Set<string>>()
   const expressionByJson = new Map<string, Expression>()
   const suggestionByJson = new Map<string, string>()
 
@@ -46,12 +47,16 @@ export function buildStepDocuments(
           const segment = text.substring(index, arg.group.start)
           textOrParameterTypeNameExpression.push(segment)
           const parameterType = parameterTypes[argIndex]
-          const regexpStrings = parameterType.regexpStrings.join('|')
-          textOrParameterTypeNameExpression.push({ name: parameterType.name || '', regexpStrings })
-          let choices = choicesByParameterTypeRegexpStrings.get(regexpStrings)
+          const key = parameterType.regexpStrings.join('|')
+          textOrParameterTypeNameExpression.push({
+            type: 'parameter-type',
+            visualName: parameterType.name || '',
+            key: key,
+          })
+          let choices = choicesByOptionKey.get(key)
           if (!choices) {
             choices = new Set<string>()
-            choicesByParameterTypeRegexpStrings.set(regexpStrings, choices)
+            choicesByOptionKey.set(key, choices)
           }
           if (arg.group.value !== undefined) choices.add(arg.group.value)
 
@@ -69,7 +74,7 @@ export function buildStepDocuments(
             if (typeof segment === 'string') {
               return segment
             } else {
-              return `{${segment.name}}`
+              return `{${segment.visualName}}`
             }
           })
           .join('')
@@ -78,12 +83,12 @@ export function buildStepDocuments(
       }
     }
     if (!matched && expression instanceof CucumberExpression) {
-      const compiler = new SegmentCompiler(expression.source, parameterTypeRegistry)
-      const textOrParameterTypeNameExpression = compiler.compile(expression.ast)
-      const json = JSON.stringify(textOrParameterTypeNameExpression)
-      expressionByJson.set(json, expression)
-      suggestionByJson.set(json, expression.source)
-      jsonTextOrParameterTypeNameExpression.add(json)
+      // const compiler = new SegmentCompiler(expression.source, parameterTypeRegistry)
+      // const textOrParameterTypeNameExpression = compiler.compile(expression.ast)
+      // const json = JSON.stringify(textOrParameterTypeNameExpression)
+      // expressionByJson.set(json, expression)
+      // suggestionByJson.set(json, expression.source)
+      // jsonTextOrParameterTypeNameExpression.add(json)
     }
   }
 
@@ -99,7 +104,7 @@ export function buildStepDocuments(
       if (typeof segment === 'string') {
         return segment
       } else {
-        const choices = choicesByParameterTypeRegexpStrings.get(segment.regexpStrings) || new Set()
+        const choices = choicesByOptionKey.get(segment.key) || new Set()
         return [...choices].sort().slice(0, maxChoices)
       }
     })
@@ -112,50 +117,4 @@ export function buildStepDocuments(
 
     return stepDocument
   })
-}
-
-class SegmentCompiler extends AbstractCompiler<TextOrParameterTypeNameExpression> {
-  protected produceText(expression: string) {
-    return [expression]
-  }
-
-  protected produceOptional(
-    segments: TextOrParameterTypeNameExpression[]
-  ): TextOrParameterTypeNameExpression {
-    throw new Error('Method not implemented.')
-  }
-
-  protected produceAlternative(
-    segments: TextOrParameterTypeNameExpression[]
-  ): TextOrParameterTypeNameExpression {
-    throw new Error('Method not implemented.')
-  }
-
-  protected produceAlternation(
-    segments: TextOrParameterTypeNameExpression[]
-  ): TextOrParameterTypeNameExpression {
-    throw new Error('Method not implemented.')
-  }
-
-  protected produceParameter(
-    parameterType: ParameterType<unknown>
-  ): TextOrParameterTypeNameExpression {
-    const name = parameterType.name || '?'
-    const regexpStrings = parameterType.regexpStrings.join('|')
-    const parameterTypeData: ParameterTypeData = { name, regexpStrings }
-    return [parameterTypeData]
-  }
-
-  protected produceExpression(
-    segments: TextOrParameterTypeNameExpression[]
-  ): TextOrParameterTypeNameExpression {
-    return segments.reduce((prev, curr) => {
-      const last = prev[prev.length - 1]
-      if (typeof last === 'string' && typeof curr[0] === 'string') {
-        return prev.slice(0, prev.length - 1).concat([last + curr[0]])
-      } else {
-        return prev.concat(curr)
-      }
-    }, [])
-  }
 }

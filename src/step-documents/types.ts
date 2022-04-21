@@ -1,6 +1,10 @@
 import { Expression } from '@cucumber/cucumber-expressions'
 
 /**
+ * TODO: Rename to AutoCompleteItem
+ * A StepDocument is a data structure for auto-completion.
+ *
+ * TODO: Remove/reformulate
  * A document that can be indexed. It's recommended to index the segments rather than the suggestion.
  * When indexing the segments, the nested arrays (representing choices) may be given lower weight
  * than the string segments (which represent the "sentence")
@@ -23,7 +27,7 @@ export type StepDocument = {
   /**
    * The Cucumber Expression or Regular Expression
    */
-  expression: Expression
+  expression?: Expression
 }
 
 export type StepSegments = readonly StepSegment[]
