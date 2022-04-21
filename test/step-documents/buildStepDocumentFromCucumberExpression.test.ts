@@ -16,7 +16,7 @@ describe('buildStepDocumentFromCucumberExpression', () => {
       segments: ['I have 4 cukes'],
       suggestion: 'I have 4 cukes',
     }
-    const actual = buildStepDocumentFromCucumberExpression(expression, registry)
+    const actual = buildStepDocumentFromCucumberExpression(expression, registry, {})
     assert.deepStrictEqual(actual, expected)
   })
 
@@ -26,7 +26,7 @@ describe('buildStepDocumentFromCucumberExpression', () => {
       segments: ['I have ', ['4', '5'], ' cukes'],
       suggestion: 'I have 4/5 cukes',
     }
-    const actual = buildStepDocumentFromCucumberExpression(expression, registry)
+    const actual = buildStepDocumentFromCucumberExpression(expression, registry, {})
     assert.deepStrictEqual(actual, expected)
   })
 
@@ -36,7 +36,19 @@ describe('buildStepDocumentFromCucumberExpression', () => {
       segments: ['I have 1 cuke', ['s', '']],
       suggestion: 'I have 1 cuke(s)',
     }
-    const actual = buildStepDocumentFromCucumberExpression(expression, registry)
+    const actual = buildStepDocumentFromCucumberExpression(expression, registry, {})
+    assert.deepStrictEqual(actual, expected)
+  })
+
+  it('builds an item from parameter expression', () => {
+    const expression = new CucumberExpression('I have {int} cukes', registry)
+    const expected: StepDocument = {
+      segments: ['I have ', ['12', '17'], ' cukes'],
+      suggestion: 'I have {int} cukes',
+    }
+    const actual = buildStepDocumentFromCucumberExpression(expression, registry, {
+      int: ['12', '17'],
+    })
     assert.deepStrictEqual(actual, expected)
   })
 })

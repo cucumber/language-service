@@ -2,6 +2,7 @@ import {
   CucumberExpression,
   Node,
   NodeType,
+  ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 
@@ -9,11 +10,10 @@ import { StepDocument, StepSegments } from './types'
 
 export function buildStepDocumentFromCucumberExpression(
   expression: CucumberExpression,
-  registry: ParameterTypeRegistry
+  registry: ParameterTypeRegistry,
+  parameterChoices: ParameterChoices
 ): StepDocument {
-  // @ts-ignore
-  const ast: Node = expression.ast
-  const compiledSegments = compile(ast, registry)
+  const compiledSegments = compile(expression.ast, registry, parameterChoices)
   const segments = flatten(compiledSegments)
   return {
     suggestion: expression.source,
@@ -21,7 +21,8 @@ export function buildStepDocumentFromCucumberExpression(
   }
 }
 
-type CompileResult = string | CompileResult[]
+type CompileResult = string | readonly CompileResult[]
+type ParameterChoices = Record<string, readonly string[]>
 
 function flatten(cr: CompileResult): StepSegments {
   if (typeof cr === 'string') return [cr]
@@ -37,7 +38,7 @@ function flatten(cr: CompileResult): StepSegments {
       const x = curr.flatMap((e) => {
         if (typeof e === 'string') return e
         const e0 = e[0]
-        if (Array.isArray(e0)) throw new Error('Unexpected array: ' + JSON.stringify(e))
+        if (!(typeof e0 === 'string')) throw new Error('Unexpected array: ' + JSON.stringify(e))
         return e0
       })
       return prev.concat([x])
@@ -45,44 +46,70 @@ function flatten(cr: CompileResult): StepSegments {
   }, [])
 }
 
-function compile(node: Node, registry: ParameterTypeRegistry): CompileResult {
+function compile(
+  node: Node,
+  registry: ParameterTypeRegistry,
+  parameterChoices: ParameterChoices
+): CompileResult {
   switch (node.type) {
     case NodeType.text:
       return node.text()
     case NodeType.optional:
-      return compileOptional(node, registry)
+      return compileOptional(node)
     case NodeType.alternation:
-      return compileAlternation(node, registry)
+      return compileAlternation(node, registry, parameterChoices)
     case NodeType.alternative:
-      return compileAlternative(node, registry)
+      return compileAlternative(node, registry, parameterChoices)
     case NodeType.parameter:
-      return compileParameter(node, registry)
+      return compileParameter(node, registry, parameterChoices)
     case NodeType.expression:
-      return compileExpression(node, registry)
+      return compileExpression(node, registry, parameterChoices)
     default:
       // Can't happen as long as the switch case is exhaustive
       throw new Error(node.type)
   }
 }
 
-function compileOptional(node: Node, registry: ParameterTypeRegistry): CompileResult {
+function compileOptional(node: Node): CompileResult {
   if (node.nodes === undefined) throw new Error('No optional')
   return [node.nodes[0].text(), '']
 }
 
-function compileAlternation(node: Node, registry: ParameterTypeRegistry): CompileResult {
-  return (node.nodes || []).map((node) => compile(node, registry))
+function compileAlternation(
+  node: Node,
+  registry: ParameterTypeRegistry,
+  parameterChoices: ParameterChoices
+): CompileResult {
+  return (node.nodes || []).map((node) => compile(node, registry, parameterChoices))
 }
 
-function compileAlternative(node: Node, registry: ParameterTypeRegistry): CompileResult {
-  return (node.nodes || []).map((node) => compile(node, registry))
+function compileAlternative(
+  node: Node,
+  registry: ParameterTypeRegistry,
+  parameterChoices: ParameterChoices
+): CompileResult {
+  return (node.nodes || []).map((node) => compile(node, registry, parameterChoices))
 }
 
-function compileParameter(node: Node, registry: ParameterTypeRegistry): CompileResult {
+function compileParameter(
+  node: Node,
+  registry: ParameterTypeRegistry,
+  parameterChoices: ParameterChoices
+): CompileResult {
   const parameterType = registry.lookupByTypeName(node.text())
-  throw new Error('Method not implemented.')
+  if (parameterType === undefined) throw new Error(`No parameter type named ${node.text()}`)
+  const key = makeKey(parameterType)
+  return parameterChoices[key] || ['']
 }
 
-function compileExpression(node: Node, registry: ParameterTypeRegistry): CompileResult {
-  return (node.nodes || []).map((node) => compile(node, registry))
+function compileExpression(
+  node: Node,
+  registry: ParameterTypeRegistry,
+  parameterChoices: ParameterChoices
+): CompileResult {
+  return (node.nodes || []).map((node) => compile(node, registry, parameterChoices))
+}
+
+function makeKey(parameterType: ParameterType<unknown>): string {
+  return parameterType.name || parameterType.regexpStrings.join('|')
 }
