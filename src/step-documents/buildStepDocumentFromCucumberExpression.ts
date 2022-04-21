@@ -99,7 +99,7 @@ function compileParameter(
   const parameterType = registry.lookupByTypeName(node.text())
   if (parameterType === undefined) throw new Error(`No parameter type named ${node.text()}`)
   const key = makeKey(parameterType)
-  return parameterChoices[key] || ['']
+  return parameterChoices[key] || defaultParameterChoices(parameterType) || ['']
 }
 
 function compileExpression(
@@ -112,4 +112,12 @@ function compileExpression(
 
 function makeKey(parameterType: ParameterType<unknown>): string {
   return parameterType.name || parameterType.regexpStrings.join('|')
+}
+
+function defaultParameterChoices(parameterType: ParameterType<unknown>): readonly string[] {
+  // @ts-ignore
+  if (parameterType.type === Number) {
+    return ['0']
+  }
+  return ['?']
 }
