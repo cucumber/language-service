@@ -1,6 +1,6 @@
 {
   "name": "@cucumber/language-service",
-  "version": "0.12.1",
+  "version": "0.13.0",
   "description": "Cucumber Language Service",
   "type": "module",
   "main": "dist/cjs/src/index.js",
@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/cucumber/language-service#readme",
   "devDependencies": {
-    "@cucumber/cucumber": "^8.0.0",
+    "@cucumber/cucumber": "^8.1.2",
     "@cucumber/message-streams": "^4.0.1",
     "@types/glob": "7.2.0",
     "@types/mocha": "9.1.1",
