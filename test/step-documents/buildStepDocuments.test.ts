@@ -21,7 +21,6 @@ describe('buildStepDocuments', () => {
         {
           suggestion: 'I have {int} cukes',
           segments: ['I have ', [], ' cukes'],
-          expression,
         },
       ]
     )
@@ -39,7 +38,6 @@ describe('buildStepDocuments', () => {
         {
           suggestion: 'I have two/three cukes',
           segments: ['I have ', ['two', 'three'], ' cukes'],
-          expression,
         },
       ]
     )
@@ -59,12 +57,10 @@ describe('buildStepDocuments', () => {
         {
           suggestion: 'The {word} boat',
           segments: ['The ', ['big', 'nice'], ' boat'],
-          expression: e2,
         },
         {
           suggestion: 'The {word} song',
           segments: ['The ', ['big', 'nice'], ' song'],
-          expression: e1,
         },
       ]
     )
@@ -84,14 +80,15 @@ describe('buildStepDocuments', () => {
       [expression],
       [
         {
-          suggestion: 'I have {int} cukes in my {word}',
-          segments: ['I have ', ['42', '54'], ' cukes in my ', ['basket', 'belly', 'table']],
-          expression,
-        },
-        {
-          suggestion: 'I have {int} cukes on my {word}',
-          segments: ['I have ', ['42', '54'], ' cukes on my ', ['basket', 'belly', 'table']],
-          expression,
+          suggestion: 'I have {int} cukes in/on my {word}',
+          segments: [
+            'I have ',
+            ['42', '54'],
+            ' cukes ',
+            ['in', 'on'],
+            ' my ',
+            ['basket', 'belly', 'table'],
+          ],
         },
       ]
     )
@@ -107,9 +104,8 @@ describe('buildStepDocuments', () => {
       [expression],
       [
         {
-          suggestion: 'I have {} cukes in my "{}"',
+          suggestion: 'I have (\\d\\d) cukes in my "(belly|suitcase)"',
           segments: ['I have ', ['42', '54'], ' cukes in my "', ['belly', 'suitcase'], '"'],
-          expression,
         },
       ]
     )
@@ -130,14 +126,8 @@ describe('buildStepDocuments', () => {
       [expression],
       [
         {
-          suggestion: 'I have {int} cukes in my {word}',
-          segments: ['I have ', ['42', '54'], ' cukes in my ', ['basket', 'belly']],
-          expression,
-        },
-        {
-          suggestion: 'I have {int} cukes on my {word}',
-          segments: ['I have ', ['42', '54'], ' cukes on my ', ['basket', 'belly']],
-          expression,
+          suggestion: 'I have {int} cukes in/on my {word}',
+          segments: ['I have ', ['42', '54'], ' cukes ', ['in', 'on'], ' my ', ['basket', 'belly']],
         },
       ],
       2

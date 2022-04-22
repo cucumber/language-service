@@ -10,17 +10,13 @@ type BuildIndex = (stepDocuments: readonly StepDocument[]) => Index
 function verifyIndexContract(name: string, buildIndex: BuildIndex) {
   describe(name, () => {
     describe('basics', () => {
-      const ef = new ExpressionFactory(new ParameterTypeRegistry())
-
       const doc1: StepDocument = {
         suggestion: 'I have {int} cukes in my belly',
         segments: ['I have ', ['42', '98'], ' cukes in my belly'],
-        expression: ef.createExpression('I have {int} cukes in my belly'),
       }
       const doc2: StepDocument = {
         suggestion: 'I am a teapot',
         segments: ['I am a teapot'],
-        expression: ef.createExpression('I am a teapot'),
       }
       let index: Index
       beforeEach(() => {

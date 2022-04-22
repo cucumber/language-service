@@ -8,7 +8,8 @@ export function buildStepDocumentsFromRegularExpression(
   stepTexts: readonly string[],
   parameterChoices: ParameterChoices
 ): StepDocument[] {
-  const stepDocuments: StepDocument[] = []
+  const segmentJsons = new Set<string>()
+
   for (const text of stepTexts) {
     const args = expression.match(text)
     if (args) {
@@ -32,12 +33,11 @@ export function buildStepDocumentsFromRegularExpression(
       if (lastSegment !== '') {
         segments.push(lastSegment)
       }
-
-      stepDocuments.push({
-        suggestion: expression.source,
-        segments,
-      })
+      segmentJsons.add(JSON.stringify(segments))
     }
   }
-  return stepDocuments
+  return [...segmentJsons].sort().map((s, n) => ({
+    segments: JSON.parse(s) as StepSegment[],
+    suggestion: n == 0 ? expression.source : `${expression.source} (${n + 1})`,
+  }))
 }

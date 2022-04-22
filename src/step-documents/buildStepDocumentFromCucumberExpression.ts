@@ -6,7 +6,8 @@ import {
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 
-import { ParameterChoices, StepDocument, StepSegments } from './types'
+import { makeKey } from './helpers.js'
+import { ParameterChoices, StepDocument, StepSegments } from './types.js'
 
 export function buildStepDocumentFromCucumberExpression(
   expression: CucumberExpression,
@@ -107,10 +108,6 @@ function compileExpression(
   parameterChoices: ParameterChoices
 ): CompileResult {
   return (node.nodes || []).map((node) => compile(node, registry, parameterChoices))
-}
-
-function makeKey(parameterType: ParameterType<unknown>): string {
-  return parameterType.name || parameterType.regexpStrings.join('|')
 }
 
 function defaultParameterChoices(parameterType: ParameterType<unknown>): readonly string[] {

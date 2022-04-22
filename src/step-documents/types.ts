@@ -27,7 +27,7 @@ export type StepDocument = {
   /**
    * The Cucumber Expression or Regular Expression
    */
-  expression?: Expression
+  // expression: Expression
 }
 
 export type StepSegments = readonly StepSegment[]

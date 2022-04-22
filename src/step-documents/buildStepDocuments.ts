@@ -1,17 +1,14 @@
 import {
   CucumberExpression,
   Expression,
-  Node,
-  NodeType,
-  ParameterType,
   ParameterTypeRegistry,
+  RegularExpression,
 } from '@cucumber/cucumber-expressions'
 
+import { buildStepDocumentFromCucumberExpression } from './buildStepDocumentFromCucumberExpression.js'
+import { buildStepDocumentsFromRegularExpression } from './buildStepDocumentsFromRegularExpression.js'
+import { makeKey } from './helpers.js'
 import { StepDocument } from './types.js'
-
-type TextOrParameterTypeNameExpression = TextOrOption[]
-type TextOrOption = string | Option
-type Option = { type: 'parameter-type' | 'optional'; visualName: string; key: string }
 
 /**
  * Builds an array of {@link StepDocument} from steps and step definitions.
@@ -27,94 +24,51 @@ export function buildStepDocuments(
   expressions: readonly Expression[],
   maxChoices = 10
 ): readonly StepDocument[] {
-  const jsonTextOrParameterTypeNameExpression = new Set<string>()
-  const choicesByOptionKey = new Map<string, Set<string>>()
-  const expressionByJson = new Map<string, Expression>()
-  const suggestionByJson = new Map<string, string>()
+  let stepDocuments: StepDocument[] = []
+
+  const parameterChoiceSets: Record<string, Set<string>> = {}
 
   for (const expression of expressions) {
-    let matched = false
     for (const text of stepTexts) {
       const args = expression.match(text)
       if (args) {
-        matched = true
         const parameterTypes = args.map((arg) => arg.getParameterType())
-        const textOrParameterTypeNameExpression: TextOrParameterTypeNameExpression = []
-        let index = 0
         for (let argIndex = 0; argIndex < args.length; argIndex++) {
           const arg = args[argIndex]
-
-          const segment = text.substring(index, arg.group.start)
-          textOrParameterTypeNameExpression.push(segment)
           const parameterType = parameterTypes[argIndex]
-          const key = parameterType.regexpStrings.join('|')
-          textOrParameterTypeNameExpression.push({
-            type: 'parameter-type',
-            visualName: parameterType.name || '',
-            key: key,
-          })
-          let choices = choicesByOptionKey.get(key)
+          const key = makeKey(parameterType)
+          let choices = parameterChoiceSets[key]
           if (!choices) {
-            choices = new Set<string>()
-            choicesByOptionKey.set(key, choices)
+            parameterChoiceSets[key] = choices = new Set()
           }
           if (arg.group.value !== undefined) choices.add(arg.group.value)
-
-          if (arg.group.end !== undefined) index = arg.group.end
         }
-        const lastSegment = text.substring(index)
-        if (lastSegment !== '') {
-          textOrParameterTypeNameExpression.push(lastSegment)
-        }
-
-        const json = JSON.stringify(textOrParameterTypeNameExpression)
-        expressionByJson.set(json, expression)
-        const suggestion = textOrParameterTypeNameExpression
-          .map((segment) => {
-            if (typeof segment === 'string') {
-              return segment
-            } else {
-              return `{${segment.visualName}}`
-            }
-          })
-          .join('')
-        suggestionByJson.set(json, suggestion)
-        jsonTextOrParameterTypeNameExpression.add(json)
       }
-    }
-    if (!matched && expression instanceof CucumberExpression) {
-      // const compiler = new SegmentCompiler(expression.source, parameterTypeRegistry)
-      // const textOrParameterTypeNameExpression = compiler.compile(expression.ast)
-      // const json = JSON.stringify(textOrParameterTypeNameExpression)
-      // expressionByJson.set(json, expression)
-      // suggestionByJson.set(json, expression.source)
-      // jsonTextOrParameterTypeNameExpression.add(json)
     }
   }
+  const parameterChoices = Object.fromEntries(
+    Object.entries(parameterChoiceSets).map(([key, choices]) => [
+      key,
+      [...choices].sort().slice(0, maxChoices),
+    ])
+  )
 
-  return [...jsonTextOrParameterTypeNameExpression].sort().map((json) => {
-    const textOrParameterTypeNameExpression: TextOrParameterTypeNameExpression = JSON.parse(json)
-    const expression = expressionByJson.get(json)
-    if (!expression) throw new Error(`No expression for json key ${json}`)
-
-    const suggestion = suggestionByJson.get(json)
-    if (!suggestion) throw new Error(`No suggestion for json key ${json}`)
-
-    const segments = textOrParameterTypeNameExpression.map((segment) => {
-      if (typeof segment === 'string') {
-        return segment
-      } else {
-        const choices = choicesByOptionKey.get(segment.key) || new Set()
-        return [...choices].sort().slice(0, maxChoices)
-      }
-    })
-
-    const stepDocument: StepDocument = {
-      suggestion,
-      segments,
-      expression,
+  for (const expression of expressions) {
+    if (expression instanceof CucumberExpression) {
+      stepDocuments = stepDocuments.concat(
+        buildStepDocumentFromCucumberExpression(expression, parameterTypeRegistry, parameterChoices)
+      )
     }
-
-    return stepDocument
-  })
+    if (expression instanceof RegularExpression) {
+      stepDocuments = stepDocuments.concat(
+        buildStepDocumentsFromRegularExpression(
+          expression,
+          parameterTypeRegistry,
+          stepTexts,
+          parameterChoices
+        )
+      )
+    }
+  }
+  return stepDocuments.sort((a, b) => a.suggestion.localeCompare(b.suggestion))
 }
