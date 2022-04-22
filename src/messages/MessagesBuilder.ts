@@ -7,11 +7,11 @@ import {
 import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
 
 import { extractStepTexts } from '../gherkin/extractStepTexts.js'
-import { buildStepDocuments } from '../step-documents/buildStepDocuments.js'
-import { StepDocument } from '../step-documents/types.js'
+import { buildSuggestions } from '../suggestions/buildSuggestions.js'
+import { Suggestion } from '../suggestions/types.js'
 
 export type MessagesBuilderResult = {
-  stepDocuments: readonly StepDocument[]
+  suggestions: readonly Suggestion[]
   expressions: readonly Expression[]
 }
 
@@ -65,11 +65,7 @@ export class MessagesBuilder {
 
   build(): MessagesBuilderResult {
     return {
-      stepDocuments: buildStepDocuments(
-        this.parameterTypeRegistry,
-        this.stepTexts,
-        this.expressions
-      ),
+      suggestions: buildSuggestions(this.parameterTypeRegistry, this.stepTexts, this.expressions),
       expressions: this.expressions,
     }
   }

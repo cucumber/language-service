@@ -3,16 +3,16 @@ import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-lan
 
 import { bruteForceIndex } from '../../src/index/index.js'
 import { getGherkinCompletionItems } from '../../src/service/getGherkinCompletionItems.js'
-import { StepDocument } from '../../src/step-documents/types.js'
+import { Suggestion } from '../../src/suggestions/types.js'
 
 describe('getGherkinCompletionItems', () => {
   it('completes with step text', () => {
-    const doc1: StepDocument = {
-      suggestion: 'I have {int} cukes in my belly',
+    const doc1: Suggestion = {
+      label: 'I have {int} cukes in my belly',
       segments: ['I have ', ['42', '98'], ' cukes in my belly'],
     }
-    const doc2: StepDocument = {
-      suggestion: 'I am a teapot',
+    const doc2: Suggestion = {
+      label: 'I am a teapot',
       segments: ['I am a teapot'],
     }
 

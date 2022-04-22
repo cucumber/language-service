@@ -21,9 +21,9 @@ that are consumed by the Language Service API.
 | source code        |               |
 +----------+---------+               |
            |                         |
-+----------v---------+       +-------v-------+
-|    tree|sitter     |       | Gherkin Parser|
-+----------+---------+       +-------+-------+
++----------v---------+       +-------v--------+
+|    tree-sitter     |       | Gherkin Parser |
++----------+---------+       +-------+--------+
            |                         |
 +----------v---------+       +-------v-------+
 |    Expressions     |       | Gherkin Steps |
@@ -31,13 +31,13 @@ that are consumed by the Language Service API.
            |                         |
            +-------------+-----------+
                          |
-               +---------v----------+
-               | buildStepDocuments |
-               +---------+----------+
+               +---------v--------+
+               | buildSuggestions |
+               +---------+--------+
                          |
-                 +-------v--------+
-                 | Step Documents |
-                 +-------+--------+
+                  +------v------+
+                  | Suggestions |
+                  +------+------+
                          |
                  +-------v-------+
                  |     Index     |
@@ -49,7 +49,7 @@ from Java/Ruby/TypeScript/JavaScript/etc. source code using [tree-sitter](https:
 
 Gherkin steps are extracted from Gherkin source code using the Gherkin parser.
 
-Expressions and steps are passed to `buildStepDocuments` to produce an array of `StepDocument`, and these are used to update
+Expressions and steps are passed to `buildSuggestions` to produce an array of `Suggestion`, and these are used to update
 a (search) `Index`.
 
 ## Language Service API

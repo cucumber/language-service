@@ -3,11 +3,11 @@
  *
  * @param expression the expression to generate the snippet from
  */
-import { StepSegments } from '../../step-documents/types.js'
+import { SuggestionSegments } from '../../suggestions/types.js'
 
-export function lspCompletionSnippet(stepSegments: StepSegments): string {
+export function lspCompletionSnippet(segments: SuggestionSegments): string {
   let n = 1
-  return stepSegments
+  return segments
     .map((segment) => (Array.isArray(segment) ? lspPlaceholder(n++, segment) : segment))
     .join('')
 }

@@ -7,26 +7,26 @@ import {
 } from '@cucumber/cucumber-expressions'
 
 import { makeKey } from './helpers.js'
-import { ParameterChoices, StepDocument, StepSegments } from './types.js'
+import { ParameterChoices, Suggestion, SuggestionSegments } from './types.js'
 
-export function buildStepDocumentFromCucumberExpression(
+export function buildSuggestionFromCucumberExpression(
   expression: CucumberExpression,
   registry: ParameterTypeRegistry,
   parameterChoices: ParameterChoices
-): StepDocument {
+): Suggestion {
   const compiledSegments = compile(expression.ast, registry, parameterChoices)
   const segments = flatten(compiledSegments)
   return {
-    suggestion: expression.source,
+    label: expression.source,
     segments,
   }
 }
 
 type CompileResult = string | readonly CompileResult[]
 
-function flatten(cr: CompileResult): StepSegments {
+function flatten(cr: CompileResult): SuggestionSegments {
   if (typeof cr === 'string') return [cr]
-  return cr.reduce<StepSegments>((prev, curr) => {
+  return cr.reduce<SuggestionSegments>((prev, curr) => {
     const last = prev[prev.length - 1]
     if (typeof curr === 'string') {
       if (typeof last === 'string') {

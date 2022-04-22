@@ -1,10 +1,10 @@
 import { ParameterTypeRegistry, RegularExpression } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
 
-import { buildStepDocumentsFromRegularExpression } from '../../src/step-documents/buildStepDocumentsFromRegularExpression.js'
-import { StepDocument } from '../../src/step-documents/types.js'
+import { buildSuggestionsFromRegularExpression } from '../../src/suggestions/buildSuggestionsFromRegularExpression.js'
+import { Suggestion } from '../../src/suggestions/types.js'
 
-describe('buildStepDocumentsFromRegularExpression', () => {
+describe('buildSuggestionsFromRegularExpression', () => {
   let registry: ParameterTypeRegistry
   beforeEach(() => {
     registry = new ParameterTypeRegistry()
@@ -12,11 +12,11 @@ describe('buildStepDocumentsFromRegularExpression', () => {
 
   it('builds an item from a plain expression', () => {
     const expression = new RegularExpression(/I have 4 cukes/, registry)
-    const expected: StepDocument = {
+    const expected: Suggestion = {
       segments: ['I have 4 cukes'],
-      suggestion: 'I have 4 cukes',
+      label: 'I have 4 cukes',
     }
-    const actual = buildStepDocumentsFromRegularExpression(
+    const actual = buildSuggestionsFromRegularExpression(
       expression,
       registry,
       ['I have 4 cukes'],
@@ -27,16 +27,13 @@ describe('buildStepDocumentsFromRegularExpression', () => {
 
   it('builds an item from an expression with a group', () => {
     const expression = new RegularExpression(/I have (\d+) cukes/, registry)
-    const expected: StepDocument = {
+    const expected: Suggestion = {
       segments: ['I have ', ['12'], ' cukes'],
-      suggestion: 'I have (\\d+) cukes',
+      label: 'I have (\\d+) cukes',
     }
-    const actual = buildStepDocumentsFromRegularExpression(
-      expression,
-      registry,
-      ['I have 4 cukes'],
-      { '-?\\d+|\\d+': ['12'] }
-    )
+    const actual = buildSuggestionsFromRegularExpression(expression, registry, ['I have 4 cukes'], {
+      '-?\\d+|\\d+': ['12'],
+    })
     assert.deepStrictEqual(actual, [expected])
   })
 })
