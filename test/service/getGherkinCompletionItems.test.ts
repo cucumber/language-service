@@ -1,4 +1,3 @@
-import { ExpressionFactory, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
 import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
 
@@ -8,16 +7,13 @@ import { StepDocument } from '../../src/step-documents/types.js'
 
 describe('getGherkinCompletionItems', () => {
   it('completes with step text', () => {
-    const ef = new ExpressionFactory(new ParameterTypeRegistry())
     const doc1: StepDocument = {
       suggestion: 'I have {int} cukes in my belly',
       segments: ['I have ', ['42', '98'], ' cukes in my belly'],
-      expression: ef.createExpression('I have {int} cukes in my belly'),
     }
     const doc2: StepDocument = {
       suggestion: 'I am a teapot',
       segments: ['I am a teapot'],
-      expression: ef.createExpression('I am a teapot'),
     }
 
     const index = bruteForceIndex([doc1, doc2])

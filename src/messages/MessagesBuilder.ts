@@ -16,7 +16,7 @@ export type MessagesBuilderResult = {
 }
 
 /**
- * Builds CucumberInfo from Cucumber Messages.
+ * Builds MessagesBuilderResult from Cucumber Messages.
  */
 export class MessagesBuilder {
   private readonly parameterTypeRegistry = new ParameterTypeRegistry()
@@ -65,7 +65,11 @@ export class MessagesBuilder {
 
   build(): MessagesBuilderResult {
     return {
-      stepDocuments: buildStepDocuments(this.stepTexts, this.expressions),
+      stepDocuments: buildStepDocuments(
+        this.parameterTypeRegistry,
+        this.stepTexts,
+        this.expressions
+      ),
       expressions: this.expressions,
     }
   }

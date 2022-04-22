@@ -1,92 +1,74 @@
-import { Expression } from '@cucumber/cucumber-expressions'
+import {
+  CucumberExpression,
+  Expression,
+  ParameterTypeRegistry,
+  RegularExpression,
+} from '@cucumber/cucumber-expressions'
 
+import { buildStepDocumentFromCucumberExpression } from './buildStepDocumentFromCucumberExpression.js'
+import { buildStepDocumentsFromRegularExpression } from './buildStepDocumentsFromRegularExpression.js'
+import { makeKey } from './helpers.js'
 import { StepDocument } from './types.js'
-
-type TextOrParameterTypeNameExpression = TextOrParameterTypeNameSegment[]
-type TextOrParameterTypeNameSegment = string | ParameterTypeData
-type ParameterTypeData = { name: string; regexpStrings: string }
 
 /**
  * Builds an array of {@link StepDocument} from steps and step definitions.
  *
+ * @param parameterTypeRegistry
  * @param stepTexts
  * @param expressions
  * @param maxChoices
  */
 export function buildStepDocuments(
+  parameterTypeRegistry: ParameterTypeRegistry,
   stepTexts: readonly string[],
   expressions: readonly Expression[],
   maxChoices = 10
 ): readonly StepDocument[] {
-  const jsonTextOrParameterTypeNameExpression = new Set<string>()
-  const choicesByParameterTypeRegexpStrings = new Map<string, Set<string>>()
-  const expressionByJson = new Map<string, Expression>()
+  let stepDocuments: StepDocument[] = []
+
+  const parameterChoiceSets: Record<string, Set<string>> = {}
 
   for (const expression of expressions) {
     for (const text of stepTexts) {
       const args = expression.match(text)
       if (args) {
         const parameterTypes = args.map((arg) => arg.getParameterType())
-        const textOrParameterTypeNameExpression: TextOrParameterTypeNameExpression = []
-        let index = 0
         for (let argIndex = 0; argIndex < args.length; argIndex++) {
           const arg = args[argIndex]
-
-          const segment = text.substring(index, arg.group.start)
-          textOrParameterTypeNameExpression.push(segment)
           const parameterType = parameterTypes[argIndex]
-          const regexpStrings = parameterType.regexpStrings.join('|')
-          textOrParameterTypeNameExpression.push({ name: parameterType.name || '', regexpStrings })
-          let choices = choicesByParameterTypeRegexpStrings.get(regexpStrings)
+          const key = makeKey(parameterType)
+          let choices = parameterChoiceSets[key]
           if (!choices) {
-            choices = new Set<string>()
-            choicesByParameterTypeRegexpStrings.set(regexpStrings, choices)
+            parameterChoiceSets[key] = choices = new Set()
           }
           if (arg.group.value !== undefined) choices.add(arg.group.value)
-
-          if (arg.group.end !== undefined) index = arg.group.end
         }
-        const lastSegment = text.substring(index)
-        if (lastSegment !== '') {
-          textOrParameterTypeNameExpression.push(lastSegment)
-        }
-        const json = JSON.stringify(textOrParameterTypeNameExpression)
-        expressionByJson.set(json, expression)
-        jsonTextOrParameterTypeNameExpression.add(json)
       }
     }
   }
+  const parameterChoices = Object.fromEntries(
+    Object.entries(parameterChoiceSets).map(([key, choices]) => [
+      key,
+      [...choices].sort().slice(0, maxChoices),
+    ])
+  )
 
-  return [...jsonTextOrParameterTypeNameExpression].sort().map((json) => {
-    const textOrParameterTypeNameExpression: TextOrParameterTypeNameExpression = JSON.parse(json)
-    const expression = expressionByJson.get(json)
-    if (!expression) throw new Error(`No expression for json key ${json}`)
-
-    const suggestion = textOrParameterTypeNameExpression
-      .map((segment) => {
-        if (typeof segment === 'string') {
-          return segment
-        } else {
-          return `{${segment.name}}`
-        }
-      })
-      .join('')
-
-    const segments = textOrParameterTypeNameExpression.map((segment) => {
-      if (typeof segment === 'string') {
-        return segment
-      } else {
-        const choices = choicesByParameterTypeRegexpStrings.get(segment.regexpStrings) || new Set()
-        return [...choices].sort().slice(0, maxChoices)
-      }
-    })
-
-    const stepDocument: StepDocument = {
-      suggestion,
-      segments,
-      expression,
+  for (const expression of expressions) {
+    if (expression instanceof CucumberExpression) {
+      stepDocuments = stepDocuments.concat(
+        buildStepDocumentFromCucumberExpression(expression, parameterTypeRegistry, parameterChoices)
+      )
     }
-
-    return stepDocument
-  })
+    if (expression instanceof RegularExpression) {
+      stepDocuments = stepDocuments.concat(
+        buildStepDocumentsFromRegularExpression(
+          expression,
+          parameterTypeRegistry,
+          stepTexts,
+          parameterChoices
+        )
+      )
+    }
+  }
+  return stepDocuments.sort((a, b) => a.suggestion.localeCompare(b.suggestion))
 }

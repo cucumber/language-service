@@ -63,7 +63,7 @@ describe('MessagesBuilder', () => {
         },
       })
     )
-    const expectedStepDocuments: Partial<StepDocument>[] = [
+    const expectedStepDocuments: StepDocument[] = [
       {
         segments: ['I select the ', ['2nd'], ' snippet'],
         suggestion: 'I select the {ordinal} snippet',
@@ -76,19 +76,19 @@ describe('MessagesBuilder', () => {
         suggestion: 'I type {string}',
       },
       {
-        segments: [
-          'the LSP snippet should be ',
-          ['"I have ${1|11,17,23|} cukes on my ${2|belly,table,tree|}"', '"cukes"'],
-        ],
-        suggestion: 'the LSP snippet should be {string}',
-      },
-      {
         segments: ['the following Gherkin step texts exist:'],
         suggestion: 'the following Gherkin step texts exist:',
       },
       {
         segments: ['the following Step Definitions exist:'],
         suggestion: 'the following Step Definitions exist:',
+      },
+      {
+        segments: [
+          'the LSP snippet should be ',
+          ['"I have ${1|11,17,23|} cukes on my ${2|belly,table,tree|}"', '"cukes"'],
+        ],
+        suggestion: 'the LSP snippet should be {string}',
       },
       {
         segments: ['the suggestions should be empty'],
