@@ -5,26 +5,26 @@ import {
   RegularExpression,
 } from '@cucumber/cucumber-expressions'
 
-import { buildStepDocumentFromCucumberExpression } from './buildStepDocumentFromCucumberExpression.js'
-import { buildStepDocumentsFromRegularExpression } from './buildStepDocumentsFromRegularExpression.js'
+import { buildSuggestionFromCucumberExpression } from './buildSuggestionFromCucumberExpression.js'
+import { buildSuggestionsFromRegularExpression } from './buildSuggestionsFromRegularExpression.js'
 import { makeKey } from './helpers.js'
-import { StepDocument } from './types.js'
+import { Suggestion } from './types.js'
 
 /**
- * Builds an array of {@link StepDocument} from steps and step definitions.
+ * Builds an array of {@link Suggestion} from steps and step definitions.
  *
- * @param parameterTypeRegistry
+ * @param registry
  * @param stepTexts
  * @param expressions
  * @param maxChoices
  */
-export function buildStepDocuments(
-  parameterTypeRegistry: ParameterTypeRegistry,
+export function buildSuggestions(
+  registry: ParameterTypeRegistry,
   stepTexts: readonly string[],
   expressions: readonly Expression[],
   maxChoices = 10
-): readonly StepDocument[] {
-  let stepDocuments: StepDocument[] = []
+): readonly Suggestion[] {
+  let suggestions: Suggestion[] = []
 
   const parameterChoiceSets: Record<string, Set<string>> = {}
 
@@ -55,20 +55,15 @@ export function buildStepDocuments(
 
   for (const expression of expressions) {
     if (expression instanceof CucumberExpression) {
-      stepDocuments = stepDocuments.concat(
-        buildStepDocumentFromCucumberExpression(expression, parameterTypeRegistry, parameterChoices)
+      suggestions = suggestions.concat(
+        buildSuggestionFromCucumberExpression(expression, registry, parameterChoices)
       )
     }
     if (expression instanceof RegularExpression) {
-      stepDocuments = stepDocuments.concat(
-        buildStepDocumentsFromRegularExpression(
-          expression,
-          parameterTypeRegistry,
-          stepTexts,
-          parameterChoices
-        )
+      suggestions = suggestions.concat(
+        buildSuggestionsFromRegularExpression(expression, registry, stepTexts, parameterChoices)
       )
     }
   }
-  return stepDocuments.sort((a, b) => a.suggestion.localeCompare(b.suggestion))
+  return suggestions.sort((a, b) => a.label.localeCompare(b.label))
 }

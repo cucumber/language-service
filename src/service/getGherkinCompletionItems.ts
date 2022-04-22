@@ -28,13 +28,13 @@ export function getGherkinCompletionItems(
     },
   })
   if (text === undefined) return []
-  const stepDocuments = index(text)
-  return stepDocuments.map((stepDocument) => ({
-    label: stepDocument.suggestion,
+  const suggestions = index(text)
+  return suggestions.map((suggestion) => ({
+    label: suggestion.label,
     insertTextFormat: InsertTextFormat.Snippet,
     kind: CompletionItemKind.Text,
     textEdit: {
-      newText: lspCompletionSnippet(stepDocument.segments),
+      newText: lspCompletionSnippet(suggestion.segments),
       range: {
         start: {
           line,

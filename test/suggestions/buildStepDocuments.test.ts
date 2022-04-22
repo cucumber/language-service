@@ -5,72 +5,38 @@ import {
 } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
 
-import { buildStepDocuments } from '../../src/step-documents/buildStepDocuments.js'
-import { StepDocument } from '../../src/step-documents/types.js'
+import { buildSuggestions } from '../../src/suggestions/buildSuggestions.js'
+import { Suggestion } from '../../src/suggestions/types.js'
 
-describe('buildStepDocuments', () => {
-  xit('builds step documents from parameter step definition without steps', () => {
-    const parameterTypeRegistry = new ParameterTypeRegistry()
-    const ef = new ExpressionFactory(parameterTypeRegistry)
-    const expression = ef.createExpression('I have {int} cukes')
-    assertStepDocuments(
-      parameterTypeRegistry,
-      [],
-      [expression],
-      [
-        {
-          suggestion: 'I have {int} cukes',
-          segments: ['I have ', [], ' cukes'],
-        },
-      ]
-    )
-  })
-
-  xit('builds step documents from alternation step definition without steps', () => {
-    const parameterTypeRegistry = new ParameterTypeRegistry()
-    const ef = new ExpressionFactory(parameterTypeRegistry)
-    const expression = ef.createExpression('I have two/three cukes')
-    assertStepDocuments(
-      parameterTypeRegistry,
-      [],
-      [expression],
-      [
-        {
-          suggestion: 'I have two/three cukes',
-          segments: ['I have ', ['two', 'three'], ' cukes'],
-        },
-      ]
-    )
-  })
-
-  it('builds step documents with global choices', () => {
+describe('buildSuggestions', () => {
+  it('builds suggestions with choices', () => {
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const ef = new ExpressionFactory(parameterTypeRegistry)
     const e1 = ef.createExpression('The {word} song')
     const e2 = ef.createExpression('The {word} boat')
 
-    assertStepDocuments(
+    assertSuggestions(
       parameterTypeRegistry,
       ['The nice song', 'The big boat'],
       [e1, e2],
       [
         {
-          suggestion: 'The {word} boat',
+          label: 'The {word} boat',
           segments: ['The ', ['big', 'nice'], ' boat'],
         },
         {
-          suggestion: 'The {word} song',
+          label: 'The {word} song',
           segments: ['The ', ['big', 'nice'], ' song'],
         },
       ]
     )
   })
 
-  it('builds step documents from CucumberExpression', () => {
+  it('builds suggestions from CucumberExpression', () => {
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const ef = new ExpressionFactory(parameterTypeRegistry)
     const expression = ef.createExpression('I have {int} cukes in/on my {word}')
-    assertStepDocuments(
+    assertSuggestions(
       parameterTypeRegistry,
       [
         'I have 42 cukes in my belly',
@@ -80,7 +46,7 @@ describe('buildStepDocuments', () => {
       [expression],
       [
         {
-          suggestion: 'I have {int} cukes in/on my {word}',
+          label: 'I have {int} cukes in/on my {word}',
           segments: [
             'I have ',
             ['42', '54'],
@@ -94,28 +60,28 @@ describe('buildStepDocuments', () => {
     )
   })
 
-  it('builds step documents from RegularExpression', () => {
+  it('builds suggestions from RegularExpression', () => {
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const ef = new ExpressionFactory(parameterTypeRegistry)
     const expression = ef.createExpression(/I have (\d\d) cukes in my "(belly|suitcase)"/)
-    assertStepDocuments(
+    assertSuggestions(
       parameterTypeRegistry,
       ['I have 42 cukes in my "belly"', 'I have 54 cukes in my "suitcase"'],
       [expression],
       [
         {
-          suggestion: 'I have (\\d\\d) cukes in my "(belly|suitcase)"',
+          label: 'I have (\\d\\d) cukes in my "(belly|suitcase)"',
           segments: ['I have ', ['42', '54'], ' cukes in my "', ['belly', 'suitcase'], '"'],
         },
       ]
     )
   })
 
-  it('builds step documents with a max number of choices', () => {
+  it('builds suggestions with a max number of choices', () => {
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const ef = new ExpressionFactory(parameterTypeRegistry)
     const expression = ef.createExpression('I have {int} cukes in/on my {word}')
-    assertStepDocuments(
+    assertSuggestions(
       parameterTypeRegistry,
       [
         'I have 42 cukes in my belly',
@@ -126,7 +92,7 @@ describe('buildStepDocuments', () => {
       [expression],
       [
         {
-          suggestion: 'I have {int} cukes in/on my {word}',
+          label: 'I have {int} cukes in/on my {word}',
           segments: ['I have ', ['42', '54'], ' cukes ', ['in', 'on'], ' my ', ['basket', 'belly']],
         },
       ],
@@ -135,18 +101,13 @@ describe('buildStepDocuments', () => {
   })
 })
 
-function assertStepDocuments(
+function assertSuggestions(
   parameterTypeRegistry: ParameterTypeRegistry,
   stepTexts: readonly string[],
   expressions: readonly Expression[],
-  expectedStepDocuments: StepDocument[],
+  expectedSuggestions: Suggestion[],
   maxChoices = 10
 ) {
-  const stepDocuments = buildStepDocuments(
-    parameterTypeRegistry,
-    stepTexts,
-    expressions,
-    maxChoices
-  )
-  assert.deepStrictEqual(stepDocuments, expectedStepDocuments)
+  const suggestions = buildSuggestions(parameterTypeRegistry, stepTexts, expressions, maxChoices)
+  assert.deepStrictEqual(suggestions, expectedSuggestions)
 }

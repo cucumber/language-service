@@ -1,6 +1,6 @@
 import { Search } from 'js-search'
 
-import { StepDocument } from '../step-documents/types.js'
+import { Suggestion } from '../suggestions/types.js'
 import { Index } from './types.js'
 
 type Doc = {
@@ -8,11 +8,11 @@ type Doc = {
   text: string
 }
 
-export function jsSearchIndex(stepDocuments: readonly StepDocument[]): Index {
-  const docs: Doc[] = stepDocuments.map((stepDocument, id) => {
+export function jsSearchIndex(suggestions: readonly Suggestion[]): Index {
+  const docs: Doc[] = suggestions.map((suggestion, id) => {
     return {
       id,
-      text: stepDocument.segments
+      text: suggestion.segments
         .map((segment) => (typeof segment === 'string' ? segment : segment.join(' ')))
         .join(''),
     }
@@ -25,6 +25,6 @@ export function jsSearchIndex(stepDocuments: readonly StepDocument[]): Index {
   return (text) => {
     if (!text) return []
     const results = search.search(text)
-    return results.map((result: Doc) => stepDocuments[result.id])
+    return results.map((result: Doc) => suggestions[result.id])
   }
 }
