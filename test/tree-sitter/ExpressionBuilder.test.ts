@@ -25,12 +25,12 @@ describe('ExpressionBuilder', () => {
         ),
         language === 'csharp'
           ? [
-              'a new bowling game',
-              'all of my balls are landing in the gutter',
-              'my total score should be (\\\\d+)',
-              'I roll (\\\\d+) and (\\\\d+)',
-              'I roll the following series:(.*)',
-              'I roll',
+              /a new bowling game/,
+              /all of my balls are landing in the gutter/,
+              /my total score should be (\d+)/,
+              /I roll (\d+) and (\d+)/,
+              /I roll the following series:(.*)/,
+              /I roll/,
             ]
           : ['a {uuid}', 'a {date}', /^a regexp$/]
       )

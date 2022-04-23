@@ -19,11 +19,8 @@ export const csharpLanguage: TreeSitterLanguage = {
 `,
   ],
   toStringOrRegExp(s: string): string | RegExp {
-    // Specflow step definitions may have embedded regex patterns in braces
-    // TODO: Need to be more robust in escaping backslashes in these expressions
-    const cucumberCompatibleString = s.replace(/(\(\\d\+\))/g, `(\\\\d+)`)
-    const match = cucumberCompatibleString.match(/^([@$'"]+)(.*)"$/)
+    const match = s.match(/^([@$'"]+)(.*)"$/)
     if (!match) throw new Error(`Could not match ${s}`)
-    return match[2]
+    return new RegExp(match[2])
   },
 }
