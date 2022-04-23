@@ -1,16 +1,16 @@
 import Fuse from 'fuse.js'
 
-import { StepDocument } from '../step-documents/types.js'
+import { Suggestion } from '../suggestions/types.js'
 import { Index } from './types.js'
 
 type Doc = {
   text: string
 }
 
-export function fuseIndex(stepDocuments: readonly StepDocument[]): Index {
-  const docs: Doc[] = stepDocuments.map((stepDocument) => {
+export function fuseIndex(suggestions: readonly Suggestion[]): Index {
+  const docs: Doc[] = suggestions.map((suggestion) => {
     return {
-      text: stepDocument.segments
+      text: suggestion.segments
         .map((segment) => (typeof segment === 'string' ? segment : segment.join(' ')))
         .join(''),
     }
@@ -25,6 +25,6 @@ export function fuseIndex(stepDocuments: readonly StepDocument[]): Index {
   return (text) => {
     if (!text) return []
     const results = fuse.search(text, { limit: 10 })
-    return results.map((result) => stepDocuments[result.refIndex])
+    return results.map((result) => suggestions[result.refIndex])
   }
 }

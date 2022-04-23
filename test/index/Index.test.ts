@@ -1,45 +1,40 @@
-import { ExpressionFactory, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
 import * as txtgen from 'txtgen'
 
 import { bruteForceIndex, fuseIndex, Index, jsSearchIndex } from '../../src/index/index.js'
-import { StepDocument } from '../../src/step-documents/types.js'
+import { Suggestion } from '../../src/suggestions/types.js'
 
-type BuildIndex = (stepDocuments: readonly StepDocument[]) => Index
+type BuildIndex = (suggestions: readonly Suggestion[]) => Index
 
 function verifyIndexContract(name: string, buildIndex: BuildIndex) {
   describe(name, () => {
     describe('basics', () => {
-      const ef = new ExpressionFactory(new ParameterTypeRegistry())
-
-      const doc1: StepDocument = {
-        suggestion: 'I have {int} cukes in my belly',
+      const s1: Suggestion = {
+        label: 'I have {int} cukes in my belly',
         segments: ['I have ', ['42', '98'], ' cukes in my belly'],
-        expression: ef.createExpression('I have {int} cukes in my belly'),
       }
-      const doc2: StepDocument = {
-        suggestion: 'I am a teapot',
+      const s2: Suggestion = {
+        label: 'I am a teapot',
         segments: ['I am a teapot'],
-        expression: ef.createExpression('I am a teapot'),
       }
       let index: Index
       beforeEach(() => {
-        index = buildIndex([doc1, doc2])
+        index = buildIndex([s1, s2])
       })
 
       it('matches two words in the beginning of an expression', () => {
         const suggestions = index('have')
-        assert.deepStrictEqual(suggestions, [doc1])
+        assert.deepStrictEqual(suggestions, [s1])
       })
 
       it('matches a word in an expression', () => {
         const suggestions = index('cukes')
-        assert.deepStrictEqual(suggestions, [doc1])
+        assert.deepStrictEqual(suggestions, [s1])
       })
 
       it('matches a word in a choice', () => {
         const suggestions = index('98')
-        assert.deepStrictEqual(suggestions, [doc1])
+        assert.deepStrictEqual(suggestions, [s1])
       })
 
       it('matches nothing', () => {
@@ -51,22 +46,20 @@ function verifyIndexContract(name: string, buildIndex: BuildIndex) {
     if (!process.env.CI) {
       describe('performance / fuzz', () => {
         it('matches how quickly exactly?', () => {
-          const ef = new ExpressionFactory(new ParameterTypeRegistry())
           for (let i = 0; i < 100; i++) {
             const length = 100
-            const stepDocuments: StepDocument[] = Array(length)
+            const allSuggestions: Suggestion[] = Array(length)
               .fill(0)
               .map(() => {
                 const sentence = txtgen.sentence()
                 return {
-                  suggestion: sentence,
+                  label: sentence,
                   segments: [sentence],
-                  expression: ef.createExpression(sentence),
                 }
               })
-            const index = buildIndex(stepDocuments)
+            const index = buildIndex(allSuggestions)
 
-            const sentence = stepDocuments[Math.floor(length / 2)].segments[0] as string
+            const sentence = allSuggestions[Math.floor(length / 2)].segments[0] as string
             const words = sentence.split(' ')
             // Find a word longer than 5 letters (fall back to the middle word if there are none)
             const word =
@@ -80,7 +73,7 @@ function verifyIndexContract(name: string, buildIndex: BuildIndex) {
             for (const suggestion of suggestions) {
               const s = (suggestion.segments[0] as string).toLowerCase()
               if (!s.includes(term)) {
-                // console.log(JSON.stringify(stepDocuments, null, 2))
+                // console.log(JSON.stringify(suggestions, null, 2))
                 console.error(`WARNING: ${name} - "${s}" does not include "${term}"`)
               }
             }
