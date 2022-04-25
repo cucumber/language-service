@@ -13,6 +13,8 @@ export function lspCompletionSnippet(segments: SuggestionSegments): string {
 }
 
 function lspPlaceholder(i: number, choices: readonly string[]) {
+  // Escape $ } \ , | in choices
+  // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#grammar
   const escapedChoices = choices
     .filter((choice) => choice !== '')
     .map((choice) => choice.replace(/([$\\},|])/g, '\\$1'))
