@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.14.4] - 2022-04-25
+
+## Fixed
+
 ## [0.14.3] - 2022-04-25
 ### Fixed
 - Properly export `@cucumber/language-server/node` and `@cucumber/language-server/wasm` modules.
@@ -119,7 +123,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.14.3...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.14.4...HEAD
+[0.14.4]: https://github.com/cucumber/language-service/compare/v0.14.3...v0.14.4
 [0.14.3]: https://github.com/cucumber/language-service/compare/v0.14.2...v0.14.3
 [0.14.2]: https://github.com/cucumber/language-service/compare/v0.14.1...v0.14.2
 [0.14.1]: https://github.com/cucumber/language-service/compare/v0.14.0...v0.14.1
