@@ -7,12 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-### Fixed
-- Fixed escaping of LSP snippets ([#34](https://github.com/cucumber/language-service/pull/34))
-
+## [0.14.0] - 2022-04-25
 ### Added
 - Added support for C# ([#29](https://github.com/cucumber/language-service/pull/29), [#35](https://github.com/cucumber/language-service/pull/35))
-- Added back wasm support that was deleted in 0.13.0 ([#33](https://github.com/cucumber/language-service/pull/33)) 
+- Added back wasm support that was removed in 0.13.0 ([#33](https://github.com/cucumber/language-service/pull/33))
+
+### Fixed
+- Fixed escaping of LSP snippets ([#34](https://github.com/cucumber/language-service/pull/34))
 
 ## [0.13.0] - 2022-04-22
 ### Changed
@@ -106,7 +107,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.13.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.14.0...HEAD
+[0.14.0]: https://github.com/cucumber/language-service/compare/v0.13.0...v0.14.0
 [0.13.0]: https://github.com/cucumber/language-service/compare/v0.12.1...v0.13.0
 [0.12.1]: https://github.com/cucumber/language-service/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/cucumber/language-service/compare/v0.11.0...v0.12.0
