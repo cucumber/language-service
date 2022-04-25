@@ -7,6 +7,10 @@ and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
 
 ## Supported features
 
+- Languages
+  - [x] Java
+  - [x] TypeScript
+  - [x] C#
 - [x] Formatting / pretty printing
 - [x] Handle parse errors
 - [x] Code completion

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed escaping of LSP snippets ([#34](https://github.com/cucumber/language-service/pull/34))
 
 ### Added
+- Added support for C# ([#29](https://github.com/cucumber/language-service/pull/29), [#35](https://github.com/cucumber/language-service/pull/35))
 - Added back wasm support that was deleted in 0.13.0 ([#33](https://github.com/cucumber/language-service/pull/33)) 
 
 ## [0.13.0] - 2022-04-22
