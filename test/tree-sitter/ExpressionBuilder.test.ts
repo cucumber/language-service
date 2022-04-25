@@ -6,9 +6,15 @@ import path from 'path'
 
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'
 import { NodeParserAdapter } from '../../src/tree-sitter/NodeParserAdapter.js'
+import { ParserAdapter } from '../../src/tree-sitter/types'
+import { WasmParserAdapter, WasmUrls } from '../../src/tree-sitter/WasmParserAdapter.js'
 
-describe('ExpressionBuilder', () => {
-  const expressionBuilder = new ExpressionBuilder(new NodeParserAdapter())
+function defineContract(makeParserAdapter: () => Promise<ParserAdapter>) {
+  let expressionBuilder: ExpressionBuilder
+  beforeEach(async () => {
+    const parserAdpater = await makeParserAdapter()
+    expressionBuilder = new ExpressionBuilder(parserAdpater)
+  })
 
   for (const dir of glob.sync(`test/tree-sitter/testdata/*`)) {
     const language = path.basename(dir) as LanguageName
@@ -27,4 +33,24 @@ describe('ExpressionBuilder', () => {
       )
     })
   }
+}
+
+describe('ExpressionBuilder', () => {
+  context('with NodeParserAdapter', () => {
+    defineContract(() => Promise.resolve(new NodeParserAdapter()))
+  })
+
+  context('with WasmParserAdapter', () => {
+    const WASM_URLS: WasmUrls = {
+      java: './parsers/java.wasm',
+      typescript: './parsers/typescript.wasm',
+    }
+
+    // @ts-ignore
+    defineContract(async () => {
+      const wasmParserAdapter = new WasmParserAdapter()
+      await wasmParserAdapter.init(WASM_URLS)
+      return wasmParserAdapter
+    })
+  })
 })
