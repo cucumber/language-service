@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
-- Added back wasm support that was deleted in 0.13.0 
+- Added back wasm support that was deleted in 0.13.0 ([#33](https://github.com/cucumber/language-service/pull/33)) 
 
 ## [0.13.0] - 2022-04-22
 ### Changed
