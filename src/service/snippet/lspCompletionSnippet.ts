@@ -1,5 +1,5 @@
 /**
- * Generates an [LSP Completion Snippet]{@link https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#snippet_syntax}
+ * Generates an [LSP Completion Snippet]{@link https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#snippet_syntax}
  *
  * @param expression the expression to generate the snippet from
  */
@@ -13,5 +13,10 @@ export function lspCompletionSnippet(segments: SuggestionSegments): string {
 }
 
 function lspPlaceholder(i: number, choices: readonly string[]) {
-  return `\${${i}|${choices.join(',')}|}`
+  // Escape $ } \ , | in choices
+  // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#grammar
+  const escapedChoices = choices
+    .filter((choice) => choice !== '')
+    .map((choice) => choice.replace(/([$\\},|])/g, '\\$1'))
+  return `\${${i}|${escapedChoices.join(',')}|}`
 }

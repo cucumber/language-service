@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Fixed escaping of LSP snippets ([#34](https://github.com/cucumber/language-service/pull/34))
+
 ### Added
 - Added back wasm support that was deleted in 0.13.0 ([#33](https://github.com/cucumber/language-service/pull/33)) 
 

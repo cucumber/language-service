@@ -33,7 +33,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
   it('builds an item from optional expression', () => {
     const expression = new CucumberExpression('I have 1 cuke(s)', registry)
     const expected: Suggestion = {
-      segments: ['I have 1 cuke', ['s', '']],
+      segments: ['I have 1 ', ['cuke', 'cukes']],
       label: 'I have 1 cuke(s)',
     }
     const actual = buildSuggestionFromCucumberExpression(expression, registry, {})
@@ -75,7 +75,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
   it('builds an item from complex expression', () => {
     const expression = new CucumberExpression('I have {int} cuke(s) in my bag/belly', registry)
     const expected: Suggestion = {
-      segments: ['I have ', ['12'], ' cuke', ['s', ''], ' in my ', ['bag', 'belly']],
+      segments: ['I have ', ['12'], ' ', ['cuke', 'cukes'], ' in my ', ['bag', 'belly']],
       label: 'I have {int} cuke(s) in my bag/belly',
     }
     const actual = buildSuggestionFromCucumberExpression(expression, registry, {

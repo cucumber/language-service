@@ -107,7 +107,22 @@ function compileExpression(
   registry: ParameterTypeRegistry,
   parameterChoices: ParameterChoices
 ): CompileResult {
-  return (node.nodes || []).map((node) => compile(node, registry, parameterChoices))
+  return (node.nodes || []).reduce<CompileResult[]>((prev, curr) => {
+    const child = compile(curr, registry, parameterChoices)
+    // If we have an optional, we'll create two choice segments - one with and one without the optional
+    if (curr.type === NodeType.optional) {
+      const last = prev[prev.length - 1]
+      if (!(typeof last === 'string')) {
+        throw new Error(`Expected a string, but was ${JSON.stringify(last)}`)
+      }
+      if (!Array.isArray(child)) {
+        throw new Error(`Expected an array, but was ${JSON.stringify(child)}`)
+      }
+      return prev.slice(0, prev.length - 1).concat([[last, last + child[0]]])
+    } else {
+      return prev.concat([child])
+    }
+  }, [])
 }
 
 function defaultParameterChoices(parameterType: ParameterType<unknown>): readonly string[] {
