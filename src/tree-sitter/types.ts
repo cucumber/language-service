@@ -2,7 +2,8 @@ import Parser from 'tree-sitter'
 
 export type ParameterTypeMeta = { name: string; regexp: string }
 
-export type LanguageName = 'java' | 'typescript' | 'csharp'
+export const LanguageNames = ['java', 'typescript', 'c_sharp'] as const
+export type LanguageName = typeof LanguageNames[number]
 
 export type Source = {
   language: LanguageName

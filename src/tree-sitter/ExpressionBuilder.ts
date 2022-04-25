@@ -20,7 +20,7 @@ import { typescriptLanguage } from './typescriptLanguage.js'
 const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
   java: javaLanguage,
   typescript: typescriptLanguage,
-  csharp: csharpLanguage,
+  c_sharp: csharpLanguage,
 }
 
 const defineStepDefinitionQueryKeys = <const>['expression']

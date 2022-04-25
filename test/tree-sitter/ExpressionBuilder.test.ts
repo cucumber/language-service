@@ -23,7 +23,7 @@ describe('ExpressionBuilder', () => {
         expressions.map((e) =>
           e instanceof CucumberExpression ? e.source : (e as RegularExpression).regexp
         ),
-        language === 'csharp'
+        language === 'c_sharp'
           ? [
               /a new bowling game/,
               /all of my balls are landing in the gutter/,

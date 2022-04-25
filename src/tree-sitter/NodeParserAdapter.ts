@@ -6,7 +6,7 @@ import Java from 'tree-sitter-java'
 // @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
-import { LanguageName, ParserAdapter } from './types'
+import { LanguageName, ParserAdapter } from '../tree-sitter/types.js'
 
 export class NodeParserAdapter implements ParserAdapter {
   readonly parser = new Parser()
@@ -23,7 +23,7 @@ export class NodeParserAdapter implements ParserAdapter {
       case 'typescript':
         this.parser.setLanguage(TypeScript.typescript)
         break
-      case 'csharp':
+      case 'c_sharp':
         this.parser.setLanguage(Csharp)
         break
       default:
