@@ -22,11 +22,7 @@ for (const [lang, names] of Object.entries(langMap)) {
 
   console.log('Compiling ' + lang + ' parser')
   // https://github.com/tree-sitter/tree-sitter/issues/1560
-  let command = `node_modules/.bin/tree-sitter build-wasm ${module}`
-  if (!process.env.CI) {
-    command += ' --docker'
-  }
-  exec(command, (err) => {
+  exec(`node_modules/.bin/tree-sitter build-wasm ${module} --docker`, (err) => {
     if (err) {
       console.error('Failed to build wasm for ' + lang + ': ' + err.message)
       process.exit(1)

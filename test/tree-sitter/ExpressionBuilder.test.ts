@@ -41,15 +41,10 @@ describe('ExpressionBuilder', () => {
   })
 
   context('with WasmParserAdapter', () => {
-    const WASM_URLS: WasmUrls = {
-      java: './parsers/java.wasm',
-      typescript: './parsers/typescript.wasm',
-    }
-
     // @ts-ignore
     defineContract(async () => {
       const wasmParserAdapter = new WasmParserAdapter()
-      await wasmParserAdapter.init(WASM_URLS)
+      await wasmParserAdapter.init('dist')
       return wasmParserAdapter
     })
   })

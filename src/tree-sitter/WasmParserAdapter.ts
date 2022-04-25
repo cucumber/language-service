@@ -9,13 +9,13 @@ export class WasmParserAdapter implements ParserAdapter {
   public parser: Parser
   private languages: Record<LanguageName, Parser.Language>
 
-  async init(wasmUrls: WasmUrls) {
+  async init(wasmBaseUrl: string) {
     await Parser.init()
     this.parser = new Parser()
 
     const languages = await Promise.all(
       LanguageNames.map((languageName) => {
-        const wasmUrl = wasmUrls[languageName]
+        const wasmUrl = `${wasmBaseUrl}/${languageName}.wasm`
         return Parser.Language.load(wasmUrl)
       })
     )
