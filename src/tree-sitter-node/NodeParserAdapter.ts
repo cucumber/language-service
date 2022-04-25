@@ -4,7 +4,7 @@ import Java from 'tree-sitter-java'
 // @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
-import { LanguageName, ParserAdapter } from './types'
+import { LanguageName, ParserAdapter } from '../tree-sitter/types'
 
 export class NodeParserAdapter implements ParserAdapter {
   readonly parser = new Parser()

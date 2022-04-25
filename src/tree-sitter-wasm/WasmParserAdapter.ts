@@ -1,14 +1,15 @@
+import NodeParser from 'tree-sitter'
 import Parser from 'web-tree-sitter'
 
-import { LanguageName, LanguageNames, ParserAdapter } from './types.js'
+import { LanguageName, LanguageNames, ParserAdapter } from '../tree-sitter/types.js'
 
 export class WasmParserAdapter implements ParserAdapter {
-  // @ts-ignore
-  public parser: Parser
+  public parser: NodeParser
   private languages: Record<LanguageName, Parser.Language>
 
   async init(wasmBaseUrl: string) {
     await Parser.init()
+    // @ts-ignore
     this.parser = new Parser()
 
     const languages = await Promise.all(
@@ -23,8 +24,7 @@ export class WasmParserAdapter implements ParserAdapter {
     )
   }
 
-  // @ts-ignore
-  query(source: string): Parser.Query {
+  query(source: string): NodeParser.Query {
     return this.parser.getLanguage().query(source)
   }
 

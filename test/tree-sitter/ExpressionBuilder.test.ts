@@ -5,9 +5,9 @@ import glob from 'glob'
 import path from 'path'
 
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'
-import { NodeParserAdapter } from '../../src/tree-sitter/NodeParserAdapter.js'
 import { ParserAdapter } from '../../src/tree-sitter/types'
-import { WasmParserAdapter } from '../../src/tree-sitter/WasmParserAdapter.js'
+import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
+import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
 
 function defineContract(makeParserAdapter: () => Promise<ParserAdapter>) {
   let expressionBuilder: ExpressionBuilder
@@ -41,7 +41,6 @@ describe('ExpressionBuilder', () => {
   })
 
   context('with WasmParserAdapter', () => {
-    // @ts-ignore
     defineContract(async () => {
       const wasmParserAdapter = new WasmParserAdapter()
       await wasmParserAdapter.init('dist')

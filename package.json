@@ -8,7 +8,7 @@
   "files": [
     "dist/cjs",
     "dist/esm",
-    "*.wasm"
+    "dist/*.wasm"
   ],
   "module": "dist/esm/src/index.js",
   "jsnext:main": "dist/esm/src/index.js",
@@ -16,6 +16,14 @@
     ".": {
       "import": "./dist/esm/src/index.js",
       "require": "./dist/cjs/src/index.js"
+    },
+    "./node": {
+      "import": "./dist/esm/src/tree-sitter-node/NodeParserAdapter.js",
+      "require": "./dist/cjs/src/tree-sitter-node/NodeParserAdapter.js"
+    },
+    "./wasm": {
+      "import": "./dist/esm/src/tree-sitter-wasm/WasmParserAdapter.js",
+      "require": "./dist/cjs/src/tree-sitter-wasm/WasmParserAdapter.js"
     }
   },
   "scripts": {
@@ -30,7 +38,7 @@
     "upgrade": "npm-check-updates --upgrade",
     "prepare": "husky install",
     "pretty-quick-staged": "pretty-quick --staged",
-    "postinstall": "scripts/build.js"
+    "postinstall": "scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist"
   },
   "repository": {
     "type": "git",
