@@ -1,6 +1,6 @@
 {
   "name": "@cucumber/language-service",
-  "version": "0.14.1",
+  "version": "0.14.2",
   "description": "Cucumber Language Service",
   "type": "module",
   "main": "dist/cjs/src/index.js",
@@ -36,9 +36,8 @@
     "eslint-fix": "eslint --ext ts --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts --max-warnings 0 src test",
     "upgrade": "npm-check-updates --upgrade",
-    "prepare": "husky install",
-    "pretty-quick-staged": "pretty-quick --staged",
-    "postinstall": "scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist"
+    "prepare": "husky install && scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist",
+    "pretty-quick-staged": "pretty-quick --staged"
   },
   "repository": {
     "type": "git",
