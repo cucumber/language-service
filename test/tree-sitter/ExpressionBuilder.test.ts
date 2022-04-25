@@ -7,7 +7,7 @@ import path from 'path'
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'
 import { NodeParserAdapter } from '../../src/tree-sitter/NodeParserAdapter.js'
 import { ParserAdapter } from '../../src/tree-sitter/types'
-import { WasmParserAdapter, WasmUrls } from '../../src/tree-sitter/WasmParserAdapter.js'
+import { WasmParserAdapter } from '../../src/tree-sitter/WasmParserAdapter.js'
 
 function defineContract(makeParserAdapter: () => Promise<ParserAdapter>) {
   let expressionBuilder: ExpressionBuilder

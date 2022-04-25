@@ -2,6 +2,10 @@
 
 Thank you for contributing! Please follow these steps before preparing a pull request
 
+## Prerequisites
+
+You need docker installed. This is because the build process uses docker to build wasm files.
+
 ## Run the tests
 
     npm install

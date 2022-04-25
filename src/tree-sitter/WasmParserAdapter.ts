@@ -2,8 +2,6 @@ import Parser from 'web-tree-sitter'
 
 import { LanguageName, LanguageNames, ParserAdapter } from './types.js'
 
-export type WasmUrls = Record<LanguageName, string>
-
 export class WasmParserAdapter implements ParserAdapter {
   // @ts-ignore
   public parser: Parser
