@@ -1,0 +1,7 @@
+{
+  "name": "node",
+  "description": "Node adapter for TreeSitter",
+  "main": "../dist/cjs/src/tree-sitter-node/NodeParserAdapter.js",
+  "module": "../dist/esm/src/tree-sitter-node/NodeParserAdapter.js",
+  "types": "../dist/esm/src/tree-sitter-node/NodeParserAdapter.d.ts"
+}

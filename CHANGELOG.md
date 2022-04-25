@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Properly export `@cucumber/language-server/node` and `@cucumber/language-server/wasm` modules.
+
 ## [0.14.2] - 2022-04-25
 ### Fixed
 - Only build wasm in local development

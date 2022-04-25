@@ -1,17 +1,11 @@
 {
   "name": "@cucumber/language-service",
-  "version": "0.14.2",
+  "version": "0.14.3",
   "description": "Cucumber Language Service",
   "type": "module",
   "main": "dist/cjs/src/index.js",
-  "types": "dist/cjs/src/index.d.ts",
-  "files": [
-    "dist/cjs",
-    "dist/esm",
-    "dist/*.wasm"
-  ],
   "module": "dist/esm/src/index.js",
-  "jsnext:main": "dist/esm/src/index.js",
+  "types": "dist/esm/src/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/esm/src/index.js",
@@ -26,6 +20,13 @@
       "require": "./dist/cjs/src/tree-sitter-wasm/WasmParserAdapter.js"
     }
   },
+  "files": [
+    "dist/cjs/src",
+    "dist/esm/src",
+    "dist/*.wasm",
+    "node",
+    "wasm"
+  ],
   "scripts": {
     "build:cjs": "tsc --build tsconfig.build-cjs.json && cp package.cjs.json dist/cjs/package.json",
     "build:esm": "tsc --build tsconfig.build-esm.json",

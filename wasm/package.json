@@ -1,0 +1,7 @@
+{
+  "name": "wasm",
+  "description": "Wasm adapter for TreeSitter",
+  "main": "../dist/cjs/src/tree-sitter-wasm/WasmParserAdapter.js",
+  "module": "../dist/esm/src/tree-sitter-wasm/WasmParserAdapter.js",
+  "types": "../dist/esm/src/tree-sitter-wasm/WasmParserAdapter.d.ts"
+}
