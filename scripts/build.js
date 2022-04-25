@@ -19,9 +19,15 @@ for (const [lang, names] of Object.entries(languages)) {
   const module = path.join('node_modules/tree-sitter-' + moduleName, ...variant)
   const output = 'tree-sitter-' + names[names.length - 1] + '.wasm'
 
-  console.log('Compiling ' + lang + ' parser')
-  // https://github.com/tree-sitter/tree-sitter/issues/1560
-  let command = `node_modules/.bin/tree-sitter build-wasm ${module}`
+  let command
+  if (process.env.CI) {
+    console.log(`Compiling ${lang} parser`)
+    command = `node_modules/.bin/tree-sitter build-wasm ${module}`
+  } else {
+    console.log(`Compiling ${lang} parser inside docker`)
+    // https://github.com/tree-sitter/tree-sitter/issues/1560
+    command = `node_modules/.bin/tree-sitter build-wasm ${module} --docker`
+  }
   exec(command, (err) => {
     if (err) {
       console.error('Failed to build wasm for ' + lang + ': ' + err.message)
