@@ -23,6 +23,7 @@ jobs:
       - name: set git core.autocrlf to 'input'
         run: git config --global core.autocrlf input
       - uses: actions/checkout@v3
+      - uses: docker/setup-buildx-action@v1
       - name: with Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
         uses: actions/setup-node@v3
         with:
