@@ -4,9 +4,9 @@ import Java from 'tree-sitter-java'
 // @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
-import { LanguageName, ParserAdpater } from './types'
+import { LanguageName, ParserAdapter } from '../tree-sitter/types'
 
-export class NodeParserAdapter implements ParserAdpater {
+export class NodeParserAdapter implements ParserAdapter {
   readonly parser = new Parser()
 
   query(source: string): Parser.Query {
