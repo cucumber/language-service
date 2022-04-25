@@ -5,9 +5,11 @@ import glob from 'glob'
 import path from 'path'
 
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'
-import { ParserAdapter } from '../../src/tree-sitter/types'
+import { ParserAdapter } from '../../src/tree-sitter/types.js'
 import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
 import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
+
+const parameterTypeSupport: Set<LanguageName> = new Set(['typescript', 'java'])
 
 function defineContract(makeParserAdapter: () => Promise<ParserAdapter>) {
   let expressionBuilder: ExpressionBuilder
@@ -29,16 +31,7 @@ function defineContract(makeParserAdapter: () => Promise<ParserAdapter>) {
         expressions.map((e) =>
           e instanceof CucumberExpression ? e.source : (e as RegularExpression).regexp
         ),
-        language === 'c_sharp'
-          ? [
-              /a new bowling game/,
-              /all of my balls are landing in the gutter/,
-              /my total score should be (\d+)/,
-              /I roll (\d+) and (\d+)/,
-              /I roll the following series:(.*)/,
-              /I roll/,
-            ]
-          : ['a {uuid}', 'a {date}', /^a regexp$/]
+        parameterTypeSupport.has(language) ? ['a {uuid}', 'a {date}', /^a regexp$/] : [/^a regexp$/]
       )
     })
   }
