@@ -22,13 +22,21 @@ for (const [lang, names] of Object.entries(langMap)) {
 
   console.log('Compiling ' + lang + ' parser')
   // https://github.com/tree-sitter/tree-sitter/issues/1560
-  exec('node_modules/.bin/tree-sitter build-wasm ' + module + ' --docker', (err) => {
-    if (err) console.log('Failed to build wasm for ' + lang + ': ' + err.message)
-    else {
+  let command = `node_modules/.bin/tree-sitter build-wasm ${module}`
+  if (!process.env.CI) {
+    command += ' --docker'
+  }
+  exec(command, (err) => {
+    if (err) {
+      console.error('Failed to build wasm for ' + lang + ': ' + err.message)
+      process.exit(1)
+    } else {
       const newPath = `${parsersDir}/${lang}.wasm`
       fs.rename(output, newPath, (err) => {
-        if (err) console.log('Failed to copy built parser: ' + err.message)
-        else console.log(`Successfully compiled ${newPath}`)
+        if (err) {
+          console.error('Failed to copy built parser: ' + err.message)
+          process.exit(1)
+        } else console.log(`Successfully compiled ${newPath}`)
       })
     }
   })
