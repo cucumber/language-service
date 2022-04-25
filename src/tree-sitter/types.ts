@@ -2,7 +2,8 @@ import Parser from 'tree-sitter'
 
 export type ParameterTypeMeta = { name: string; regexp: string }
 
-export type LanguageName = 'java' | 'typescript'
+export const LanguageNames = ['java', 'typescript'] as const
+export type LanguageName = typeof LanguageNames[number]
 
 export type Source = {
   language: LanguageName
@@ -19,7 +20,7 @@ export type TreeSitterLanguage = {
  * The Node.js and Web bindings have slightly different APIs. We hide this difference behind this interface.
  * https://github.com/tree-sitter/node-tree-sitter/issues/68
  */
-export interface ParserAdpater {
+export interface ParserAdapter {
   readonly parser: Parser
   setLanguage(language: LanguageName): void
   query(source: string): Parser.Query

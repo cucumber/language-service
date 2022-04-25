@@ -10,7 +10,7 @@ import { javaLanguage } from './javaLanguage.js'
 import {
   LanguageName,
   ParameterTypeMeta,
-  ParserAdpater,
+  ParserAdapter,
   Source,
   TreeSitterLanguage,
 } from './types.js'
@@ -25,7 +25,7 @@ const defineStepDefinitionQueryKeys = <const>['expression']
 const defineParameterTypeKeys = <const>['name', 'expression']
 
 export class ExpressionBuilder {
-  constructor(private readonly parserAdpater: ParserAdpater) {}
+  constructor(private readonly parserAdpater: ParserAdapter) {}
 
   build(
     sources: readonly Source[],
