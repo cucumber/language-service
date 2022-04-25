@@ -6,6 +6,7 @@ import {
 } from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
 
+import { csharpLanguage } from './csharpLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
 import {
   LanguageName,
@@ -19,13 +20,14 @@ import { typescriptLanguage } from './typescriptLanguage.js'
 const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
   java: javaLanguage,
   typescript: typescriptLanguage,
+  c_sharp: csharpLanguage,
 }
 
 const defineStepDefinitionQueryKeys = <const>['expression']
 const defineParameterTypeKeys = <const>['name', 'expression']
 
 export class ExpressionBuilder {
-  constructor(private readonly parserAdpater: ParserAdapter) {}
+  constructor(private readonly parserAdapter: ParserAdapter) {}
 
   build(
     sources: readonly Source[],
@@ -42,12 +44,12 @@ export class ExpressionBuilder {
     }
 
     for (const source of sources) {
-      this.parserAdpater.setLanguage(source.language)
-      const tree = this.parserAdpater.parser.parse(source.content)
+      this.parserAdapter.setLanguage(source.language)
+      const tree = this.parserAdapter.parser.parse(source.content)
 
       const treeSitterLanguage = treeSitterLanguageByName[source.language]
       for (const defineParameterTypeQuery of treeSitterLanguage.defineParameterTypeQueries) {
-        const query = this.parserAdpater.query(defineParameterTypeQuery)
+        const query = this.parserAdapter.query(defineParameterTypeQuery)
         const matches = query.matches(tree.rootNode)
         const records = matches.map((match) => recordFromMatch(match, defineParameterTypeKeys))
         for (const record of records) {
@@ -63,12 +65,12 @@ export class ExpressionBuilder {
     }
 
     for (const source of sources) {
-      this.parserAdpater.setLanguage(source.language)
-      const tree = this.parserAdpater.parser.parse(source.content)
+      this.parserAdapter.setLanguage(source.language)
+      const tree = this.parserAdapter.parser.parse(source.content)
 
       const treeSitterLanguage = treeSitterLanguageByName[source.language]
       for (const defineStepDefinitionQuery of treeSitterLanguage.defineStepDefinitionQueries) {
-        const query = this.parserAdpater.query(defineStepDefinitionQuery)
+        const query = this.parserAdapter.query(defineStepDefinitionQuery)
         const matches = query.matches(tree.rootNode)
         const records = matches.map((match) =>
           recordFromMatch(match, defineStepDefinitionQueryKeys)

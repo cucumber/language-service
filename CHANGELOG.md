@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.13.0] - 2022-04-22
 ### Changed
 - Renamed `StepDocument` to `Suggestion`
-- The `ExpressionBuilder` constructor has changed. Consumers must provide a `ParserAdpater` - currently a `NodeParserAdapter` is the only implementation.
+- The `ExpressionBuilder` constructor has changed. Consumers must provide a `ParserAdapter` - currently a `NodeParserAdapter` is the only implementation.
 
 ### Fixed
 - Generate suggestions for Cucumber Expressions even if there are no matching steps. ([#16](https://github.com/cucumber/language-service/issues/16), [#32](https://github.com/cucumber/language-service/pull/32))

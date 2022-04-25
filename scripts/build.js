@@ -4,36 +4,48 @@ import { exec } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
-const languages = {
-  typescript: ['typescript', 'typescript'],
-  java: ['java'],
-}
+const languages = [
+  {
+    npm: 'tree-sitter-java',
+    dir: '',
+    wasm: 'java',
+  },
+  {
+    npm: 'tree-sitter-typescript',
+    dir: 'typescript',
+    wasm: 'typescript',
+  },
+  {
+    npm: 'tree-sitter-c-sharp',
+    dir: '',
+    wasm: 'c_sharp',
+  },
+]
 
 // Build wasm parsers for supported languages
-const parsersDir = 'dist'
-if (!fs.existsSync(parsersDir)) {
-  fs.mkdirSync(parsersDir)
+const distDir = 'dist'
+if (!fs.existsSync(distDir)) {
+  fs.mkdirSync(distDir)
 }
-for (const [lang, names] of Object.entries(languages)) {
-  const [moduleName, ...variant] = names
-  const module = path.join('node_modules/tree-sitter-' + moduleName, ...variant)
-  const output = 'tree-sitter-' + names[names.length - 1] + '.wasm'
+for (const { npm, dir, wasm } of languages) {
+  const module = path.join('node_modules', npm, dir)
 
   let command
   if (process.env.CI) {
-    console.log(`Compiling ${lang} parser`)
+    console.log(`Compiling ${module}`)
     command = `node_modules/.bin/tree-sitter build-wasm ${module}`
   } else {
-    console.log(`Compiling ${lang} parser inside docker`)
+    console.log(`Compiling ${module} inside docker`)
     // https://github.com/tree-sitter/tree-sitter/issues/1560
     command = `node_modules/.bin/tree-sitter build-wasm ${module} --docker`
   }
   exec(command, (err) => {
     if (err) {
-      console.error('Failed to build wasm for ' + lang + ': ' + err.message)
+      console.error('Failed to build wasm for ' + module + ': ' + err.message)
       process.exit(1)
     } else {
-      const newPath = `${parsersDir}/${lang}.wasm`
+      const output = `tree-sitter-${wasm}.wasm`
+      const newPath = `${distDir}/${wasm}.wasm`
       fs.rename(output, newPath, (err) => {
         if (err) {
           console.error('Failed to copy built parser: ' + err.message)

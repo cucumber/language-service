@@ -1,10 +1,12 @@
 import Parser, { Query } from 'tree-sitter'
 // @ts-ignore
+import Csharp from 'tree-sitter-c-sharp'
+// @ts-ignore
 import Java from 'tree-sitter-java'
 // @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
-import { LanguageName, ParserAdapter } from '../tree-sitter/types'
+import { LanguageName, ParserAdapter } from '../tree-sitter/types.js'
 
 export class NodeParserAdapter implements ParserAdapter {
   readonly parser = new Parser()
@@ -20,6 +22,9 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'typescript':
         this.parser.setLanguage(TypeScript.typescript)
+        break
+      case 'c_sharp':
+        this.parser.setLanguage(Csharp)
         break
       default:
         throw new Error(`Unsupported language: ${language}`)
