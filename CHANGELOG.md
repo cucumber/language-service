@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Add `ParserAdapter#init()` to public API
+
 ### Added
 - Added support for PHP ([#28](https://github.com/cucumber/language-service/pull/28))
 

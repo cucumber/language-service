@@ -35,4 +35,8 @@ export class NodeParserAdapter implements ParserAdapter {
         throw new Error(`Unsupported language: ${language}`)
     }
   }
+
+  init(): Promise<void> {
+    return Promise.resolve(undefined)
+  }
 }
