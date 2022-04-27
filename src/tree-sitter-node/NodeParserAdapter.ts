@@ -4,9 +4,9 @@ import Csharp from 'tree-sitter-c-sharp'
 // @ts-ignore
 import Java from 'tree-sitter-java'
 // @ts-ignore
-import TypeScript from 'tree-sitter-typescript'
-// @ts-ignore
 import Php from 'tree-sitter-php'
+// @ts-ignore
+import TypeScript from 'tree-sitter-typescript'
 
 import { LanguageName, ParserAdapter } from '../tree-sitter/types.js'
 
