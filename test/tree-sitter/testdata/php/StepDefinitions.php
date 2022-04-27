@@ -2,7 +2,7 @@
 
 namespace LanguageService;
 
-class StepDefinitions 
+class StepDefinitions
 {
     /**
      * @Given ^a regexp$

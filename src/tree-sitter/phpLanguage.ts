@@ -1,6 +1,7 @@
 import { TreeSitterLanguage } from './types.js'
 
 export const phpLanguage: TreeSitterLanguage = {
+  // Empty array because Behat does not support Cucumber Expressions
   defineParameterTypeQueries: [],
   defineStepDefinitionQueries: [
     `
@@ -12,8 +13,8 @@ export const phpLanguage: TreeSitterLanguage = {
   ],
   toStringOrRegExp(s: string): string | RegExp {
     // match multiline comment
-    const match = s.match(/^(\/**[\s*]*)([\s\S]*)(\n[\s]**\/)/)
+    const match = s.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
     if (!match) throw new Error(`Could not match ${s}`)
-    return new RegExp(match[2].replace(/@(Given|When|Then)\s/, ''))
+    return new RegExp(match[2].replace(/@(Given |When |Then )/, '').trim())
   },
 }
