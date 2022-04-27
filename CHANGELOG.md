@@ -7,18 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.15.0] - 2022-04-27
+### Added
+- Added support for PHP ([#28](https://github.com/cucumber/language-service/pull/28))
+
 ### Changed
 - Add `ParserAdapter#init()` to public API
 
-### Added
-- Added support for PHP ([#28](https://github.com/cucumber/language-service/pull/28))
-
 ## [0.14.4] - 2022-04-25
-### Added
-- Added support for PHP ([#28](https://github.com/cucumber/language-service/pull/28))
-
 ### Fixed
-
 - Make sure `dist/cjs/package.json` is added to published npm module
 
 ## [0.14.3] - 2022-04-25
@@ -133,7 +130,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.14.4...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.15.0...HEAD
+[0.15.0]: https://github.com/cucumber/language-service/compare/v0.14.4...v0.15.0
 [0.14.4]: https://github.com/cucumber/language-service/compare/v0.14.3...v0.14.4
 [0.14.3]: https://github.com/cucumber/language-service/compare/v0.14.2...v0.14.3
 [0.14.2]: https://github.com/cucumber/language-service/compare/v0.14.1...v0.14.2
