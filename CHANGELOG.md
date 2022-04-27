@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ## [0.14.4] - 2022-04-25
+### Added
+- Added support for PHP ([#28](https://github.com/cucumber/language-service/pull/28))
 
 ## Fixed
 
