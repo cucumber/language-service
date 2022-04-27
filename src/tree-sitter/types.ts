@@ -22,6 +22,7 @@ export type TreeSitterLanguage = {
  */
 export interface ParserAdapter {
   readonly parser: Parser
+  init(): Promise<void>
   setLanguage(language: LanguageName): void
   query(source: string): Parser.Query
 }

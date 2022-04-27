@@ -11,10 +11,11 @@ import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.
 
 const parameterTypeSupport: Set<LanguageName> = new Set(['typescript', 'java'])
 
-function defineContract(makeParserAdapter: () => Promise<ParserAdapter>) {
+function defineContract(makeParserAdapter: () => ParserAdapter) {
   let expressionBuilder: ExpressionBuilder
   beforeEach(async () => {
     const parserAdpater = await makeParserAdapter()
+    await parserAdpater.init()
     expressionBuilder = new ExpressionBuilder(parserAdpater)
   })
 
@@ -39,14 +40,10 @@ function defineContract(makeParserAdapter: () => Promise<ParserAdapter>) {
 
 describe('ExpressionBuilder', () => {
   context('with NodeParserAdapter', () => {
-    defineContract(() => Promise.resolve(new NodeParserAdapter()))
+    defineContract(() => new NodeParserAdapter())
   })
 
   context('with WasmParserAdapter', () => {
-    defineContract(async () => {
-      const wasmParserAdapter = new WasmParserAdapter()
-      await wasmParserAdapter.init('dist')
-      return wasmParserAdapter
-    })
+    defineContract(() => new WasmParserAdapter('dist'))
   })
 })

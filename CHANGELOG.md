@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## Changed
+- Add `ParserAdapter#init()` to public API
+
 ## [0.14.4] - 2022-04-25
 
 ## Fixed
