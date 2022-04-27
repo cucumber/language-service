@@ -8,6 +8,7 @@ import Parser from 'tree-sitter'
 
 import { csharpLanguage } from './csharpLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
+import { phpLanguage } from './phpLanguage.js'
 import {
   LanguageName,
   ParameterTypeMeta,
@@ -21,6 +22,7 @@ const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
   java: javaLanguage,
   typescript: typescriptLanguage,
   c_sharp: csharpLanguage,
+  php: phpLanguage,
 }
 
 const defineStepDefinitionQueryKeys = <const>['expression']

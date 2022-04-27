@@ -7,12 +7,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## Changed
+### Changed
 - Add `ParserAdapter#init()` to public API
 
-## [0.14.4] - 2022-04-25
+### Added
+- Added support for PHP ([#28](https://github.com/cucumber/language-service/pull/28))
 
-## Fixed
+## [0.14.4] - 2022-04-25
+### Added
+- Added support for PHP ([#28](https://github.com/cucumber/language-service/pull/28))
+
+### Fixed
+
+- Make sure `dist/cjs/package.json` is added to published npm module
 
 ## [0.14.3] - 2022-04-25
 ### Fixed
