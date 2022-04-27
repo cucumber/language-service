@@ -4,6 +4,8 @@ import Csharp from 'tree-sitter-c-sharp'
 // @ts-ignore
 import Java from 'tree-sitter-java'
 // @ts-ignore
+import Php from 'tree-sitter-php'
+// @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
 import { LanguageName, ParserAdapter } from '../tree-sitter/types.js'
@@ -25,6 +27,9 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'c_sharp':
         this.parser.setLanguage(Csharp)
+        break
+      case 'php':
+        this.parser.setLanguage(Php)
         break
       default:
         throw new Error(`Unsupported language: ${language}`)

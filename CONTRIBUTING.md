@@ -19,9 +19,10 @@ If your contribution is to add support for a new programming language, follow th
 2. Update `languages` in `scripts/build.js`
 3. Run `npm install` - this should build a wasm for the new language into `dist/{language}.wasm`
 4. Add the following files, porting the names and expressions from one of the existing implementations:
-   - `test/tree-sitter/testdata/{language}/ParameterTypes.{ext}`
+   - `test/tree-sitter/testdata/{language}/ParameterTypes.{ext}` (if the Cucumber implementation supports [Cucumber Expressions](https://github.com/cucumber/cucumber-expressions#readme))
    - `test/tree-sitter/testdata/{language}/StepDefinitions.{ext}`
 5. Add a new `src/tree-sitter/{language}Language.ts` file
+   - If the Cucumber implementation does not support Cucumber Expressions, make `defineParameterTypeQueries` an empty array
 6. Add the name of the new language to the `LanguageName` type
 7. Update `treeSitterLanguageByName` in `src/tree-sitter/ExpressionBuilder.ts`
 8. Run tests
@@ -31,3 +32,9 @@ to build your query. The queries must have [capturing nodes](https://tree-sitter
 
 - `defineParameterTypeQueries`: `@expression` and `@name`
 - `defineStepDefinitionQueries`: `@expression`
+
+## One last thing
+
+Please make sure all code is formatted before submitting a pull request
+
+    npm run eslint-fix
