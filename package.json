@@ -79,7 +79,7 @@
     "tree-sitter-cli": "0.20.6",
     "ts-node": "10.7.0",
     "txtgen": "3.0.1",
-    "typescript": "4.6.3",
+    "typescript": "4.6.4",
     "web-tree-sitter": "0.20.5"
   },
   "peerDependencies": {
