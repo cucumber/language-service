@@ -20,6 +20,7 @@ export function fuseIndex(suggestions: readonly Suggestion[]): Index {
     minMatchCharLength: 2,
     threshold: 0.1,
     ignoreLocation: true,
+    fieldNormWeight: 1,
   })
 
   return (text) => {
