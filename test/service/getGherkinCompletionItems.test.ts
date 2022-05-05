@@ -6,7 +6,7 @@ import { getGherkinCompletionItems } from '../../src/service/getGherkinCompletio
 import { Suggestion } from '../../src/suggestions/types.js'
 
 describe('getGherkinCompletionItems', () => {
-  it('completes with step text', () => {
+  it('completes matched step', () => {
     const s1: Suggestion = {
       label: 'I have {int} cukes in my belly',
       segments: ['I have ', ['42', '98'], ' cukes in my belly'],
@@ -48,7 +48,7 @@ describe('getGherkinCompletionItems', () => {
     assert.deepStrictEqual(completions, expectedCompletions)
   })
 
-  it('completes with step text', () => {
+  it('completes unmatched step', () => {
     const s1: Suggestion = {
       label: 'I have {int} cukes in my belly',
       segments: ['I have ', ['42', '98'], ' cukes in my belly'],
