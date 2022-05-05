@@ -99,6 +99,35 @@ describe('buildSuggestions', () => {
       2
     )
   })
+
+  it('builds suggestions from unmatched step texts', () => {
+    const parameterTypeRegistry = new ParameterTypeRegistry()
+    const ef = new ExpressionFactory(parameterTypeRegistry)
+
+    assertSuggestions(
+      parameterTypeRegistry,
+      [
+        'I have 42 cukes in my belly',
+        'I have 54 cukes on my table',
+        'I have 54 cukes in my basket',
+      ],
+      [],
+      [
+        {
+          label: 'I have 42 cukes in my belly',
+          segments: ['I have 42 cukes in my belly'],
+        },
+        {
+          label: 'I have 54 cukes in my basket',
+          segments: ['I have 54 cukes in my basket'],
+        },
+        {
+          label: 'I have 54 cukes on my table',
+          segments: ['I have 54 cukes on my table'],
+        },
+      ]
+    )
+  })
 })
 
 function assertSuggestions(
