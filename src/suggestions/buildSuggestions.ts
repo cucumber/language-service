@@ -27,6 +27,7 @@ export function buildSuggestions(
   let suggestions: Suggestion[] = []
 
   const parameterChoiceSets: Record<string, Set<string>> = {}
+  const unmatchedStepTexts = new Set(stepTexts)
 
   for (const expression of expressions) {
     for (const text of stepTexts) {
@@ -43,6 +44,8 @@ export function buildSuggestions(
           }
           if (arg.group.value !== undefined) choices.add(arg.group.value)
         }
+
+        unmatchedStepTexts.delete(text)
       }
     }
   }
@@ -65,5 +68,13 @@ export function buildSuggestions(
       )
     }
   }
+
+  for (const stepText of unmatchedStepTexts) {
+    suggestions.push({
+      label: stepText,
+      segments: [stepText],
+    })
+  }
+
   return suggestions.sort((a, b) => a.label.localeCompare(b.label))
 }

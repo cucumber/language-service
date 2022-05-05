@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Build suggestions from unmatched gherkin steps ([#40](https://github.com/cucumber/language-service/pull/40))
+
 ## [0.15.0] - 2022-04-27
 ### Added
 - Added support for PHP ([#28](https://github.com/cucumber/language-service/pull/28))
