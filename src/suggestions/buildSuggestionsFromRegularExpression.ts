@@ -39,5 +39,6 @@ export function buildSuggestionsFromRegularExpression(
   return [...segmentJsons].sort().map((s, n) => ({
     segments: JSON.parse(s) as SuggestionSegment[],
     label: n == 0 ? expression.source : `${expression.source} (${n + 1})`,
+    matched: true,
   }))
 }

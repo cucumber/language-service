@@ -12,10 +12,12 @@ function verifyIndexContract(name: string, buildIndex: BuildIndex) {
       const s1: Suggestion = {
         label: 'I have {int} cukes in my belly',
         segments: ['I have ', ['42', '98'], ' cukes in my belly'],
+        matched: true,
       }
       const s2: Suggestion = {
         label: 'I am a teapot',
         segments: ['I am a teapot'],
+        matched: true,
       }
       let index: Index
       beforeEach(() => {
@@ -55,6 +57,7 @@ function verifyIndexContract(name: string, buildIndex: BuildIndex) {
                 return {
                   label: sentence,
                   segments: [sentence],
+                  matched: false,
                 }
               })
             const index = buildIndex(allSuggestions)

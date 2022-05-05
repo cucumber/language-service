@@ -10,7 +10,7 @@ export function getGherkinCompletionItems(
   gherkinSource: string,
   line: number,
   index: Index
-): CompletionItem[] {
+): readonly CompletionItem[] {
   const { gherkinDocument } = parseGherkinDocument(gherkinSource)
   if (!gherkinDocument) {
     return []
@@ -29,22 +29,28 @@ export function getGherkinCompletionItems(
   })
   if (text === undefined) return []
   const suggestions = index(text)
-  return suggestions.map((suggestion) => ({
-    label: suggestion.label,
-    insertTextFormat: InsertTextFormat.Snippet,
-    kind: CompletionItemKind.Text,
-    textEdit: {
-      newText: lspCompletionSnippet(suggestion.segments),
-      range: {
-        start: {
-          line,
-          character: startCharacter,
-        },
-        end: {
-          line,
-          character: endCharacter,
+  return suggestions.map((suggestion) => {
+    const item: CompletionItem = {
+      label: suggestion.label,
+      insertTextFormat: InsertTextFormat.Snippet,
+      kind: CompletionItemKind.Text,
+      labelDetails: {
+        ...(suggestion.matched ? {} : { detail: ' (undefined step)' }),
+      },
+      textEdit: {
+        newText: lspCompletionSnippet(suggestion.segments),
+        range: {
+          start: {
+            line,
+            character: startCharacter,
+          },
+          end: {
+            line,
+            character: endCharacter,
+          },
         },
       },
-    },
-  }))
+    }
+    return item
+  })
 }

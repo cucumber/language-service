@@ -12,6 +12,11 @@ export type Suggestion = {
    * lspCompletionSnippet function.
    */
   segments: SuggestionSegments
+
+  /**
+   * True is this suggestion is from a matched step
+   */
+  matched: boolean
 }
 
 export type SuggestionSegments = readonly SuggestionSegment[]
