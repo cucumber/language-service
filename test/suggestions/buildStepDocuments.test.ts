@@ -102,7 +102,6 @@ describe('buildSuggestions', () => {
 
   it('builds suggestions from unmatched step texts', () => {
     const parameterTypeRegistry = new ParameterTypeRegistry()
-    const ef = new ExpressionFactory(parameterTypeRegistry)
 
     assertSuggestions(
       parameterTypeRegistry,
