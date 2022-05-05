@@ -11,6 +11,9 @@ and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
   - [x] Java
   - [x] TypeScript
   - [x] C#
+  - [x] PHP
+  - [ ] [Ruby](https://github.com/cucumber/language-service/issues/41)
+  - [ ] [JavaScript](https://github.com/cucumber/language-service/issues/42)
 - [x] Formatting / pretty printing
 - [x] Handle parse errors
 - [x] Code completion
