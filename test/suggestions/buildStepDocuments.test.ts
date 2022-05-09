@@ -23,10 +23,12 @@ describe('buildSuggestions', () => {
         {
           label: 'The {word} boat',
           segments: ['The ', ['big', 'nice'], ' boat'],
+          matched: true,
         },
         {
           label: 'The {word} song',
           segments: ['The ', ['big', 'nice'], ' song'],
+          matched: true,
         },
       ]
     )
@@ -55,6 +57,7 @@ describe('buildSuggestions', () => {
             ' my ',
             ['basket', 'belly', 'table'],
           ],
+          matched: true,
         },
       ]
     )
@@ -72,6 +75,7 @@ describe('buildSuggestions', () => {
         {
           label: 'I have (\\d\\d) cukes in my "(belly|suitcase)"',
           segments: ['I have ', ['42', '54'], ' cukes in my "', ['belly', 'suitcase'], '"'],
+          matched: true,
         },
       ]
     )
@@ -94,6 +98,7 @@ describe('buildSuggestions', () => {
         {
           label: 'I have {int} cukes in/on my {word}',
           segments: ['I have ', ['42', '54'], ' cukes ', ['in', 'on'], ' my ', ['basket', 'belly']],
+          matched: true,
         },
       ],
       2
@@ -115,14 +120,17 @@ describe('buildSuggestions', () => {
         {
           label: 'I have 42 cukes in my belly',
           segments: ['I have 42 cukes in my belly'],
+          matched: false,
         },
         {
           label: 'I have 54 cukes in my basket',
           segments: ['I have 54 cukes in my basket'],
+          matched: false,
         },
         {
           label: 'I have 54 cukes on my table',
           segments: ['I have 54 cukes on my table'],
+          matched: false,
         },
       ]
     )

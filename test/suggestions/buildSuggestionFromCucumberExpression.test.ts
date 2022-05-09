@@ -15,6 +15,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
     const expected: Suggestion = {
       segments: ['I have 4 cukes'],
       label: 'I have 4 cukes',
+      matched: true,
     }
     const actual = buildSuggestionFromCucumberExpression(expression, registry, {})
     assert.deepStrictEqual(actual, expected)
@@ -25,6 +26,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
     const expected: Suggestion = {
       segments: ['I have ', ['4', '5'], ' cukes'],
       label: 'I have 4/5 cukes',
+      matched: true,
     }
     const actual = buildSuggestionFromCucumberExpression(expression, registry, {})
     assert.deepStrictEqual(actual, expected)
@@ -35,6 +37,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
     const expected: Suggestion = {
       segments: ['I have 1 ', ['cuke', 'cukes']],
       label: 'I have 1 cuke(s)',
+      matched: true,
     }
     const actual = buildSuggestionFromCucumberExpression(expression, registry, {})
     assert.deepStrictEqual(actual, expected)
@@ -45,6 +48,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
     const expected: Suggestion = {
       segments: ['I have ', ['12', '17'], ' cukes'],
       label: 'I have {int} cukes',
+      matched: true,
     }
     const actual = buildSuggestionFromCucumberExpression(expression, registry, {
       int: ['12', '17'],
@@ -57,6 +61,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
     const expected: Suggestion = {
       segments: ['I have ', ['0'], ' cukes'],
       label: 'I have {int} cukes',
+      matched: true,
     }
     const actual = buildSuggestionFromCucumberExpression(expression, registry, {})
     assert.deepStrictEqual(actual, expected)
@@ -67,6 +72,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
     const expected: Suggestion = {
       segments: [['me', 'you']],
       label: 'me/you',
+      matched: true,
     }
     const actual = buildSuggestionFromCucumberExpression(expression, registry, {})
     assert.deepStrictEqual(actual, expected)
@@ -77,6 +83,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
     const expected: Suggestion = {
       segments: ['I have ', ['12'], ' ', ['cuke', 'cukes'], ' in my ', ['bag', 'belly']],
       label: 'I have {int} cuke(s) in my bag/belly',
+      matched: true,
     }
     const actual = buildSuggestionFromCucumberExpression(expression, registry, {
       int: ['12'],

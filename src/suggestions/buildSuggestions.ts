@@ -73,6 +73,7 @@ export function buildSuggestions(
     suggestions.push({
       label: stepText,
       segments: [stepText],
+      matched: false,
     })
   }
 

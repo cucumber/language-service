@@ -19,6 +19,7 @@ export function buildSuggestionFromCucumberExpression(
   return {
     label: expression.source,
     segments,
+    matched: true,
   }
 }
 

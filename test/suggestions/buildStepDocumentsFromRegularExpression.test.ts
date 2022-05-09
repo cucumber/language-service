@@ -15,6 +15,7 @@ describe('buildSuggestionsFromRegularExpression', () => {
     const expected: Suggestion = {
       segments: ['I have 4 cukes'],
       label: 'I have 4 cukes',
+      matched: true,
     }
     const actual = buildSuggestionsFromRegularExpression(
       expression,
@@ -30,6 +31,7 @@ describe('buildSuggestionsFromRegularExpression', () => {
     const expected: Suggestion = {
       segments: ['I have ', ['12'], ' cukes'],
       label: 'I have (\\d+) cukes',
+      matched: true,
     }
     const actual = buildSuggestionsFromRegularExpression(expression, registry, ['I have 4 cukes'], {
       '-?\\d+|\\d+': ['12'],
