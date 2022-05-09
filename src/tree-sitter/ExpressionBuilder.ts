@@ -9,6 +9,7 @@ import Parser from 'tree-sitter'
 import { csharpLanguage } from './csharpLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
 import { phpLanguage } from './phpLanguage.js'
+import { rubyLanguage } from './rubyLanguage.js'
 import {
   LanguageName,
   ParameterTypeMeta,
@@ -23,6 +24,7 @@ const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
   typescript: typescriptLanguage,
   c_sharp: csharpLanguage,
   php: phpLanguage,
+  ruby: rubyLanguage,
 }
 
 const defineStepDefinitionQueryKeys = <const>['expression']
@@ -80,9 +82,8 @@ export class ExpressionBuilder {
         for (const record of records) {
           const expression = record['expression']
           if (expression) {
-            expressions.push(
-              expressionFactory.createExpression(treeSitterLanguage.toStringOrRegExp(expression))
-            )
+            const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expression)
+            expressions.push(expressionFactory.createExpression(stringOrRegexp))
           }
         }
       }

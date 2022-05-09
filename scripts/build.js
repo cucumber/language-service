@@ -25,6 +25,11 @@ const languages = [
     dir: '',
     wasm: 'php',
   },
+  {
+    npm: 'tree-sitter-ruby',
+    dir: '',
+    wasm: 'ruby',
+  },
 ]
 
 // Build wasm parsers for supported languages

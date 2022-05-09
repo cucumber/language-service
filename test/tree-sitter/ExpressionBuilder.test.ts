@@ -9,7 +9,7 @@ import { ParserAdapter } from '../../src/tree-sitter/types.js'
 import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
 import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
 
-const parameterTypeSupport: Set<LanguageName> = new Set(['typescript', 'java'])
+const parameterTypeSupport: Set<LanguageName> = new Set(['typescript', 'java', 'ruby'])
 
 function defineContract(makeParserAdapter: () => ParserAdapter) {
   let expressionBuilder: ExpressionBuilder
@@ -21,6 +21,9 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
 
   for (const dir of glob.sync(`test/tree-sitter/testdata/*`)) {
     const language = path.basename(dir) as LanguageName
+    // if (language !== 'ruby') {
+    //   continue
+    // }
     it(`builds parameter types and expressions from ${language} source`, async () => {
       const contents = await Promise.all(glob.sync(`${dir}/**/*`).map((f) => readFile(f, 'utf-8')))
       const sources = contents.map((content) => ({
