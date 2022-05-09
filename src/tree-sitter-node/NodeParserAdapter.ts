@@ -6,6 +6,8 @@ import Java from 'tree-sitter-java'
 // @ts-ignore
 import Php from 'tree-sitter-php'
 // @ts-ignore
+import Ruby from 'tree-sitter-ruby'
+// @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
 import { LanguageName, ParserAdapter } from '../tree-sitter/types.js'
@@ -30,6 +32,9 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'php':
         this.parser.setLanguage(Php)
+        break
+      case 'ruby':
+        this.parser.setLanguage(Ruby)
         break
       default:
         throw new Error(`Unsupported language: ${language}`)
