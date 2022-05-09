@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Ruby support ([#44](https://github.com/cucumber/language-service/pull/44))
 
+### Fixed
+- Label suggestions from unmatched steps as `(undefined)` ([#43](https://github.com/cucumber/language-service/pull/43))
+
 ## [0.16.0] - 2022-05-05
 ### Added
 - Build suggestions from unmatched gherkin steps ([#40](https://github.com/cucumber/language-service/pull/40))
