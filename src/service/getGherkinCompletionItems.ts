@@ -65,9 +65,6 @@ export function getGherkinCompletionItems(
         },
       },
     }
-    const { label } = item
-    console.log({ label, sortText })
-    console.log()
     return item
   })
 }
