@@ -19,9 +19,15 @@ function verifyIndexContract(name: string, buildIndex: BuildIndex) {
         segments: ['I am a teapot'],
         matched: true,
       }
+
+      const s3: Suggestion = {
+        label: '{word} can do it',
+        segments: [['You', 'They'], 'can do it'],
+        matched: true,
+      }
       let index: Index
       beforeEach(() => {
-        index = buildIndex([s1, s2])
+        index = buildIndex([s1, s2, s3])
       })
 
       it('matches two words in the beginning of an expression', () => {
@@ -37,6 +43,11 @@ function verifyIndexContract(name: string, buildIndex: BuildIndex) {
       it('matches a word in a choice', () => {
         const suggestions = index('98')
         assert.deepStrictEqual(suggestions, [s1])
+      })
+
+      it('matches another word in a choice', () => {
+        const suggestions = index('They')
+        assert.deepStrictEqual(suggestions, [s3])
       })
 
       it('matches nothing', () => {

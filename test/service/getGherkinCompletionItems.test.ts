@@ -23,13 +23,15 @@ describe('getGherkinCompletionItems', () => {
   Scenario: World
     Given cukes
 `
-    const completions = getGherkinCompletionItems(gherkinSource, 2, index)
+    const completions = getGherkinCompletionItems(gherkinSource, { line: 2, character: 15 }, index)
     const expectedCompletions: CompletionItem[] = [
       {
         label: 'I have {int} cukes in my belly',
         insertTextFormat: InsertTextFormat.Snippet,
         kind: CompletionItemKind.Text,
         labelDetails: {},
+        filterText: 'cukes',
+        sortText: '1000',
         textEdit: {
           newText: 'I have ${1|42,98|} cukes in my belly',
           range: {
@@ -65,7 +67,7 @@ describe('getGherkinCompletionItems', () => {
   Scenario: World
     Given teapot
 `
-    const completions = getGherkinCompletionItems(gherkinSource, 2, index)
+    const completions = getGherkinCompletionItems(gherkinSource, { line: 2, character: 16 }, index)
     const expectedCompletions: CompletionItem[] = [
       {
         label: 'I am a teapot',
@@ -74,6 +76,8 @@ describe('getGherkinCompletionItems', () => {
         labelDetails: {
           detail: ' (undefined step)',
         },
+        filterText: 'teapot',
+        sortText: '2000',
         textEdit: {
           newText: 'I am a teapot',
           range: {

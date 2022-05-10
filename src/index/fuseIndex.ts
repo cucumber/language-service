@@ -21,6 +21,7 @@ export function fuseIndex(suggestions: readonly Suggestion[]): Index {
     threshold: 0.1,
     ignoreLocation: true,
     fieldNormWeight: 1,
+    shouldSort: true,
   })
 
   return (text) => {
