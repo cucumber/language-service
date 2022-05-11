@@ -11,6 +11,7 @@ import { javaLanguage } from './javaLanguage.js'
 import { phpLanguage } from './phpLanguage.js'
 import { rubyLanguage } from './rubyLanguage.js'
 import {
+  ExpressionBuilderResult,
   LanguageName,
   ParameterTypeMeta,
   ParserAdapter,
@@ -36,10 +37,20 @@ export class ExpressionBuilder {
   build(
     sources: readonly Source[],
     parameterTypes: readonly ParameterTypeMeta[]
-  ): readonly Expression[] {
+  ): ExpressionBuilderResult {
     const expressions: Expression[] = []
+    const errors: Error[] = []
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const expressionFactory = new ExpressionFactory(parameterTypeRegistry)
+
+    const treeByContent = new Map<Source, Parser.Tree>()
+    const parse = (source: Source): Parser.Tree => {
+      let tree: Parser.Tree | undefined = treeByContent.get(source)
+      if (!tree) {
+        treeByContent.set(source, (tree = this.parserAdapter.parser.parse(source.content)))
+      }
+      return tree
+    }
 
     for (const parameterType of parameterTypes) {
       parameterTypeRegistry.defineParameterType(
@@ -49,7 +60,14 @@ export class ExpressionBuilder {
 
     for (const source of sources) {
       this.parserAdapter.setLanguage(source.language)
-      const tree = this.parserAdapter.parser.parse(source.content)
+      let tree: Parser.Tree
+      try {
+        tree = parse(source)
+      } catch (err) {
+        err.message += `\npath: ${source.path}`
+        errors.push(err)
+        continue
+      }
 
       const treeSitterLanguage = treeSitterLanguageByName[source.language]
       for (const defineParameterTypeQuery of treeSitterLanguage.defineParameterTypeQueries) {
@@ -70,7 +88,10 @@ export class ExpressionBuilder {
 
     for (const source of sources) {
       this.parserAdapter.setLanguage(source.language)
-      const tree = this.parserAdapter.parser.parse(source.content)
+      const tree = treeByContent.get(source)
+      if (!tree) {
+        continue
+      }
 
       const treeSitterLanguage = treeSitterLanguageByName[source.language]
       for (const defineStepDefinitionQuery of treeSitterLanguage.defineStepDefinitionQueries) {
@@ -89,7 +110,10 @@ export class ExpressionBuilder {
       }
     }
 
-    return expressions
+    return {
+      expressions,
+      errors,
+    }
   }
 }
 

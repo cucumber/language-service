@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.19.0] - 2022-05-11
+
 ## [0.18.1] - 2022-05-10
 ### Fixed
 - Remove logging
@@ -150,7 +152,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.18.1...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.19.0...HEAD
+[0.19.0]: https://github.com/cucumber/language-service/compare/v0.18.1...v0.19.0
 [0.18.1]: https://github.com/cucumber/language-service/compare/v0.18.0...v0.18.1
 [0.18.0]: https://github.com/cucumber/language-service/compare/v0.17.0...v0.18.0
 [0.17.0]: https://github.com/cucumber/language-service/compare/v0.16.0...v0.17.0

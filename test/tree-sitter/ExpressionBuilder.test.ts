@@ -5,7 +5,7 @@ import glob from 'glob'
 import path from 'path'
 
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'
-import { ParserAdapter } from '../../src/tree-sitter/types.js'
+import { ParserAdapter, Source } from '../../src/tree-sitter/types.js'
 import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
 import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
 
@@ -26,13 +26,14 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
     // }
     it(`builds parameter types and expressions from ${language} source`, async () => {
       const contents = await Promise.all(glob.sync(`${dir}/**/*`).map((f) => readFile(f, 'utf-8')))
-      const sources = contents.map((content) => ({
+      const sources: Source[] = contents.map((content, i) => ({
         language,
         content,
+        path: `dummy-${i}`,
       }))
-      const expressions = expressionBuilder.build(sources, [])
+      const result = expressionBuilder.build(sources, [])
       assert.deepStrictEqual(
-        expressions.map((e) =>
+        result.expressions.map((e) =>
           e instanceof CucumberExpression ? e.source : (e as RegularExpression).regexp
         ),
         parameterTypeSupport.has(language) ? ['a {uuid}', 'a {date}', /^a regexp$/] : [/^a regexp$/]
