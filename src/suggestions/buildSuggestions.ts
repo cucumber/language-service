@@ -28,7 +28,6 @@ export function buildSuggestions(
 
   const parameterChoiceSets: Record<string, Set<string>> = {}
   const unmatchedStepTexts = new Set(stepTexts)
-
   for (const expression of expressions) {
     for (const text of stepTexts) {
       const args = expression.match(text)
@@ -76,6 +75,5 @@ export function buildSuggestions(
       matched: false,
     })
   }
-
   return suggestions.sort((a, b) => a.label.localeCompare(b.label))
 }

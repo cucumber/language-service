@@ -35,7 +35,7 @@ export class ExpressionBuilder {
   constructor(private readonly parserAdapter: ParserAdapter) {}
 
   build(
-    sources: readonly Source[],
+    sources: readonly Source<LanguageName>[],
     parameterTypes: readonly ParameterTypeMeta[]
   ): ExpressionBuilderResult {
     const expressions: Expression[] = []
@@ -43,8 +43,8 @@ export class ExpressionBuilder {
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const expressionFactory = new ExpressionFactory(parameterTypeRegistry)
 
-    const treeByContent = new Map<Source, Parser.Tree>()
-    const parse = (source: Source): Parser.Tree => {
+    const treeByContent = new Map<Source<LanguageName>, Parser.Tree>()
+    const parse = (source: Source<LanguageName>): Parser.Tree => {
       let tree: Parser.Tree | undefined = treeByContent.get(source)
       if (!tree) {
         treeByContent.set(source, (tree = this.parserAdapter.parser.parse(source.content)))

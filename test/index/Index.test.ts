@@ -87,7 +87,6 @@ function verifyIndexContract(name: string, buildIndex: BuildIndex) {
             for (const suggestion of suggestions) {
               const s = (suggestion.segments[0] as string).toLowerCase()
               if (!s.includes(term)) {
-                // console.log(JSON.stringify(suggestions, null, 2))
                 console.error(`WARNING: ${name} - "${s}" does not include "${term}"`)
               }
             }

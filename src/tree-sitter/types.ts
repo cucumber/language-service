@@ -6,8 +6,8 @@ export type ParameterTypeMeta = { name: string; regexp: string }
 export const LanguageNames = ['java', 'typescript', 'c_sharp', 'php', 'ruby'] as const
 export type LanguageName = typeof LanguageNames[number]
 
-export type Source = {
-  readonly language: LanguageName
+export type Source<L> = {
+  readonly language: L
   readonly path: string
   readonly content: string
 }

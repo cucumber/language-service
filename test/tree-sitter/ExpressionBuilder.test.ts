@@ -26,7 +26,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
     // }
     it(`builds parameter types and expressions from ${language} source`, async () => {
       const contents = await Promise.all(glob.sync(`${dir}/**/*`).map((f) => readFile(f, 'utf-8')))
-      const sources: Source[] = contents.map((content, i) => ({
+      const sources: Source<LanguageName>[] = contents.map((content, i) => ({
         language,
         content,
         path: `dummy-${i}`,
