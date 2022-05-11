@@ -28,7 +28,7 @@ If your contribution is to add support for a new programming language, follow th
    8 Update `src/tree-sitter-node/NodeParserAdaapter.ts`
 8. Run tests
 
-As you are working on step 1 and 2 - use [tree-sitter playground](https://tree-sitter.github.io/tree-sitter/playground)
+As you are working on step 4 and 5 - use [tree-sitter playground](https://tree-sitter.github.io/tree-sitter/playground)
 to build your query. The queries must have [capturing nodes](https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax):
 
 - `defineParameterTypeQueries`: `@expression` and `@name`
