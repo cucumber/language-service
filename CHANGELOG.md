@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Fix release.
+
 ## [0.20.1] - 2022-05-12
 ### Fixed
 - Don't fail if an expression fails to parse. Report it as an error instead.
