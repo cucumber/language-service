@@ -1,15 +1,18 @@
-import { Given, Then, When } from '@cucumber/cucumber'
+import { Given } from '@cucumber/cucumber'
+import assert from 'assert'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 Given('a {uuid}', async function (uuid: string) {
-  // no-op
+  assert(uuid)
 })
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-When('a {date}', async function (date: Date) {
-  // no-op
+Given('a {date}', async function (date: Date) {
+  assert(date)
 })
 
-Then(/^a regexp$/, async function () {
-  // no-op
+Given(/^a regexp$/, async function () {
+  assert(true)
+})
+
+Given('an {undefined-parameter}', async function (date: Date) {
+  assert(date)
 })
