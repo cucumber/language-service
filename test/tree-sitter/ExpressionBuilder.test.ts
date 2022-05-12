@@ -34,7 +34,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
           }))
         })
       )
-      const result = expressionBuilder.build(sources, [])
+      const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
       const expressions = result.expressions.map((e) =>
         e instanceof CucumberExpression ? e.source : (e as RegularExpression).regexp
       )
@@ -42,6 +42,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
       if (parameterTypeSupport.has(language)) {
         assert.deepStrictEqual(expressions, ['a {uuid}', 'a {date}', /^a regexp$/])
         assert.deepStrictEqual(errors, [
+          'There is already a parameter type with name int',
           `This Cucumber Expression has a problem at column 4:
 
 an {undefined-parameter}
@@ -51,7 +52,7 @@ Please register a ParameterType for 'undefined-parameter'`,
         ])
       } else {
         assert.deepStrictEqual(expressions, [/^a regexp$/])
-        assert.deepStrictEqual(errors, [])
+        assert.deepStrictEqual(errors, ['There is already a parameter type with name int'])
       }
     })
   }
