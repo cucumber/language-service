@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Fix release.
+
 ## [0.20.3] - 2022-05-12
 ### Fixed
 - Don't fail if a parameter type is already registered. Report it as an error instead.
