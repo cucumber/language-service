@@ -52,10 +52,16 @@ export class ExpressionBuilder {
       return tree
     }
 
+    function defineParameterType(parameterType: ParameterType<unknown>) {
+      try {
+        parameterTypeRegistry.defineParameterType(parameterType)
+      } catch (err) {
+        errors.push(err)
+      }
+    }
+
     for (const parameterType of parameterTypes) {
-      parameterTypeRegistry.defineParameterType(
-        makeParameterType(parameterType.name, new RegExp(parameterType.regexp))
-      )
+      defineParameterType(makeParameterType(parameterType.name, new RegExp(parameterType.regexp)))
     }
 
     for (const source of sources) {
@@ -78,7 +84,7 @@ export class ExpressionBuilder {
           const name = record['name']
           const regexp = record['expression']
           if (name && regexp) {
-            parameterTypeRegistry.defineParameterType(
+            defineParameterType(
               makeParameterType(toString(name), treeSitterLanguage.toStringOrRegExp(regexp))
             )
           }
