@@ -1,8 +1,11 @@
 Given('a {uuid}') do |uuid|
 end
 
-When('a {date}') do |date|
+Given('a {date}') do |date|
 end
 
-Then(/^a regexp$/) do
+Given(/^a regexp$/) do
+end
+
+Given('an {undefined-parameter}') do |date|
 end

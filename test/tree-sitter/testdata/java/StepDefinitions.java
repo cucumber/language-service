@@ -1,4 +1,6 @@
-class StepDefinitions {
+import io.cucumber.java.en.Given;
+
+public class StepDefinitions {
     @Given("a {uuid}"  )
     void a_uuid(String uuid) {
     }
@@ -9,5 +11,9 @@ class StepDefinitions {
 
     @Given("^a regexp$"  )
     void a_regexp() {
+    }
+
+    @Given("an {undefined-parameter}"  )
+    void a_date(Date date) {
     }
 }

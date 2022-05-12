@@ -104,7 +104,11 @@ export class ExpressionBuilder {
           const expression = record['expression']
           if (expression) {
             const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expression)
-            expressions.push(expressionFactory.createExpression(stringOrRegexp))
+            try {
+              expressions.push(expressionFactory.createExpression(stringOrRegexp))
+            } catch (err) {
+              errors.push(err)
+            }
           }
         }
       }

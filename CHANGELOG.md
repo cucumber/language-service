@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Don't fail if an expression fails to parse. Report it as an error instead.
+
 ## [0.20.0] - 2022-05-11
 ### Changed
 - Made `<Source>` type generic

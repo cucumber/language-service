@@ -2,7 +2,7 @@ import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expres
 import assert from 'assert'
 import { readFile } from 'fs/promises'
 import glob from 'glob'
-import path from 'path'
+import { basename } from 'path'
 
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'
 import { ParserAdapter, Source } from '../../src/tree-sitter/types.js'
@@ -20,24 +20,39 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
   })
 
   for (const dir of glob.sync(`test/tree-sitter/testdata/*`)) {
-    const language = path.basename(dir) as LanguageName
+    const language = basename(dir) as LanguageName
     // if (language !== 'ruby') {
     //   continue
     // }
     it(`builds parameter types and expressions from ${language} source`, async () => {
-      const contents = await Promise.all(glob.sync(`${dir}/**/*`).map((f) => readFile(f, 'utf-8')))
-      const sources: Source<LanguageName>[] = contents.map((content, i) => ({
-        language,
-        content,
-        path: `dummy-${i}`,
-      }))
-      const result = expressionBuilder.build(sources, [])
-      assert.deepStrictEqual(
-        result.expressions.map((e) =>
-          e instanceof CucumberExpression ? e.source : (e as RegularExpression).regexp
-        ),
-        parameterTypeSupport.has(language) ? ['a {uuid}', 'a {date}', /^a regexp$/] : [/^a regexp$/]
+      const sources: Source<LanguageName>[] = await Promise.all(
+        glob.sync(`${dir}/**/*`).map((path) => {
+          return readFile(path, 'utf-8').then((content) => ({
+            language,
+            content,
+            path,
+          }))
+        })
       )
+      const result = expressionBuilder.build(sources, [])
+      const expressions = result.expressions.map((e) =>
+        e instanceof CucumberExpression ? e.source : (e as RegularExpression).regexp
+      )
+      const errors = result.errors.map((e) => e.message)
+      if (parameterTypeSupport.has(language)) {
+        assert.deepStrictEqual(expressions, ['a {uuid}', 'a {date}', /^a regexp$/])
+        assert.deepStrictEqual(errors, [
+          `This Cucumber Expression has a problem at column 4:
+
+an {undefined-parameter}
+   ^-------------------^
+Undefined parameter type 'undefined-parameter'.
+Please register a ParameterType for 'undefined-parameter'`,
+        ])
+      } else {
+        assert.deepStrictEqual(expressions, [/^a regexp$/])
+        assert.deepStrictEqual(errors, [])
+      }
     })
   }
 }
