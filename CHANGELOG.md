@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.20.1] - 2022-05-12
 ### Fixed
 - Don't fail if an expression fails to parse. Report it as an error instead.
 
@@ -159,7 +160,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.20.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.20.1...HEAD
+[0.20.1]: https://github.com/cucumber/language-service/compare/v0.20.0...v0.20.1
 [0.20.0]: https://github.com/cucumber/language-service/compare/v0.19.0...v0.20.0
 [0.19.0]: https://github.com/cucumber/language-service/compare/v0.18.1...v0.19.0
 [0.18.1]: https://github.com/cucumber/language-service/compare/v0.18.0...v0.18.1
