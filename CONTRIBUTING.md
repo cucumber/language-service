@@ -11,6 +11,11 @@ You need docker installed. This is because the build process uses docker to buil
     npm install
     npm test
 
+## Manual testing
+
+If you need to test your changes in an editor, use VSCode.
+See [cucumber/vscode/CONTRIBUTING.md](https://github.com/cucumber/vscode/blob/main/CONTRIBUTING.md) for details.
+
 ## Add support for a new programming language
 
 If your contribution is to add support for a new programming language, follow these steps:
