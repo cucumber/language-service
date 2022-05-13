@@ -6,27 +6,14 @@ import {
 } from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
 
-import { csharpLanguage } from './csharpLanguage.js'
-import { javaLanguage } from './javaLanguage.js'
-import { phpLanguage } from './phpLanguage.js'
-import { rubyLanguage } from './rubyLanguage.js'
+import { getLanguage } from './languages.js'
 import {
   ExpressionBuilderResult,
   LanguageName,
   ParameterTypeMeta,
   ParserAdapter,
   Source,
-  TreeSitterLanguage,
 } from './types.js'
-import { typescriptLanguage } from './typescriptLanguage.js'
-
-const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
-  java: javaLanguage,
-  typescript: typescriptLanguage,
-  c_sharp: csharpLanguage,
-  php: phpLanguage,
-  ruby: rubyLanguage,
-}
 
 const defineStepDefinitionQueryKeys = <const>['expression']
 const defineParameterTypeKeys = <const>['name', 'expression']
@@ -40,8 +27,8 @@ export class ExpressionBuilder {
   ): ExpressionBuilderResult {
     const expressions: Expression[] = []
     const errors: Error[] = []
-    const parameterTypeRegistry = new ParameterTypeRegistry()
-    const expressionFactory = new ExpressionFactory(parameterTypeRegistry)
+    const registry = new ParameterTypeRegistry()
+    const expressionFactory = new ExpressionFactory(registry)
 
     const treeByContent = new Map<Source<LanguageName>, Parser.Tree>()
     const parse = (source: Source<LanguageName>): Parser.Tree => {
@@ -54,7 +41,7 @@ export class ExpressionBuilder {
 
     function defineParameterType(parameterType: ParameterType<unknown>) {
       try {
-        parameterTypeRegistry.defineParameterType(parameterType)
+        registry.defineParameterType(parameterType)
       } catch (err) {
         errors.push(err)
       }
@@ -75,7 +62,7 @@ export class ExpressionBuilder {
         continue
       }
 
-      const treeSitterLanguage = treeSitterLanguageByName[source.language]
+      const treeSitterLanguage = getLanguage(source.language)
       for (const defineParameterTypeQuery of treeSitterLanguage.defineParameterTypeQueries) {
         const query = this.parserAdapter.query(defineParameterTypeQuery)
         const matches = query.matches(tree.rootNode)
@@ -99,7 +86,7 @@ export class ExpressionBuilder {
         continue
       }
 
-      const treeSitterLanguage = treeSitterLanguageByName[source.language]
+      const treeSitterLanguage = getLanguage(source.language)
       for (const defineStepDefinitionQuery of treeSitterLanguage.defineStepDefinitionQueries) {
         const query = this.parserAdapter.query(defineStepDefinitionQuery)
         const matches = query.matches(tree.rootNode)
@@ -123,6 +110,7 @@ export class ExpressionBuilder {
     return {
       expressions,
       errors,
+      registry,
     }
   }
 }

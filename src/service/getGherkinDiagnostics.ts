@@ -32,7 +32,7 @@ export function getGherkinDiagnostics(
           },
         },
         message: error.message,
-        source: 'ex',
+        source: 'Cucumber',
       }
       diagnostics.push(diagnostic)
     }
@@ -56,26 +56,41 @@ export function getGherkinDiagnostics(
       if (isUndefined(step.text, expressions) && step.location.column !== undefined) {
         const line = step.location.line - 1
         const character = step.location.column - 1 + step.keyword.length
-        const diagnostic: Diagnostic = {
-          severity: DiagnosticSeverity.Warning,
-          range: {
-            start: {
-              line,
-              character,
-            },
-            end: {
-              line,
-              character: character + step.text.length,
-            },
-          },
-          message: `Undefined step: ${step.text}`,
-          source: 'ex',
-        }
+        const diagnostic: Diagnostic = makeUndefinedStepDiagnostic(line, character, step.text)
         return arr.concat(diagnostic)
       }
       return arr
     },
   })
+}
+
+export function makeUndefinedStepDiagnostic(
+  line: number,
+  character: number,
+  stepText: string
+): Diagnostic {
+  return {
+    severity: DiagnosticSeverity.Warning,
+    range: {
+      start: {
+        line,
+        character,
+      },
+      end: {
+        line,
+        character: character + stepText.length,
+      },
+    },
+    message: `Undefined step: ${stepText}`,
+    source: 'Cucumber',
+    code: 'cucumber.undefined-step',
+    codeDescription: {
+      href: 'https://cucumber.io/docs/cucumber/step-definitions/',
+    },
+    data: {
+      stepText,
+    },
+  }
 }
 
 function isUndefined(stepText: string, expressions: readonly Expression[]): boolean {

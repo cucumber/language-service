@@ -1,3 +1,5 @@
+import { GeneratedExpression } from '@cucumber/cucumber-expressions'
+
 import { TreeSitterLanguage } from './types.js'
 
 export const javaLanguage: TreeSitterLanguage = {
@@ -77,5 +79,13 @@ export const javaLanguage: TreeSitterLanguage = {
     const match = s.match(/^"(\^.*\$)"$/)
     if (match) return new RegExp(match[1])
     return s.substring(1, s.length - 1)
+  },
+
+  generateSnippet(expression: GeneratedExpression): string {
+    return `
+        [Given(@"${expression.source}")]
+        public void todo_rename() {
+        }
+`
   },
 }

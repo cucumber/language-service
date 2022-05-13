@@ -1,3 +1,5 @@
+import { GeneratedExpression } from '@cucumber/cucumber-expressions'
+
 import { TreeSitterLanguage } from './types.js'
 
 export const typescriptLanguage: TreeSitterLanguage = {
@@ -57,5 +59,12 @@ export const typescriptLanguage: TreeSitterLanguage = {
     if (!match) throw new Error(`Could not match ${s}`)
     if (match[1] === '/' && match[3] === '/') return new RegExp(match[2])
     return match[2]
+  },
+
+  generateSnippet(expression: GeneratedExpression): string {
+    return `
+Given('${expression.source}', function (arg0: number) {
+})
+`
   },
 }

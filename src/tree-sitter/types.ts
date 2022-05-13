@@ -1,4 +1,8 @@
-import { Expression } from '@cucumber/cucumber-expressions'
+import {
+  Expression,
+  GeneratedExpression,
+  ParameterTypeRegistry,
+} from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
 
 export type ParameterTypeMeta = { name: string; regexp: string }
@@ -16,11 +20,13 @@ export type TreeSitterLanguage = {
   defineParameterTypeQueries: readonly string[]
   defineStepDefinitionQueries: readonly string[]
   toStringOrRegExp(expression: string): string | RegExp
+  generateSnippet(expression: GeneratedExpression): string
 }
 
 export type ExpressionBuilderResult = {
   readonly expressions: readonly Expression[]
   readonly errors: readonly Error[]
+  readonly registry: ParameterTypeRegistry
 }
 
 /**
