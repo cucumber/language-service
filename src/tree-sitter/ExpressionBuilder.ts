@@ -15,6 +15,7 @@ import {
   LanguageName,
   ParameterTypeMeta,
   ParserAdapter,
+  RecordLink,
   Source,
   TreeSitterLanguage,
 } from './types.js'
@@ -75,8 +76,8 @@ export class ExpressionBuilder {
         const matches = query.matches(tree.rootNode)
         const records = matches.map((match) => recordFromMatch(match, defineParameterTypeKeys))
         for (const record of records) {
-          const name = record['name']
-          const regexp = record['expression']
+          const name = record.record['name']
+          const regexp = record.record['expression']
           if (name && regexp) {
             parameterTypeRegistry.defineParameterType(
               makeParameterType(toString(name), treeSitterLanguage.toStringOrRegExp(regexp))
@@ -101,7 +102,7 @@ export class ExpressionBuilder {
           recordFromMatch(match, defineStepDefinitionQueryKeys)
         )
         for (const record of records) {
-          const expression = record['expression']
+          const expression = record.record['expression']
           if (expression) {
             const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expression)
             try {
@@ -130,12 +131,25 @@ function toString(s: string): string {
 function recordFromMatch<T extends string>(
   match: Parser.QueryMatch,
   keys: readonly T[]
-): Record<T, string | undefined> {
-  const values = keys.map((name) => match.captures.find((c) => c.name === name)?.node?.text)
-  return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]])) as Record<
+): RecordLink {
+  const recordValues = keys.map((name) => match.captures.find((c) => c.name === name)?.node?.text)
+  const record = Object.fromEntries(keys.map((_, i) => [keys[i], recordValues[i]])) as Record<
     T,
     string | undefined
   >
+
+  // const linkValues = match.captures
+
+  const link = {
+    targetUri: 'ddd',
+    targetRange: { start: { character: 1, line: 10 }, end: { character: 1, line: 10 } },
+    targetSelectionRange: { start: { character: 1, line: 10 }, end: { character: 1, line: 10 } },
+  }
+
+  return {
+    record,
+    link,
+  }
 }
 
 function makeParameterType(name: string, regexp: string | RegExp) {

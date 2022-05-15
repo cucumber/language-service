@@ -1,5 +1,6 @@
 import { Expression } from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
+import { LocationLink } from 'vscode-languageserver-types'
 
 export type ParameterTypeMeta = { name: string; regexp: string }
 
@@ -32,4 +33,9 @@ export interface ParserAdapter {
   init(): Promise<void>
   setLanguage(language: LanguageName): void
   query(source: string): Parser.Query
+}
+
+export type RecordLink = {
+  record: Record<string, string | undefined>
+  link: LocationLink
 }
