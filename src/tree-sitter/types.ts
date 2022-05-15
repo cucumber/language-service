@@ -35,7 +35,7 @@ export interface ParserAdapter {
   query(source: string): Parser.Query
 }
 
-export type RecordLink = {
-  record: Record<string, string | undefined>
+export type GlueDefinition<T extends string> = {
+  record: Record<T, string | undefined>
   link: LocationLink
 }

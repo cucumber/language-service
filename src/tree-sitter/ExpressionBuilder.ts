@@ -12,10 +12,10 @@ import { phpLanguage } from './phpLanguage.js'
 import { rubyLanguage } from './rubyLanguage.js'
 import {
   ExpressionBuilderResult,
+  GlueDefinition,
   LanguageName,
   ParameterTypeMeta,
   ParserAdapter,
-  RecordLink,
   Source,
   TreeSitterLanguage,
 } from './types.js'
@@ -74,10 +74,12 @@ export class ExpressionBuilder {
       for (const defineParameterTypeQuery of treeSitterLanguage.defineParameterTypeQueries) {
         const query = this.parserAdapter.query(defineParameterTypeQuery)
         const matches = query.matches(tree.rootNode)
-        const records = matches.map((match) => recordFromMatch(match, defineParameterTypeKeys))
-        for (const record of records) {
-          const name = record.record['name']
-          const regexp = record.record['expression']
+        const glueDefinitions = matches.map((match) =>
+          glueDefinitionFromMatch(match, defineParameterTypeKeys)
+        )
+        for (const glueDefinition of glueDefinitions) {
+          const name = glueDefinition.record['name']
+          const regexp = glueDefinition.record['expression']
           if (name && regexp) {
             parameterTypeRegistry.defineParameterType(
               makeParameterType(toString(name), treeSitterLanguage.toStringOrRegExp(regexp))
@@ -99,7 +101,7 @@ export class ExpressionBuilder {
         const query = this.parserAdapter.query(defineStepDefinitionQuery)
         const matches = query.matches(tree.rootNode)
         const records = matches.map((match) =>
-          recordFromMatch(match, defineStepDefinitionQueryKeys)
+          glueDefinitionFromMatch(match, defineStepDefinitionQueryKeys)
         )
         for (const record of records) {
           const expression = record.record['expression']
@@ -128,10 +130,10 @@ function toString(s: string): string {
   return match[1]
 }
 
-function recordFromMatch<T extends string>(
+function glueDefinitionFromMatch<T extends string>(
   match: Parser.QueryMatch,
   keys: readonly T[]
-): RecordLink {
+): GlueDefinition<T> {
   const recordValues = keys.map((name) => match.captures.find((c) => c.name === name)?.node?.text)
   const record = Object.fromEntries(keys.map((_, i) => [keys[i], recordValues[i]])) as Record<
     T,
