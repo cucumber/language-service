@@ -25,7 +25,7 @@ export type ParameterTypeName =
   | 'biginteger'
   | ''
 export type Types = Record<ParameterTypeName, string>
-export type Names = Partial<Record<ParameterTypeName, string>>
+export type Names = Record<ParameterTypeName, string>
 
 export function stepDefinitionSnippet(
   generatedExpression: GeneratedExpression,

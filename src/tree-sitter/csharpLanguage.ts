@@ -1,5 +1,6 @@
 import { GeneratedExpression } from '@cucumber/cucumber-expressions'
 
+import { Names, Types } from '../service/snippet/stepDefinitionSnippet'
 import { TreeSitterLanguage } from './types.js'
 
 export const csharpLanguage: TreeSitterLanguage = {
@@ -30,11 +31,30 @@ export const csharpLanguage: TreeSitterLanguage = {
     return new RegExp(match[2])
   },
 
-  generateSnippet(expression: GeneratedExpression): string {
-    return `
-        [Given(@"${expression.source}")]
-        public void todo_rename() {
-        }
-`
+  types: {
+    int: 'int',
+    float: 'float',
+    word: 'string',
+    string: 'string',
+    double: 'double',
+    bigdecimal: 'BigDecimal',
+    byte: 'byte',
+    short: 'short',
+    long: 'long',
+    biginteger: 'BigInteger',
+    '': 'object',
+  },
+  names: {
+    int: 'i',
+    float: 'f',
+    word: 'word',
+    string: 's',
+    double: 'd',
+    bigdecimal: 'bigDecimal',
+    byte: 'b',
+    short: 's',
+    long: 'l',
+    biginteger: 'BigInt',
+    '': 'arg',
   },
 }

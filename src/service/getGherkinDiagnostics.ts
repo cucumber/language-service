@@ -4,6 +4,7 @@ import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
+import { diagnosticCodeUndefinedStep } from './constants.js'
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#diagnostic
 export function getGherkinDiagnostics(
@@ -83,7 +84,7 @@ export function makeUndefinedStepDiagnostic(
     },
     message: `Undefined step: ${stepText}`,
     source: 'Cucumber',
-    code: 'cucumber.undefined-step',
+    code: diagnosticCodeUndefinedStep,
     codeDescription: {
       href: 'https://cucumber.io/docs/cucumber/step-definitions/',
     },

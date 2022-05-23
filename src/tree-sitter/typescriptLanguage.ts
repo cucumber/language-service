@@ -61,10 +61,30 @@ export const typescriptLanguage: TreeSitterLanguage = {
     return match[2]
   },
 
-  generateSnippet(expression: GeneratedExpression): string {
-    return `
-Given('${expression.source}', function (arg0: number) {
-})
-`
+  types: {
+    int: 'number',
+    float: 'number',
+    word: 'string',
+    string: 'string',
+    double: 'number',
+    bigdecimal: 'string',
+    byte: 'number',
+    short: 'number',
+    long: 'number',
+    biginteger: 'BigInt',
+    '': 'unknown',
+  },
+  names: {
+    int: 'i',
+    float: 'f',
+    word: 'word',
+    string: 's',
+    double: 'd',
+    bigdecimal: 'bigDecimal',
+    byte: 'b',
+    short: 's',
+    long: 'l',
+    biginteger: 'bigInt',
+    '': 'arg',
   },
 }

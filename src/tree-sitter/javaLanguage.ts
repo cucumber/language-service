@@ -81,11 +81,30 @@ export const javaLanguage: TreeSitterLanguage = {
     return s.substring(1, s.length - 1)
   },
 
-  generateSnippet(expression: GeneratedExpression): string {
-    return `
-        [Given(@"${expression.source}")]
-        public void todo_rename() {
-        }
-`
+  types: {
+    int: 'int',
+    float: 'float',
+    word: 'String',
+    string: 'String',
+    double: 'double',
+    bigdecimal: 'java.math.BigDecimal',
+    byte: 'byte',
+    short: 'short',
+    long: 'long',
+    biginteger: 'java.math.BigInteger',
+    '': 'Object',
+  },
+  names: {
+    int: 'i',
+    float: 'f',
+    word: 'word',
+    string: 's',
+    double: 'd',
+    bigdecimal: 'bigDecimal',
+    byte: 'b',
+    short: 's',
+    long: 'l',
+    biginteger: 'bigInt',
+    '': 'arg',
   },
 }

@@ -5,6 +5,8 @@ import {
 } from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
 
+import { Names, Types } from '../service/snippet/stepDefinitionSnippet.js'
+
 export type ParameterTypeMeta = { name: string; regexp: string }
 
 export const LanguageNames = ['java', 'typescript', 'c_sharp', 'php', 'ruby'] as const
@@ -17,10 +19,11 @@ export type Source<L> = {
 }
 
 export type TreeSitterLanguage = {
-  defineParameterTypeQueries: readonly string[]
-  defineStepDefinitionQueries: readonly string[]
+  readonly defineParameterTypeQueries: readonly string[]
+  readonly defineStepDefinitionQueries: readonly string[]
+  readonly names: Names
+  readonly types: Types
   toStringOrRegExp(expression: string): string | RegExp
-  generateSnippet(expression: GeneratedExpression): string
 }
 
 export type ExpressionBuilderResult = {

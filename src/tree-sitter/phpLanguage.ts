@@ -20,11 +20,30 @@ export const phpLanguage: TreeSitterLanguage = {
     return new RegExp(match[2].replace(/@(Given |When |Then )/, '').trim())
   },
 
-  generateSnippet(expression: GeneratedExpression): string {
-    return `
-        [Given(@"${expression.source}")]
-        public void todo_rename() {
-        }
-`
+  types: {
+    int: 'int',
+    float: 'float',
+    word: 'string',
+    string: 'string',
+    double: 'float',
+    bigdecimal: 'string',
+    byte: 'int',
+    short: 'int',
+    long: 'int',
+    biginteger: 'int',
+    '': 'mixed',
+  },
+  names: {
+    int: 'i',
+    float: 'f',
+    word: 'word',
+    string: 's',
+    double: 'd',
+    bigdecimal: 'bigDecimal',
+    byte: 'b',
+    short: 's',
+    long: 'l',
+    biginteger: 'BigInt',
+    '': 'arg',
   },
 }

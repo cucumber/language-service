@@ -1,9 +1,4 @@
-import {
-  CucumberExpressionGenerator,
-  GeneratedExpression,
-  ParameterTypeRegistry,
-} from '@cucumber/cucumber-expressions'
-import mustache from 'mustache'
+import { CucumberExpressionGenerator, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import {
   CodeAction,
   CodeActionKind,
@@ -14,17 +9,21 @@ import {
   VersionedTextDocumentIdentifier,
 } from 'vscode-languageserver-types'
 
-import { Names, stepDefinitionSnippet, Types } from './snippet/stepDefinitionSnippet.js'
+import { getLanguage } from '../tree-sitter/languages.js'
+import { LanguageName } from '../tree-sitter/types.js'
+import { diagnosticCodeUndefinedStep } from './constants.js'
+import { stepDefinitionSnippet } from './snippet/stepDefinitionSnippet.js'
 
 export function getGenerateSnippetCodeActions(
   diagnostics: Diagnostic[],
   uri: string,
   mustacheTemplate: string,
-  types: Types,
-  names: Names,
+  languageName: LanguageName,
   registry: ParameterTypeRegistry
 ): CodeAction[] {
-  const undefinedStepDiagnostic = diagnostics.find((d) => d.code === 'cucumber.undefined-step')
+  const undefinedStepDiagnostic = diagnostics.find((d) => d.code === diagnosticCodeUndefinedStep)
+  const language = getLanguage(languageName)
+  const { types, names } = language
   const stepText = undefinedStepDiagnostic?.data?.stepText
   if (undefinedStepDiagnostic && stepText && uri) {
     const generator = new CucumberExpressionGenerator(() => registry.parameterTypes)

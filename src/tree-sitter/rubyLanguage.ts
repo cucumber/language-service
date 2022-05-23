@@ -59,11 +59,30 @@ export const rubyLanguage: TreeSitterLanguage = {
     return match[2]
   },
 
-  generateSnippet(expression: GeneratedExpression): string {
-    return `
-        [Given(@"${expression.source}")]
-        public void todo_rename() {
-        }
-`
+  types: {
+    int: 'Integer',
+    float: 'Float',
+    word: 'String',
+    string: 'String',
+    double: 'Float',
+    bigdecimal: 'BigDecimal',
+    byte: 'Integer',
+    short: 'Integer',
+    long: 'Integer',
+    biginteger: 'Integer',
+    '': 'Object',
+  },
+  names: {
+    int: 'i',
+    float: 'f',
+    word: 'word',
+    string: 's',
+    double: 'd',
+    bigdecimal: 'bigDecimal',
+    byte: 'b',
+    short: 's',
+    long: 'l',
+    biginteger: 'BigInt',
+    '': 'arg',
   },
 }
