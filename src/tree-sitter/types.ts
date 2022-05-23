@@ -1,5 +1,6 @@
 import { Expression } from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
+import { LocationLink } from 'vscode-languageserver-types'
 
 export type ParameterTypeMeta = { name: string; regexp: string }
 
@@ -19,7 +20,7 @@ export type TreeSitterLanguage = {
 }
 
 export type ExpressionBuilderResult = {
-  readonly expressions: readonly Expression[]
+  readonly expressionLinks: readonly ExpressionLink[]
   readonly errors: readonly Error[]
 }
 
@@ -32,4 +33,14 @@ export interface ParserAdapter {
   init(): Promise<void>
   setLanguage(language: LanguageName): void
   query(source: string): Parser.Query
+}
+
+export type PartialLocationLink = Pick<
+  LocationLink,
+  'targetUri' | 'targetRange' | 'targetSelectionRange'
+>
+
+export type ExpressionLink = {
+  expression: Expression
+  partialLink: PartialLocationLink
 }

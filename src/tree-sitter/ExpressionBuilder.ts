@@ -1,10 +1,11 @@
 import {
-  Expression,
   ExpressionFactory,
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
-import Parser from 'tree-sitter'
+import { resolve } from 'path'
+import Parser, { SyntaxNode } from 'tree-sitter'
+import { Range } from 'vscode-languageserver-types'
 
 import { csharpLanguage } from './csharpLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
@@ -12,9 +13,11 @@ import { phpLanguage } from './phpLanguage.js'
 import { rubyLanguage } from './rubyLanguage.js'
 import {
   ExpressionBuilderResult,
+  ExpressionLink,
   LanguageName,
   ParameterTypeMeta,
   ParserAdapter,
+  PartialLocationLink,
   Source,
   TreeSitterLanguage,
 } from './types.js'
@@ -28,9 +31,6 @@ const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
   ruby: rubyLanguage,
 }
 
-const defineStepDefinitionQueryKeys = <const>['expression']
-const defineParameterTypeKeys = <const>['name', 'expression']
-
 export class ExpressionBuilder {
   constructor(private readonly parserAdapter: ParserAdapter) {}
 
@@ -38,7 +38,7 @@ export class ExpressionBuilder {
     sources: readonly Source<LanguageName>[],
     parameterTypes: readonly ParameterTypeMeta[]
   ): ExpressionBuilderResult {
-    const expressions: Expression[] = []
+    const expressionLinks: ExpressionLink[] = []
     const errors: Error[] = []
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const expressionFactory = new ExpressionFactory(parameterTypeRegistry)
@@ -79,13 +79,15 @@ export class ExpressionBuilder {
       for (const defineParameterTypeQuery of treeSitterLanguage.defineParameterTypeQueries) {
         const query = this.parserAdapter.query(defineParameterTypeQuery)
         const matches = query.matches(tree.rootNode)
-        const records = matches.map((match) => recordFromMatch(match, defineParameterTypeKeys))
-        for (const record of records) {
-          const name = record['name']
-          const regexp = record['expression']
-          if (name && regexp) {
+        for (const match of matches) {
+          const nameNode = syntaxNode(match, 'name')
+          const regexpNode = syntaxNode(match, 'expression')
+          if (nameNode && regexpNode) {
             defineParameterType(
-              makeParameterType(toString(name), treeSitterLanguage.toStringOrRegExp(regexp))
+              makeParameterType(
+                toString(nameNode.text),
+                treeSitterLanguage.toStringOrRegExp(regexpNode.text)
+              )
             )
           }
         }
@@ -103,15 +105,24 @@ export class ExpressionBuilder {
       for (const defineStepDefinitionQuery of treeSitterLanguage.defineStepDefinitionQueries) {
         const query = this.parserAdapter.query(defineStepDefinitionQuery)
         const matches = query.matches(tree.rootNode)
-        const records = matches.map((match) =>
-          recordFromMatch(match, defineStepDefinitionQueryKeys)
-        )
-        for (const record of records) {
-          const expression = record['expression']
-          if (expression) {
-            const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expression)
+        for (const match of matches) {
+          const expressionNode = syntaxNode(match, 'expression')
+          if (expressionNode) {
+            const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expressionNode.text)
             try {
-              expressions.push(expressionFactory.createExpression(stringOrRegexp))
+              const expression = expressionFactory.createExpression(stringOrRegexp)
+              const targetRange: Range = Range.create(
+                expressionNode.startPosition.row,
+                expressionNode.startPosition.column,
+                expressionNode.endPosition.row,
+                expressionNode.endPosition.column
+              )
+              const partialLink: PartialLocationLink = {
+                targetRange,
+                targetSelectionRange: targetRange,
+                targetUri: `file://${resolve(source.path)}`,
+              }
+              expressionLinks.push({ expression, partialLink })
             } catch (err) {
               errors.push(err)
             }
@@ -121,7 +132,7 @@ export class ExpressionBuilder {
     }
 
     return {
-      expressions,
+      expressionLinks,
       errors,
     }
   }
@@ -133,15 +144,8 @@ function toString(s: string): string {
   return match[1]
 }
 
-function recordFromMatch<T extends string>(
-  match: Parser.QueryMatch,
-  keys: readonly T[]
-): Record<T, string | undefined> {
-  const values = keys.map((name) => match.captures.find((c) => c.name === name)?.node?.text)
-  return Object.fromEntries(keys.map((_, i) => [keys[i], values[i]])) as Record<
-    T,
-    string | undefined
-  >
+function syntaxNode(match: Parser.QueryMatch, name: string): SyntaxNode | undefined {
+  return match.captures.find((c) => c.name === name)?.node
 }
 
 function makeParameterType(name: string, regexp: string | RegExp) {
