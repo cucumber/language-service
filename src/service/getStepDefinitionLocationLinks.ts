@@ -1,6 +1,6 @@
 import { LocationLink, Position } from 'vscode-languageserver-types'
 
-import { ExpressionLink } from '../tree-sitter/types.js'
+import { ExpressionLink } from '../language/types.js'
 import { getStepRange } from './helpers.js'
 
 export function getStepDefinitionLocationLinks(

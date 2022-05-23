@@ -5,7 +5,7 @@ import glob from 'glob'
 import { basename } from 'path'
 
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'
-import { ParserAdapter, Source } from '../../src/tree-sitter/types.js'
+import { ParserAdapter, Source } from '../../src/language/types.js'
 import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
 import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
 
@@ -19,7 +19,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
     expressionBuilder = new ExpressionBuilder(parserAdpater)
   })
 
-  for (const dir of glob.sync(`test/tree-sitter/testdata/*`)) {
+  for (const dir of glob.sync(`test/language/testdata/*`)) {
     const language = basename(dir) as LanguageName
     // if (language !== 'ruby') {
     //   continue

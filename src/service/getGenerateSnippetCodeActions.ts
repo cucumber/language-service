@@ -9,8 +9,8 @@ import {
   VersionedTextDocumentIdentifier,
 } from 'vscode-languageserver-types'
 
-import { getLanguage } from '../tree-sitter/languages.js'
-import { LanguageName } from '../tree-sitter/types.js'
+import { getLanguage } from '../language/languages.js'
+import { LanguageName } from '../language/types.js'
 import { diagnosticCodeUndefinedStep } from './constants.js'
 import { stepDefinitionSnippet } from './snippet/stepDefinitionSnippet.js'
 

@@ -24,17 +24,17 @@ If your contribution is to add support for a new programming language, follow th
 2. Update `languages` in `scripts/build.js`
 3. Run `npm install` - this should build a wasm for the new language into `dist/{language}.wasm`
 4. Add the following files, porting the names and expressions from one of the existing implementations:
-   - `test/tree-sitter/testdata/{language}/ParameterTypes.{ext}` (if the Cucumber implementation supports [Cucumber Expressions](https://github.com/cucumber/cucumber-expressions#readme))
-   - `test/tree-sitter/testdata/{language}/StepDefinitions.{ext}`
-5. Add a new `src/tree-sitter/{language}Language.ts` file
+   - `test/language/testdata/{language}/ParameterTypes.{ext}` (if the Cucumber implementation supports [Cucumber Expressions](https://github.com/cucumber/cucumber-expressions#readme))
+   - `test/language/testdata/{language}/StepDefinitions.{ext}`
+5. Add a new `src/language/{language}Language.ts` file
    - If the Cucumber implementation does not support Cucumber Expressions, make `defineParameterTypeQueries` an empty array
 6. Add the name of the new language to the `LanguageName` type
-7. Update `treeSitterLanguageByName` in `src/tree-sitter/ExpressionBuilder.ts`
+7. Update `treeSitterLanguageByName` in `src/language/ExpressionBuilder.ts`
 8. Update `src/tree-sitter-node/NodeParserAdapter.ts`
 9. Run tests
 
-As you are working on step 4 and 5 - use [tree-sitter playground](https://tree-sitter.github.io/tree-sitter/playground)
-to build your query. The queries must have [capturing nodes](https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax):
+As you are working on step 4 and 5 - use [tree-sitter playground](https://tree-sitter.github.io/language/playground)
+to build your query. The queries must have [capturing nodes](https://tree-sitter.github.io/language/using-parsers#query-syntax):
 
 - `defineParameterTypeQueries`: `@expression` and `@name`
 - `defineStepDefinitionQueries`: `@expression`

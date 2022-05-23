@@ -35,7 +35,7 @@ export type ExpressionBuilderResult = {
 
 /**
  * The Node.js and Web bindings have slightly different APIs. We hide this difference behind this interface.
- * https://github.com/tree-sitter/node-tree-sitter/issues/68
+ * https://github.com/language/node-tree-sitter/issues/68
  */
 export interface ParserAdapter {
   readonly parser: Parser

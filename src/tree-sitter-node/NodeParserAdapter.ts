@@ -10,7 +10,7 @@ import Ruby from 'tree-sitter-ruby'
 // @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
-import { LanguageName, ParserAdapter } from '../tree-sitter/types.js'
+import { LanguageName, ParserAdapter } from '../language/types.js'
 
 export class NodeParserAdapter implements ParserAdapter {
   readonly parser = new Parser()

@@ -2,5 +2,5 @@
   "loader": "ts-node/esm",
   "extension": ["ts"],
   "recursive": true,
-  "ignore": ["test/tree-sitter/testdata/**/*"]
+  "ignore": ["test/language/testdata/**/*"]
 }
