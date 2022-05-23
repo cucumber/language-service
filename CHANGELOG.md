@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Implement go to step definition ([#48](https://github.com/cucumber/language-service/pull/48))
+
+### Changed
+- The 
+
 ## [0.20.4] - 2022-05-12
 ### Fixed
 - Fix release.

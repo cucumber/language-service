@@ -111,16 +111,12 @@ export class ExpressionBuilder {
             const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expressionNode.text)
             try {
               const expression = expressionFactory.createExpression(stringOrRegexp)
-              const targetRange: Range = {
-                start: {
-                  line: expressionNode.startPosition.row,
-                  character: expressionNode.startPosition.column,
-                },
-                end: {
-                  line: expressionNode.endPosition.row,
-                  character: expressionNode.endPosition.column,
-                },
-              }
+              const targetRange: Range = Range.create(
+                expressionNode.startPosition.row,
+                expressionNode.startPosition.column,
+                expressionNode.endPosition.row,
+                expressionNode.endPosition.column
+              )
               const partialLink: PartialLocationLink = {
                 targetRange,
                 targetSelectionRange: targetRange,

@@ -15,10 +15,7 @@ describe('getStepDefinitionLocationLinks', () => {
 
     const targetUri = 'file://path/to/some/file.ts'
     // The range of the Cucumber/Regular Expression
-    const targetRange: Range = {
-      start: { line: 10, character: 10 },
-      end: { line: 10, character: 27 },
-    }
+    const targetRange: Range = Range.create(10, 10, 10, 27)
     const expressionLinks: ExpressionLink[] = [
       {
         expression,
