@@ -1,4 +1,3 @@
-import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import {
   CompletionItem,
   CompletionItemKind,
@@ -6,8 +5,8 @@ import {
   Position,
 } from 'vscode-languageserver-types'
 
-import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 import { Index } from '../index/index.js'
+import { getStepRange } from './helpers.js'
 import { lspCompletionSnippet } from './snippet/lspCompletionSnippet.js'
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_completion
@@ -16,24 +15,9 @@ export function getGherkinCompletionItems(
   position: Position,
   index: Index
 ): readonly CompletionItem[] {
-  const { gherkinDocument } = parseGherkinDocument(gherkinSource)
-  if (!gherkinDocument) {
-    return []
-  }
-  let text: string | undefined = undefined
-  let startCharacter: number
-  let endCharacter: number
-  walkGherkinDocument(gherkinDocument, undefined, {
-    step(step) {
-      if (step.location.line === position.line + 1 && step.location.column !== undefined) {
-        text = step.text
-        startCharacter = step.location.column + step.keyword.length - 1
-        endCharacter = startCharacter + text.length
-      }
-    },
-  })
-  if (text === undefined) return []
-  const suggestions = index(text)
+  const stepRange = getStepRange(gherkinSource, position)
+  if (!stepRange) return []
+  const suggestions = index(stepRange.stepText)
   // https://github.com/microsoft/language-server-protocol/issues/898#issuecomment-593968008
   return suggestions.map((suggestion, i) => {
     // The index has already sorted the syggestions by match score.
@@ -49,20 +33,11 @@ export function getGherkinCompletionItems(
       // VSCode will only display suggestions that literally match the label.
       // We're overriding this behaviour by setting filterText to what the user has typed,
       // so that the suggestions are always displayed
-      filterText: text,
+      filterText: stepRange.stepText,
       sortText,
       textEdit: {
         newText: lspCompletionSnippet(suggestion.segments),
-        range: {
-          start: {
-            line: position.line,
-            character: startCharacter,
-          },
-          end: {
-            line: position.line,
-            character: endCharacter,
-          },
-        },
+        range: stepRange.range,
       },
     }
     return item

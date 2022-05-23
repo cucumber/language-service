@@ -4,6 +4,7 @@ import {
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
+import { LocationLink } from 'vscode-languageserver-types'
 
 import { Names, Types } from '../service/snippet/stepDefinitionSnippet.js'
 
@@ -27,7 +28,7 @@ export type TreeSitterLanguage = {
 }
 
 export type ExpressionBuilderResult = {
-  readonly expressions: readonly Expression[]
+  readonly expressionLinks: readonly ExpressionLink[]
   readonly errors: readonly Error[]
   readonly registry: ParameterTypeRegistry
 }
@@ -41,4 +42,14 @@ export interface ParserAdapter {
   init(): Promise<void>
   setLanguage(language: LanguageName): void
   query(source: string): Parser.Query
+}
+
+export type PartialLocationLink = Pick<
+  LocationLink,
+  'targetUri' | 'targetRange' | 'targetSelectionRange'
+>
+
+export type ExpressionLink = {
+  expression: Expression
+  partialLink: PartialLocationLink
 }
