@@ -1,6 +1,5 @@
+import { GeneratedExpression } from '@cucumber/cucumber-expressions'
 import mustache from 'mustache'
-
-import { GeneratedExpression } from '../../../../cucumber-expressions/javascript'
 
 type TemplateContext = {
   expression: string
