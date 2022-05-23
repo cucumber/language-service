@@ -1,8 +1,8 @@
 import { GeneratedExpression } from '@cucumber/cucumber-expressions'
 
-import { TreeSitterLanguage } from './types.js'
+import { Language } from './types.js'
 
-export const javaLanguage: TreeSitterLanguage = {
+export const javaLanguage: Language = {
   defineParameterTypeQueries: [
     `
 (method_declaration 
@@ -81,30 +81,23 @@ export const javaLanguage: TreeSitterLanguage = {
     return s.substring(1, s.length - 1)
   },
 
-  types: {
-    int: 'int',
-    float: 'float',
-    word: 'String',
-    string: 'String',
-    double: 'double',
-    bigdecimal: 'java.math.BigDecimal',
-    byte: 'byte',
-    short: 'short',
-    long: 'long',
-    biginteger: 'java.math.BigInteger',
-    '': 'Object',
+  snippetParameters: {
+    int: { type: 'int', name: 'i' },
+    float: { type: 'float', name: 'f' },
+    word: { type: 'String' },
+    string: { type: 'String', name: 's' },
+    double: { type: 'double', name: 'd' },
+    bigdecimal: { type: 'java.math.BigDecimal', name: 'bigDecimal' },
+    byte: { type: 'byte', name: 'b' },
+    short: { type: 'short', name: 's' },
+    long: { type: 'long', name: 'l' },
+    biginteger: { type: 'java.math.BigInteger', name: 'bigInteger' },
+    '': { type: 'Object', name: 'arg' },
   },
-  names: {
-    int: 'i',
-    float: 'f',
-    word: 'word',
-    string: 's',
-    double: 'd',
-    bigdecimal: 'bigDecimal',
-    byte: 'b',
-    short: 's',
-    long: 'l',
-    biginteger: 'bigInt',
-    '': 'arg',
-  },
+  defaultSnippetTemplate: `
+@{{ stepKeyword }}("{{ expression }}")
+public void {{ #snakeName }}({{ #parameters }}{{ type }} {{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }}) {
+  // {{ blurb }}
+}
+`,
 }

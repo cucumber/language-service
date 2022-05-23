@@ -1,8 +1,6 @@
-import { GeneratedExpression } from '@cucumber/cucumber-expressions'
+import { Language } from './types.js'
 
-import { TreeSitterLanguage } from './types.js'
-
-export const typescriptLanguage: TreeSitterLanguage = {
+export const typescriptLanguage: Language = {
   defineParameterTypeQueries: [
     `
 (call_expression
@@ -61,30 +59,23 @@ export const typescriptLanguage: TreeSitterLanguage = {
     return match[2]
   },
 
-  types: {
-    int: 'number',
-    float: 'number',
-    word: 'string',
-    string: 'string',
-    double: 'number',
-    bigdecimal: 'string',
-    byte: 'number',
-    short: 'number',
-    long: 'number',
-    biginteger: 'BigInt',
-    '': 'unknown',
+  snippetParameters: {
+    int: { type: 'number' },
+    float: { type: 'number' },
+    word: { type: 'string' },
+    string: { type: 'string', name: 's' },
+    double: { type: 'number' },
+    bigdecimal: { type: 'string', name: 'bigDecimal' },
+    byte: { type: 'number' },
+    short: { type: 'number' },
+    long: { type: 'number' },
+    biginteger: { type: 'BigInt', name: 'bigInt' },
+    '': { type: 'unknown', name: 'arg' },
   },
-  names: {
-    int: 'i',
-    float: 'f',
-    word: 'word',
-    string: 's',
-    double: 'd',
-    bigdecimal: 'bigDecimal',
-    byte: 'b',
-    short: 's',
-    long: 'l',
-    biginteger: 'bigInt',
-    '': 'arg',
-  },
+
+  defaultSnippetTemplate: `
+{{ stepKeyword }}('{{ expression }}', ({{ #parameters }}{{ name }}: {{ type }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }}) => {
+  // {{ blurb }}
+})
+`,
 }

@@ -2,10 +2,10 @@ import { csharpLanguage } from './csharpLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
 import { phpLanguage } from './phpLanguage.js'
 import { rubyLanguage } from './rubyLanguage.js'
-import { LanguageName, TreeSitterLanguage } from './types.js'
+import { Language, LanguageName } from './types.js'
 import { typescriptLanguage } from './typescriptLanguage.js'
 
-const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
+const treeSitterLanguageByName: Record<LanguageName, Language> = {
   java: javaLanguage,
   typescript: typescriptLanguage,
   c_sharp: csharpLanguage,
@@ -13,6 +13,6 @@ const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
   ruby: rubyLanguage,
 }
 
-export function getLanguage(languageName: LanguageName): TreeSitterLanguage {
+export function getLanguage(languageName: LanguageName): Language {
   return treeSitterLanguageByName[languageName]
 }

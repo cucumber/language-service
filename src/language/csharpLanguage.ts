@@ -1,9 +1,6 @@
-import { GeneratedExpression } from '@cucumber/cucumber-expressions'
+import { Language } from './types.js'
 
-import { Names, Types } from '../service/snippet/stepDefinitionSnippet'
-import { TreeSitterLanguage } from './types.js'
-
-export const csharpLanguage: TreeSitterLanguage = {
+export const csharpLanguage: Language = {
   // Empty array because SpecFlow does not support Cucumber Expressions out of the box
   // They are supported via CucumberExpressions.SpecFlow - see https://github.com/cucumber/language-service/pull/29#discussion_r858319308
   // so we could add support for this in the future
@@ -31,30 +28,25 @@ export const csharpLanguage: TreeSitterLanguage = {
     return new RegExp(match[2])
   },
 
-  types: {
-    int: 'int',
-    float: 'float',
-    word: 'string',
-    string: 'string',
-    double: 'double',
-    bigdecimal: 'BigDecimal',
-    byte: 'byte',
-    short: 'short',
-    long: 'long',
-    biginteger: 'BigInteger',
-    '': 'object',
+  snippetParameters: {
+    int: { type: 'int', name: 'i' },
+    float: { type: 'float', name: 'f' },
+    word: { type: 'string' },
+    string: { type: 'string', name: 's' },
+    double: { type: 'double', name: 'd' },
+    bigdecimal: { type: 'BigDecimal', name: 'bigDecimal' },
+    byte: { type: 'byte', name: 'b' },
+    short: { type: 'short', name: 's' },
+    long: { type: 'long', name: 'l' },
+    biginteger: { type: 'BigInteger', name: 'bigInteger' },
+    '': { type: 'object', name: 'arg' },
   },
-  names: {
-    int: 'i',
-    float: 'f',
-    word: 'word',
-    string: 's',
-    double: 'd',
-    bigdecimal: 'bigDecimal',
-    byte: 'b',
-    short: 's',
-    long: 'l',
-    biginteger: 'BigInt',
-    '': 'arg',
-  },
+
+  defaultSnippetTemplate: `
+[{{ stepKeyword }}("{{ expression }}")]
+public void {{ #camelName }}({{ #parameters }}{{ type }} {{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }})
+{
+  // {{ blurb }}
+}
+`,
 }

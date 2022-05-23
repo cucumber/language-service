@@ -17,20 +17,25 @@ import { stepDefinitionSnippet } from './snippet/stepDefinitionSnippet.js'
 export function getGenerateSnippetCodeActions(
   diagnostics: Diagnostic[],
   uri: string,
-  mustacheTemplate: string,
+  mustacheTemplate: string | undefined,
   languageName: LanguageName,
   registry: ParameterTypeRegistry
 ): CodeAction[] {
   const undefinedStepDiagnostic = diagnostics.find((d) => d.code === diagnosticCodeUndefinedStep)
   const language = getLanguage(languageName)
-  const { types, names } = language
+  const stepKeyword = undefinedStepDiagnostic?.data?.stepKeyword
   const stepText = undefinedStepDiagnostic?.data?.stepText
   if (undefinedStepDiagnostic && stepText && uri) {
     const generator = new CucumberExpressionGenerator(() => registry.parameterTypes)
     const generatedExpressions = generator.generateExpressions(stepText)
 
     const snippets = generatedExpressions.map((generatedExpression) =>
-      stepDefinitionSnippet(generatedExpression, mustacheTemplate, types, names)
+      stepDefinitionSnippet(
+        stepKeyword,
+        generatedExpression,
+        mustacheTemplate || language.defaultSnippetTemplate,
+        language.snippetParameters
+      )
     )
 
     const ca: CodeAction = {

@@ -57,7 +57,12 @@ export function getGherkinDiagnostics(
       if (isUndefined(step.text, expressions) && step.location.column !== undefined) {
         const line = step.location.line - 1
         const character = step.location.column - 1 + step.keyword.length
-        const diagnostic: Diagnostic = makeUndefinedStepDiagnostic(line, character, step.text)
+        const diagnostic: Diagnostic = makeUndefinedStepDiagnostic(
+          line,
+          character,
+          step.keyword,
+          step.text
+        )
         return arr.concat(diagnostic)
       }
       return arr
@@ -68,6 +73,7 @@ export function getGherkinDiagnostics(
 export function makeUndefinedStepDiagnostic(
   line: number,
   character: number,
+  stepKeyword: string,
   stepText: string
 ): Diagnostic {
   return {
@@ -89,6 +95,7 @@ export function makeUndefinedStepDiagnostic(
       href: 'https://cucumber.io/docs/cucumber/step-definitions/',
     },
     data: {
+      stepKeyword,
       stepText,
     },
   }

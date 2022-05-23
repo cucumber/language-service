@@ -82,6 +82,7 @@ describe('getGherkinDiagnostics', () => {
           href: 'https://cucumber.io/docs/cucumber/step-definitions/',
         },
         data: {
+          stepKeyword: 'Given ',
           stepText: 'an undefined step',
         },
         message: 'Undefined step: an undefined step',

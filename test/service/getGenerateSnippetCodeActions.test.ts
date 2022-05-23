@@ -7,16 +7,12 @@ import { makeUndefinedStepDiagnostic } from '../../src/service/getGherkinDiagnos
 
 describe('getGenerateSnippetCodeActions', () => {
   it('generates code', () => {
-    const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'I have 43 cukes')
-    const mustacheTemplate = `
-Given('{{ expression }}', ({{ #parameters }}{{ name }}: {{ type }}{{ /parameters }}) => {
-})
-`
+    const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'Given ', 'I have 43 cukes')
 
     const actions = getGenerateSnippetCodeActions(
       [diagnostic],
       'features/step_defnitions/steps.ts',
-      mustacheTemplate,
+      undefined,
       'typescript',
       new ParameterTypeRegistry()
     )
@@ -43,6 +39,7 @@ Given('{{ expression }}', ({{ #parameters }}{{ name }}: {{ type }}{{ /parameters
               href: 'https://cucumber.io/docs/cucumber/step-definitions/',
             },
             data: {
+              stepKeyword: 'Given ',
               stepText: 'I have 43 cukes',
             },
           },
@@ -76,7 +73,8 @@ Given('{{ expression }}', ({{ #parameters }}{{ name }}: {{ type }}{{ /parameters
                     },
                   },
                   newText: `
-Given('I have {int} cukes', (i: number) => {
+Given('I have {int} cukes', (int: number) => {
+  // Write code here that turns the phrase above into concrete actions
 })
 `,
                 },
@@ -100,7 +98,8 @@ Given('I have {int} cukes', (i: number) => {
                     },
                   },
                   newText: `
-Given('I have {float} cukes', (f: number) => {
+Given('I have {float} cukes', (float: number) => {
+  // Write code here that turns the phrase above into concrete actions
 })
 `,
                 },

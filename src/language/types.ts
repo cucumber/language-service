@@ -1,12 +1,32 @@
-import {
-  Expression,
-  GeneratedExpression,
-  ParameterTypeRegistry,
-} from '@cucumber/cucumber-expressions'
+import { Expression, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
 import { LocationLink } from 'vscode-languageserver-types'
 
-import { Names, Types } from '../service/snippet/stepDefinitionSnippet.js'
+export type ParameterTypeName =
+  | 'int'
+  | 'float'
+  | 'word'
+  | 'string'
+  | 'double'
+  | 'bigdecimal'
+  | 'byte'
+  | 'short'
+  | 'long'
+  | 'biginteger'
+  | ''
+
+/**
+ * Used to generate step definition snippets
+ */
+export type SnippetParameter = {
+  /**
+   * The name to use for the parameter.
+   */
+  name?: string
+  type: string
+}
+
+export type SnippetParameters = Record<ParameterTypeName, SnippetParameter>
 
 export type ParameterTypeMeta = { name: string; regexp: string }
 
@@ -19,11 +39,11 @@ export type Source<L> = {
   readonly content: string
 }
 
-export type TreeSitterLanguage = {
+export type Language = {
+  readonly defaultSnippetTemplate: string
   readonly defineParameterTypeQueries: readonly string[]
   readonly defineStepDefinitionQueries: readonly string[]
-  readonly names: Names
-  readonly types: Types
+  readonly snippetParameters: SnippetParameters
   toStringOrRegExp(expression: string): string | RegExp
 }
 

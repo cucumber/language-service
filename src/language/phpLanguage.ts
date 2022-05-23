@@ -1,8 +1,8 @@
 import { GeneratedExpression } from '@cucumber/cucumber-expressions'
 
-import { TreeSitterLanguage } from './types.js'
+import { Language } from './types.js'
 
-export const phpLanguage: TreeSitterLanguage = {
+export const phpLanguage: Language = {
   // Empty array because Behat does not support Cucumber Expressions
   defineParameterTypeQueries: [],
   defineStepDefinitionQueries: [
@@ -20,30 +20,26 @@ export const phpLanguage: TreeSitterLanguage = {
     return new RegExp(match[2].replace(/@(Given |When |Then )/, '').trim())
   },
 
-  types: {
-    int: 'int',
-    float: 'float',
-    word: 'string',
-    string: 'string',
-    double: 'float',
-    bigdecimal: 'string',
-    byte: 'int',
-    short: 'int',
-    long: 'int',
-    biginteger: 'int',
-    '': 'mixed',
+  snippetParameters: {
+    int: { type: 'int', name: 'i' },
+    float: { type: 'float', name: 'f' },
+    word: { type: 'string' },
+    string: { type: 'string', name: 's' },
+    double: { type: 'float', name: 'd' },
+    bigdecimal: { type: 'string', name: 'bigDecimal' },
+    byte: { type: 'int', name: 'b' },
+    short: { type: 'int', name: 's' },
+    long: { type: 'int', name: 'l' },
+    biginteger: { type: 'int', name: 'bigInteger' },
+    '': { type: 'Object', name: 'arg' },
   },
-  names: {
-    int: 'i',
-    float: 'f',
-    word: 'word',
-    string: 's',
-    double: 'd',
-    bigdecimal: 'bigDecimal',
-    byte: 'b',
-    short: 's',
-    long: 'l',
-    biginteger: 'BigInt',
-    '': 'arg',
-  },
+  defaultSnippetTemplate: `
+    /**
+     * {{ stepKeyword }} {{ expression }}
+     */
+    public function {{ #snakeName }}({{ #parameters }}{{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }})
+    {
+      // {{ blurb }}
+    }
+`,
 }
