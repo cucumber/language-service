@@ -35,8 +35,10 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         })
       )
       const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
-      const expressions = result.expressions.map((e) =>
-        e instanceof CucumberExpression ? e.source : (e as RegularExpression).regexp
+      const expressions = result.expressionLinks.map(({ expression }) =>
+        expression instanceof CucumberExpression
+          ? expression.source
+          : (expression as RegularExpression).regexp
       )
       const errors = result.errors.map((e) => e.message)
       if (parameterTypeSupport.has(language)) {

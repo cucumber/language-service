@@ -20,7 +20,7 @@ export type TreeSitterLanguage = {
 }
 
 export type ExpressionBuilderResult = {
-  readonly expressions: readonly Expression[]
+  readonly expressionLinks: readonly ExpressionLink[]
   readonly errors: readonly Error[]
 }
 
@@ -35,7 +35,12 @@ export interface ParserAdapter {
   query(source: string): Parser.Query
 }
 
-export type GlueDefinition<T extends string> = {
-  record: Record<T, string | undefined>
-  link: LocationLink
+export type PartialLocationLink = Pick<
+  LocationLink,
+  'targetUri' | 'targetRange' | 'targetSelectionRange'
+>
+
+export type ExpressionLink = {
+  expression: Expression
+  partialLink: PartialLocationLink
 }

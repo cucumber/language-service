@@ -1,60 +1,62 @@
-// import assert from 'assert'
-// import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
+import { CucumberExpression, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
+import assert from 'assert'
+import { LocationLink, Range } from 'vscode-languageserver-types'
 
-// import { bruteForceIndex } from '../../src/index/index.js'
 import { getStepDefinitionLocationLinks } from '../../src/service/getStepDefinitionLocationLinks.js'
-// import { Suggestion } from '../../src/suggestions/types.js'
+import { ExpressionLink } from '../../src/tree-sitter/types.js'
 
 describe('getStepDefinitionLocationLinks', () => {
-  it('find a matched step definition', () => {
+  it('finds a matched step definition', () => {
+    const expression = new CucumberExpression('some cukes/apples', new ParameterTypeRegistry())
     const gherkinSource = `Feature: Hello
       Scenario: World
-        Given cukes
+        Given some cukes
     `
 
-    const links = getStepDefinitionLocationLinks(gherkinSource, { line: 2, character: 15 })
+    const targetUri = 'file://path/to/some/file.ts'
+    // The range of the Cucumber/Regular Expression
+    const targetRange: Range = {
+      start: { line: 10, character: 10 },
+      end: { line: 10, character: 27 },
+    }
+    const expressionLinks: ExpressionLink[] = [
+      {
+        expression,
+        partialLink: {
+          targetUri,
+          targetRange,
+          targetSelectionRange: targetRange,
+        },
+      },
+    ]
+    // The cursor is between the c and the u
+    const links = getStepDefinitionLocationLinks(
+      gherkinSource,
+      { line: 2, character: 20 },
+      expressionLinks
+    )
 
-    console.log(links)
+    // The range of the Gherkin step text
+    const originSelectionRange = {
+      start: {
+        line: 2,
+        character: 14,
+      },
+      end: {
+        line: 2,
+        character: 24,
+      },
+    }
 
-    //     const s1: Suggestion = {
-    //       label: 'I have {int} cukes in my belly',
-    //       segments: ['I have ', ['42', '98'], ' cukes in my belly'],
-    //       matched: true,
-    //     }
-    //     const s2: Suggestion = {
-    //       label: 'I am a teapot',
-    //       segments: ['I am a teapot'],
-    //       matched: true,
-    //     }
-    //     const index = bruteForceIndex([s1, s2])
-    //     const gherkinSource = `Feature: Hello
-    //   Scenario: World
-    //     Given cukes
-    // `
-    //     const completions = getGherkinLocationLinks(gherkinSource, { line: 2, character: 15 }, index)
-    //     const expectedCompletions: CompletionItem[] = [
-    //       {
-    //         label: 'I have {int} cukes in my belly',
-    //         insertTextFormat: InsertTextFormat.Snippet,
-    //         kind: CompletionItemKind.Text,
-    //         labelDetails: {},
-    //         filterText: 'cukes',
-    //         sortText: '1000',
-    //         textEdit: {
-    //           newText: 'I have ${1|42,98|} cukes in my belly',
-    //           range: {
-    //             start: {
-    //               line: 2,
-    //               character: 10,
-    //             },
-    //             end: {
-    //               line: 2,
-    //               character: 15,
-    //             },
-    //           },
-    //         },
-    //       },
-    //     ]
-    //     assert.deepStrictEqual(completions, expectedCompletions)
+    const expectedLinks: LocationLink[] = [
+      {
+        originSelectionRange,
+        targetRange: targetRange,
+        targetSelectionRange: targetRange,
+        targetUri,
+      },
+    ]
+
+    assert.deepStrictEqual(links, expectedLinks)
   })
 })
