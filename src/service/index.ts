@@ -1,4 +1,4 @@
-export * from './getGenerateSnippetCodeActions.js'
+export * from './getGenerateSnippetCodeAction.js'
 export * from './getGherkinCompletionItems.js'
 export * from './getGherkinDiagnostics.js'
 export * from './getGherkinFormattingEdits.js'
