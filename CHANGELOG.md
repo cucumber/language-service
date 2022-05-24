@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.23.0] - 2022-05-24
 ### Changed
 - Generate a single code action with relative path ([#50](https://github.com/cucumber/language-service/pull/50))
 
@@ -191,7 +192,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.22.2...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.23.0...HEAD
+[0.23.0]: https://github.com/cucumber/language-service/compare/v0.22.2...v0.23.0
 [0.22.2]: https://github.com/cucumber/language-service/compare/v0.22.1...v0.22.2
 [0.22.1]: https://github.com/cucumber/language-service/compare/v0.22.0...v0.22.1
 [0.22.0]: https://github.com/cucumber/language-service/compare/v0.21.0...v0.22.0
