@@ -1,5 +1,5 @@
 {
   "extension": ["js"],
   "recursive": true,
-  "ignore": ["dist/cjs/test/tree-sitter/testdata/**/*"]
+  "ignore": ["dist/cjs/test/language/testdata/**/*"]
 }

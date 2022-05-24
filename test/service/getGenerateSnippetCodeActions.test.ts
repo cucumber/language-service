@@ -1,0 +1,181 @@
+import { ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
+import assert from 'assert'
+import { CodeAction, LocationLink, Range } from 'vscode-languageserver-types'
+
+import { getGenerateSnippetCodeActions } from '../../src/service/getGenerateSnippetCodeActions.js'
+import { makeUndefinedStepDiagnostic } from '../../src/service/getGherkinDiagnostics.js'
+
+describe('getGenerateSnippetCodeActions', () => {
+  it('generates code in a new file', () => {
+    const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'Given ', 'I have 43 cukes')
+
+    const targetRange = Range.create(10, 0, 10, 0)
+    const link: LocationLink = {
+      targetUri: 'file://home/features/step_defnitions/steps.ts',
+      targetRange,
+      targetSelectionRange: targetRange,
+    }
+    const actions = getGenerateSnippetCodeActions(
+      [diagnostic],
+      link,
+      true,
+      undefined,
+      'typescript',
+      new ParameterTypeRegistry()
+    )
+    const expectedActions: CodeAction[] = [
+      {
+        title: 'Generate step definition',
+        diagnostics: [
+          {
+            severity: 2,
+            range: {
+              start: {
+                line: 10,
+                character: 4,
+              },
+              end: {
+                line: 10,
+                character: 19,
+              },
+            },
+            message: 'Undefined step: I have 43 cukes',
+            source: 'Cucumber',
+            code: 'cucumber.undefined-step',
+            codeDescription: {
+              href: 'https://cucumber.io/docs/cucumber/step-definitions/',
+            },
+            data: {
+              stepKeyword: 'Given ',
+              stepText: 'I have 43 cukes',
+            },
+          },
+        ],
+        kind: 'quickfix',
+        edit: {
+          documentChanges: [
+            {
+              kind: 'create',
+              uri: 'file://home/features/step_defnitions/steps.ts',
+              options: {
+                ignoreIfExists: true,
+                overwrite: true,
+              },
+            },
+            {
+              textDocument: {
+                uri: 'file://home/features/step_defnitions/steps.ts',
+                version: 0,
+              },
+              edits: [
+                {
+                  range: {
+                    start: {
+                      line: 10,
+                      character: 0,
+                    },
+                    end: {
+                      line: 10,
+                      character: 0,
+                    },
+                  },
+                  newText: `
+
+Given('I have {int} cukes', (int: number) => {
+  // Write code here that turns the phrase above into concrete actions
+})
+`,
+                },
+              ],
+            },
+          ],
+        },
+        isPreferred: true,
+      },
+    ]
+    assert.deepStrictEqual(actions, expectedActions)
+  })
+
+  it('generates code in an existing file', () => {
+    const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'Given ', 'I have 43 cukes')
+
+    const targetRange = Range.create(10, 0, 10, 0)
+    const link: LocationLink = {
+      targetUri: 'file://home/features/step_defnitions/steps.ts',
+      targetRange,
+      targetSelectionRange: targetRange,
+    }
+
+    const actions = getGenerateSnippetCodeActions(
+      [diagnostic],
+      link,
+      false,
+      undefined,
+      'typescript',
+      new ParameterTypeRegistry()
+    )
+    const expectedActions: CodeAction[] = [
+      {
+        title: 'Generate step definition',
+        diagnostics: [
+          {
+            severity: 2,
+            range: {
+              start: {
+                line: 10,
+                character: 4,
+              },
+              end: {
+                line: 10,
+                character: 19,
+              },
+            },
+            message: 'Undefined step: I have 43 cukes',
+            source: 'Cucumber',
+            code: 'cucumber.undefined-step',
+            codeDescription: {
+              href: 'https://cucumber.io/docs/cucumber/step-definitions/',
+            },
+            data: {
+              stepKeyword: 'Given ',
+              stepText: 'I have 43 cukes',
+            },
+          },
+        ],
+        kind: 'quickfix',
+        edit: {
+          documentChanges: [
+            {
+              textDocument: {
+                uri: 'file://home/features/step_defnitions/steps.ts',
+                version: 0,
+              },
+              edits: [
+                {
+                  range: {
+                    start: {
+                      line: 10,
+                      character: 0,
+                    },
+                    end: {
+                      line: 10,
+                      character: 0,
+                    },
+                  },
+                  newText: `
+
+Given('I have {int} cukes', (int: number) => {
+  // Write code here that turns the phrase above into concrete actions
+})
+`,
+                },
+              ],
+            },
+          ],
+        },
+        isPreferred: true,
+      },
+    ]
+    assert.deepStrictEqual(actions, expectedActions)
+  })
+})

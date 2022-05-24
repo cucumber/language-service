@@ -4,6 +4,7 @@ import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
+import { diagnosticCodeUndefinedStep } from './constants.js'
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#diagnostic
 export function getGherkinDiagnostics(
@@ -32,7 +33,7 @@ export function getGherkinDiagnostics(
           },
         },
         message: error.message,
-        source: 'ex',
+        source: 'Cucumber',
       }
       diagnostics.push(diagnostic)
     }
@@ -56,26 +57,48 @@ export function getGherkinDiagnostics(
       if (isUndefined(step.text, expressions) && step.location.column !== undefined) {
         const line = step.location.line - 1
         const character = step.location.column - 1 + step.keyword.length
-        const diagnostic: Diagnostic = {
-          severity: DiagnosticSeverity.Warning,
-          range: {
-            start: {
-              line,
-              character,
-            },
-            end: {
-              line,
-              character: character + step.text.length,
-            },
-          },
-          message: `Undefined step: ${step.text}`,
-          source: 'ex',
-        }
+        const diagnostic: Diagnostic = makeUndefinedStepDiagnostic(
+          line,
+          character,
+          step.keyword,
+          step.text
+        )
         return arr.concat(diagnostic)
       }
       return arr
     },
   })
+}
+
+export function makeUndefinedStepDiagnostic(
+  line: number,
+  character: number,
+  stepKeyword: string,
+  stepText: string
+): Diagnostic {
+  return {
+    severity: DiagnosticSeverity.Warning,
+    range: {
+      start: {
+        line,
+        character,
+      },
+      end: {
+        line,
+        character: character + stepText.length,
+      },
+    },
+    message: `Undefined step: ${stepText}`,
+    source: 'Cucumber',
+    code: diagnosticCodeUndefinedStep,
+    codeDescription: {
+      href: 'https://cucumber.io/docs/cucumber/step-definitions/',
+    },
+    data: {
+      stepKeyword,
+      stepText,
+    },
+  }
 }
 
 function isUndefined(stepText: string, expressions: readonly Expression[]): boolean {

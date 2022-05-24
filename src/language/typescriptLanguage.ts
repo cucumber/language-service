@@ -1,6 +1,6 @@
-import { TreeSitterLanguage } from './types.js'
+import { Language } from './types.js'
 
-export const typescriptLanguage: TreeSitterLanguage = {
+export const typescriptLanguage: Language = {
   defineParameterTypeQueries: [
     `
 (call_expression
@@ -34,7 +34,7 @@ export const typescriptLanguage: TreeSitterLanguage = {
   (#eq? @function-name "defineParameterType")
   (#eq? @name-key "name")
   (#eq? @regexp-key "regexp")
-)
+) @root
 `,
   ],
   defineStepDefinitionQueries: [
@@ -48,7 +48,7 @@ export const typescriptLanguage: TreeSitterLanguage = {
     ]
   )
   (#match? @function-name "Given|When|Then")
-)
+) @root
 `,
   ],
 
@@ -58,4 +58,25 @@ export const typescriptLanguage: TreeSitterLanguage = {
     if (match[1] === '/' && match[3] === '/') return new RegExp(match[2])
     return match[2]
   },
+
+  snippetParameters: {
+    int: { type: 'number' },
+    float: { type: 'number' },
+    word: { type: 'string' },
+    string: { type: 'string', name: 's' },
+    double: { type: 'number' },
+    bigdecimal: { type: 'string', name: 'bigDecimal' },
+    byte: { type: 'number' },
+    short: { type: 'number' },
+    long: { type: 'number' },
+    biginteger: { type: 'BigInt', name: 'bigInt' },
+    '': { type: 'unknown', name: 'arg' },
+  },
+
+  defaultSnippetTemplate: `
+
+{{ stepKeyword }}('{{ expression }}', ({{ #parameters }}{{ name }}: {{ type }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }}) => {
+  // {{ blurb }}
+})
+`,
 }

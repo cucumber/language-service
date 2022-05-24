@@ -5,30 +5,39 @@ import {
 } from '@cucumber/cucumber-expressions'
 import { resolve } from 'path'
 import Parser, { SyntaxNode } from 'tree-sitter'
-import { Range } from 'vscode-languageserver-types'
+import { LocationLink, Range } from 'vscode-languageserver-types'
 
-import { csharpLanguage } from './csharpLanguage.js'
-import { javaLanguage } from './javaLanguage.js'
-import { phpLanguage } from './phpLanguage.js'
-import { rubyLanguage } from './rubyLanguage.js'
+import { getLanguage } from './languages.js'
 import {
   ExpressionBuilderResult,
   ExpressionLink,
   LanguageName,
+  Link,
+  ParameterTypeLink,
   ParameterTypeMeta,
   ParserAdapter,
-  PartialLocationLink,
   Source,
-  TreeSitterLanguage,
 } from './types.js'
-import { typescriptLanguage } from './typescriptLanguage.js'
 
-const treeSitterLanguageByName: Record<LanguageName, TreeSitterLanguage> = {
-  java: javaLanguage,
-  typescript: typescriptLanguage,
-  c_sharp: csharpLanguage,
-  php: phpLanguage,
-  ruby: rubyLanguage,
+function createLocationLink(rootNode: SyntaxNode, expressionNode: SyntaxNode, path: string) {
+  const targetRange: Range = Range.create(
+    rootNode.startPosition.row,
+    rootNode.startPosition.column,
+    rootNode.endPosition.row,
+    rootNode.endPosition.column
+  )
+  const targetSelectionRange: Range = Range.create(
+    expressionNode.startPosition.row,
+    expressionNode.startPosition.column,
+    expressionNode.endPosition.row,
+    expressionNode.endPosition.column
+  )
+  const locationLink: LocationLink = {
+    targetRange,
+    targetSelectionRange,
+    targetUri: `file://${resolve(path)}`,
+  }
+  return locationLink
 }
 
 export class ExpressionBuilder {
@@ -39,9 +48,10 @@ export class ExpressionBuilder {
     parameterTypes: readonly ParameterTypeMeta[]
   ): ExpressionBuilderResult {
     const expressionLinks: ExpressionLink[] = []
+    const parameterTypeLinks: ParameterTypeLink[] = []
     const errors: Error[] = []
-    const parameterTypeRegistry = new ParameterTypeRegistry()
-    const expressionFactory = new ExpressionFactory(parameterTypeRegistry)
+    const registry = new ParameterTypeRegistry()
+    const expressionFactory = new ExpressionFactory(registry)
 
     const treeByContent = new Map<Source<LanguageName>, Parser.Tree>()
     const parse = (source: Source<LanguageName>): Parser.Tree => {
@@ -54,7 +64,7 @@ export class ExpressionBuilder {
 
     function defineParameterType(parameterType: ParameterType<unknown>) {
       try {
-        parameterTypeRegistry.defineParameterType(parameterType)
+        registry.defineParameterType(parameterType)
       } catch (err) {
         errors.push(err)
       }
@@ -75,20 +85,22 @@ export class ExpressionBuilder {
         continue
       }
 
-      const treeSitterLanguage = treeSitterLanguageByName[source.language]
+      const treeSitterLanguage = getLanguage(source.language)
       for (const defineParameterTypeQuery of treeSitterLanguage.defineParameterTypeQueries) {
         const query = this.parserAdapter.query(defineParameterTypeQuery)
         const matches = query.matches(tree.rootNode)
         for (const match of matches) {
           const nameNode = syntaxNode(match, 'name')
-          const regexpNode = syntaxNode(match, 'expression')
-          if (nameNode && regexpNode) {
-            defineParameterType(
-              makeParameterType(
-                toString(nameNode.text),
-                treeSitterLanguage.toStringOrRegExp(regexpNode.text)
-              )
+          const expressionNode = syntaxNode(match, 'expression')
+          const rootNode = syntaxNode(match, 'root')
+          if (nameNode && expressionNode && rootNode) {
+            const parameterType = makeParameterType(
+              toString(nameNode.text),
+              treeSitterLanguage.toStringOrRegExp(expressionNode.text)
             )
+            defineParameterType(parameterType)
+            const locationLink = createLocationLink(rootNode, expressionNode, source.path)
+            parameterTypeLinks.push({ parameterType, locationLink })
           }
         }
       }
@@ -101,28 +113,19 @@ export class ExpressionBuilder {
         continue
       }
 
-      const treeSitterLanguage = treeSitterLanguageByName[source.language]
+      const treeSitterLanguage = getLanguage(source.language)
       for (const defineStepDefinitionQuery of treeSitterLanguage.defineStepDefinitionQueries) {
         const query = this.parserAdapter.query(defineStepDefinitionQuery)
         const matches = query.matches(tree.rootNode)
         for (const match of matches) {
           const expressionNode = syntaxNode(match, 'expression')
-          if (expressionNode) {
+          const rootNode = syntaxNode(match, 'root')
+          if (expressionNode && rootNode) {
             const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expressionNode.text)
             try {
               const expression = expressionFactory.createExpression(stringOrRegexp)
-              const targetRange: Range = Range.create(
-                expressionNode.startPosition.row,
-                expressionNode.startPosition.column,
-                expressionNode.endPosition.row,
-                expressionNode.endPosition.column
-              )
-              const partialLink: PartialLocationLink = {
-                targetRange,
-                targetSelectionRange: targetRange,
-                targetUri: `file://${resolve(source.path)}`,
-              }
-              expressionLinks.push({ expression, partialLink })
+              const locationLink = createLocationLink(rootNode, expressionNode, source.path)
+              expressionLinks.push({ expression, locationLink })
             } catch (err) {
               errors.push(err)
             }
@@ -132,8 +135,10 @@ export class ExpressionBuilder {
     }
 
     return {
-      expressionLinks,
+      expressionLinks: sortLinks(expressionLinks),
+      parameterTypeLinks: sortLinks(parameterTypeLinks),
       errors,
+      registry,
     }
   }
 }
@@ -150,4 +155,12 @@ function syntaxNode(match: Parser.QueryMatch, name: string): SyntaxNode | undefi
 
 function makeParameterType(name: string, regexp: string | RegExp) {
   return new ParameterType(name, regexp, Object, () => undefined, false, false)
+}
+
+function sortLinks<L extends Link>(links: L[]): readonly L[] {
+  return links.sort((a, b) => {
+    const pathComparison = a.locationLink.targetUri.localeCompare(b.locationLink.targetUri)
+    if (pathComparison !== 0) return pathComparison
+    return a.locationLink.targetRange.start.line - b.locationLink.targetRange.start.line
+  })
 }

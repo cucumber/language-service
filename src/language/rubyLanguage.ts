@@ -1,6 +1,6 @@
-import { TreeSitterLanguage } from './types.js'
+import { Language } from './types.js'
 
-export const rubyLanguage: TreeSitterLanguage = {
+export const rubyLanguage: Language = {
   defineParameterTypeQueries: [
     `
 (call
@@ -32,7 +32,7 @@ export const rubyLanguage: TreeSitterLanguage = {
   (#eq? @method "ParameterType")
   (#eq? @name-key "name")
   (#eq? @regexp-key "regexp")
-)
+) @root
 `,
   ],
   defineStepDefinitionQueries: [
@@ -46,7 +46,7 @@ export const rubyLanguage: TreeSitterLanguage = {
     ]
   )
   (#match? @method "(Given|When|Then)$")
-)
+) @root
 `,
   ],
 
@@ -56,4 +56,25 @@ export const rubyLanguage: TreeSitterLanguage = {
     if (match[1] === '/' && match[3] === '/') return new RegExp(match[2])
     return match[2]
   },
+
+  snippetParameters: {
+    int: { type: 'Integer' },
+    float: { type: 'Float' },
+    word: { type: 'String' },
+    string: { type: 'String' },
+    double: { type: 'Float' },
+    bigdecimal: { type: 'BigDecimal' },
+    byte: { type: 'Integer' },
+    short: { type: 'Integer' },
+    long: { type: 'Integer' },
+    biginteger: { type: 'Integer' },
+    '': { type: 'Object', name: 'arg' },
+  },
+
+  defaultSnippetTemplate: `
+
+{{ stepKeyword }}('{{ expression }}') do |{{ #parameters }}{{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }}|
+  // {{ blurb }}
+end
+`,
 }

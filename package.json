@@ -86,13 +86,15 @@
     "web-tree-sitter": "^0.20.5"
   },
   "dependencies": {
-    "@cucumber/cucumber-expressions": "^15.1.1",
+    "@cucumber/cucumber-expressions": "^15.2.0",
     "@cucumber/gherkin": "^23.0.1",
     "@cucumber/gherkin-utils": "^7.0.0",
     "@cucumber/messages": "^18.0.0",
     "@types/js-search": "1.4.0",
+    "@types/mustache": "4.1.2",
     "fuse.js": "6.6.2",
     "js-search": "2.0.0",
+    "mustache": "4.2.0",
     "tree-sitter": "0.20.0",
     "tree-sitter-c-sharp": "0.19.1",
     "tree-sitter-java": "0.19.1",

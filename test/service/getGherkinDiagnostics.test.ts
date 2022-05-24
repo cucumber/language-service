@@ -31,7 +31,7 @@ describe('getGherkinDiagnostics', () => {
           },
         },
         severity: DiagnosticSeverity.Error,
-        source: 'ex',
+        source: 'Cucumber',
       },
     ])
   })
@@ -61,7 +61,7 @@ describe('getGherkinDiagnostics', () => {
           },
         },
         severity: DiagnosticSeverity.Error,
-        source: 'ex',
+        source: 'Cucumber',
       },
     ]
     assert.deepStrictEqual(diagnostics, expectedDiagnostics)
@@ -77,6 +77,14 @@ describe('getGherkinDiagnostics', () => {
     )
     const expectedDiagnostics: Diagnostic[] = [
       {
+        code: 'cucumber.undefined-step',
+        codeDescription: {
+          href: 'https://cucumber.io/docs/cucumber/step-definitions/',
+        },
+        data: {
+          stepKeyword: 'Given ',
+          stepText: 'an undefined step',
+        },
         message: 'Undefined step: an undefined step',
         range: {
           start: {
@@ -89,7 +97,7 @@ describe('getGherkinDiagnostics', () => {
           },
         },
         severity: DiagnosticSeverity.Warning,
-        source: 'ex',
+        source: 'Cucumber',
       },
     ]
     assert.deepStrictEqual(diagnostics, expectedDiagnostics)
