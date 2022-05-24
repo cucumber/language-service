@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- Generate a single code action with relative path ([#50](https://github.com/cucumber/language-service/pull/50))
+
 ## [0.22.2] - 2022-05-24
 ### Fixed
 - Fix a few bugs in snipet generation
