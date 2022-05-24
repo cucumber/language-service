@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.22.1] - 2022-05-24
 ### Fixed
 - Remove newlines from snippet templates
 
@@ -183,7 +184,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.22.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.22.1...HEAD
+[0.22.1]: https://github.com/cucumber/language-service/compare/v0.22.0...v0.22.1
 [0.22.0]: https://github.com/cucumber/language-service/compare/v0.21.0...v0.22.0
 [0.21.0]: https://github.com/cucumber/language-service/compare/v0.20.4...v0.21.0
 [0.20.4]: https://github.com/cucumber/language-service/compare/v0.20.3...v0.20.4
