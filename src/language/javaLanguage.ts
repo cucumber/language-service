@@ -1,5 +1,3 @@
-import { GeneratedExpression } from '@cucumber/cucumber-expressions'
-
 import { Language } from './types.js'
 
 export const javaLanguage: Language = {
