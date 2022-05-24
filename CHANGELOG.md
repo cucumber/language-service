@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Fix a few bugs in snipet generation
+
 ## [0.22.1] - 2022-05-24
 ### Fixed
 - Remove newlines from snippet templates

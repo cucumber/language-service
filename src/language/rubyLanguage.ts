@@ -72,7 +72,7 @@ export const rubyLanguage: Language = {
   },
 
   defaultSnippetTemplate: `
-{{ stepKeyword }}('{{ expression }}') do |{{ #parameters }}{{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }}|
+{{ stepKeyword }}('{{ expression }}') do |{{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}{{ /parameters }}|
   // {{ blurb }}
 end
 `,

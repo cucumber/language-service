@@ -5,7 +5,7 @@ import { rubyLanguage } from './rubyLanguage.js'
 import { Language, LanguageName } from './types.js'
 import { typescriptLanguage } from './typescriptLanguage.js'
 
-const treeSitterLanguageByName: Record<LanguageName, Language> = {
+const languageByName: Record<LanguageName, Language> = {
   java: javaLanguage,
   typescript: typescriptLanguage,
   c_sharp: csharpLanguage,
@@ -14,5 +14,5 @@ const treeSitterLanguageByName: Record<LanguageName, Language> = {
 }
 
 export function getLanguage(languageName: LanguageName): Language {
-  return treeSitterLanguageByName[languageName]
+  return languageByName[languageName]
 }

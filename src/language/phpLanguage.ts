@@ -35,7 +35,7 @@ export const phpLanguage: Language = {
     /**
      * {{ stepKeyword }} {{ expression }}
      */
-    public function {{ snakeName }}({{ #parameters }}{{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }})
+    public function {{ snakeName }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}{{ /parameters }})
     {
       // {{ blurb }}
     }

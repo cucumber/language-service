@@ -19,8 +19,8 @@ export class NodeParserAdapter implements ParserAdapter {
     return new Query(this.parser.getLanguage(), source)
   }
 
-  setLanguage(language: LanguageName): void {
-    switch (language) {
+  setLanguageName(languageName: LanguageName): void {
+    switch (languageName) {
       case 'java':
         this.parser.setLanguage(Java)
         break
@@ -37,7 +37,7 @@ export class NodeParserAdapter implements ParserAdapter {
         this.parser.setLanguage(Ruby)
         break
       default:
-        throw new Error(`Unsupported language: ${language}`)
+        throw new Error(`Unsupported language: ${languageName}`)
     }
   }
 

@@ -20,15 +20,15 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
   })
 
   for (const dir of glob.sync(`test/language/testdata/*`)) {
-    const language = basename(dir) as LanguageName
+    const languageName = basename(dir) as LanguageName
     // if (language !== 'ruby') {
     //   continue
     // }
-    it(`builds parameter types and expressions from ${language} source`, async () => {
+    it(`builds parameter types and expressions from ${languageName} source`, async () => {
       const sources: Source<LanguageName>[] = await Promise.all(
         glob.sync(`${dir}/**/*`).map((path) => {
           return readFile(path, 'utf-8').then((content) => ({
-            language,
+            languageName,
             content,
             path,
           }))
@@ -54,7 +54,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
           : (expression as RegularExpression).regexp
       )
       const errors = result.errors.map((e) => e.message)
-      if (parameterTypeSupport.has(language)) {
+      if (parameterTypeSupport.has(languageName)) {
         assert.deepStrictEqual(expressions, ['a {uuid}', 'a {date}', /^a regexp$/])
         assert.deepStrictEqual(errors, [
           'There is already a parameter type with name int',

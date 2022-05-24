@@ -30,7 +30,7 @@ export class WasmParserAdapter implements ParserAdapter {
     return this.parser.getLanguage().query(source)
   }
 
-  setLanguage(language: LanguageName): void {
-    this.parser.setLanguage(this.languages[language])
+  setLanguageName(languageName: LanguageName): void {
+    this.parser.setLanguage(this.languages[languageName])
   }
 }

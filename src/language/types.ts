@@ -34,7 +34,7 @@ export const LanguageNames = ['java', 'typescript', 'c_sharp', 'php', 'ruby'] as
 export type LanguageName = typeof LanguageNames[number]
 
 export type Source<L> = {
-  readonly language: L
+  readonly languageName: L
   readonly path: string
   readonly content: string
 }
@@ -61,7 +61,7 @@ export type ExpressionBuilderResult = {
 export interface ParserAdapter {
   readonly parser: Parser
   init(): Promise<void>
-  setLanguage(language: LanguageName): void
+  setLanguageName(languageName: LanguageName): void
   query(source: string): Parser.Query
 }
 

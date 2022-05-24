@@ -75,7 +75,7 @@ export class ExpressionBuilder {
     }
 
     for (const source of sources) {
-      this.parserAdapter.setLanguage(source.language)
+      this.parserAdapter.setLanguageName(source.languageName)
       let tree: Parser.Tree
       try {
         tree = parse(source)
@@ -85,7 +85,7 @@ export class ExpressionBuilder {
         continue
       }
 
-      const treeSitterLanguage = getLanguage(source.language)
+      const treeSitterLanguage = getLanguage(source.languageName)
       for (const defineParameterTypeQuery of treeSitterLanguage.defineParameterTypeQueries) {
         const query = this.parserAdapter.query(defineParameterTypeQuery)
         const matches = query.matches(tree.rootNode)
@@ -107,13 +107,13 @@ export class ExpressionBuilder {
     }
 
     for (const source of sources) {
-      this.parserAdapter.setLanguage(source.language)
+      this.parserAdapter.setLanguageName(source.languageName)
       const tree = treeByContent.get(source)
       if (!tree) {
         continue
       }
 
-      const treeSitterLanguage = getLanguage(source.language)
+      const treeSitterLanguage = getLanguage(source.languageName)
       for (const defineStepDefinitionQuery of treeSitterLanguage.defineStepDefinitionQueries) {
         const query = this.parserAdapter.query(defineStepDefinitionQuery)
         const matches = query.matches(tree.rootNode)

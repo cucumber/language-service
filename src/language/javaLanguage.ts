@@ -94,7 +94,7 @@ export const javaLanguage: Language = {
   },
   defaultSnippetTemplate: `
     @{{ stepKeyword }}("{{ expression }}")
-    public void {{ snakeName }}({{ #parameters }}{{ type }} {{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }}) {
+    public void {{ snakeName }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ type }} {{ name }}{{ /parameters }}) {
         // {{ blurb }}
     }
 `,
