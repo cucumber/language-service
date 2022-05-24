@@ -44,7 +44,7 @@ export function stepDefinitionSnippet(
       const name = snippetParameter?.name || parameterInfo.name || snippetParameters[''].name
       const type = snippetParameter?.type || parameterInfo.name || snippetParameters[''].type
       return {
-        name: `${name}${parameterInfo.counter === 1 ? '' : parameterInfo.counter.toString()}`,
+        name: `${name}${parameterInfo.count === 1 ? '' : parameterInfo.count.toString()}`,
         type,
       }
     }),
