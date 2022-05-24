@@ -15,7 +15,7 @@ export function getStepDefinitionLocationLinks(
   for (const expressionLink of expressionLinks) {
     if (expressionLink.expression.match(stepRange.stepText)) {
       const locationLink: LocationLink = {
-        ...expressionLink.partialLink,
+        ...expressionLink.locationLink,
         originSelectionRange: stepRange.range,
       }
       locationLinks.push(locationLink)

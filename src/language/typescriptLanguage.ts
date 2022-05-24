@@ -48,7 +48,7 @@ export const typescriptLanguage: Language = {
     ]
   )
   (#match? @function-name "Given|When|Then")
-)
+) @root
 `,
   ],
 
@@ -74,6 +74,7 @@ export const typescriptLanguage: Language = {
   },
 
   defaultSnippetTemplate: `
+
 {{ stepKeyword }}('{{ expression }}', ({{ #parameters }}{{ name }}: {{ type }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }}) => {
   // {{ blurb }}
 })

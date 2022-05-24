@@ -1,17 +1,24 @@
 import { ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
-import { CodeAction } from 'vscode-languageserver-types'
+import { CodeAction, LocationLink, Range } from 'vscode-languageserver-types'
 
 import { getGenerateSnippetCodeActions } from '../../src/service/getGenerateSnippetCodeActions.js'
 import { makeUndefinedStepDiagnostic } from '../../src/service/getGherkinDiagnostics.js'
 
 describe('getGenerateSnippetCodeActions', () => {
-  it('generates code', () => {
+  it('generates code in a new file', () => {
     const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'Given ', 'I have 43 cukes')
 
+    const targetRange = Range.create(10, 0, 10, 0)
+    const link: LocationLink = {
+      targetUri: 'file://home/features/step_defnitions/steps.ts',
+      targetRange,
+      targetSelectionRange: targetRange,
+    }
     const actions = getGenerateSnippetCodeActions(
       [diagnostic],
-      'features/step_defnitions/steps.ts',
+      link,
+      true,
       undefined,
       'typescript',
       new ParameterTypeRegistry()
@@ -49,7 +56,7 @@ describe('getGenerateSnippetCodeActions', () => {
           documentChanges: [
             {
               kind: 'create',
-              uri: 'features/step_defnitions/steps.ts',
+              uri: 'file://home/features/step_defnitions/steps.ts',
               options: {
                 ignoreIfExists: true,
                 overwrite: true,
@@ -57,18 +64,18 @@ describe('getGenerateSnippetCodeActions', () => {
             },
             {
               textDocument: {
-                uri: 'features/step_defnitions/steps.ts',
+                uri: 'file://home/features/step_defnitions/steps.ts',
                 version: 0,
               },
               edits: [
                 {
                   range: {
                     start: {
-                      line: 0,
+                      line: 10,
                       character: 0,
                     },
                     end: {
-                      line: 0,
+                      line: 10,
                       character: 0,
                     },
                   },
@@ -80,25 +87,82 @@ Given('I have {int} cukes', (int: number) => {
                 },
               ],
             },
+          ],
+        },
+        isPreferred: true,
+      },
+    ]
+    assert.deepStrictEqual(actions, expectedActions)
+  })
+
+  it('generates code in an existing file', () => {
+    const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'Given ', 'I have 43 cukes')
+
+    const targetRange = Range.create(10, 0, 10, 0)
+    const link: LocationLink = {
+      targetUri: 'file://home/features/step_defnitions/steps.ts',
+      targetRange,
+      targetSelectionRange: targetRange,
+    }
+
+    const actions = getGenerateSnippetCodeActions(
+      [diagnostic],
+      link,
+      false,
+      undefined,
+      'typescript',
+      new ParameterTypeRegistry()
+    )
+    const expectedActions: CodeAction[] = [
+      {
+        title: 'Generate step definition',
+        diagnostics: [
+          {
+            severity: 2,
+            range: {
+              start: {
+                line: 10,
+                character: 4,
+              },
+              end: {
+                line: 10,
+                character: 19,
+              },
+            },
+            message: 'Undefined step: I have 43 cukes',
+            source: 'Cucumber',
+            code: 'cucumber.undefined-step',
+            codeDescription: {
+              href: 'https://cucumber.io/docs/cucumber/step-definitions/',
+            },
+            data: {
+              stepKeyword: 'Given ',
+              stepText: 'I have 43 cukes',
+            },
+          },
+        ],
+        kind: 'quickfix',
+        edit: {
+          documentChanges: [
             {
               textDocument: {
-                uri: 'features/step_defnitions/steps.ts',
+                uri: 'file://home/features/step_defnitions/steps.ts',
                 version: 0,
               },
               edits: [
                 {
                   range: {
                     start: {
-                      line: 0,
+                      line: 10,
                       character: 0,
                     },
                     end: {
-                      line: 0,
+                      line: 10,
                       character: 0,
                     },
                   },
                   newText: `
-Given('I have {float} cukes', (float: number) => {
+Given('I have {int} cukes', (int: number) => {
   // Write code here that turns the phrase above into concrete actions
 })
 `,

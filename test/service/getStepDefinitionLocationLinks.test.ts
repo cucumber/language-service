@@ -19,7 +19,7 @@ describe('getStepDefinitionLocationLinks', () => {
     const expressionLinks: ExpressionLink[] = [
       {
         expression,
-        partialLink: {
+        locationLink: {
           targetUri,
           targetRange,
           targetSelectionRange: targetRange,

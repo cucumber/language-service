@@ -5,7 +5,7 @@ import {
 } from '@cucumber/cucumber-expressions'
 import { resolve } from 'path'
 import Parser, { SyntaxNode } from 'tree-sitter'
-import { Range } from 'vscode-languageserver-types'
+import { LocationLink, Range } from 'vscode-languageserver-types'
 
 import { getLanguage } from './languages.js'
 import {
@@ -14,7 +14,6 @@ import {
   LanguageName,
   ParameterTypeMeta,
   ParserAdapter,
-  PartialLocationLink,
   Source,
 } from './types.js'
 
@@ -94,22 +93,29 @@ export class ExpressionBuilder {
         const matches = query.matches(tree.rootNode)
         for (const match of matches) {
           const expressionNode = syntaxNode(match, 'expression')
-          if (expressionNode) {
+          const rootNode = syntaxNode(match, 'root')
+          if (expressionNode && rootNode) {
             const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expressionNode.text)
             try {
               const expression = expressionFactory.createExpression(stringOrRegexp)
               const targetRange: Range = Range.create(
+                rootNode.startPosition.row,
+                rootNode.startPosition.column,
+                rootNode.endPosition.row,
+                rootNode.endPosition.column
+              )
+              const targetSelectionRange: Range = Range.create(
                 expressionNode.startPosition.row,
                 expressionNode.startPosition.column,
                 expressionNode.endPosition.row,
                 expressionNode.endPosition.column
               )
-              const partialLink: PartialLocationLink = {
+              const locationLink: LocationLink = {
                 targetRange,
-                targetSelectionRange: targetRange,
+                targetSelectionRange,
                 targetUri: `file://${resolve(source.path)}`,
               }
-              expressionLinks.push({ expression, partialLink })
+              expressionLinks.push({ expression, locationLink })
             } catch (err) {
               errors.push(err)
             }
@@ -118,8 +124,13 @@ export class ExpressionBuilder {
       }
     }
 
+    const sortedExpressionLinks = expressionLinks.sort((a, b) => {
+      const pathComparison = a.locationLink.targetUri.localeCompare(b.locationLink.targetUri)
+      if (pathComparison !== 0) return pathComparison
+      return a.locationLink.targetRange.start.line - b.locationLink.targetRange.start.line
+    })
     return {
-      expressionLinks,
+      expressionLinks: sortedExpressionLinks,
       errors,
       registry,
     }

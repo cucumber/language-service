@@ -71,7 +71,7 @@ export const javaLanguage: Language = {
     )
   )
   (#match? @annotation-name "Given|When|Then")
-)
+) @root
 `,
   ],
 
@@ -95,9 +95,10 @@ export const javaLanguage: Language = {
     '': { type: 'Object', name: 'arg' },
   },
   defaultSnippetTemplate: `
-@{{ stepKeyword }}("{{ expression }}")
-public void {{ #snakeName }}({{ #parameters }}{{ type }} {{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }}) {
-  // {{ blurb }}
-}
+
+    @{{ stepKeyword }}("{{ expression }}")
+    public void {{ snakeName }}({{ #parameters }}{{ type }} {{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }}) {
+        // {{ blurb }}
+    }
 `,
 }

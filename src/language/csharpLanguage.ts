@@ -19,7 +19,7 @@ export const csharpLanguage: Language = {
     )
   )
   (#match? @annotation-name "Given|When|Then|And|But|StepDefinition")
-)
+) @root
 `,
   ],
   toStringOrRegExp(s) {
@@ -43,10 +43,11 @@ export const csharpLanguage: Language = {
   },
 
   defaultSnippetTemplate: `
-[{{ stepKeyword }}("{{ expression }}")]
-public void {{ #camelName }}({{ #parameters }}{{ type }} {{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }})
-{
-  // {{ blurb }}
-}
+
+    [{{ stepKeyword }}("{{ expression }}")]
+    public void {{ camelName }}({{ #parameters }}{{ type }} {{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }})
+    {
+        // {{ blurb }}
+    }
 `,
 }

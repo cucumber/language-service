@@ -10,7 +10,7 @@ export const phpLanguage: Language = {
 (
   (comment)+ @expression
   (#match? @expression "Given|When|Then")
-)
+) @root
 `,
   ],
   toStringOrRegExp(s: string): string | RegExp {
@@ -34,10 +34,11 @@ export const phpLanguage: Language = {
     '': { type: 'Object', name: 'arg' },
   },
   defaultSnippetTemplate: `
+
     /**
      * {{ stepKeyword }} {{ expression }}
      */
-    public function {{ #snakeName }}({{ #parameters }}{{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }})
+    public function {{ snakeName }}({{ #parameters }}{{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }})
     {
       // {{ blurb }}
     }

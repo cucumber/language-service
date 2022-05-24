@@ -22,11 +22,13 @@ const blurb = 'Write code here that turns the phrase above into concrete actions
 
 export function stepDefinitionSnippet(
   stepKeyword: string,
-  generatedExpression: GeneratedExpression,
+  generatedExpressions: readonly GeneratedExpression[],
   mustacheTemplate: string,
   snippetParameters: SnippetParameters
 ): string {
-  const words = generatedExpression.source.replace(/[^\x00-\x7F]+/g, ' ').split(/\s+/)
+  // TODO: Add the remaining ones as comments
+  const generatedExpression = generatedExpressions[0]
+  const words = generatedExpression.source.replace(/[^a-zA-Z_]+/g, ' ').split(/\s+/)
   const camelName = words
     .map((word, i) => (i === 0 ? word.toLowerCase() : word[0].toUpperCase() + word.slice(1)))
     .join('')

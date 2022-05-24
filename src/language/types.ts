@@ -64,12 +64,7 @@ export interface ParserAdapter {
   query(source: string): Parser.Query
 }
 
-export type PartialLocationLink = Pick<
-  LocationLink,
-  'targetUri' | 'targetRange' | 'targetSelectionRange'
->
-
 export type ExpressionLink = {
   expression: Expression
-  partialLink: PartialLocationLink
+  locationLink: LocationLink
 }

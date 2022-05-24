@@ -35,6 +35,19 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         })
       )
       const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
+
+      // verify that the targetSelectionRange is inside the targetRange
+      for (const link of result.expressionLinks.map((l) => l.locationLink)) {
+        assert(
+          link.targetSelectionRange.start.line > link.targetRange.start.line ||
+            link.targetSelectionRange.start.character >= link.targetRange.start.character
+        )
+        assert(
+          link.targetSelectionRange.end.line < link.targetRange.end.line ||
+            link.targetSelectionRange.end.character <= link.targetRange.end.character
+        )
+      }
+
       const expressions = result.expressionLinks.map(({ expression }) =>
         expression instanceof CucumberExpression
           ? expression.source
