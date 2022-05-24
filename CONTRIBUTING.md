@@ -36,7 +36,7 @@ If your contribution is to add support for a new programming language, follow th
 As you are working on step 4 and 5 - use [tree-sitter playground](https://tree-sitter.github.io/tree-sitter/playground)
 to build your query. The queries must have [capturing nodes](https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax):
 
-- `defineParameterTypeQueries`: `@expression` and `@name`
+- `defineParameterTypeQueries`: `@expression`, `@name` and `@root`
 - `defineStepDefinitionQueries`: `@expression` and `@root`
 
 ## One last thing

@@ -1,3 +1,5 @@
+import { Language } from './types.js'
+
 export const phpLanguage: Language = {
   // Empty array because Behat does not support Cucumber Expressions
   defineParameterTypeQueries: [],

@@ -16,7 +16,7 @@ export const javaLanguage: Language = {
   )
   name: (identifier) @name
   (#eq? @annotation-name "ParameterType")
-)
+) @root
     `,
     `
 (method_declaration 
@@ -52,7 +52,7 @@ export const javaLanguage: Language = {
   (#eq? @annotation-name "ParameterType")
   (#eq? @name-key "name")
   (#eq? @value-key "value")
-)
+) @root
 `,
   ],
   defineStepDefinitionQueries: [

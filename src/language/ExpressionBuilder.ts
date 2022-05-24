@@ -12,10 +12,33 @@ import {
   ExpressionBuilderResult,
   ExpressionLink,
   LanguageName,
+  Link,
+  ParameterTypeLink,
   ParameterTypeMeta,
   ParserAdapter,
   Source,
 } from './types.js'
+
+function createLocationLink(rootNode: SyntaxNode, expressionNode: SyntaxNode, path: string) {
+  const targetRange: Range = Range.create(
+    rootNode.startPosition.row,
+    rootNode.startPosition.column,
+    rootNode.endPosition.row,
+    rootNode.endPosition.column
+  )
+  const targetSelectionRange: Range = Range.create(
+    expressionNode.startPosition.row,
+    expressionNode.startPosition.column,
+    expressionNode.endPosition.row,
+    expressionNode.endPosition.column
+  )
+  const locationLink: LocationLink = {
+    targetRange,
+    targetSelectionRange,
+    targetUri: `file://${resolve(path)}`,
+  }
+  return locationLink
+}
 
 export class ExpressionBuilder {
   constructor(private readonly parserAdapter: ParserAdapter) {}
@@ -25,6 +48,7 @@ export class ExpressionBuilder {
     parameterTypes: readonly ParameterTypeMeta[]
   ): ExpressionBuilderResult {
     const expressionLinks: ExpressionLink[] = []
+    const parameterTypeLinks: ParameterTypeLink[] = []
     const errors: Error[] = []
     const registry = new ParameterTypeRegistry()
     const expressionFactory = new ExpressionFactory(registry)
@@ -67,14 +91,16 @@ export class ExpressionBuilder {
         const matches = query.matches(tree.rootNode)
         for (const match of matches) {
           const nameNode = syntaxNode(match, 'name')
-          const regexpNode = syntaxNode(match, 'expression')
-          if (nameNode && regexpNode) {
-            defineParameterType(
-              makeParameterType(
-                toString(nameNode.text),
-                treeSitterLanguage.toStringOrRegExp(regexpNode.text)
-              )
+          const expressionNode = syntaxNode(match, 'expression')
+          const rootNode = syntaxNode(match, 'root')
+          if (nameNode && expressionNode && rootNode) {
+            const parameterType = makeParameterType(
+              toString(nameNode.text),
+              treeSitterLanguage.toStringOrRegExp(expressionNode.text)
             )
+            defineParameterType(parameterType)
+            const locationLink = createLocationLink(rootNode, expressionNode, source.path)
+            parameterTypeLinks.push({ parameterType, locationLink })
           }
         }
       }
@@ -98,23 +124,7 @@ export class ExpressionBuilder {
             const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expressionNode.text)
             try {
               const expression = expressionFactory.createExpression(stringOrRegexp)
-              const targetRange: Range = Range.create(
-                rootNode.startPosition.row,
-                rootNode.startPosition.column,
-                rootNode.endPosition.row,
-                rootNode.endPosition.column
-              )
-              const targetSelectionRange: Range = Range.create(
-                expressionNode.startPosition.row,
-                expressionNode.startPosition.column,
-                expressionNode.endPosition.row,
-                expressionNode.endPosition.column
-              )
-              const locationLink: LocationLink = {
-                targetRange,
-                targetSelectionRange,
-                targetUri: `file://${resolve(source.path)}`,
-              }
+              const locationLink = createLocationLink(rootNode, expressionNode, source.path)
               expressionLinks.push({ expression, locationLink })
             } catch (err) {
               errors.push(err)
@@ -124,13 +134,9 @@ export class ExpressionBuilder {
       }
     }
 
-    const sortedExpressionLinks = expressionLinks.sort((a, b) => {
-      const pathComparison = a.locationLink.targetUri.localeCompare(b.locationLink.targetUri)
-      if (pathComparison !== 0) return pathComparison
-      return a.locationLink.targetRange.start.line - b.locationLink.targetRange.start.line
-    })
     return {
-      expressionLinks: sortedExpressionLinks,
+      expressionLinks: sortLinks(expressionLinks),
+      parameterTypeLinks: sortLinks(parameterTypeLinks),
       errors,
       registry,
     }
@@ -149,4 +155,12 @@ function syntaxNode(match: Parser.QueryMatch, name: string): SyntaxNode | undefi
 
 function makeParameterType(name: string, regexp: string | RegExp) {
   return new ParameterType(name, regexp, Object, () => undefined, false, false)
+}
+
+function sortLinks<L extends Link>(links: L[]): readonly L[] {
+  return links.sort((a, b) => {
+    const pathComparison = a.locationLink.targetUri.localeCompare(b.locationLink.targetUri)
+    if (pathComparison !== 0) return pathComparison
+    return a.locationLink.targetRange.start.line - b.locationLink.targetRange.start.line
+  })
 }

@@ -32,7 +32,7 @@ export const rubyLanguage: Language = {
   (#eq? @method "ParameterType")
   (#eq? @name-key "name")
   (#eq? @regexp-key "regexp")
-)
+) @root
 `,
   ],
   defineStepDefinitionQueries: [

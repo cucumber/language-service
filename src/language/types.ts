@@ -1,4 +1,4 @@
-import { Expression, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
+import { Expression, ParameterType, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
 import { LocationLink } from 'vscode-languageserver-types'
 
@@ -49,6 +49,7 @@ export type Language = {
 
 export type ExpressionBuilderResult = {
   readonly expressionLinks: readonly ExpressionLink[]
+  readonly parameterTypeLinks: readonly ParameterTypeLink[]
   readonly errors: readonly Error[]
   readonly registry: ParameterTypeRegistry
 }
@@ -64,7 +65,14 @@ export interface ParserAdapter {
   query(source: string): Parser.Query
 }
 
-export type ExpressionLink = {
-  expression: Expression
+export type Link = {
   locationLink: LocationLink
+}
+
+export type ExpressionLink = Link & {
+  expression: Expression
+}
+
+export type ParameterTypeLink = Link & {
+  parameterType: ParameterType<unknown>
 }

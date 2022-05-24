@@ -34,7 +34,7 @@ export const typescriptLanguage: Language = {
   (#eq? @function-name "defineParameterType")
   (#eq? @name-key "name")
   (#eq? @regexp-key "regexp")
-)
+) @root
 `,
   ],
   defineStepDefinitionQueries: [
