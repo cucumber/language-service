@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Remove newlines from snippet templates
+
 ## [0.22.0] - 2022-05-24
 ### Added
 - Implement generate step definition ([#46](https://github.com/cucumber/language-service/pull/46))

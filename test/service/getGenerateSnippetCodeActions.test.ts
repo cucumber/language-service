@@ -80,7 +80,6 @@ describe('getGenerateSnippetCodeActions', () => {
                     },
                   },
                   newText: `
-
 Given('I have {int} cukes', (int: number) => {
   // Write code here that turns the phrase above into concrete actions
 })
@@ -163,7 +162,6 @@ Given('I have {int} cukes', (int: number) => {
                     },
                   },
                   newText: `
-
 Given('I have {int} cukes', (int: number) => {
   // Write code here that turns the phrase above into concrete actions
 })

@@ -43,7 +43,6 @@ export const csharpLanguage: Language = {
   },
 
   defaultSnippetTemplate: `
-
     [{{ stepKeyword }}("{{ expression }}")]
     public void {{ camelName }}({{ #parameters }}{{ type }} {{ name }}{{ #seenParameter }}, {{ /seenParameter }}{{ /parameters }})
     {

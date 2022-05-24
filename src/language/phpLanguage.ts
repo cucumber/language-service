@@ -32,7 +32,6 @@ export const phpLanguage: Language = {
     '': { type: 'Object', name: 'arg' },
   },
   defaultSnippetTemplate: `
-
     /**
      * {{ stepKeyword }} {{ expression }}
      */
