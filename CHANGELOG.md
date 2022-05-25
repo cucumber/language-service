@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Fixed
-- Fix parsing of Java regular expressions by unescaping `\\` to `\`.
+- Fix parsing of Java regular expressions by unescaping `\\` to `\`. ([#51](https://github.com/cucumber/language-service/pull/51))
 
 ## [0.23.0] - 2022-05-24
 ### Changed
