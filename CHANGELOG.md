@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Remove dependency on Node `path` from `ExpressionBuilder` in order to make the library work in a browser
+
+### Changed
+- `Source.path` has been renamed to `Source.uri`
+
 ## [0.24.1] - 2022-05-25
 ### Fixed
 - Fix handling of `And` and `But` which wasn't properly fixed in `0.24.0`

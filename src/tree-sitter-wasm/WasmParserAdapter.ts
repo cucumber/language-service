@@ -17,7 +17,11 @@ export class WasmParserAdapter implements ParserAdapter {
     const languages = await Promise.all(
       LanguageNames.map((languageName) => {
         const wasmUrl = `${this.wasmBaseUrl}/${languageName}.wasm`
-        return Parser.Language.load(wasmUrl)
+        try {
+          return Parser.Language.load(wasmUrl)
+        } catch (err) {
+          console.error(`Failed to load ${wasmUrl}: ${err.message}`)
+        }
       })
     )
     // @ts-ignore

@@ -23,7 +23,11 @@ describe('stepDefinitionSnippet', () => {
       )
 
       const expressionBuilder = new ExpressionBuilder(new NodeParserAdapter())
-      const source: Source<LanguageName> = { path: 'test.x', languageName, content: snippet }
+      const source: Source<LanguageName> = {
+        uri: 'file:///tmp/test.x',
+        languageName,
+        content: snippet,
+      }
       const result = expressionBuilder.build([source], [])
       if (result.expressionLinks.length === 1) {
         assert.strictEqual(result.expressionLinks[0].expression.source, '{int} is not {int}')
