@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Fix handling of `And` and `But` which wasn't properly fixed in `0.24.0`
+
 ## [0.24.0] - 2022-05-25
 ### Changed
 - The mustache templating syntax now uses different variables ([#54](https://github.com/cucumber/language-service/pull/54))

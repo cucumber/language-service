@@ -67,7 +67,7 @@ describe('getGherkinDiagnostics', () => {
     assert.deepStrictEqual(diagnostics, expectedDiagnostics)
   })
 
-  it('returns warning diagnostic for undefined step', () => {
+  it('returns warning diagnostic for undefined Given->And step', () => {
     const diagnostics = getGherkinDiagnostics(
       `Feature: Hello
   Scenario: Hi
@@ -94,6 +94,45 @@ describe('getGherkinDiagnostics', () => {
           },
           end: {
             line: 3,
+            character: 25,
+          },
+        },
+        severity: DiagnosticSeverity.Warning,
+        source: 'Cucumber',
+      },
+    ]
+    assert.deepStrictEqual(diagnostics, expectedDiagnostics)
+  })
+
+  it('returns warning diagnostic for undefined When->And->But step', () => {
+    const diagnostics = getGherkinDiagnostics(
+      `Feature: Hello
+  Scenario: Hi
+    Given a defined step
+    When a defined step
+    And a defined step
+    But an undefined step
+`,
+      [new CucumberExpression('a defined step', new ParameterTypeRegistry())]
+    )
+    const expectedDiagnostics: Diagnostic[] = [
+      {
+        code: 'cucumber.undefined-step',
+        codeDescription: {
+          href: 'https://cucumber.io/docs/cucumber/step-definitions/',
+        },
+        data: {
+          snippetKeyword: 'When ',
+          stepText: 'an undefined step',
+        },
+        message: 'Undefined step: an undefined step',
+        range: {
+          start: {
+            line: 5,
+            character: 8,
+          },
+          end: {
+            line: 5,
             character: 25,
           },
         },

@@ -58,8 +58,8 @@ export function getGherkinDiagnostics(
       if (inScenarioOutline) {
         return diagnostics
       }
-      if (codeKeywords.includes(step.text)) {
-        snippetKeyword = step.text
+      if (codeKeywords.includes(step.keyword)) {
+        snippetKeyword = step.keyword
       }
 
       if (isUndefined(step.text, expressions) && step.location.column !== undefined) {
