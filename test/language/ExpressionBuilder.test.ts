@@ -69,11 +69,9 @@ Please register a ParameterType for 'undefined-parameter'`,
         // Verify that the extracted expressions actually work
         let matched = false
         for (const expressionLink of result.expressionLinks) {
-          const cukexp =
-            expressionLink.expression instanceof CucumberExpression
-              ? expressionLink.expression
-              : undefined
-          if (expressionLink.expression.match('a 2020-12-24')) {
+          const match = expressionLink.expression.match('a 2020-12-24')
+          if (match) {
+            assert.strictEqual(match[0].getValue(undefined), '2020-12-24')
             matched = true
           }
         }

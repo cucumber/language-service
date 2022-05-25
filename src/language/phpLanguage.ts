@@ -11,7 +11,8 @@ export const phpLanguage: Language = {
 ) @root
 `,
   ],
-  convertParameterTypeExpression(_s: string): RegExp {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  convertParameterTypeExpression(s: string): RegExp {
     throw new Error('Unsupported operation')
   },
   convertStepDefinitionExpression(s: string): string | RegExp {

@@ -22,7 +22,8 @@ export const csharpLanguage: Language = {
 ) @root
 `,
   ],
-  convertParameterTypeExpression(_s) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  convertParameterTypeExpression(s) {
     throw new Error('Unsupported operation')
   },
   convertStepDefinitionExpression(s) {

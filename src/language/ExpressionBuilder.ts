@@ -156,7 +156,7 @@ function syntaxNode(match: Parser.QueryMatch, name: string): SyntaxNode | undefi
 }
 
 function makeParameterType(name: string, regexp: string | RegExp) {
-  return new ParameterType(name, regexp, Object, () => undefined, true, false)
+  return new ParameterType(name, regexp, Object, (arg) => arg, true, false)
 }
 
 function sortLinks<L extends Link>(links: L[]): readonly L[] {
