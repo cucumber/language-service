@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.24.1] - 2022-05-25
 ### Fixed
 - Fix handling of `And` and `But` which wasn't properly fixed in `0.24.0`
 
@@ -208,7 +209,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.24.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.24.1...HEAD
+[0.24.1]: https://github.com/cucumber/language-service/compare/v0.24.0...v0.24.1
 [0.24.0]: https://github.com/cucumber/language-service/compare/v0.23.1...v0.24.0
 [0.23.1]: https://github.com/cucumber/language-service/compare/v0.23.0...v0.23.1
 [0.23.0]: https://github.com/cucumber/language-service/compare/v0.22.2...v0.23.0
