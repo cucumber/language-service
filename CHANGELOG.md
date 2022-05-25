@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-### Fixed
-- Remove dependency on Node `path` from `ExpressionBuilder` in order to make the library work in a browser
-
+## [0.25.0] - 2022-05-25
 ### Changed
 - `Source.path` has been renamed to `Source.uri`
+
+### Fixed
+- Remove dependency on Node `path` from `ExpressionBuilder` in order to make the library work in a browser
 
 ## [0.24.1] - 2022-05-25
 ### Fixed
@@ -215,7 +216,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.24.1...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.25.0...HEAD
+[0.25.0]: https://github.com/cucumber/language-service/compare/v0.24.1...v0.25.0
 [0.24.1]: https://github.com/cucumber/language-service/compare/v0.24.0...v0.24.1
 [0.24.0]: https://github.com/cucumber/language-service/compare/v0.23.1...v0.24.0
 [0.23.1]: https://github.com/cucumber/language-service/compare/v0.23.0...v0.23.1
