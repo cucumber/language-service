@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+* Undefined `And` and `But` steps now generate the correct `Given`, `When` or `Then` keyword, based on parent step(s) ([#54](https://github.com/cucumber/language-service/pull/54))
+* Parameters are excluded from method names ([#54](https://github.com/cucumber/language-service/pull/54))
+* Generated C# step definitions include the keyword in the method name ([#54](https://github.com/cucumber/language-service/pull/54))
+
+### Changed
+* The mustache templating syntax now uses different variables ([#54](https://github.com/cucumber/language-service/pull/54))
+
 ## [0.23.1] - 2022-05-25
 ### Fixed
 - Fix parsing of Java regular expressions by unescaping `\\` to `\`. ([#51](https://github.com/cucumber/language-service/pull/51))
