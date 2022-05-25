@@ -29,7 +29,7 @@ If your contribution is to add support for a new programming language, follow th
 5. Add a new `src/language/{language}Language.ts` file
    - If the Cucumber implementation does not support Cucumber Expressions, make `defineParameterTypeQueries` an empty array
 6. Add the name of the new language to the `LanguageName` type
-7. Update `treeSitterLanguageByName` in `src/language/ExpressionBuilder.ts`
+7. Update `languageByName` in `src/language/language.ts`
 8. Update `src/tree-sitter-node/NodeParserAdapter.ts`
 9. Run tests
 
