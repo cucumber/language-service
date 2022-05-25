@@ -73,9 +73,18 @@ export const javaLanguage: Language = {
 `,
   ],
 
-  toStringOrRegExp(s: string): string | RegExp {
+  convertParameterTypeExpression(s: string): RegExp {
+    const match = s.match(/^"(.*)"$/)
+    if (!match) throw new Error(`Could not match ${s}`)
+    return unescapeRegExp(match[1])
+  },
+
+  convertStepDefinitionExpression(s: string): string | RegExp {
     const match = s.match(/^"(\^.*\$)"$/)
-    if (match) return new RegExp(match[1])
+    if (match) {
+      const regExp = unescapeRegExp(match[1])
+      return new RegExp(regExp)
+    }
     return s.substring(1, s.length - 1)
   },
 
@@ -98,4 +107,9 @@ export const javaLanguage: Language = {
         // {{ blurb }}
     }
 `,
+}
+
+// Java escapes \ as \\. Turn \\ back to \.
+function unescapeRegExp(regexp: string): RegExp {
+  return new RegExp(regexp.replace(/\\\\/g, '\\'))
 }

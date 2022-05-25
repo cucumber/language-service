@@ -52,11 +52,12 @@ export const typescriptLanguage: Language = {
 `,
   ],
 
-  toStringOrRegExp(s: string): string | RegExp {
-    const match = s.match(/^([/'"])(.*)([/'"])$/)
-    if (!match) throw new Error(`Could not match ${s}`)
-    if (match[1] === '/' && match[3] === '/') return new RegExp(match[2])
-    return match[2]
+  convertParameterTypeExpression(s: string) {
+    return toStringOrRegExp(s)
+  },
+
+  convertStepDefinitionExpression(s: string) {
+    return toStringOrRegExp(s)
   },
 
   snippetParameters: {
@@ -78,4 +79,11 @@ export const typescriptLanguage: Language = {
   // {{ blurb }}
 })
 `,
+}
+
+function toStringOrRegExp(s: string): string | RegExp {
+  const match = s.match(/^([/'"])(.*)([/'"])$/)
+  if (!match) throw new Error(`Could not match ${s}`)
+  if (match[1] === '/' && match[3] === '/') return new RegExp(match[2])
+  return match[2]
 }

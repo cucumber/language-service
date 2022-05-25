@@ -22,7 +22,10 @@ export const csharpLanguage: Language = {
 ) @root
 `,
   ],
-  toStringOrRegExp(s) {
+  convertParameterTypeExpression(_s) {
+    throw new Error('Unsupported operation')
+  },
+  convertStepDefinitionExpression(s) {
     const match = s.match(/^([@$'"]+)(.*)"$/)
     if (!match) throw new Error(`Could not match ${s}`)
     return new RegExp(match[2])

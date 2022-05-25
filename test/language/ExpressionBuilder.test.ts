@@ -21,7 +21,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
 
   for (const dir of glob.sync(`test/language/testdata/*`)) {
     const languageName = basename(dir) as LanguageName
-    // if (language !== 'ruby') {
+    // if (languageName !== 'php') {
     //   continue
     // }
     it(`builds parameter types and expressions from ${languageName} source`, async () => {
@@ -65,6 +65,19 @@ an {undefined-parameter}
 Undefined parameter type 'undefined-parameter'.
 Please register a ParameterType for 'undefined-parameter'`,
         ])
+
+        // Verify that the extracted expressions actually work
+        let matched = false
+        for (const expressionLink of result.expressionLinks) {
+          const cukexp =
+            expressionLink.expression instanceof CucumberExpression
+              ? expressionLink.expression
+              : undefined
+          if (expressionLink.expression.match('a 2020-12-24')) {
+            matched = true
+          }
+        }
+        assert(matched, 'The generated expressions did not match parameter type {date}')
       } else {
         assert.deepStrictEqual(expressions, [/^a regexp$/])
         assert.deepStrictEqual(errors, ['There is already a parameter type with name int'])

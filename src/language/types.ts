@@ -44,7 +44,8 @@ export type Language = {
   readonly defineParameterTypeQueries: readonly string[]
   readonly defineStepDefinitionQueries: readonly string[]
   readonly snippetParameters: SnippetParameters
-  toStringOrRegExp(expression: string): string | RegExp
+  convertStepDefinitionExpression(expression: string): string | RegExp
+  convertParameterTypeExpression(expression: string): string | RegExp
 }
 
 export type ExpressionBuilderResult = {
