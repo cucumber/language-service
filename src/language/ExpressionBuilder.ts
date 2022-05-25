@@ -3,9 +3,8 @@ import {
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
-import { resolve } from 'path'
 import Parser, { SyntaxNode } from 'tree-sitter'
-import { LocationLink, Range } from 'vscode-languageserver-types'
+import { DocumentUri, LocationLink, Range } from 'vscode-languageserver-types'
 
 import { getLanguage } from './languages.js'
 import {
@@ -18,27 +17,6 @@ import {
   ParserAdapter,
   Source,
 } from './types.js'
-
-function createLocationLink(rootNode: SyntaxNode, expressionNode: SyntaxNode, path: string) {
-  const targetRange: Range = Range.create(
-    rootNode.startPosition.row,
-    rootNode.startPosition.column,
-    rootNode.endPosition.row,
-    rootNode.endPosition.column
-  )
-  const targetSelectionRange: Range = Range.create(
-    expressionNode.startPosition.row,
-    expressionNode.startPosition.column,
-    expressionNode.endPosition.row,
-    expressionNode.endPosition.column
-  )
-  const locationLink: LocationLink = {
-    targetRange,
-    targetSelectionRange,
-    targetUri: `file://${resolve(path)}`,
-  }
-  return locationLink
-}
 
 export class ExpressionBuilder {
   constructor(private readonly parserAdapter: ParserAdapter) {}
@@ -80,7 +58,7 @@ export class ExpressionBuilder {
       try {
         tree = parse(source)
       } catch (err) {
-        err.message += `\npath: ${source.path}`
+        err.message += `\nuri: ${source.uri}`
         errors.push(err)
         continue
       }
@@ -99,7 +77,7 @@ export class ExpressionBuilder {
               language.convertParameterTypeExpression(expressionNode.text)
             )
             defineParameterType(parameterType)
-            const locationLink = createLocationLink(rootNode, expressionNode, source.path)
+            const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
             parameterTypeLinks.push({ parameterType, locationLink })
           }
         }
@@ -113,20 +91,18 @@ export class ExpressionBuilder {
         continue
       }
 
-      const treeSitterLanguage = getLanguage(source.languageName)
-      for (const defineStepDefinitionQuery of treeSitterLanguage.defineStepDefinitionQueries) {
+      const language = getLanguage(source.languageName)
+      for (const defineStepDefinitionQuery of language.defineStepDefinitionQueries) {
         const query = this.parserAdapter.query(defineStepDefinitionQuery)
         const matches = query.matches(tree.rootNode)
         for (const match of matches) {
           const expressionNode = syntaxNode(match, 'expression')
           const rootNode = syntaxNode(match, 'root')
           if (expressionNode && rootNode) {
-            const stringOrRegexp = treeSitterLanguage.convertStepDefinitionExpression(
-              expressionNode.text
-            )
+            const stringOrRegexp = language.convertStepDefinitionExpression(expressionNode.text)
             try {
               const expression = expressionFactory.createExpression(stringOrRegexp)
-              const locationLink = createLocationLink(rootNode, expressionNode, source.path)
+              const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
               expressionLinks.push({ expression, locationLink })
             } catch (err) {
               errors.push(err)
@@ -165,4 +141,29 @@ function sortLinks<L extends Link>(links: L[]): readonly L[] {
     if (pathComparison !== 0) return pathComparison
     return a.locationLink.targetRange.start.line - b.locationLink.targetRange.start.line
   })
+}
+
+function createLocationLink(
+  rootNode: SyntaxNode,
+  expressionNode: SyntaxNode,
+  targetUri: DocumentUri
+) {
+  const targetRange: Range = Range.create(
+    rootNode.startPosition.row,
+    rootNode.startPosition.column,
+    rootNode.endPosition.row,
+    rootNode.endPosition.column
+  )
+  const targetSelectionRange: Range = Range.create(
+    expressionNode.startPosition.row,
+    expressionNode.startPosition.column,
+    expressionNode.endPosition.row,
+    expressionNode.endPosition.column
+  )
+  const locationLink: LocationLink = {
+    targetRange,
+    targetSelectionRange,
+    targetUri,
+  }
+  return locationLink
 }

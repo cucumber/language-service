@@ -1,6 +1,6 @@
 import { Expression, ParameterType, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import Parser from 'tree-sitter'
-import { LocationLink } from 'vscode-languageserver-types'
+import { DocumentUri, LocationLink } from 'vscode-languageserver-types'
 
 export type ParameterTypeName =
   | 'int'
@@ -35,7 +35,7 @@ export type LanguageName = typeof LanguageNames[number]
 
 export type Source<L> = {
   readonly languageName: L
-  readonly path: string
+  readonly uri: DocumentUri
   readonly content: string
 }
 

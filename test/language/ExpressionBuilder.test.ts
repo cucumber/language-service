@@ -2,7 +2,7 @@ import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expres
 import assert from 'assert'
 import { readFile } from 'fs/promises'
 import glob from 'glob'
-import { basename } from 'path'
+import { basename, resolve } from 'path'
 
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'
 import { ParserAdapter, Source } from '../../src/language/types.js'
@@ -30,7 +30,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
           return readFile(path, 'utf-8').then((content) => ({
             languageName,
             content,
-            path,
+            uri: `file://${resolve(path)}`,
           }))
         })
       )
