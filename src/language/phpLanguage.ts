@@ -11,7 +11,11 @@ export const phpLanguage: Language = {
 ) @root
 `,
   ],
-  toStringOrRegExp(s: string): string | RegExp {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  convertParameterTypeExpression(s: string): RegExp {
+    throw new Error('Unsupported operation')
+  },
+  convertStepDefinitionExpression(s: string): string | RegExp {
     // match multiline comment
     const match = s.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
     if (!match) throw new Error(`Could not match ${s}`)
@@ -37,7 +41,7 @@ export const phpLanguage: Language = {
      */
     public function {{ snakeName }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}{{ /parameters }})
     {
-      // {{ blurb }}
+        // {{ blurb }}
     }
 `,
 }

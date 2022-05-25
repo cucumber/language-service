@@ -85,8 +85,8 @@ export class ExpressionBuilder {
         continue
       }
 
-      const treeSitterLanguage = getLanguage(source.languageName)
-      for (const defineParameterTypeQuery of treeSitterLanguage.defineParameterTypeQueries) {
+      const language = getLanguage(source.languageName)
+      for (const defineParameterTypeQuery of language.defineParameterTypeQueries) {
         const query = this.parserAdapter.query(defineParameterTypeQuery)
         const matches = query.matches(tree.rootNode)
         for (const match of matches) {
@@ -96,7 +96,7 @@ export class ExpressionBuilder {
           if (nameNode && expressionNode && rootNode) {
             const parameterType = makeParameterType(
               toString(nameNode.text),
-              treeSitterLanguage.toStringOrRegExp(expressionNode.text)
+              language.convertParameterTypeExpression(expressionNode.text)
             )
             defineParameterType(parameterType)
             const locationLink = createLocationLink(rootNode, expressionNode, source.path)
@@ -121,7 +121,9 @@ export class ExpressionBuilder {
           const expressionNode = syntaxNode(match, 'expression')
           const rootNode = syntaxNode(match, 'root')
           if (expressionNode && rootNode) {
-            const stringOrRegexp = treeSitterLanguage.toStringOrRegExp(expressionNode.text)
+            const stringOrRegexp = treeSitterLanguage.convertStepDefinitionExpression(
+              expressionNode.text
+            )
             try {
               const expression = expressionFactory.createExpression(stringOrRegexp)
               const locationLink = createLocationLink(rootNode, expressionNode, source.path)
@@ -154,7 +156,7 @@ function syntaxNode(match: Parser.QueryMatch, name: string): SyntaxNode | undefi
 }
 
 function makeParameterType(name: string, regexp: string | RegExp) {
-  return new ParameterType(name, regexp, Object, () => undefined, false, false)
+  return new ParameterType(name, regexp, Object, (arg) => arg, true, false)
 }
 
 function sortLinks<L extends Link>(links: L[]): readonly L[] {
