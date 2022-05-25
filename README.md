@@ -14,21 +14,12 @@ and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
   - [x] PHP
   - [x] Ruby
   - [ ] [JavaScript](https://github.com/cucumber/language-service/issues/42)
-- [x] Formatting / pretty printing
-- [x] Handle parse errors
+  - [ ] [Python](https://github.com/cucumber/language-service/issues/49)
+- [x] Go to step definition
+- [x] Generate step definition
 - [x] Code completion
   - [x] Steps
   - [ ] Generic Gherkin keywords
-- [x] Syntax validation
-  - [x] Parse errors
-  - [x] Undefined steps
-  - [ ] Ambiguous steps
-  - [x] Ignore Scenario Outline steps
-- [x] [Semantic tokens](https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_semanticTokens) (syntax highlighting)
-  - [x] Gherkin keywords
-  - [x] Gherkin step parameters
-  - [x] DocStrings
-  - [x] Data tables
-  - [x] Tags
-  - [x] Scenario Outline step <placeholders>
-  - [x] Examples tables headers
+- [x] Formatting / pretty printing
+- [x] Syntax highlighting
+- [x] Syntax validation (underline undefined steps)
