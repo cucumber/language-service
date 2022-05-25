@@ -46,7 +46,6 @@ export class MessagesBuilder {
       }
     }
     if (envelope.stepDefinition) {
-      // TODO: Register Cucumber-JVM parameter types if they haven't already been defined
       const expr =
         envelope.stepDefinition.pattern.type === StepDefinitionPatternType.CUCUMBER_EXPRESSION
           ? envelope.stepDefinition.pattern.source
