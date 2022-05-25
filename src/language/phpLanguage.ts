@@ -37,9 +37,9 @@ export const phpLanguage: Language = {
   },
   defaultSnippetTemplate: `
     /**
-     * {{ stepKeyword }} {{ expression }}
+     * {{ keyword }} {{ expression }}
      */
-    public function {{ snakeName }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}{{ /parameters }})
+    public function {{ #camelize }}{{ expression }}{{ /camelize }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}{{ /parameters }})
     {
         // {{ blurb }}
     }

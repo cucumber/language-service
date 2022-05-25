@@ -7,7 +7,7 @@ import { makeUndefinedStepDiagnostic } from '../../src/service/getGherkinDiagnos
 
 describe('getGenerateSnippetCodeAction', () => {
   it('generates code in a new file', () => {
-    const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'Given ', 'I have 43 cukes')
+    const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'And ', 'I have 43 cukes', 'Given ')
 
     const targetRange = Range.create(10, 0, 10, 0)
     const link: LocationLink = {
@@ -46,7 +46,7 @@ describe('getGenerateSnippetCodeAction', () => {
             href: 'https://cucumber.io/docs/cucumber/step-definitions/',
           },
           data: {
-            stepKeyword: 'Given ',
+            snippetKeyword: 'Given ',
             stepText: 'I have 43 cukes',
           },
         },
@@ -96,7 +96,7 @@ Given('I have {int} cukes', (int: number) => {
   })
 
   it('generates code in an existing file', () => {
-    const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'Given ', 'I have 43 cukes')
+    const diagnostic = makeUndefinedStepDiagnostic(10, 4, 'But ', 'I have 43 cukes', 'Given ')
 
     const targetRange = Range.create(10, 0, 10, 0)
     const link: LocationLink = {
@@ -136,7 +136,7 @@ Given('I have {int} cukes', (int: number) => {
             href: 'https://cucumber.io/docs/cucumber/step-definitions/',
           },
           data: {
-            stepKeyword: 'Given ',
+            snippetKeyword: 'Given ',
             stepText: 'I have 43 cukes',
           },
         },

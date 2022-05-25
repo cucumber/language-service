@@ -37,7 +37,7 @@ export function getGenerateSnippetCodeAction(
 ): CodeAction | null {
   const undefinedStepDiagnostic = diagnostics.find((d) => d.code === diagnosticCodeUndefinedStep)
   const language = getLanguage(languageName)
-  const stepKeyword = undefinedStepDiagnostic?.data?.stepKeyword
+  const snippetKeyword = undefinedStepDiagnostic?.data?.snippetKeyword
   const stepText = undefinedStepDiagnostic?.data?.stepText
   if (!undefinedStepDiagnostic || !stepText) {
     return null
@@ -46,7 +46,7 @@ export function getGenerateSnippetCodeAction(
   const generatedExpressions = generator.generateExpressions(stepText)
 
   const snippet = stepDefinitionSnippet(
-    stepKeyword,
+    snippetKeyword,
     generatedExpressions,
     mustacheTemplate || language.defaultSnippetTemplate,
     language.snippetParameters

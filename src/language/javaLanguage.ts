@@ -102,8 +102,8 @@ export const javaLanguage: Language = {
     '': { type: 'Object', name: 'arg' },
   },
   defaultSnippetTemplate: `
-    @{{ stepKeyword }}("{{ expression }}")
-    public void {{ snakeName }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ type }} {{ name }}{{ /parameters }}) {
+    @{{ keyword }}("{{ expression }}")
+    public void {{ #underscore }}{{ expression }}{{ /underscore }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ type }} {{ name }}{{ /parameters }}) {
         // {{ blurb }}
     }
 `,

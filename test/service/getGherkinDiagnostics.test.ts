@@ -71,9 +71,10 @@ describe('getGherkinDiagnostics', () => {
     const diagnostics = getGherkinDiagnostics(
       `Feature: Hello
   Scenario: Hi
-    Given an undefined step
+    Given a defined step
+    And an undefined step
 `,
-      []
+      [new CucumberExpression('a defined step', new ParameterTypeRegistry())]
     )
     const expectedDiagnostics: Diagnostic[] = [
       {
@@ -82,18 +83,18 @@ describe('getGherkinDiagnostics', () => {
           href: 'https://cucumber.io/docs/cucumber/step-definitions/',
         },
         data: {
-          stepKeyword: 'Given ',
+          snippetKeyword: 'Given ',
           stepText: 'an undefined step',
         },
         message: 'Undefined step: an undefined step',
         range: {
           start: {
-            line: 2,
-            character: 10,
+            line: 3,
+            character: 8,
           },
           end: {
-            line: 2,
-            character: 27,
+            line: 3,
+            character: 25,
           },
         },
         severity: DiagnosticSeverity.Warning,

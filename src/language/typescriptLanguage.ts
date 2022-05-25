@@ -75,7 +75,7 @@ export const typescriptLanguage: Language = {
   },
 
   defaultSnippetTemplate: `
-{{ stepKeyword }}('{{ expression }}', ({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}: {{ type }}{{ /parameters }}) => {
+{{ keyword }}('{{ expression }}', ({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}: {{ type }}{{ /parameters }}) => {
   // {{ blurb }}
 })
 `,

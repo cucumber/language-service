@@ -1,5 +1,5 @@
 import { Expression } from '@cucumber/cucumber-expressions'
-import { Errors } from '@cucumber/gherkin'
+import { dialects, Errors } from '@cucumber/gherkin'
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
 import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
 
@@ -39,21 +39,29 @@ export function getGherkinDiagnostics(
     }
   }
 
-  if (!gherkinDocument) {
+  if (!gherkinDocument?.feature) {
     return diagnostics
   }
 
   let inScenarioOutline = false
+  const dialect = dialects[gherkinDocument.feature.language]
+  const noStars = (keyword: string) => keyword !== '* '
+  const codeKeywords = [...dialect.given, ...dialect.when, ...dialect.then].filter(noStars)
+  let snippetKeyword = dialect.given.filter(noStars)[0]
 
   return walkGherkinDocument<Diagnostic[]>(gherkinDocument, diagnostics, {
-    scenario(scenario, arr) {
+    scenario(scenario, diagnostics) {
       inScenarioOutline = (scenario.examples || []).length > 0
-      return arr
+      return diagnostics
     },
-    step(step, arr) {
+    step(step, diagnostics) {
       if (inScenarioOutline) {
-        return arr
+        return diagnostics
       }
+      if (codeKeywords.includes(step.text)) {
+        snippetKeyword = step.text
+      }
+
       if (isUndefined(step.text, expressions) && step.location.column !== undefined) {
         const line = step.location.line - 1
         const character = step.location.column - 1 + step.keyword.length
@@ -61,11 +69,12 @@ export function getGherkinDiagnostics(
           line,
           character,
           step.keyword,
-          step.text
+          step.text,
+          snippetKeyword
         )
-        return arr.concat(diagnostic)
+        return diagnostics.concat(diagnostic)
       }
-      return arr
+      return diagnostics
     },
   })
 }
@@ -74,7 +83,8 @@ export function makeUndefinedStepDiagnostic(
   line: number,
   character: number,
   stepKeyword: string,
-  stepText: string
+  stepText: string,
+  snippetKeyword: string
 ): Diagnostic {
   return {
     severity: DiagnosticSeverity.Warning,
@@ -95,7 +105,7 @@ export function makeUndefinedStepDiagnostic(
       href: 'https://cucumber.io/docs/cucumber/step-definitions/',
     },
     data: {
-      stepKeyword,
+      snippetKeyword,
       stepText,
     },
   }

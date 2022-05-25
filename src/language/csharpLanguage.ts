@@ -47,8 +47,9 @@ export const csharpLanguage: Language = {
   },
 
   defaultSnippetTemplate: `
-    [{{ stepKeyword }}("{{ expression }}")]
-    public void {{ camelName }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ type }} {{ name }}{{ /parameters }})
+    // This step definition uses Cucumber Expressions. See https://github.com/gasparnagy/CucumberExpressions.SpecFlow
+    [{{ keyword }}("{{ expression }}")]
+    public void {{ #capitalize }}{{ #camelize }}{{ keyword }} {{expression}}{{ /camelize }}{{ /capitalize }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ type }} {{ name }}{{ /parameters }})
     {
         // {{ blurb }}
     }

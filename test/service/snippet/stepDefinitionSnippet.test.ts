@@ -9,6 +9,7 @@ import { NodeParserAdapter } from '../../../src/tree-sitter-node/NodeParserAdapt
 
 describe('stepDefinitionSnippet', () => {
   for (const languageName of Object.values(LanguageNames)) {
+    // if (languageName !== 'c_sharp') continue
     it(`generates a snippet for ${languageName}`, () => {
       const registry = new ParameterTypeRegistry()
       const generator = new CucumberExpressionGenerator(() => registry.parameterTypes)
@@ -26,10 +27,9 @@ describe('stepDefinitionSnippet', () => {
       const result = expressionBuilder.build([source], [])
       if (result.expressionLinks.length === 1) {
         assert.strictEqual(result.expressionLinks[0].expression.source, '{int} is not {int}')
-      } else {
-        console.log(`### Manually verify that this is valid ${languageName}:`)
-        console.log(snippet)
       }
+      console.log(`### Manually verify that this is valid ${languageName}:`)
+      console.log(snippet)
     })
   }
 })
