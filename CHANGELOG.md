@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Handle Cucumber Expression optionals not preceded by space in suggestions 
+
 ## [0.25.0] - 2022-05-25
 ### Changed
 - `Source.path` has been renamed to `Source.uri`
