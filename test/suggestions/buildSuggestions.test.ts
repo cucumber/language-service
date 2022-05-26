@@ -81,6 +81,24 @@ describe('buildSuggestions', () => {
     )
   })
 
+  it('builds suggestions from another RegularExpression', () => {
+    const parameterTypeRegistry = new ParameterTypeRegistry()
+    const ef = new ExpressionFactory(parameterTypeRegistry)
+    const expression = ef.createExpression(/^the price of a "(.*?)" is (\d+)c$/)
+    assertSuggestions(
+      parameterTypeRegistry,
+      ['the price of a "lemon" is 34c', 'the price of a "pear" is 48c'],
+      [expression],
+      [
+        {
+          label: '^the price of a "(.*?)" is (\\d+)c$',
+          segments: ['the price of a "', ['lemon', 'pear'], '" is ', ['...'], 'c'],
+          matched: true,
+        },
+      ]
+    )
+  })
+
   it('builds suggestions with a max number of choices', () => {
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const ef = new ExpressionFactory(parameterTypeRegistry)

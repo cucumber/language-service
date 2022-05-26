@@ -38,4 +38,20 @@ describe('buildSuggestionsFromRegularExpression', () => {
     })
     assert.deepStrictEqual(actual, [expected])
   })
+
+  it('builds suggestions for regexp without choices', () => {
+    const expression = new RegularExpression(/^the price of a "(.*?)" is (\d+)c$/, registry)
+    const expected: Suggestion = {
+      segments: ['the price of a "', ['...'], '" is ', ['...'], 'c'],
+      label: '^the price of a "(.*?)" is (\\d+)c$',
+      matched: true,
+    }
+    const actual = buildSuggestionsFromRegularExpression(
+      expression,
+      registry,
+      ['the price of a "lemon" is 34c'],
+      {}
+    )
+    assert.deepStrictEqual(actual, [expected])
+  })
 })

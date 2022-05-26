@@ -24,7 +24,7 @@ export function buildSuggestionsFromRegularExpression(
         const parameterType = parameterTypes[argIndex]
 
         const key = parameterType.regexpStrings.join('|')
-        const parameterSegment = parameterChoices[key]
+        const parameterSegment = parameterChoices[key] || ['...']
         segments.push(parameterSegment)
 
         if (arg.group.end !== undefined) index = arg.group.end
