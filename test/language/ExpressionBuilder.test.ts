@@ -86,9 +86,15 @@ Please register a ParameterType for 'undefined-parameter'`,
 }
 
 describe('ExpressionBuilder', () => {
-  context('with NodeParserAdapter', () => {
-    defineContract(() => new NodeParserAdapter())
-  })
+  if (!fs.existsSync('node_modules/tree-sitter-java')) {
+    console.info(
+      'Skipping tests with NodeParserAdapter - node_modules/tree-sitter* are not installed'
+    )
+  } else {
+    context('with NodeParserAdapter', () => {
+      defineContract(() => new NodeParserAdapter())
+    })
+  }
 
   if (!fs.existsSync('dist/java.wasm')) {
     console.info('Skipping tests with WasmParserAdapter - the dist/*.wasm files are not built')
