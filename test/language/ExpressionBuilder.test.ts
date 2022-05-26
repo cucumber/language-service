@@ -1,5 +1,6 @@
 import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
+import fs from 'fs'
 import { readFile } from 'fs/promises'
 import glob from 'glob'
 import { basename, resolve } from 'path'
@@ -89,7 +90,11 @@ describe('ExpressionBuilder', () => {
     defineContract(() => new NodeParserAdapter())
   })
 
-  context('with WasmParserAdapter', () => {
-    defineContract(() => new WasmParserAdapter('dist'))
-  })
+  if (!fs.existsSync('dist/java.wasm')) {
+    console.info('Skipping tests with WasmParserAdapter - the dist/*.wasm files are not built')
+  } else {
+    context('with WasmParserAdapter', () => {
+      defineContract(() => new WasmParserAdapter('dist'))
+    })
+  }
 })
