@@ -14,12 +14,20 @@ export function buildSuggestionFromCucumberExpression(
   registry: ParameterTypeRegistry,
   parameterChoices: ParameterChoices
 ): Suggestion {
-  const compiledSegments = compile(expression.ast, registry, parameterChoices)
-  const segments = flatten(compiledSegments)
-  return {
-    label: expression.source,
-    segments,
-    matched: true,
+  try {
+    const compiledSegments = compile(expression.ast, registry, parameterChoices)
+    const segments = flatten(compiledSegments)
+    return {
+      label: expression.source,
+      segments,
+      matched: true,
+    }
+  } catch (err) {
+    err.message += `
+Unable to compile Cucumber Expression "${expression.source}"
+Please submit an issue at https://github.com/cucumber/language-service/issues
+`
+    throw err
   }
 }
 
@@ -73,7 +81,7 @@ function compile(
 
 function compileOptional(node: Node): CompileResult {
   if (node.nodes === undefined) throw new Error('No optional')
-  return [node.nodes[0].text(), '']
+  return [node.nodes.map((node) => node.text()).join('')]
 }
 
 function compileAlternation(
@@ -113,11 +121,11 @@ function compileExpression(
     // If we have an optional, we'll create two choice segments - one with and one without the optional
     if (curr.type === NodeType.optional) {
       const last = prev[prev.length - 1]
-      if (!(typeof last === 'string')) {
-        throw new Error(`Expected a string, but was ${JSON.stringify(last)}`)
-      }
       if (!Array.isArray(child)) {
         throw new Error(`Expected an array, but was ${JSON.stringify(child)}`)
+      }
+      if (typeof last !== 'string' || last.trim() === '') {
+        return prev.concat(child[0])
       }
       return prev.slice(0, prev.length - 1).concat([[last, last + child[0]]])
     } else {
