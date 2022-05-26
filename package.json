@@ -56,6 +56,26 @@
     "url": "https://github.com/cucumber/language-service/issues"
   },
   "homepage": "https://github.com/cucumber/language-service#readme",
+  "dependencies": {
+    "@cucumber/cucumber-expressions": "^15.2.0",
+    "@cucumber/gherkin": "^23.0.1",
+    "@cucumber/gherkin-utils": "^7.0.0",
+    "@cucumber/messages": "^18.0.0",
+    "@types/js-search": "1.4.0",
+    "@types/mustache": "4.1.2",
+    "fuse.js": "6.6.2",
+    "js-search": "2.0.0",
+    "mustache": "4.2.0",
+    "vscode-languageserver-types": "3.17.1"
+  },
+  "optionalDependencies": {
+    "tree-sitter": "0.20.0",
+    "tree-sitter-c-sharp": "0.19.1",
+    "tree-sitter-java": "0.19.1",
+    "tree-sitter-php": "0.19.0",
+    "tree-sitter-ruby": "0.19.0",
+    "tree-sitter-typescript": "0.20.1"
+  },
   "devDependencies": {
     "@cucumber/cucumber": "^8.2.1",
     "@cucumber/message-streams": "^4.0.1",
@@ -84,23 +104,5 @@
   },
   "peerDependencies": {
     "web-tree-sitter": "^0.20.5"
-  },
-  "dependencies": {
-    "@cucumber/cucumber-expressions": "^15.2.0",
-    "@cucumber/gherkin": "^23.0.1",
-    "@cucumber/gherkin-utils": "^7.0.0",
-    "@cucumber/messages": "^18.0.0",
-    "@types/js-search": "1.4.0",
-    "@types/mustache": "4.1.2",
-    "fuse.js": "6.6.2",
-    "js-search": "2.0.0",
-    "mustache": "4.2.0",
-    "tree-sitter": "0.20.0",
-    "tree-sitter-c-sharp": "0.19.1",
-    "tree-sitter-java": "0.19.1",
-    "tree-sitter-php": "0.19.0",
-    "tree-sitter-ruby": "0.19.0",
-    "tree-sitter-typescript": "0.20.1",
-    "vscode-languageserver-types": "3.17.1"
   }
 }
