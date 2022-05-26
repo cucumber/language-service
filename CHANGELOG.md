@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.27.0] - 2022-05-26
 ### Fixed
 - Make all `tree-sitter-{language}` dependencies optional. They are only needed at runtime for the `NodeParserAdapter` - the
-  `WasmParserAdapter` does not need them (they use prebuilt `dist/*.wasm` files included in the module).
+`WasmParserAdapter` does not need them (they use prebuilt `dist/*.wasm` files included in the module).
 
 ## [0.26.0] - 2022-05-26
 ### Fixed
@@ -224,7 +225,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.26.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.27.0...HEAD
+[0.27.0]: https://github.com/cucumber/language-service/compare/v0.26.0...v0.27.0
 [0.26.0]: https://github.com/cucumber/language-service/compare/v0.25.0...v0.26.0
 [0.25.0]: https://github.com/cucumber/language-service/compare/v0.24.1...v0.25.0
 [0.24.1]: https://github.com/cucumber/language-service/compare/v0.24.0...v0.24.1
