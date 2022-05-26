@@ -36,4 +36,6 @@ jobs:
           cache-dependency-path: package-lock.json
       - run: npm install-test
         if: ${{ matrix.os != 'windows-latest' }}
+      - run: npm install --no-optional
+        if: ${{ matrix.os == 'windows-latest' }}
       - run: npm run eslint
