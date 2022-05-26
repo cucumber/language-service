@@ -33,7 +33,7 @@
     "build:esm": "tsc --build tsconfig.build-esm.json",
     "build": "npm run build:cjs && npm run build:esm",
     "test": "mocha && npm run test:cjs",
-    "test:cjs": "npm run build:cjs && mocha --config .mocharc.cjs.json --recursive dist/cjs/test",
+    "test:cjs": "npm run build:cjs && mocha --config .mocharc.cjs.cjs --recursive dist/cjs/test",
     "prepublishOnly": "npm run build",
     "eslint-fix": "eslint --ext ts --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts --max-warnings 0 src test",
@@ -66,10 +66,10 @@
     "fuse.js": "6.6.2",
     "js-search": "2.0.0",
     "mustache": "4.2.0",
+    "tree-sitter": "0.20.0",
     "vscode-languageserver-types": "3.17.1"
   },
   "optionalDependencies": {
-    "tree-sitter": "0.20.0",
     "tree-sitter-cli": "0.20.6",
     "tree-sitter-c-sharp": "0.19.1",
     "tree-sitter-java": "0.19.1",

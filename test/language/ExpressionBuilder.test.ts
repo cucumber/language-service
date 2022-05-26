@@ -1,6 +1,5 @@
 import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
-import fs from 'fs'
 import { readFile } from 'fs/promises'
 import glob from 'glob'
 import { basename, resolve } from 'path'
@@ -86,21 +85,10 @@ Please register a ParameterType for 'undefined-parameter'`,
 }
 
 describe('ExpressionBuilder', () => {
-  if (!fs.existsSync('node_modules/tree-sitter-java')) {
-    console.info(
-      'Skipping tests with NodeParserAdapter - node_modules/tree-sitter* are not installed'
-    )
-  } else {
-    context('with NodeParserAdapter', () => {
-      defineContract(() => new NodeParserAdapter())
-    })
-  }
-
-  if (!fs.existsSync('dist/java.wasm')) {
-    console.info('Skipping tests with WasmParserAdapter - the dist/*.wasm files are not built')
-  } else {
-    context('with WasmParserAdapter', () => {
-      defineContract(() => new WasmParserAdapter('dist'))
-    })
-  }
+  context('with NodeParserAdapter', () => {
+    defineContract(() => new NodeParserAdapter())
+  })
+  context('with WasmParserAdapter', () => {
+    defineContract(() => new WasmParserAdapter('dist'))
+  })
 })
