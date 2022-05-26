@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Fixed
-- Don't throw an error when generating suggestions for RegExp.
+- Don't throw an error when generating suggestions for RegExp. ([#60](https://github.com/cucumber/language-service/issues/60), [#61](https://github.com/cucumber/language-service/pull/61))
 
 ## [0.27.0] - 2022-05-26
 ### Fixed
