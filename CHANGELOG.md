@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Make all `tree-sitter-{language}` dependencies optional. They are only needed at runtime for the `NodeParserAdapter` - the
+  `WasmParserAdapter` does not need them (they use prebuilt `dist/*.wasm` files included in the module).
+
 ## [0.26.0] - 2022-05-26
 ### Fixed
 - Handle Cucumber Expression optionals not preceded by space in suggestions
