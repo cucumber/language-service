@@ -3,7 +3,6 @@ import {
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
-import Parser, { SyntaxNode } from 'tree-sitter'
 import { DocumentUri, LocationLink, Range } from 'vscode-languageserver-types'
 
 import { getLanguage } from './languages.js'
@@ -15,6 +14,9 @@ import {
   ParameterTypeLink,
   ParameterTypeMeta,
   ParserAdapter,
+  TreeSitterTree,
+  TreeSitterSyntaxNode,
+  TreeSitterQueryMatch,
   Source,
 } from './types.js'
 
@@ -31,9 +33,9 @@ export class ExpressionBuilder {
     const registry = new ParameterTypeRegistry()
     const expressionFactory = new ExpressionFactory(registry)
 
-    const treeByContent = new Map<Source<LanguageName>, Parser.Tree>()
-    const parse = (source: Source<LanguageName>): Parser.Tree => {
-      let tree: Parser.Tree | undefined = treeByContent.get(source)
+    const treeByContent = new Map<Source<LanguageName>, TreeSitterTree>()
+    const parse = (source: Source<LanguageName>): TreeSitterTree => {
+      let tree: TreeSitterTree | undefined = treeByContent.get(source)
       if (!tree) {
         treeByContent.set(source, (tree = this.parserAdapter.parser.parse(source.content)))
       }
@@ -54,7 +56,7 @@ export class ExpressionBuilder {
 
     for (const source of sources) {
       this.parserAdapter.setLanguageName(source.languageName)
-      let tree: Parser.Tree
+      let tree: TreeSitterTree
       try {
         tree = parse(source)
       } catch (err) {
@@ -127,7 +129,7 @@ function toString(s: string): string {
   return match[1]
 }
 
-function syntaxNode(match: Parser.QueryMatch, name: string): SyntaxNode | undefined {
+function syntaxNode(match: TreeSitterQueryMatch, name: string): TreeSitterSyntaxNode | undefined {
   return match.captures.find((c) => c.name === name)?.node
 }
 
@@ -144,8 +146,8 @@ function sortLinks<L extends Link>(links: L[]): readonly L[] {
 }
 
 function createLocationLink(
-  rootNode: SyntaxNode,
-  expressionNode: SyntaxNode,
+  rootNode: TreeSitterSyntaxNode,
+  expressionNode: TreeSitterSyntaxNode,
   targetUri: DocumentUri
 ) {
   const targetRange: Range = Range.create(
