@@ -1,3 +1,4 @@
+// @ts-ignore
 import Parser, { Query } from 'tree-sitter'
 // @ts-ignore
 import Csharp from 'tree-sitter-c-sharp'
