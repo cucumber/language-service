@@ -1,5 +1,4 @@
 import { Expression, ParameterType, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
-import Parser from 'tree-sitter'
 import { DocumentUri, LocationLink } from 'vscode-languageserver-types'
 
 export type ParameterTypeName =
@@ -55,17 +54,6 @@ export type ExpressionBuilderResult = {
   readonly registry: ParameterTypeRegistry
 }
 
-/**
- * The Node.js and Web bindings have slightly different APIs. We hide this difference behind this interface.
- * https://github.com/language/node-tree-sitter/issues/68
- */
-export interface ParserAdapter {
-  readonly parser: Parser
-  init(): Promise<void>
-  setLanguageName(languageName: LanguageName): void
-  query(source: string): Parser.Query
-}
-
 export type Link = {
   locationLink: LocationLink
 }
@@ -76,4 +64,50 @@ export type ExpressionLink = Link & {
 
 export type ParameterTypeLink = Link & {
   parameterType: ParameterType<unknown>
+}
+
+/**
+ * The Node.js and Web bindings have slightly different APIs. We hide this difference behind this interface.
+ * https://github.com/tree-sitter/node-tree-sitter/issues/68
+ */
+export interface ParserAdapter {
+  readonly parser: TreeSitterParser
+  init(): Promise<void>
+  setLanguageName(languageName: LanguageName): void
+  query(source: string): TreeSitterQuery
+}
+
+//// We're redefining the tree-sitter API we're using so that we don't need to rely on the
+//// optional tree-sitter module to be installed.
+
+export interface TreeSitterParser {
+  parse(input: string): TreeSitterTree
+}
+
+export type TreeSitterTree = {
+  rootNode: TreeSitterSyntaxNode
+}
+
+export type TreeSitterQuery = {
+  matches(node: TreeSitterSyntaxNode): readonly TreeSitterQueryMatch[]
+}
+
+export type TreeSitterSyntaxNode = {
+  text: string
+  startPosition: TreeSitterPosition
+  endPosition: TreeSitterPosition
+}
+
+export type TreeSitterQueryMatch = {
+  captures: readonly TreeSitterCapture[]
+}
+
+export type TreeSitterCapture = {
+  name: string
+  node: TreeSitterSyntaxNode
+}
+
+export type TreeSitterPosition = {
+  row: number
+  column: number
 }

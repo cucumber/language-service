@@ -66,11 +66,11 @@
     "fuse.js": "6.6.2",
     "js-search": "2.0.0",
     "mustache": "4.2.0",
-    "tree-sitter": "0.20.0",
     "vscode-languageserver-types": "3.17.1",
     "web-tree-sitter": "0.20.5"
   },
   "optionalDependencies": {
+    "tree-sitter": "0.20.0",
     "tree-sitter-cli": "0.20.6",
     "tree-sitter-c-sharp": "0.19.1",
     "tree-sitter-java": "0.19.1",
