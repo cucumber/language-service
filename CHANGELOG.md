@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- The `tree-sitter` module is an optional dependency. This reduces the risk of installation problems on Windows and also makes the library more light weight.
+
 ## [0.28.0] - 2022-05-26
 ### Fixed
 - Don't throw an error when generating suggestions for RegExp. ([#60](https://github.com/cucumber/language-service/issues/60), [#61](https://github.com/cucumber/language-service/pull/61))

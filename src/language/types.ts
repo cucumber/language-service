@@ -1,5 +1,4 @@
 import { Expression, ParameterType, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
-// import Parser from 'tree-sitter'
 import { DocumentUri, LocationLink } from 'vscode-languageserver-types'
 
 export type ParameterTypeName =
@@ -55,8 +54,31 @@ export type ExpressionBuilderResult = {
   readonly registry: ParameterTypeRegistry
 }
 
-//// We're redefining the tree-sitte API we're using so that we don't need to rely on the
-//// tree-sitter module to be installed. This way we can run tests against only the web-tree-sitter implementation
+export type Link = {
+  locationLink: LocationLink
+}
+
+export type ExpressionLink = Link & {
+  expression: Expression
+}
+
+export type ParameterTypeLink = Link & {
+  parameterType: ParameterType<unknown>
+}
+
+/**
+ * The Node.js and Web bindings have slightly different APIs. We hide this difference behind this interface.
+ * https://github.com/tree-sitter/node-tree-sitter/issues/68
+ */
+export interface ParserAdapter {
+  readonly parser: TreeSitterParser
+  init(): Promise<void>
+  setLanguageName(languageName: LanguageName): void
+  query(source: string): TreeSitterQuery
+}
+
+//// We're redefining the tree-sitter API we're using so that we don't need to rely on the
+//// optional tree-sitter module to be installed.
 
 export interface TreeSitterParser {
   parse(input: string): TreeSitterTree
@@ -88,27 +110,4 @@ export type TreeSitterCapture = {
 export type TreeSitterPosition = {
   row: number
   column: number
-}
-
-/**
- * The Node.js and Web bindings have slightly different APIs. We hide this difference behind this interface.
- * https://github.com/tree-sitter/node-tree-sitter/issues/68
- */
-export interface ParserAdapter {
-  readonly parser: TreeSitterParser
-  init(): Promise<void>
-  setLanguageName(languageName: LanguageName): void
-  query(source: string): TreeSitterQuery
-}
-
-export type Link = {
-  locationLink: LocationLink
-}
-
-export type ExpressionLink = Link & {
-  expression: Expression
-}
-
-export type ParameterTypeLink = Link & {
-  parameterType: ParameterType<unknown>
 }
