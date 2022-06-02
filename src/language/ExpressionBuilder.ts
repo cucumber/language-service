@@ -14,10 +14,10 @@ import {
   ParameterTypeLink,
   ParameterTypeMeta,
   ParserAdapter,
-  TreeSitterTree,
-  TreeSitterSyntaxNode,
-  TreeSitterQueryMatch,
   Source,
+  TreeSitterQueryMatch,
+  TreeSitterSyntaxNode,
+  TreeSitterTree,
 } from './types.js'
 
 export class ExpressionBuilder {
