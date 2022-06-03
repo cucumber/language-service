@@ -2,13 +2,13 @@ using TechTalk.SpecFlow;
 
 namespace StepDefinitions
 {
-    [Binding]
-    public class BowlingSteps
-    {
+	[Binding]
+	public class BowlingSteps
+	{
 		[Given(@"^a regexp$")]
-        public void ARegexp() 
+		public void ARegexp() 
 		{
-        }
+		}
 
 		[When(@"I have Regex parameters like (\d+) and (\d+)")]
 		public void WhenIHaveRegexParametersLikeAnd(int pins1, int pins2)
@@ -24,5 +24,5 @@ namespace StepDefinitions
 		public void ThenIHaveAVerbatimString()
 		{
 		}
-    }
+	}
 }
