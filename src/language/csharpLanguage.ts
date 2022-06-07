@@ -42,10 +42,10 @@ export const csharpLanguage: Language = {
     throw new Error('Unsupported operation')
   },
   convertStepDefinitionExpression(s) {
-    const regexStepDefMatch = s.match(/(\([^)]+[*+]\)|\.\*)/)
-    const fallbackRegexStepDefMatch = s.match(/^@"(\^.*\$)"$/)
+    const regexParamMatch = s.match(/(\([^)]+[*+]\)|\.\*)/)
+    const regexExpressionMatch = s.match(/^@"(\^.*\$)"$/)
 
-    if (fallbackRegexStepDefMatch || regexStepDefMatch) {
+    if (regexExpressionMatch || regexParamMatch) {
       // For regex step definitions, the string always needs to be verbatim_string_literal (i.e. Prefixed with an '@')
       return new RegExp(s.substring(2, s.length - 1))
     }

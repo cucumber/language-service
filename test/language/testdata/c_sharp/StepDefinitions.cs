@@ -10,18 +10,18 @@ namespace StepDefinitions
 		{
 		}
 
-		[When(@"I have Regex parameters like (\d+) and (\d+)")]
-		public void WhenIHaveRegexParametersLikeAnd(int pins1, int pins2)
+		[When("a {uuid}")]
+		public void AUniqueID(string uuid) 
 		{
 		}
 
-		[Then("a {string} cucumber expression {string}")]
-		public void ThenACucumberExpression(string s, string s2)
+		[Then("a {date}")]
+		public void ADate(Date date) 
 		{
 		}
 
-		[Then(@"I have a verbatim string")]
-		public void ThenIHaveAVerbatimString()
+		[Then("an {undefined-parameter}")]
+		public void AnUndefinedParameter(Date date) 
 		{
 		}
 	}

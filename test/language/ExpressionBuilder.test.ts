@@ -9,7 +9,7 @@ import { ParserAdapter, Source } from '../../src/language/types.js'
 import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
 import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
 
-const parameterTypeSupport: Set<LanguageName> = new Set(['typescript', 'java', 'ruby'])
+const parameterTypeSupport: Set<LanguageName> = new Set(['typescript', 'java', 'ruby', 'c_sharp'])
 
 function defineContract(makeParserAdapter: () => ParserAdapter) {
   let expressionBuilder: ExpressionBuilder
