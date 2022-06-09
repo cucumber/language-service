@@ -75,20 +75,16 @@ export const csharpLanguage: Language = {
     }
     const match = expression.match(/^@"(.*)"$/)
     if (!match) throw new Error(`Could not match ${expression}`)
-    const regExp = unescapeRegExp(match[1])
-    return regExp
+    return new RegExp(unescapeString(match[1]))
   },
-  convertStepDefinitionExpression(s) {
-    const regexParamMatch = s.match(/(\([^)]+[*+]\)|\.\*)/)
-    const regexExpressionMatch = s.match(/^@"(\^.*\$)"$/)
-
-    if (regexExpressionMatch || regexParamMatch) {
-      // For regex step definitions, the string always needs to be verbatim_string_literal (i.e. Prefixed with an '@')
-      return new RegExp(s.substring(2, s.length - 1))
+  convertStepDefinitionExpression(expression) {
+    const match = expression.match(/^(@)?"(.*)"$/)
+    if (!match) throw new Error(`Could not match ${expression}`)
+    if (match[1] === '@') {
+      return new RegExp(unescapeString(match[2]))
+    } else {
+      return unescapeString(match[2])
     }
-
-    const exprStart = s.startsWith('@') ? 2 : 1
-    return s.substring(exprStart, s.length - 1)
   },
 
   snippetParameters: {
@@ -116,6 +112,6 @@ export const csharpLanguage: Language = {
 }
 
 // C# escapes \ as \\. Turn \\ back to \.
-function unescapeRegExp(regexp: string): RegExp {
-  return new RegExp(regexp.replace(/\\\\/g, '\\'))
+function unescapeString(s: string): string {
+  return s.replace(/\\\\/g, '\\')
 }
