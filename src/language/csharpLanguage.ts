@@ -7,7 +7,7 @@ export const csharpLanguage: Language = {
   defineParameterTypeQueries: [],
   defineStepDefinitionQueries: [
     `
-(method_declaration 
+(method_declaration
   (attribute_list
     (attribute
       name: (identifier) @annotation-name
@@ -21,15 +21,37 @@ export const csharpLanguage: Language = {
   (#match? @annotation-name "Given|When|Then|And|But|StepDefinition")
 ) @root
 `,
+    `
+(method_declaration
+  (attribute_list
+    (attribute
+      name: (identifier) @annotation-name
+      (attribute_argument_list
+        (attribute_argument
+          (string_literal) @expression
+        )
+      )
+    )
+  )
+  (#match? @annotation-name "Given|When|Then|And|But|StepDefinition")
+) @root
+`,
   ],
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   convertParameterTypeExpression(s) {
     throw new Error('Unsupported operation')
   },
   convertStepDefinitionExpression(s) {
-    const match = s.match(/^([@$'"]+)(.*)"$/)
-    if (!match) throw new Error(`Could not match ${s}`)
-    return new RegExp(match[2])
+    const regexParamMatch = s.match(/(\([^)]+[*+]\)|\.\*)/)
+    const regexExpressionMatch = s.match(/^@"(\^.*\$)"$/)
+
+    if (regexExpressionMatch || regexParamMatch) {
+      // For regex step definitions, the string always needs to be verbatim_string_literal (i.e. Prefixed with an '@')
+      return new RegExp(s.substring(2, s.length - 1))
+    }
+
+    const exprStart = s.startsWith('@') ? 2 : 1
+    return s.substring(exprStart, s.length - 1)
   },
 
   snippetParameters: {
