@@ -50,12 +50,13 @@ export const rubyLanguage: Language = {
 `,
   ],
 
-  convertParameterTypeExpression(expression: string) {
+  convertParameterTypeExpression(expression) {
+    if (expression === null) throw new Error('expression cannot be null')
     return toStringOrRegExp(expression)
   },
 
-  convertStepDefinitionExpression(s: string) {
-    return toStringOrRegExp(s)
+  convertStepDefinitionExpression(expression) {
+    return toStringOrRegExp(expression)
   },
 
   snippetParameters: {

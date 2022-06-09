@@ -21,19 +21,21 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
 
   for (const dir of glob.sync(`test/language/testdata/*`)) {
     const languageName = basename(dir) as LanguageName
-    // if (languageName !== 'php') {
-    //   continue
-    // }
+
+    if (languageName === 'c_sharp') {
+      it(`builds parameter type without expression from ${languageName} source`, async () => {
+        const sources = await loadSources(dir, languageName)
+        const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
+
+        const regexpStrings = result.parameterTypeLinks.find(
+          (l) => l.parameterType.name === 'WithoutExpression'
+        )?.parameterType?.regexpStrings
+        assert.deepStrictEqual(regexpStrings, ['.*'])
+      })
+    }
+
     it(`builds parameter types and expressions from ${languageName} source`, async () => {
-      const sources: Source<LanguageName>[] = await Promise.all(
-        glob.sync(`${dir}/**/*`).map((path) => {
-          return readFile(path, 'utf-8').then((content) => ({
-            languageName,
-            content,
-            uri: `file://${resolve(path)}`,
-          }))
-        })
-      )
+      const sources = await loadSources(dir, languageName)
       const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
 
       // verify that the targetSelectionRange is inside the targetRange
@@ -82,6 +84,21 @@ Please register a ParameterType for 'undefined-parameter'`,
       }
     })
   }
+}
+
+async function loadSources(
+  dir: string,
+  languageName: LanguageName
+): Promise<Source<LanguageName>[]> {
+  return Promise.all(
+    glob.sync(`${dir}/**/*`).map((path) => {
+      return readFile(path, 'utf-8').then((content) => ({
+        languageName,
+        content,
+        uri: `file://${resolve(path)}`,
+      }))
+    })
+  )
 }
 
 describe('ExpressionBuilder', () => {

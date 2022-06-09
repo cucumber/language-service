@@ -5,33 +5,36 @@ export const csharpLanguage: Language = {
   // They are supported via CucumberExpressions.SpecFlow - see https://github.com/cucumber/language-service/pull/29#discussion_r858319308
   // so we could add support for this in the future
   defineParameterTypeQueries: [
+    // [StepArgumentTransformation(@"blabla")]
     `
-(method_declaration 
-  (attribute_list
-    (attribute
-      name: (identifier) @attribute-name
-      (attribute_argument_list
-        (attribute_argument
-          (verbatim_string_literal) @expression
+    (method_declaration
+      (attribute_list
+        (attribute
+          name: (identifier) @attribute-name
+          (attribute_argument_list
+            (attribute_argument
+              (verbatim_string_literal) @expression
+            )
+          )
         )
       )
-    )
-  )
-  type: (identifier) @name
-  (#eq? @attribute-name "StepArgumentTransformation")
-) @root
-`,
-    //     `
-    // (method_declaration
-    //   (attribute_list
-    //     (attribute
-    //       name: (identifier) @attribute-name
-    //     )
-    //   )
-    //   type: (identifier) @name
-    //   (#eq? @attribute-name "StepArgumentTransformation")
-    // ) @root
-    //     `,
+      type: (identifier) @name
+      (#eq? @attribute-name "StepArgumentTransformation")
+    ) @root
+    `,
+    // [StepArgumentTransformation]
+    `
+    (method_declaration
+      (attribute_list
+        (attribute
+          name: (identifier) @attribute-name
+          .
+        )
+      )
+      type: (identifier) @name
+      (#eq? @attribute-name "StepArgumentTransformation")
+    ) @root
+        `,
   ],
   defineStepDefinitionQueries: [
     `
@@ -65,9 +68,13 @@ export const csharpLanguage: Language = {
 ) @root
 `,
   ],
-  convertParameterTypeExpression(s) {
-    const match = s.match(/^@"(.*)"$/)
-    if (!match) throw new Error(`Could not match ${s}`)
+  convertParameterTypeExpression(expression) {
+    if (expression === null) {
+      // https://github.com/gasparnagy/CucumberExpressions.SpecFlow/blob/a2354d2175f5c632c9ae4a421510f314efce4111/CucumberExpressions.SpecFlow.SpecFlowPlugin/Expressions/CucumberExpressionParameterType.cs#L10
+      return /.*/
+    }
+    const match = expression.match(/^@"(.*)"$/)
+    if (!match) throw new Error(`Could not match ${expression}`)
     const regExp = unescapeRegExp(match[1])
     return regExp
   },

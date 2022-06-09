@@ -18,5 +18,12 @@ namespace StepDefinitions
         {
           return s
         }
+
+        // Additional parameter type without an expression
+        [StepArgumentTransformation]
+        public WithoutExpression ConvertWithoutExpression(string s)
+        {
+          return s
+        }
 	}
 }

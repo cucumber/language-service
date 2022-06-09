@@ -73,13 +73,17 @@ export class ExpressionBuilder {
           const nameNode = syntaxNode(match, 'name')
           const expressionNode = syntaxNode(match, 'expression')
           const rootNode = syntaxNode(match, 'root')
-          if (nameNode && expressionNode && rootNode) {
+          if (nameNode && rootNode) {
+            // SpecFlow allows definition of parameter types (StepArgumentTransformation) without specifying an expression
+            // See https://github.com/gasparnagy/CucumberExpressions.SpecFlow/blob/a2354d2175f5c632c9ae4a421510f314efce4111/CucumberExpressions.SpecFlow.SpecFlowPlugin/Expressions/UserDefinedCucumberExpressionParameterTypeTransformation.cs#L25-L27
+            const parameterTypeExpression = expressionNode ? expressionNode.text : null
             const parameterType = makeParameterType(
               toString(nameNode.text),
-              language.convertParameterTypeExpression(expressionNode.text)
+              language.convertParameterTypeExpression(parameterTypeExpression)
             )
             defineParameterType(parameterType)
-            const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
+            const selectionNode = expressionNode || nameNode
+            const locationLink = createLocationLink(rootNode, selectionNode, source.uri)
             parameterTypeLinks.push({ parameterType, locationLink })
           }
         }
@@ -147,7 +151,7 @@ function sortLinks<L extends Link>(links: L[]): readonly L[] {
 
 function createLocationLink(
   rootNode: TreeSitterSyntaxNode,
-  expressionNode: TreeSitterSyntaxNode,
+  selectionNode: TreeSitterSyntaxNode,
   targetUri: DocumentUri
 ) {
   const targetRange: Range = Range.create(
@@ -157,10 +161,10 @@ function createLocationLink(
     rootNode.endPosition.column
   )
   const targetSelectionRange: Range = Range.create(
-    expressionNode.startPosition.row,
-    expressionNode.startPosition.column,
-    expressionNode.endPosition.row,
-    expressionNode.endPosition.column
+    selectionNode.startPosition.row,
+    selectionNode.startPosition.column,
+    selectionNode.endPosition.row,
+    selectionNode.endPosition.column
   )
   const locationLink: LocationLink = {
     targetRange,

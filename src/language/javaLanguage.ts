@@ -73,13 +73,14 @@ export const javaLanguage: Language = {
 `,
   ],
 
-  convertParameterTypeExpression(s: string): RegExp {
-    const match = s.match(/^"(.*)"$/)
-    if (!match) throw new Error(`Could not match ${s}`)
+  convertParameterTypeExpression(expression) {
+    if (expression === null) throw new Error('expression cannot be null')
+    const match = expression.match(/^"(.*)"$/)
+    if (!match) throw new Error(`Could not match ${expression}`)
     return unescapeRegExp(match[1])
   },
 
-  convertStepDefinitionExpression(s: string): string | RegExp {
+  convertStepDefinitionExpression(s) {
     const match = s.match(/^"(\^.*\$)"$/)
     if (match) {
       const regExp = unescapeRegExp(match[1])
