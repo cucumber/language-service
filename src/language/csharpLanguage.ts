@@ -4,7 +4,35 @@ export const csharpLanguage: Language = {
   // Empty array because SpecFlow does not support Cucumber Expressions out of the box
   // They are supported via CucumberExpressions.SpecFlow - see https://github.com/cucumber/language-service/pull/29#discussion_r858319308
   // so we could add support for this in the future
-  defineParameterTypeQueries: [],
+  defineParameterTypeQueries: [
+    `
+(method_declaration 
+  (attribute_list
+    (attribute
+      name: (identifier) @attribute-name
+      (attribute_argument_list
+        (attribute_argument
+          (verbatim_string_literal) @expression
+        )
+      )
+    )
+  )
+  type: (identifier) @name
+  (#eq? @attribute-name "StepArgumentTransformation")
+) @root
+`,
+    //     `
+    // (method_declaration
+    //   (attribute_list
+    //     (attribute
+    //       name: (identifier) @attribute-name
+    //     )
+    //   )
+    //   type: (identifier) @name
+    //   (#eq? @attribute-name "StepArgumentTransformation")
+    // ) @root
+    //     `,
+  ],
   defineStepDefinitionQueries: [
     `
 (method_declaration
@@ -37,9 +65,11 @@ export const csharpLanguage: Language = {
 ) @root
 `,
   ],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   convertParameterTypeExpression(s) {
-    throw new Error('Unsupported operation')
+    const match = s.match(/^@"(.*)"$/)
+    if (!match) throw new Error(`Could not match ${s}`)
+    const regExp = unescapeRegExp(match[1])
+    return regExp
   },
   convertStepDefinitionExpression(s) {
     const regexParamMatch = s.match(/(\([^)]+[*+]\)|\.\*)/)
@@ -76,4 +106,9 @@ export const csharpLanguage: Language = {
         // {{ blurb }}
     }
 `,
+}
+
+// C# escapes \ as \\. Turn \\ back to \.
+function unescapeRegExp(regexp: string): RegExp {
+  return new RegExp(regexp.replace(/\\\\/g, '\\'))
 }
