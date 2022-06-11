@@ -86,10 +86,7 @@ Please register a ParameterType for 'undefined-parameter'`,
   }
 }
 
-async function loadSources(
-  dir: string,
-  languageName: LanguageName
-): Promise<Source<LanguageName>[]> {
+async function loadSources(dir: string, languageName: LanguageName): Promise<Source[]> {
   return Promise.all(
     glob.sync(`${dir}/**/*`).map((path) => {
       return readFile(path, 'utf-8').then((content) => ({

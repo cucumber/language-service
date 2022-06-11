@@ -23,7 +23,7 @@ describe('stepDefinitionSnippet', () => {
       )
 
       const expressionBuilder = new ExpressionBuilder(new NodeParserAdapter())
-      const source: Source<LanguageName> = {
+      const source: Source = {
         uri: 'file:///tmp/test.x',
         languageName,
         content: snippet,

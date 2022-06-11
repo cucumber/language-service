@@ -1,9 +1,6 @@
 import { Language } from './types.js'
 
 export const csharpLanguage: Language = {
-  // Empty array because SpecFlow does not support Cucumber Expressions out of the box
-  // They are supported via CucumberExpressions.SpecFlow - see https://github.com/cucumber/language-service/pull/29#discussion_r858319308
-  // so we could add support for this in the future
   defineParameterTypeQueries: [
     // [StepArgumentTransformation(@"blabla")]
     `

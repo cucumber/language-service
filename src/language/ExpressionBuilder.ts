@@ -9,7 +9,7 @@ import { getLanguage } from './languages.js'
 import {
   ExpressionBuilderResult,
   ExpressionLink,
-  LanguageName,
+  Language,
   Link,
   ParameterTypeLink,
   ParameterTypeMeta,
@@ -20,11 +20,19 @@ import {
   TreeSitterTree,
 } from './types.js'
 
+type SourceMatch = {
+  source: Source
+  match: TreeSitterQueryMatch
+}
+
+type GetQueryStrings = (language: Language) => readonly string[]
+type Parse = (source: Source) => TreeSitterTree
+
 export class ExpressionBuilder {
   constructor(private readonly parserAdapter: ParserAdapter) {}
 
   build(
-    sources: readonly Source<LanguageName>[],
+    sources: readonly Source[],
     parameterTypes: readonly ParameterTypeMeta[]
   ): ExpressionBuilderResult {
     const expressionLinks: ExpressionLink[] = []
@@ -33,8 +41,8 @@ export class ExpressionBuilder {
     const registry = new ParameterTypeRegistry()
     const expressionFactory = new ExpressionFactory(registry)
 
-    const treeByContent = new Map<Source<LanguageName>, TreeSitterTree>()
-    const parse = (source: Source<LanguageName>): TreeSitterTree => {
+    const treeByContent = new Map<Source, TreeSitterTree>()
+    const parse = (source: Source): TreeSitterTree => {
       let tree: TreeSitterTree | undefined = treeByContent.get(source)
       if (!tree) {
         treeByContent.set(source, (tree = this.parserAdapter.parser.parse(source.content)))
@@ -54,6 +62,71 @@ export class ExpressionBuilder {
       defineParameterType(makeParameterType(parameterType.name, new RegExp(parameterType.regexp)))
     }
 
+    const parameterTypeMatches = this.getSourceMatches(
+      (language: Language) => language.defineParameterTypeQueries,
+      parse,
+      sources,
+      errors
+    )
+
+    for (const { source, match } of parameterTypeMatches) {
+      const nameNode = syntaxNode(match, 'name')
+      const expressionNode = syntaxNode(match, 'expression')
+      const rootNode = syntaxNode(match, 'root')
+      if (nameNode && rootNode) {
+        // SpecFlow allows definition of parameter types (StepArgumentTransformation) without specifying an expression
+        // See https://github.com/gasparnagy/CucumberExpressions.SpecFlow/blob/a2354d2175f5c632c9ae4a421510f314efce4111/CucumberExpressions.SpecFlow.SpecFlowPlugin/Expressions/UserDefinedCucumberExpressionParameterTypeTransformation.cs#L25-L27
+        const parameterTypeExpression = expressionNode ? expressionNode.text : null
+        const language = getLanguage(source.languageName)
+        const parameterType = makeParameterType(
+          toString(nameNode.text),
+          language.convertParameterTypeExpression(parameterTypeExpression)
+        )
+        defineParameterType(parameterType)
+        const selectionNode = expressionNode || nameNode
+        const locationLink = createLocationLink(rootNode, selectionNode, source.uri)
+        parameterTypeLinks.push({ parameterType, locationLink })
+      }
+    }
+
+    const stepDefinitionMatches = this.getSourceMatches(
+      (language: Language) => language.defineStepDefinitionQueries,
+      parse,
+      sources,
+      errors
+    )
+
+    for (const { source, match } of stepDefinitionMatches) {
+      const expressionNode = syntaxNode(match, 'expression')
+      const rootNode = syntaxNode(match, 'root')
+      if (expressionNode && rootNode) {
+        const language = getLanguage(source.languageName)
+        const stringOrRegexp = language.convertStepDefinitionExpression(expressionNode.text)
+        try {
+          const expression = expressionFactory.createExpression(stringOrRegexp)
+          const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
+          expressionLinks.push({ expression, locationLink })
+        } catch (err) {
+          errors.push(err)
+        }
+      }
+    }
+
+    return {
+      expressionLinks: sortLinks(expressionLinks),
+      parameterTypeLinks: sortLinks(parameterTypeLinks),
+      errors,
+      registry,
+    }
+  }
+
+  private getSourceMatches(
+    getQueryStrings: GetQueryStrings,
+    parse: Parse,
+    sources: readonly Source[],
+    errors: Error[]
+  ): readonly SourceMatch[] {
+    const sourceMatches: SourceMatch[] = []
     for (const source of sources) {
       this.parserAdapter.setLanguageName(source.languageName)
       let tree: TreeSitterTree
@@ -66,64 +139,16 @@ export class ExpressionBuilder {
       }
 
       const language = getLanguage(source.languageName)
-      for (const defineParameterTypeQuery of language.defineParameterTypeQueries) {
-        const query = this.parserAdapter.query(defineParameterTypeQuery)
+      const queryStrings = getQueryStrings(language)
+      for (const queryString of queryStrings) {
+        const query = this.parserAdapter.query(queryString)
         const matches = query.matches(tree.rootNode)
         for (const match of matches) {
-          const nameNode = syntaxNode(match, 'name')
-          const expressionNode = syntaxNode(match, 'expression')
-          const rootNode = syntaxNode(match, 'root')
-          if (nameNode && rootNode) {
-            // SpecFlow allows definition of parameter types (StepArgumentTransformation) without specifying an expression
-            // See https://github.com/gasparnagy/CucumberExpressions.SpecFlow/blob/a2354d2175f5c632c9ae4a421510f314efce4111/CucumberExpressions.SpecFlow.SpecFlowPlugin/Expressions/UserDefinedCucumberExpressionParameterTypeTransformation.cs#L25-L27
-            const parameterTypeExpression = expressionNode ? expressionNode.text : null
-            const parameterType = makeParameterType(
-              toString(nameNode.text),
-              language.convertParameterTypeExpression(parameterTypeExpression)
-            )
-            defineParameterType(parameterType)
-            const selectionNode = expressionNode || nameNode
-            const locationLink = createLocationLink(rootNode, selectionNode, source.uri)
-            parameterTypeLinks.push({ parameterType, locationLink })
-          }
+          sourceMatches.push({ source, match })
         }
       }
     }
-
-    for (const source of sources) {
-      this.parserAdapter.setLanguageName(source.languageName)
-      const tree = treeByContent.get(source)
-      if (!tree) {
-        continue
-      }
-
-      const language = getLanguage(source.languageName)
-      for (const defineStepDefinitionQuery of language.defineStepDefinitionQueries) {
-        const query = this.parserAdapter.query(defineStepDefinitionQuery)
-        const matches = query.matches(tree.rootNode)
-        for (const match of matches) {
-          const expressionNode = syntaxNode(match, 'expression')
-          const rootNode = syntaxNode(match, 'root')
-          if (expressionNode && rootNode) {
-            const stringOrRegexp = language.convertStepDefinitionExpression(expressionNode.text)
-            try {
-              const expression = expressionFactory.createExpression(stringOrRegexp)
-              const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
-              expressionLinks.push({ expression, locationLink })
-            } catch (err) {
-              errors.push(err)
-            }
-          }
-        }
-      }
-    }
-
-    return {
-      expressionLinks: sortLinks(expressionLinks),
-      parameterTypeLinks: sortLinks(parameterTypeLinks),
-      errors,
-      registry,
-    }
+    return sourceMatches
   }
 }
 
