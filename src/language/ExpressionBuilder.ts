@@ -6,6 +6,7 @@ import {
 import { DocumentUri, LocationLink, Range } from 'vscode-languageserver-types'
 
 import { getLanguage } from './languages.js'
+import { SourceAnalyzer } from './SourceAnalyzer.js'
 import {
   ExpressionBuilderResult,
   ExpressionLink,
@@ -17,16 +18,7 @@ import {
   Source,
   TreeSitterQueryMatch,
   TreeSitterSyntaxNode,
-  TreeSitterTree,
 } from './types.js'
-
-type SourceMatch = {
-  source: Source
-  match: TreeSitterQueryMatch
-}
-
-type GetQueryStrings = (language: Language) => readonly string[]
-type Parse = (source: Source) => TreeSitterTree
 
 export class ExpressionBuilder {
   constructor(private readonly parserAdapter: ParserAdapter) {}
@@ -41,15 +33,6 @@ export class ExpressionBuilder {
     const registry = new ParameterTypeRegistry()
     const expressionFactory = new ExpressionFactory(registry)
 
-    const treeByContent = new Map<Source, TreeSitterTree>()
-    const parse = (source: Source): TreeSitterTree => {
-      let tree: TreeSitterTree | undefined = treeByContent.get(source)
-      if (!tree) {
-        treeByContent.set(source, (tree = this.parserAdapter.parser.parse(source.content)))
-      }
-      return tree
-    }
-
     function defineParameterType(parameterType: ParameterType<unknown>) {
       try {
         registry.defineParameterType(parameterType)
@@ -62,11 +45,10 @@ export class ExpressionBuilder {
       defineParameterType(makeParameterType(parameterType.name, new RegExp(parameterType.regexp)))
     }
 
-    const parameterTypeMatches = this.getSourceMatches(
-      (language: Language) => language.defineParameterTypeQueries,
-      parse,
-      sources,
-      errors
+    const sourceAnalyser = new SourceAnalyzer(this.parserAdapter, sources)
+
+    const parameterTypeMatches = sourceAnalyser.getSourceMatches(
+      (language: Language) => language.defineParameterTypeQueries
     )
 
     for (const { source, match } of parameterTypeMatches) {
@@ -89,11 +71,8 @@ export class ExpressionBuilder {
       }
     }
 
-    const stepDefinitionMatches = this.getSourceMatches(
-      (language: Language) => language.defineStepDefinitionQueries,
-      parse,
-      sources,
-      errors
+    const stepDefinitionMatches = sourceAnalyser.getSourceMatches(
+      (language: Language) => language.defineStepDefinitionQueries
     )
 
     for (const { source, match } of stepDefinitionMatches) {
@@ -115,40 +94,9 @@ export class ExpressionBuilder {
     return {
       expressionLinks: sortLinks(expressionLinks),
       parameterTypeLinks: sortLinks(parameterTypeLinks),
-      errors,
+      errors: sourceAnalyser.getErrors().concat(errors),
       registry,
     }
-  }
-
-  private getSourceMatches(
-    getQueryStrings: GetQueryStrings,
-    parse: Parse,
-    sources: readonly Source[],
-    errors: Error[]
-  ): readonly SourceMatch[] {
-    const sourceMatches: SourceMatch[] = []
-    for (const source of sources) {
-      this.parserAdapter.setLanguageName(source.languageName)
-      let tree: TreeSitterTree
-      try {
-        tree = parse(source)
-      } catch (err) {
-        err.message += `\nuri: ${source.uri}`
-        errors.push(err)
-        continue
-      }
-
-      const language = getLanguage(source.languageName)
-      const queryStrings = getQueryStrings(language)
-      for (const queryString of queryStrings) {
-        const query = this.parserAdapter.query(queryString)
-        const matches = query.matches(tree.rootNode)
-        for (const match of matches) {
-          sourceMatches.push({ source, match })
-        }
-      }
-    }
-    return sourceMatches
   }
 }
 
