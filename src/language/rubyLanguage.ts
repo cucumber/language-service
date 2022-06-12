@@ -1,3 +1,4 @@
+import { buildParameterTypeLinksFromMatches } from './helpers.js'
 import { Language } from './types.js'
 
 export const rubyLanguage: Language = {
@@ -57,6 +58,9 @@ export const rubyLanguage: Language = {
 
   convertStepDefinitionExpression(expression) {
     return toStringOrRegExp(expression)
+  },
+  buildParameterTypeLinks(matches) {
+    return buildParameterTypeLinksFromMatches(matches)
   },
 
   snippetParameters: {

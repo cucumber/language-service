@@ -1,3 +1,4 @@
+import { buildParameterTypeLinksFromMatches } from './helpers.js'
 import { Language } from './types.js'
 
 export const javaLanguage: Language = {
@@ -87,7 +88,9 @@ export const javaLanguage: Language = {
     }
     return unescapeString(expression.substring(1, expression.length - 1))
   },
-
+  buildParameterTypeLinks(matches) {
+    return buildParameterTypeLinksFromMatches(matches)
+  },
   snippetParameters: {
     int: { type: 'int', name: 'i' },
     float: { type: 'float', name: 'f' },

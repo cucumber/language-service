@@ -1,4 +1,8 @@
-import { Language } from './types.js'
+import { StringOrRegExp } from '@cucumber/cucumber-expressions'
+import { LocationLink } from 'vscode-languageserver-types'
+
+import { createLocationLink, makeParameterType, stripQuotes } from './helpers.js'
+import { Language, ParameterTypeLink, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types.js'
 
 export const csharpLanguage: Language = {
   defineParameterTypeQueries: [
@@ -10,7 +14,10 @@ export const csharpLanguage: Language = {
           name: (identifier) @attribute-name
           (attribute_argument_list
             (attribute_argument
-              (verbatim_string_literal) @expression
+              [
+                (verbatim_string_literal) 
+                (string_literal)
+              ] @expression
             )
           )
         )
@@ -70,18 +77,41 @@ export const csharpLanguage: Language = {
       // https://github.com/gasparnagy/CucumberExpressions.SpecFlow/blob/a2354d2175f5c632c9ae4a421510f314efce4111/CucumberExpressions.SpecFlow.SpecFlowPlugin/Expressions/CucumberExpressionParameterType.cs#L10
       return /.*/
     }
-    const match = expression.match(/^@"(.*)"$/)
-    if (!match) throw new Error(`Could not match ${expression}`)
-    return new RegExp(unescapeString(match[1]))
+    return convertExpression(expression)
   },
   convertStepDefinitionExpression(expression) {
-    const match = expression.match(/^(@)?"(.*)"$/)
-    if (!match) throw new Error(`Could not match ${expression}`)
-    if (match[1] === '@') {
-      return new RegExp(unescapeString(match[2]))
-    } else {
-      return unescapeString(match[2])
+    return convertExpression(expression)
+  },
+  buildParameterTypeLinks(matches) {
+    const parameterTypeLinks: ParameterTypeLink[] = []
+    const propsByName: Record<string, ParameterTypeLinkProps> = {}
+    for (const { source, match } of matches) {
+      const nameNode = syntaxNode(match, 'name')
+      const expressionNode = syntaxNode(match, 'expression')
+      const rootNode = syntaxNode(match, 'root')
+      if (nameNode && rootNode) {
+        // SpecFlow allows definition of parameter types (StepArgumentTransformation) without specifying an expression
+        // See https://github.com/gasparnagy/CucumberExpressions.SpecFlow/blob/a2354d2175f5c632c9ae4a421510f314efce4111/CucumberExpressions.SpecFlow.SpecFlowPlugin/Expressions/UserDefinedCucumberExpressionParameterTypeTransformation.cs#L25-L27
+        const parameterTypeName = stripQuotes(nameNode.text)
+        const selectionNode = expressionNode || nameNode
+        const locationLink = createLocationLink(rootNode, selectionNode, source.uri)
+        const props: ParameterTypeLinkProps = (propsByName[parameterTypeName] = propsByName[
+          parameterTypeName
+        ] || { locationLink, regexps: [] })
+        const parameterTypeExpression = expressionNode ? expressionNode.text : null
+        props.regexps.push(this.convertParameterTypeExpression(parameterTypeExpression))
+
+        // const parameterType = makeParameterType(
+        //   parameterTypeName,
+        //   this.convertParameterTypeExpression(parameterTypeExpression)
+        // )
+      }
     }
+    for (const [name, { regexps, locationLink }] of Object.entries(propsByName)) {
+      const parameterType = makeParameterType(name, regexps)
+      parameterTypeLinks.push({ parameterType, locationLink })
+    }
+    return parameterTypeLinks
   },
 
   snippetParameters: {
@@ -108,7 +138,32 @@ export const csharpLanguage: Language = {
 `,
 }
 
-// C# escapes \ as \\. Turn \\ back to \.
+function convertExpression(expression: string) {
+  const match = expression.match(/^(@)?"(.*)"$/)
+  if (!match) throw new Error(`Could not match ${expression}`)
+  if (match[1] === '@') {
+    return new RegExp(unescapeVerbatimString(match[2]))
+  } else {
+    return unescapeString(match[2])
+  }
+}
+
+// C# verbatim strings escape " as "". Unescape "" back to ".
+// https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/verbatim
+function unescapeVerbatimString(s: string): string {
+  return s.replace(/""/g, '"')
+}
+
+// TODO(@aslakhellesoy) not sure if this is correct.
 function unescapeString(s: string): string {
   return s.replace(/\\\\/g, '\\')
+}
+
+type ParameterTypeLinkProps = {
+  regexps: StringOrRegExp[]
+  locationLink: LocationLink
+}
+
+function syntaxNode(match: TreeSitterQueryMatch, name: string): TreeSitterSyntaxNode | undefined {
+  return match.captures.find((c) => c.name === name)?.node
 }

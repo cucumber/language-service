@@ -23,7 +23,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
     const languageName = basename(dir) as LanguageName
 
     if (languageName === 'c_sharp') {
-      it(`builds parameter type without expression from ${languageName} source`, async () => {
+      it(`builds parameter type from [StepArgumentTransformation] without expression`, async () => {
         const sources = await loadSources(dir, languageName)
         const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
 
@@ -31,6 +31,16 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
           (l) => l.parameterType.name === 'WithoutExpression'
         )?.parameterType?.regexpStrings
         assert.deepStrictEqual(regexpStrings, ['.*'])
+      })
+
+      it(`builds parameter type from multiple [StepArgumentTransformation] with the same return type`, async () => {
+        const sources = await loadSources(dir, languageName)
+        const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
+
+        const regexpStrings = result.parameterTypeLinks.find(
+          (l) => l.parameterType.name === 'DateTime'
+        )?.parameterType?.regexpStrings
+        assert.deepStrictEqual(regexpStrings, ['today', 'tomorrow', '(.*) days later'])
       })
     }
 
