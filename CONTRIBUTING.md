@@ -20,6 +20,7 @@ See [cucumber/vscode/CONTRIBUTING.md](https://github.com/cucumber/vscode/blob/ma
 
 If your contribution is to add support for a new programming language, follow these steps:
 
+0. Read and understand tree-sitter. It's job is to query the source code of whatever language you are trying to add support for. By doing this we can find the specific functions or methods that correspond to that languages Cucumber support. This allows the `language-service` to abstract away the language specific components and allows the rest of the program to work in more universal Gherkin space.
 1. Run `npm install -E tree-sitter-{language}`
 2. Update `languages` in `scripts/build.js`
 3. Run `npm install` - this should build a wasm for the new language into `dist/{language}.wasm`
@@ -31,13 +32,16 @@ If your contribution is to add support for a new programming language, follow th
 6. Add the name of the new language to the `LanguageName` type
 7. Update `languageByName` in `src/language/language.ts`
 8. Update `src/tree-sitter-node/NodeParserAdapter.ts`
-9. Run tests
+9. Update `test/language/ExpressionBuilder.test.ts` to include the new language if it supports Cucumber Expressions
+10. Run tests
 
 As you are working on step 4 and 5 - use [tree-sitter playground](https://tree-sitter.github.io/tree-sitter/playground)
-to build your query. The queries must have [capturing nodes](https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax):
+to build your query. The queries _must have_ [capturing nodes](https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax):
 
 - `defineParameterTypeQueries`: `@expression`, `@name` and `@root`
 - `defineStepDefinitionQueries`: `@expression` and `@root`
+
+Changing the names of these aliases will result in test failures, even if they work within the tree-sitter playground.
 
 ## One last thing
 
