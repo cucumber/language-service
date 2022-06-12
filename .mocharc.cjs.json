@@ -1,5 +1,0 @@
-{
-  "extension": ["js"],
-  "recursive": true,
-  "ignore": ["dist/cjs/test/language/testdata/**/*"]
-}

@@ -10,7 +10,7 @@ describe('buildSuggestionsFromRegularExpression', () => {
     registry = new ParameterTypeRegistry()
   })
 
-  it('builds an item from a plain expression', () => {
+  it('builds suggestions from a plain expression', () => {
     const expression = new RegularExpression(/I have 4 cukes/, registry)
     const expected: Suggestion = {
       segments: ['I have 4 cukes'],
@@ -26,7 +26,7 @@ describe('buildSuggestionsFromRegularExpression', () => {
     assert.deepStrictEqual(actual, [expected])
   })
 
-  it('builds an item from an expression with a group', () => {
+  it('builds suggestions from an expression with a group', () => {
     const expression = new RegularExpression(/I have (\d+) cukes/, registry)
     const expected: Suggestion = {
       segments: ['I have ', ['12'], ' cukes'],
@@ -36,6 +36,22 @@ describe('buildSuggestionsFromRegularExpression', () => {
     const actual = buildSuggestionsFromRegularExpression(expression, registry, ['I have 4 cukes'], {
       '-?\\d+|\\d+': ['12'],
     })
+    assert.deepStrictEqual(actual, [expected])
+  })
+
+  it('builds suggestions for regexp without choices', () => {
+    const expression = new RegularExpression(/^the price of a "(.*?)" is (\d+)c$/, registry)
+    const expected: Suggestion = {
+      segments: ['the price of a "', ['...'], '" is ', ['...'], 'c'],
+      label: '^the price of a "(.*?)" is (\\d+)c$',
+      matched: true,
+    }
+    const actual = buildSuggestionsFromRegularExpression(
+      expression,
+      registry,
+      ['the price of a "lemon" is 34c'],
+      {}
+    )
     assert.deepStrictEqual(actual, [expected])
   })
 })

@@ -88,7 +88,6 @@ describe('ExpressionBuilder', () => {
   context('with NodeParserAdapter', () => {
     defineContract(() => new NodeParserAdapter())
   })
-
   context('with WasmParserAdapter', () => {
     defineContract(() => new WasmParserAdapter('dist'))
   })

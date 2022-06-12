@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.29.0] - 2022-06-03
+### Changed
+- The `tree-sitter` module is an optional dependency. This reduces the risk of installation problems on Windows and also makes the library more light weight.
+
+## [0.28.0] - 2022-05-26
+### Fixed
+- Don't throw an error when generating suggestions for RegExp. ([#60](https://github.com/cucumber/language-service/issues/60), [#61](https://github.com/cucumber/language-service/pull/61))
+
+## [0.27.0] - 2022-05-26
+### Fixed
+- Make all `tree-sitter-{language}` dependencies optional. They are only needed at runtime for the `NodeParserAdapter` - the
+`WasmParserAdapter` does not need them (they use prebuilt `dist/*.wasm` files included in the module).
+
+## [0.26.0] - 2022-05-26
+### Fixed
+- Handle Cucumber Expression optionals not preceded by space in suggestions
+
 ## [0.25.0] - 2022-05-25
 ### Changed
 - `Source.path` has been renamed to `Source.uri`
@@ -216,7 +233,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.25.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.29.0...HEAD
+[0.29.0]: https://github.com/cucumber/language-service/compare/v0.28.0...v0.29.0
+[0.28.0]: https://github.com/cucumber/language-service/compare/v0.27.0...v0.28.0
+[0.27.0]: https://github.com/cucumber/language-service/compare/v0.26.0...v0.27.0
+[0.26.0]: https://github.com/cucumber/language-service/compare/v0.25.0...v0.26.0
 [0.25.0]: https://github.com/cucumber/language-service/compare/v0.24.1...v0.25.0
 [0.24.1]: https://github.com/cucumber/language-service/compare/v0.24.0...v0.24.1
 [0.24.0]: https://github.com/cucumber/language-service/compare/v0.23.1...v0.24.0
