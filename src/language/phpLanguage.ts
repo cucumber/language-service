@@ -1,3 +1,4 @@
+import { buildParameterTypeLinksFromMatches } from './helpers.js'
 import { Language } from './types.js'
 
 export const phpLanguage: Language = {
@@ -12,14 +13,17 @@ export const phpLanguage: Language = {
 `,
   ],
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  convertParameterTypeExpression(s: string): RegExp {
+  convertParameterTypeExpression(expression) {
     throw new Error('Unsupported operation')
   },
-  convertStepDefinitionExpression(s: string): string | RegExp {
+  convertStepDefinitionExpression(expression) {
     // match multiline comment
-    const match = s.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
-    if (!match) throw new Error(`Could not match ${s}`)
+    const match = expression.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
+    if (!match) throw new Error(`Could not match ${expression}`)
     return new RegExp(match[2].replace(/@(Given |When |Then )/, '').trim())
+  },
+  buildParameterTypeLinks(matches) {
+    return buildParameterTypeLinksFromMatches(matches)
   },
 
   snippetParameters: {

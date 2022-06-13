@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Better Cucumber Expression support for SpecFlow/C# ([#68](https://github.com/cucumber/language-service/pull/68), [#62](https://github.com/cucumber/language-service/issues/62), [#63](https://github.com/cucumber/language-service/issues/63))
+
 ## [0.29.0] - 2022-06-03
 ### Changed
 - The `tree-sitter` module is an optional dependency. This reduces the risk of installation problems on Windows and also makes the library more light weight.
