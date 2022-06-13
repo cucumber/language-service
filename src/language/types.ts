@@ -39,8 +39,8 @@ export type ParameterTypeMeta = { name: string; regexp: string }
 export const LanguageNames = ['java', 'typescript', 'c_sharp', 'php', 'ruby'] as const
 export type LanguageName = typeof LanguageNames[number]
 
-export type Source = {
-  readonly languageName: LanguageName
+export type Source<L> = {
+  readonly languageName: L
   readonly uri: DocumentUri
   readonly content: string
 }

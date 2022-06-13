@@ -11,6 +11,7 @@ import {
   ExpressionBuilderResult,
   ExpressionLink,
   Language,
+  LanguageName,
   ParameterTypeLink,
   ParameterTypeMeta,
   ParserAdapter,
@@ -21,7 +22,7 @@ export class ExpressionBuilder {
   constructor(private readonly parserAdapter: ParserAdapter) {}
 
   build(
-    sources: readonly Source[],
+    sources: readonly Source<LanguageName>[],
     parameterTypes: readonly ParameterTypeMeta[]
   ): ExpressionBuilderResult {
     const expressionLinks: ExpressionLink[] = []

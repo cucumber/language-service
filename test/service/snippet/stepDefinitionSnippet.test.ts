@@ -3,7 +3,7 @@ import assert from 'assert'
 
 import { ExpressionBuilder } from '../../../src/language/ExpressionBuilder.js'
 import { getLanguage } from '../../../src/language/languages.js'
-import { LanguageNames, Source } from '../../../src/language/types.js'
+import { LanguageName, LanguageNames, Source } from '../../../src/language/types.js'
 import { stepDefinitionSnippet } from '../../../src/service/snippet/stepDefinitionSnippet.js'
 import { NodeParserAdapter } from '../../../src/tree-sitter-node/NodeParserAdapter.js'
 
@@ -23,7 +23,7 @@ describe('stepDefinitionSnippet', () => {
       )
 
       const expressionBuilder = new ExpressionBuilder(new NodeParserAdapter())
-      const source: Source = {
+      const source: Source<LanguageName> = {
         uri: 'file:///tmp/test.x',
         languageName,
         content: snippet,

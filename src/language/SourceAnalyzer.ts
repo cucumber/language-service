@@ -1,19 +1,26 @@
 import { getLanguage } from './languages.js'
-import { Language, ParserAdapter, Source, TreeSitterQueryMatch, TreeSitterTree } from './types.js'
+import {
+  Language,
+  LanguageName,
+  ParserAdapter,
+  Source,
+  TreeSitterQueryMatch,
+  TreeSitterTree,
+} from './types.js'
 
 export type GetQueryStrings = (language: Language) => readonly string[]
 export type SourceMatch = {
-  source: Source
+  source: Source<LanguageName>
   match: TreeSitterQueryMatch
 }
 
 export class SourceAnalyzer {
   private readonly errors: Error[] = []
-  private readonly treeByContent = new Map<Source, TreeSitterTree>()
+  private readonly treeByContent = new Map<Source<LanguageName>, TreeSitterTree>()
 
   constructor(
     private readonly parserAdapter: ParserAdapter,
-    private readonly sources: readonly Source[]
+    private readonly sources: readonly Source<LanguageName>[]
   ) {}
 
   getSourceMatches(getQueryStrings: GetQueryStrings): Map<Language, readonly SourceMatch[]> {
@@ -49,7 +56,7 @@ export class SourceAnalyzer {
     return this.errors
   }
 
-  private parse(source: Source): TreeSitterTree {
+  private parse(source: Source<LanguageName>): TreeSitterTree {
     let tree: TreeSitterTree | undefined = this.treeByContent.get(source)
     if (!tree) {
       this.treeByContent.set(source, (tree = this.parserAdapter.parser.parse(source.content)))
