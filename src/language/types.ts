@@ -1,5 +1,12 @@
-import { Expression, ParameterType, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
+import {
+  Expression,
+  ParameterType,
+  ParameterTypeRegistry,
+  StringOrRegExp,
+} from '@cucumber/cucumber-expressions'
 import { DocumentUri, LocationLink } from 'vscode-languageserver-types'
+
+import { SourceMatch } from './SourceAnalyzer'
 
 export type ParameterTypeName =
   | 'int'
@@ -43,8 +50,9 @@ export type Language = {
   readonly defineParameterTypeQueries: readonly string[]
   readonly defineStepDefinitionQueries: readonly string[]
   readonly snippetParameters: SnippetParameters
-  convertStepDefinitionExpression(expression: string): string | RegExp
-  convertParameterTypeExpression(expression: string): string | RegExp
+  convertStepDefinitionExpression(expression: string): StringOrRegExp
+  convertParameterTypeExpression(expression: string | null): StringOrRegExp
+  buildParameterTypeLinks(matches: readonly SourceMatch[]): readonly ParameterTypeLink[]
 }
 
 export type ExpressionBuilderResult = {

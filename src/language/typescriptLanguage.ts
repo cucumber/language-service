@@ -1,3 +1,4 @@
+import { buildParameterTypeLinksFromMatches } from './helpers.js'
 import { Language } from './types.js'
 
 export const typescriptLanguage: Language = {
@@ -52,14 +53,17 @@ export const typescriptLanguage: Language = {
 `,
   ],
 
-  convertParameterTypeExpression(s: string) {
-    return toStringOrRegExp(s)
+  convertParameterTypeExpression(expression) {
+    if (expression === null) throw new Error('expression cannot be null')
+    return toStringOrRegExp(expression)
   },
 
-  convertStepDefinitionExpression(s: string) {
-    return toStringOrRegExp(s)
+  convertStepDefinitionExpression(expression) {
+    return toStringOrRegExp(expression)
   },
-
+  buildParameterTypeLinks(matches) {
+    return buildParameterTypeLinksFromMatches(matches)
+  },
   snippetParameters: {
     int: { type: 'number' },
     float: { type: 'number' },

@@ -1,3 +1,4 @@
+import { buildParameterTypeLinksFromMatches } from './helpers.js'
 import { Language } from './types.js'
 
 export const javaLanguage: Language = {
@@ -73,21 +74,23 @@ export const javaLanguage: Language = {
 `,
   ],
 
-  convertParameterTypeExpression(s: string): RegExp {
-    const match = s.match(/^"(.*)"$/)
-    if (!match) throw new Error(`Could not match ${s}`)
-    return unescapeRegExp(match[1])
+  convertParameterTypeExpression(expression) {
+    if (expression === null) throw new Error('expression cannot be null')
+    const match = expression.match(/^"(.*)"$/)
+    if (!match) throw new Error(`Could not match ${expression}`)
+    return new RegExp(unescapeString(match[1]))
   },
 
-  convertStepDefinitionExpression(s: string): string | RegExp {
-    const match = s.match(/^"(\^.*\$)"$/)
+  convertStepDefinitionExpression(expression) {
+    const match = expression.match(/^"(\^.*\$)"$/)
     if (match) {
-      const regExp = unescapeRegExp(match[1])
-      return new RegExp(regExp)
+      return new RegExp(unescapeString(match[1]))
     }
-    return s.substring(1, s.length - 1)
+    return unescapeString(expression.substring(1, expression.length - 1))
   },
-
+  buildParameterTypeLinks(matches) {
+    return buildParameterTypeLinksFromMatches(matches)
+  },
   snippetParameters: {
     int: { type: 'int', name: 'i' },
     float: { type: 'float', name: 'f' },
@@ -110,6 +113,6 @@ export const javaLanguage: Language = {
 }
 
 // Java escapes \ as \\. Turn \\ back to \.
-function unescapeRegExp(regexp: string): RegExp {
-  return new RegExp(regexp.replace(/\\\\/g, '\\'))
+function unescapeString(s: string): string {
+  return s.replace(/\\\\/g, '\\')
 }
