@@ -22,7 +22,7 @@ If your contribution is to add support for a new programming language, follow th
 
 0. Read and understand tree-sitter. It's job is to query the source code of whatever language you are trying to add support for. By doing this we can find the specific functions or methods that correspond to that languages Cucumber support. This allows the `language-service` to abstract away the language specific components and allows the rest of the program to work in more universal Gherkin space.
 1. Run `npm install -E tree-sitter-{language}`
-2. Update `languages` in `scripts/build.js`
+2. Update `languages` in `scripts/build.js` and add it to [cucumber/vscode/README.md](https://github.com/cucumber/vscode/blob/main/README.md).
 3. Run `npm install` - this should build a wasm for the new language into `dist/{language}.wasm`
 4. Add the following files, porting the names and expressions from one of the existing implementations:
    - `test/language/testdata/{language}/ParameterTypes.{ext}` (if the Cucumber implementation supports [Cucumber Expressions](https://github.com/cucumber/cucumber-expressions#readme))
@@ -42,6 +42,26 @@ to build your query. The queries _must have_ [capturing nodes](https://tree-sitt
 - `defineStepDefinitionQueries`: `@expression` and `@root`
 
 Changing the names of these aliases will result in test failures, even if they work within the tree-sitter playground.
+
+## Snippets
+
+Languages _should_ (Should as in, will not merge but could technically work) contain a snippet in their respective `src/language/{language}Language.ts`.
+
+Below is the canonical Ruby example:
+
+```
+{{ keyword }}('{{ expression }}') do |{{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}{{ /parameters }}|
+  // {{ blurb }}
+end
+```
+
+This is a [Mustache Template](https://mustache.github.io/). Here is the [documentation](https://mustache.github.io/mustache.5.html)
+
+Here there are a number of parameters to use:
+`keyword` this your languages Given, When, Then
+`expression` this the cucumber expression to associate with the given step definition
+`blurb` this is the default place holder blurb for developer
+`parameters` and `seenParameter` are the parameters used for development (i.e for Ruby the use of the word date for the parameter in the expression)
 
 ## One last thing
 

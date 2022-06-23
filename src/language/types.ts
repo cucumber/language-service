@@ -36,7 +36,7 @@ export type SnippetParameters = Record<ParameterTypeName, SnippetParameter>
 
 export type ParameterTypeMeta = { name: string; regexp: string }
 
-export const LanguageNames = ['java', 'typescript', 'python', 'c_sharp', 'php', 'ruby'] as const
+export const LanguageNames = ['java', 'typescript', 'c_sharp', 'php', 'python', 'ruby'] as const
 export type LanguageName = typeof LanguageNames[number]
 
 export type Source<L> = {
