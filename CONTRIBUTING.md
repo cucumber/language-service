@@ -20,7 +20,7 @@ See [cucumber/vscode/CONTRIBUTING.md](https://github.com/cucumber/vscode/blob/ma
 
 If your contribution is to add support for a new programming language, follow these steps:
 
-0. Read and understand tree-sitter. It's job is to query the source code of whatever language you are trying to add support for. By doing this we can find the specific functions or methods that correspond to that languages Cucumber support. This allows the `language-service` to abstract away the language specific components and allows the rest of the program to work in more universal Gherkin space.
+0. Read and understand tree-sitter. It's job is to query the source code of whatever language you are trying to add support for. By doing this we can find the specific functions or methods that correspond to that language's Cucumber support. This allows the `language-service` to abstract away the language specific components and allows the rest of the program to work in more universal Gherkin space.
 1. Run `npm install -E tree-sitter-{language}`
 2. Update `languages` in `scripts/build.js` and add it to [cucumber/vscode/README.md](https://github.com/cucumber/vscode/blob/main/README.md).
 3. Run `npm install` - this should build a wasm for the new language into `dist/{language}.wasm`
