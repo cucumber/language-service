@@ -1,5 +1,5 @@
-import { buildParameterTypeLinksFromMatches } from "./helpers.js";
-import { Language } from "./types.js";
+import { buildParameterTypeLinksFromMatches } from './helpers.js'
+import { Language } from './types.js'
 
 export const pythonLanguage: Language = {
   defineParameterTypeQueries: [
@@ -37,41 +37,41 @@ export const pythonLanguage: Language = {
   ],
 
   convertParameterTypeExpression(expression: string) {
-    return toStringOrRegExp(expression);
+    return toStringOrRegExp(expression)
   },
 
   convertStepDefinitionExpression(expression: string) {
-    return toStringOrRegExp(expression);
+    return toStringOrRegExp(expression)
   },
   buildParameterTypeLinks(matches) {
-    return buildParameterTypeLinksFromMatches(matches);
+    return buildParameterTypeLinksFromMatches(matches)
   },
 
   snippetParameters: {
-    int: { type: "int" },
-    float: { type: "float" },
-    word: { type: "str" },
-    string: { type: "str" },
-    double: { type: "double" },
-    bigdecimal: { type: "decimal" },
-    byte: { type: "byte" },
-    short: { type: "short" },
-    long: { type: "long" },
-    biginteger: { type: "int" },
-    "": { type: "Object", name: "arg" },
+    int: { type: 'int' },
+    float: { type: 'float' },
+    word: { type: 'str' },
+    string: { type: 'str' },
+    double: { type: 'double' },
+    bigdecimal: { type: 'decimal' },
+    byte: { type: 'byte' },
+    short: { type: 'short' },
+    long: { type: 'long' },
+    biginteger: { type: 'int' },
+    '': { type: 'Object', name: 'arg' },
   },
 
   defaultSnippetTemplate: `
   @{{ #lowercase }}{{ keyword }}{{ /lowercase }}('{{ expression }}')
   def step_{{ #lowercase }}{{ keyword }}{{ /lowercase }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}{{ /parameters }}) :
       # {{ blurb }}`,
-};
+}
 
 function toStringOrRegExp(s: string): string | RegExp {
-  const match = s.match(/([/'"])(.*)([/'"])/);
-  if (!match) throw new Error(`Could not match '${s}'`);
-  if (match[2].startsWith("/") && match[2].endsWith("/")) {
-    return new RegExp(match[2].slice(1, -1));
+  const match = s.match(/([/'"])(.*)([/'"])/)
+  if (!match) throw new Error(`Could not match '${s}'`)
+  if (match[2].startsWith('/') && match[2].endsWith('/')) {
+    return new RegExp(match[2].slice(1, -1))
   }
-  return match[2];
+  return match[2]
 }
