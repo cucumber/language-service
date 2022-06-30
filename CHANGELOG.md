@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.30.0] - 2022-06-13
 ### Fixed
 - Better Cucumber Expression support for SpecFlow/C# ([#68](https://github.com/cucumber/language-service/pull/68), [#62](https://github.com/cucumber/language-service/issues/62), [#63](https://github.com/cucumber/language-service/issues/63))
 
@@ -236,7 +237,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.29.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.30.0...HEAD
+[0.30.0]: https://github.com/cucumber/language-service/compare/v0.29.0...v0.30.0
 [0.29.0]: https://github.com/cucumber/language-service/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/cucumber/language-service/compare/v0.27.0...v0.28.0
 [0.27.0]: https://github.com/cucumber/language-service/compare/v0.26.0...v0.27.0
