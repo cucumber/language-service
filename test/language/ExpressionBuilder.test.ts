@@ -9,13 +9,7 @@ import { ParserAdapter, Source } from '../../src/language/types.js'
 import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
 import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
 
-const parameterTypeSupport: Set<LanguageName> = new Set([
-  'c_sharp',
-  'java',
-  'python',
-  'ruby',
-  'typescript',
-])
+const parameterTypeSupport: Set<LanguageName> = new Set(['c_sharp', 'java', 'ruby', 'typescript'])
 
 function defineContract(makeParserAdapter: () => ParserAdapter) {
   let expressionBuilder: ExpressionBuilder
@@ -31,7 +25,12 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
     if (languageName === 'c_sharp') {
       it(`builds parameter type from [StepArgumentTransformation] without expression`, async () => {
         const sources = await loadSources(dir, languageName)
-        const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
+        const result = expressionBuilder.build(sources, [
+          {
+            regexp: '.*',
+            name: 'int',
+          },
+        ])
 
         const regexpStrings = result.parameterTypeLinks.find(
           (l) => l.parameterType.name === 'WithoutExpression'
@@ -41,7 +40,12 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
 
       it(`builds parameter type from multiple [StepArgumentTransformation] with the same return type`, async () => {
         const sources = await loadSources(dir, languageName)
-        const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
+        const result = expressionBuilder.build(sources, [
+          {
+            regexp: '.*',
+            name: 'int',
+          },
+        ])
 
         const regexpStrings = result.parameterTypeLinks.find(
           (l) => l.parameterType.name === 'DateTime'
@@ -52,7 +56,12 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
 
     it(`builds parameter types and expressions from ${languageName} source`, async () => {
       const sources = await loadSources(dir, languageName)
-      const result = expressionBuilder.build(sources, [{ regexp: '.*', name: 'int' }])
+      const result = expressionBuilder.build(sources, [
+        {
+          regexp: '.*',
+          name: 'int',
+        },
+      ])
 
       // verify that the targetSelectionRange is inside the targetRange
       for (const link of result.expressionLinks.map((l) => l.locationLink)) {
