@@ -15,7 +15,7 @@ export function getStepDefinitionLocationLinks(
   for (const expressionLink of expressionLinks) {
     if (expressionLink.expression.match(stepRange.stepText)) {
       // the expressionLink.locationLink.targetUri value is not a valid Uri for Windows
-      // It is treated as a service. We assign a new URL instead. It is valid for Darwin/Linux/Windows
+      // It is treated as a directory. We assign a new URL instead. It is valid for Darwin/Linux/Windows
       expressionLink.locationLink.targetUri = new URL(expressionLink.locationLink.targetUri).href
       const locationLink: LocationLink = {
         ...expressionLink.locationLink,
