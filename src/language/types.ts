@@ -24,28 +24,28 @@ export type ParameterTypeName =
 /**
  * Used to generate step definition snippets
  */
-export type SnippetParameter = {
+export type SnippetParameter = Readonly<{
   /**
    * The name to use for the parameter.
    */
   name?: string
   type: string
-}
+}>
 
-export type SnippetParameters = Record<ParameterTypeName, SnippetParameter>
+export type SnippetParameters = Readonly<Record<ParameterTypeName, SnippetParameter>>
 
-export type ParameterTypeMeta = { name: string; regexp: string }
+export type ParameterTypeMeta = Readonly<{ name: string; regexp: string }>
 
 export const LanguageNames = ['java', 'typescript', 'c_sharp', 'php', 'ruby'] as const
 export type LanguageName = typeof LanguageNames[number]
 
-export type Source<L> = {
+export type Source<L> = Readonly<{
   readonly languageName: L
   readonly uri: DocumentUri
   readonly content: string
-}
+}>
 
-export type Language = {
+export type Language = Readonly<{
   readonly defaultSnippetTemplate: string
   readonly defineParameterTypeQueries: readonly string[]
   readonly defineStepDefinitionQueries: readonly string[]
@@ -53,26 +53,28 @@ export type Language = {
   convertStepDefinitionExpression(expression: string): StringOrRegExp
   convertParameterTypeExpression(expression: string | null): StringOrRegExp
   buildParameterTypeLinks(matches: readonly SourceMatch[]): readonly ParameterTypeLink[]
-}
+}>
 
-export type ExpressionBuilderResult = {
+export type ExpressionBuilderResult = Readonly<{
   readonly expressionLinks: readonly ExpressionLink[]
   readonly parameterTypeLinks: readonly ParameterTypeLink[]
   readonly errors: readonly Error[]
   readonly registry: ParameterTypeRegistry
-}
+}>
 
-export type Link = {
+export type Link = Readonly<{
   locationLink: LocationLink
-}
+}>
 
-export type ExpressionLink = Link & {
-  expression: Expression
-}
+export type ExpressionLink = Link &
+  Readonly<{
+    expression: Expression
+  }>
 
-export type ParameterTypeLink = Link & {
-  parameterType: ParameterType<unknown>
-}
+export type ParameterTypeLink = Link &
+  Readonly<{
+    parameterType: ParameterType<unknown>
+  }>
 
 /**
  * The Node.js and Web bindings have slightly different APIs. We hide this difference behind this interface.
@@ -92,30 +94,30 @@ export interface TreeSitterParser {
   parse(input: string): TreeSitterTree
 }
 
-export type TreeSitterTree = {
+export type TreeSitterTree = Readonly<{
   rootNode: TreeSitterSyntaxNode
-}
+}>
 
-export type TreeSitterQuery = {
+export interface TreeSitterQuery {
   matches(node: TreeSitterSyntaxNode): readonly TreeSitterQueryMatch[]
 }
 
-export type TreeSitterSyntaxNode = {
+export type TreeSitterSyntaxNode = Readonly<{
   text: string
   startPosition: TreeSitterPosition
   endPosition: TreeSitterPosition
-}
+}>
 
-export type TreeSitterQueryMatch = {
+export type TreeSitterQueryMatch = Readonly<{
   captures: readonly TreeSitterCapture[]
-}
+}>
 
-export type TreeSitterCapture = {
+export type TreeSitterCapture = Readonly<{
   name: string
   node: TreeSitterSyntaxNode
-}
+}>
 
-export type TreeSitterPosition = {
+export type TreeSitterPosition = Readonly<{
   row: number
   column: number
-}
+}>

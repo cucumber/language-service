@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- All types are immutable (using `Readonly`)
+
 ## [0.30.0] - 2022-06-13
 ### Fixed
 - Better Cucumber Expression support for SpecFlow/C# ([#68](https://github.com/cucumber/language-service/pull/68), [#62](https://github.com/cucumber/language-service/issues/62), [#63](https://github.com/cucumber/language-service/issues/63))
