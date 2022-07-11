@@ -1,4 +1,4 @@
-export type Suggestion = {
+export type Suggestion = Readonly<{
   /**
    * The value that is presented to users in an autocomplete.
    */
@@ -17,7 +17,7 @@ export type Suggestion = {
    * True is this suggestion is from a matched step
    */
   matched: boolean
-}
+}>
 
 export type SuggestionSegments = readonly SuggestionSegment[]
 export type SuggestionSegment = Text | Choices
