@@ -19,3 +19,6 @@ storybook-static
 # stryker temp files
 .stryker-tmp
 reports
+# python
+.python-version
+.mypy-cache
