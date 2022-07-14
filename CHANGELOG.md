@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [0.31.0] - 2022-07-14
 ### Added
 - Basic Python Support via behave ([#69](https://github.com/cucumber/language-service/pull/69))
 
@@ -242,7 +244,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.30.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.31.0...HEAD
+[0.31.0]: https://github.com/cucumber/language-service/compare/v0.30.0...v0.31.0
 [0.30.0]: https://github.com/cucumber/language-service/compare/v0.29.0...v0.30.0
 [0.29.0]: https://github.com/cucumber/language-service/compare/v0.28.0...v0.29.0
 [0.28.0]: https://github.com/cucumber/language-service/compare/v0.27.0...v0.28.0
