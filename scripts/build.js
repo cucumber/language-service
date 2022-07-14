@@ -30,6 +30,11 @@ const languages = [
     dir: '',
     wasm: 'ruby',
   },
+  {
+    npm: 'tree-sitter-python',
+    dir: '',
+    wasm: 'python',
+  },
 ]
 
 // Build wasm parsers for supported languages

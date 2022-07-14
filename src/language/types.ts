@@ -36,7 +36,7 @@ export type SnippetParameters = Readonly<Record<ParameterTypeName, SnippetParame
 
 export type ParameterTypeMeta = Readonly<{ name: string; regexp: string }>
 
-export const LanguageNames = ['java', 'typescript', 'c_sharp', 'php', 'ruby'] as const
+export const LanguageNames = ['java', 'typescript', 'c_sharp', 'php', 'python', 'ruby'] as const
 export type LanguageName = typeof LanguageNames[number]
 
 export type Source<L> = Readonly<{
