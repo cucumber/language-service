@@ -17,7 +17,8 @@ export const pythonLanguage: Language = {
 `,
   ],
 
-  convertParameterTypeExpression(expression: string) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  convertParameterTypeExpression(_expression: string) {
     throw new Error('Unsupported Operation')
   },
 
