@@ -17,6 +17,9 @@ Feature: a
   This is a description
   and so is this
 
+  Background:
+    Given a repeating step
+
   Scenario: b
     Given I have 42 cukes in my belly
       """sometype
@@ -45,6 +48,8 @@ Feature: a
       ['@foo', SemanticTokenTypes.type],
       ['@bar', SemanticTokenTypes.type],
       ['Feature', SemanticTokenTypes.keyword],
+      ['Background', SemanticTokenTypes.keyword],
+      ['Given ', SemanticTokenTypes.keyword],
       ['Scenario', SemanticTokenTypes.keyword],
       ['Given ', SemanticTokenTypes.keyword],
       ['42', SemanticTokenTypes.parameter],
