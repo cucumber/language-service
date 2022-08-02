@@ -75,6 +75,14 @@ export function getGherkinSemanticTokens(
     rule(rule, arr) {
       return makeLocationToken(rule.location, rule.keyword, SemanticTokenTypes.keyword, arr)
     },
+    background(background, arr) {
+      return makeLocationToken(
+        background.location,
+        background.keyword,
+        SemanticTokenTypes.keyword,
+        arr
+      )
+    },
     scenario(scenario, arr) {
       inScenarioOutline = (scenario.examples || []).length > 0
       return makeLocationToken(scenario.location, scenario.keyword, SemanticTokenTypes.keyword, arr)
