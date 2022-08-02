@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Highlight `Background` keyword ([#78](https://github.com/cucumber/language-service/pull/78))
+
 ## [0.31.0] - 2022-07-14
 ### Added
 - Basic Python Support via behave ([#69](https://github.com/cucumber/language-service/pull/69))
