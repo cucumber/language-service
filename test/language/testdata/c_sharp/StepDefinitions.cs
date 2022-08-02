@@ -24,5 +24,10 @@ namespace StepDefinitions
 		public void AnUndefinedParameter(Date date)
 		{
 		}
+
+		[Given("the bee's knees")]
+		public void TheBeesKnees()
+		{
+		}
 	}
 }
