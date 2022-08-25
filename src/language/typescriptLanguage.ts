@@ -93,5 +93,5 @@ function toStringOrRegExp(s: string): string | RegExp {
 }
 
 function unescapeString(s: string): string {
-  return s.replace(/\\'/g, "'")
+  return s.replace(/\\'/g, "'").replace(/\\"/g, '"')
 }
