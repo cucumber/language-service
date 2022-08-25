@@ -17,7 +17,6 @@ Given('an {undefined-parameter}', async function (date: Date) {
   assert(date)
 })
 
-// eslint-disable-next-line prettier/prettier
 Given("the bee's knees", async function () {
   assert(true)
 })
