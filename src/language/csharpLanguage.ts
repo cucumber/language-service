@@ -44,7 +44,6 @@ export const csharpLanguage: Language = {
     }
   },
   defineParameterTypeQueries: [
-    // [StepArgumentTransformation(@"blabla")]
     `
     (method_declaration
       (attribute_list
@@ -57,26 +56,13 @@ export const csharpLanguage: Language = {
                 (string_literal)
               ] @expression
             )
-          )
+          )?
         )
       )
       type: (identifier) @name
       (#eq? @attribute-name "StepArgumentTransformation")
     ) @root
     `,
-    // [StepArgumentTransformation]
-    `
-    (method_declaration
-      (attribute_list
-        (attribute
-          name: (identifier) @attribute-name
-          .
-        )
-      )
-      type: (identifier) @name
-      (#eq? @attribute-name "StepArgumentTransformation")
-    ) @root
-        `,
   ],
   defineStepDefinitionQueries: [
     `
