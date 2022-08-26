@@ -9,7 +9,13 @@ import { ParserAdapter, Source } from '../../src/language/types.js'
 import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
 import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
 
-const parameterTypeSupport: Set<LanguageName> = new Set(['c_sharp', 'java', 'ruby', 'typescript'])
+// List languages that support Cucumber Expressions here
+const cucumberExpressionsSupport: Set<LanguageName> = new Set([
+  'c_sharp',
+  'java',
+  'ruby',
+  'typescript',
+])
 
 function defineContract(makeParserAdapter: () => ParserAdapter) {
   let expressionBuilder: ExpressionBuilder
@@ -72,7 +78,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
           : (expression as RegularExpression).regexp
       )
       const errors = result.errors.map((e) => e.message)
-      if (parameterTypeSupport.has(languageName)) {
+      if (cucumberExpressionsSupport.has(languageName)) {
         assert.deepStrictEqual(expressions, ['a {uuid}', 'a {date}', 'a {planet}', /^a regexp$/])
         assert.deepStrictEqual(errors, [
           'There is already a parameter type with name int',
