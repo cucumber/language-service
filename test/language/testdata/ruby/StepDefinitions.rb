@@ -4,6 +4,9 @@ end
 Given('a {date}') do |date|
 end
 
+Given('a {planet}') do |planet|
+end
+
 Given(/^a regexp$/) do
 end
 

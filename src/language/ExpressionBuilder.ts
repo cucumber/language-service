@@ -67,9 +67,9 @@ export class ExpressionBuilder {
         const rootNode = syntaxNode(match, 'root')
         if (expressionNode && rootNode) {
           const language = getLanguage(source.languageName)
-          const stringOrRegexp = language.convertStepDefinitionExpression(expressionNode.text)
+          const stepDefinitionExpression = language.toStepDefinitionExpression(expressionNode)
           try {
-            const expression = expressionFactory.createExpression(stringOrRegexp)
+            const expression = expressionFactory.createExpression(stepDefinitionExpression)
             const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
             expressionLinks.push({ expression, locationLink })
           } catch (err) {

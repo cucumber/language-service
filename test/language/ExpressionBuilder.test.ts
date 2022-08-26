@@ -25,12 +25,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
     if (languageName === 'c_sharp') {
       it(`builds parameter type from [StepArgumentTransformation] without expression`, async () => {
         const sources = await loadSources(dir, languageName)
-        const result = expressionBuilder.build(sources, [
-          {
-            regexp: '.*',
-            name: 'int',
-          },
-        ])
+        const result = expressionBuilder.build(sources, [])
 
         const regexpStrings = result.parameterTypeLinks.find(
           (l) => l.parameterType.name === 'WithoutExpression'
@@ -40,12 +35,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
 
       it(`builds parameter type from multiple [StepArgumentTransformation] with the same return type`, async () => {
         const sources = await loadSources(dir, languageName)
-        const result = expressionBuilder.build(sources, [
-          {
-            regexp: '.*',
-            name: 'int',
-          },
-        ])
+        const result = expressionBuilder.build(sources, [])
 
         const regexpStrings = result.parameterTypeLinks.find(
           (l) => l.parameterType.name === 'DateTime'
@@ -53,6 +43,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         assert.deepStrictEqual(regexpStrings, ['today', 'tomorrow', '(.*) days later'])
       })
     }
+    // if (languageName !== 'c_sharp') continue
 
     it(`builds parameter types and expressions from ${languageName} source`, async () => {
       const sources = await loadSources(dir, languageName)
@@ -82,7 +73,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
       )
       const errors = result.errors.map((e) => e.message)
       if (parameterTypeSupport.has(languageName)) {
-        assert.deepStrictEqual(expressions, ['a {uuid}', 'a {date}', /^a regexp$/])
+        assert.deepStrictEqual(expressions, ['a {uuid}', 'a {date}', 'a {planet}', /^a regexp$/])
         assert.deepStrictEqual(errors, [
           'There is already a parameter type with name int',
           `This Cucumber Expression has a problem at column 4:

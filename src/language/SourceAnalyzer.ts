@@ -25,7 +25,6 @@ export class SourceAnalyzer {
 
   getSourceMatches(getQueryStrings: GetQueryStrings): Map<Language, readonly SourceMatch[]> {
     const result = new Map<Language, SourceMatch[]>()
-    // const sourceMatches: SourceMatch[] = []
     for (const source of this.sources) {
       this.parserAdapter.setLanguageName(source.languageName)
       let tree: TreeSitterTree

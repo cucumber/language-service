@@ -9,6 +9,10 @@ Given('a {date}', async function (date: Date) {
   assert(date)
 })
 
+Given('a {planet}', async function (planet: string) {
+  assert(planet)
+})
+
 Given(/^a regexp$/, async function () {
   assert(true)
 })

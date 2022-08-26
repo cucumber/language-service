@@ -9,6 +9,10 @@ public class StepDefinitions {
     void a_date(Date date) {
     }
 
+    @Given("a {planet}"  )
+    void a_date(Date date) {
+    }
+
     @Given("^a regexp$"  )
     void a_regexp() {
     }

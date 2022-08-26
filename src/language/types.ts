@@ -4,6 +4,7 @@ import {
   ParameterTypeRegistry,
   StringOrRegExp,
 } from '@cucumber/cucumber-expressions'
+import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 import { DocumentUri, LocationLink } from 'vscode-languageserver-types'
 
 import { SourceMatch } from './SourceAnalyzer'
@@ -46,13 +47,16 @@ export type Source<L> = Readonly<{
 }>
 
 export type Language = Readonly<{
-  readonly defaultSnippetTemplate: string
+  toParameterTypeName(node: TreeSitterSyntaxNode): string
+  toParameterTypeRegExps(node: TreeSitterSyntaxNode | null): RegExps
+  toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp
+  buildParameterTypeLinks(matches: readonly SourceMatch[]): readonly ParameterTypeLink[]
+
   readonly defineParameterTypeQueries: readonly string[]
   readonly defineStepDefinitionQueries: readonly string[]
+
+  readonly defaultSnippetTemplate: string
   readonly snippetParameters: SnippetParameters
-  convertStepDefinitionExpression(expression: string): StringOrRegExp
-  convertParameterTypeExpression(expression: string | null): StringOrRegExp
-  buildParameterTypeLinks(matches: readonly SourceMatch[]): readonly ParameterTypeLink[]
 }>
 
 export type ExpressionBuilderResult = Readonly<{
@@ -75,6 +79,10 @@ export type ParameterTypeLink = Link &
   Readonly<{
     parameterType: ParameterType<unknown>
   }>
+
+export type NodePredicate = (node: TreeSitterSyntaxNode) => boolean
+// export type NodeToParameterTypeRegExps = (node: TreeSitterSyntaxNode) => RegExps | null
+// export type NodeToString = (node: TreeSitterSyntaxNode) => string
 
 /**
  * The Node.js and Web bindings have slightly different APIs. We hide this difference behind this interface.
@@ -103,7 +111,9 @@ export interface TreeSitterQuery {
 }
 
 export type TreeSitterSyntaxNode = Readonly<{
+  type: string
   text: string
+  children: readonly TreeSitterSyntaxNode[]
   startPosition: TreeSitterPosition
   endPosition: TreeSitterPosition
 }>

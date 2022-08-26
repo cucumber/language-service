@@ -15,6 +15,11 @@ namespace StepDefinitions
 		{
 		}
 
+		[Given("a {planet}")]
+		public void APlanet(string planet)
+		{
+		}
+
 		[Given(@"^a regexp$")]
 		public void ARegexp()
 		{
