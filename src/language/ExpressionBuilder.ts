@@ -52,7 +52,7 @@ export class ExpressionBuilder {
     )
 
     let parameterTypeLinks: ParameterTypeLink[] = []
-    for (const [_, matches] of parameterTypeMatches.entries()) {
+    for (const [, matches] of parameterTypeMatches.entries()) {
       const links = buildParameterTypeLinksFromMatches(matches)
       parameterTypeLinks = parameterTypeLinks.concat(links)
       for (const { parameterType } of links) {

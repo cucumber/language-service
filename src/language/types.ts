@@ -7,8 +7,6 @@ import {
 import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 import { DocumentUri, LocationLink } from 'vscode-languageserver-types'
 
-import { SourceMatch } from './SourceAnalyzer'
-
 export type ParameterTypeName =
   | 'int'
   | 'float'
@@ -89,8 +87,11 @@ export type NodePredicate = (node: TreeSitterSyntaxNode) => boolean
  */
 export interface ParserAdapter {
   readonly parser: TreeSitterParser
+
   init(): Promise<void>
+
   setLanguageName(languageName: LanguageName): void
+
   query(source: string): TreeSitterQuery
 }
 
