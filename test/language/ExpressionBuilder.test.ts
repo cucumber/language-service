@@ -82,7 +82,12 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
       )
       const errors = result.errors.map((e) => e.message)
       if (parameterTypeSupport.has(languageName)) {
-        assert.deepStrictEqual(expressions, ['a {uuid}', 'a {date}', /^a regexp$/])
+        assert.deepStrictEqual(expressions, [
+          'a {uuid}',
+          'a {date}',
+          /^a regexp$/,
+          "the bee's knees",
+        ])
         assert.deepStrictEqual(errors, [
           'There is already a parameter type with name int',
           `This Cucumber Expression has a problem at column 4:

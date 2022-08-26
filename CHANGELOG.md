@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- Support escaped single and doublt quotes in TypeScript and Ruby ([#66](https://github.com/cucumber/language-service/issues/66), [#85](https://github.com/cucumber/language-service/pull/85))
+- Highlight `Background` keyword ([#78](https://github.com/cucumber/language-service/pull/78))
+
 ## [0.31.0] - 2022-07-14
 ### Added
 - Basic Python Support via behave ([#69](https://github.com/cucumber/language-service/pull/69))
