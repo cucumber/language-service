@@ -1,4 +1,3 @@
-import { buildParameterTypeLinksFromMatches } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const javaLanguage: Language = {
@@ -96,9 +95,6 @@ export const javaLanguage: Language = {
 `,
   ],
 
-  buildParameterTypeLinks(matches) {
-    return buildParameterTypeLinksFromMatches(matches)
-  },
   snippetParameters: {
     int: { type: 'int', name: 'i' },
     float: { type: 'float', name: 'f' },

@@ -1,6 +1,5 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 
-import { buildParameterTypeLinksFromMatches } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const pythonLanguage: Language = {
@@ -39,10 +38,6 @@ export const pythonLanguage: Language = {
 ) @root
 `,
   ],
-
-  buildParameterTypeLinks(matches) {
-    return buildParameterTypeLinksFromMatches(matches)
-  },
 
   snippetParameters: {
     int: { type: 'int' },

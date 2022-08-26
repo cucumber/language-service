@@ -1,13 +1,7 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
-import {
-  buildParameterTypeLinksFromMatches,
-  childrenToString,
-  filter,
-  NO_QUOTES,
-  NO_SLASHES,
-} from './helpers.js'
+import { childrenToString, filter, NO_QUOTES, NO_SLASHES } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const rubyLanguage: Language = {
@@ -86,18 +80,6 @@ export const rubyLanguage: Language = {
 ) @root
 `,
   ],
-
-  // convertParameterTypeExpression(expression) {
-  //   if (expression === null) throw new Error('expression cannot be null')
-  //   return toStringOrRegExps(expression)
-  // },
-  //
-  // convertStepDefinitionExpression(expression) {
-  //   return toStringOrRegExp(expression)
-  // },
-  buildParameterTypeLinks(matches) {
-    return buildParameterTypeLinksFromMatches(matches)
-  },
 
   snippetParameters: {
     int: { type: 'Integer' },

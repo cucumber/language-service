@@ -1,13 +1,7 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
-import {
-  buildParameterTypeLinksFromMatches,
-  childrenToString,
-  filter,
-  NO_QUOTES,
-  NO_SLASHES,
-} from './helpers.js'
+import { childrenToString, filter, NO_QUOTES, NO_SLASHES } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const typescriptLanguage: Language = {
@@ -88,9 +82,7 @@ export const typescriptLanguage: Language = {
 ) @root
 `,
   ],
-  buildParameterTypeLinks(matches) {
-    return buildParameterTypeLinksFromMatches(matches)
-  },
+
   snippetParameters: {
     int: { type: 'number' },
     float: { type: 'number' },

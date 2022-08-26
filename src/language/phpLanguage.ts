@@ -1,4 +1,3 @@
-import { buildParameterTypeLinksFromMatches } from './helpers.js'
 import { Language } from './types.js'
 
 export const phpLanguage: Language = {
@@ -25,10 +24,6 @@ export const phpLanguage: Language = {
 ) @root
 `,
   ],
-  buildParameterTypeLinks(matches) {
-    return buildParameterTypeLinksFromMatches(matches)
-  },
-
   snippetParameters: {
     int: { type: 'int', name: 'i' },
     float: { type: 'float', name: 'f' },

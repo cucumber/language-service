@@ -50,7 +50,6 @@ export type Language = Readonly<{
   toParameterTypeName(node: TreeSitterSyntaxNode): string
   toParameterTypeRegExps(node: TreeSitterSyntaxNode | null): RegExps
   toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp
-  buildParameterTypeLinks(matches: readonly SourceMatch[]): readonly ParameterTypeLink[]
 
   readonly defineParameterTypeQueries: readonly string[]
   readonly defineStepDefinitionQueries: readonly string[]
