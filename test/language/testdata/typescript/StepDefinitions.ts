@@ -20,3 +20,7 @@ Given(/^a regexp$/, async function () {
 Given('an {undefined-parameter}', async function (date: Date) {
   assert(date)
 })
+
+Given("the bee's knees", async function () {
+  assert(true)
+})

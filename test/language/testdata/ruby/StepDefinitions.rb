@@ -12,3 +12,6 @@ end
 
 Given('an {undefined-parameter}') do |date|
 end
+
+Given('the bee\'s knees') do |date|
+end

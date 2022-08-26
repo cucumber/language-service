@@ -18,6 +18,10 @@ public class StepDefinitions {
     }
 
     @Given("an {undefined-parameter}"  )
-    void a_date(Date date) {
+    void an_undefined_parameter(Date date) {
+    }
+
+    @Given("the bee's knees"  )
+    void the_bees_knees(Date date) {
     }
 }

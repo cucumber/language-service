@@ -118,10 +118,14 @@ function toRegExps(node: TreeSitterSyntaxNode | null): RegExps {
 function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
   switch (node.type) {
     case 'regex':
-      return new RegExp(childrenToString(node, NO_SLASHES))
+      return new RegExp(unescapeString(childrenToString(node, NO_SLASHES)))
     case 'string':
-      return childrenToString(node, NO_QUOTES)
+      return unescapeString(childrenToString(node, NO_QUOTES))
     default:
       throw new Error(`Unexpected type: ${node.type}`)
   }
+}
+
+function unescapeString(s: string): string {
+  return s.replace(/\\'/g, "'").replace(/\\"/g, '"')
 }
