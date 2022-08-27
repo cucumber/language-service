@@ -1,12 +1,49 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
-import { LocationLink } from 'vscode-languageserver-types'
 
-import { createLocationLink, makeParameterType, stripQuotes } from './helpers.js'
-import { Language, ParameterTypeLink, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types.js'
+import { childrenToString, NO_QUOTES } from './helpers.js'
+import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const csharpLanguage: Language = {
+  toParameterTypeName(node: TreeSitterSyntaxNode) {
+    switch (node.type) {
+      case 'identifier': {
+        return node.text
+      }
+    }
+    return childrenToString(node, NO_QUOTES)
+  },
+  toParameterTypeRegExps(node) {
+    if (node === null) {
+      return /.*/
+    }
+
+    switch (node.type) {
+      case 'verbatim_string_literal': {
+        const s = node.text.slice(2, -1)
+        return new RegExp(unescapeVerbatimString(s))
+      }
+      case 'string_literal': {
+        const s = node.text.slice(1, -1)
+        return new RegExp(unescapeString(s))
+      }
+      default:
+        throw new Error(`Unexpected type: ${node.type}`)
+    }
+  },
+  toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp {
+    switch (node.type) {
+      case 'verbatim_string_literal': {
+        const s = node.text.slice(2, -1)
+        return new RegExp(unescapeVerbatimString(s))
+      }
+      case 'string_literal': {
+        return unescapeString(node.text.slice(1, -1))
+      }
+      default:
+        throw new Error(`Unexpected type: ${node.type}`)
+    }
+  },
   defineParameterTypeQueries: [
-    // [StepArgumentTransformation(@"blabla")]
     `
     (method_declaration
       (attribute_list
@@ -19,26 +56,13 @@ export const csharpLanguage: Language = {
                 (string_literal)
               ] @expression
             )
-          )
+          )?
         )
       )
       type: (identifier) @name
       (#eq? @attribute-name "StepArgumentTransformation")
     ) @root
     `,
-    // [StepArgumentTransformation]
-    `
-    (method_declaration
-      (attribute_list
-        (attribute
-          name: (identifier) @attribute-name
-          .
-        )
-      )
-      type: (identifier) @name
-      (#eq? @attribute-name "StepArgumentTransformation")
-    ) @root
-        `,
   ],
   defineStepDefinitionQueries: [
     `
@@ -72,47 +96,6 @@ export const csharpLanguage: Language = {
 ) @root
 `,
   ],
-  convertParameterTypeExpression(expression) {
-    if (expression === null) {
-      // https://github.com/gasparnagy/CucumberExpressions.SpecFlow/blob/a2354d2175f5c632c9ae4a421510f314efce4111/CucumberExpressions.SpecFlow.SpecFlowPlugin/Expressions/CucumberExpressionParameterType.cs#L10
-      return /.*/
-    }
-    return convertExpression(expression)
-  },
-  convertStepDefinitionExpression(expression) {
-    return convertExpression(expression)
-  },
-  buildParameterTypeLinks(matches) {
-    const parameterTypeLinks: ParameterTypeLink[] = []
-    const propsByName: Record<string, ParameterTypeLinkProps> = {}
-    for (const { source, match } of matches) {
-      const nameNode = syntaxNode(match, 'name')
-      const expressionNode = syntaxNode(match, 'expression')
-      const rootNode = syntaxNode(match, 'root')
-      if (nameNode && rootNode) {
-        // SpecFlow allows definition of parameter types (StepArgumentTransformation) without specifying an expression
-        // See https://github.com/gasparnagy/CucumberExpressions.SpecFlow/blob/a2354d2175f5c632c9ae4a421510f314efce4111/CucumberExpressions.SpecFlow.SpecFlowPlugin/Expressions/UserDefinedCucumberExpressionParameterTypeTransformation.cs#L25-L27
-        const parameterTypeName = stripQuotes(nameNode.text)
-        const selectionNode = expressionNode || nameNode
-        const locationLink = createLocationLink(rootNode, selectionNode, source.uri)
-        const props: ParameterTypeLinkProps = (propsByName[parameterTypeName] = propsByName[
-          parameterTypeName
-        ] || { locationLink, regexps: [] })
-        const parameterTypeExpression = expressionNode ? expressionNode.text : null
-        props.regexps.push(this.convertParameterTypeExpression(parameterTypeExpression))
-
-        // const parameterType = makeParameterType(
-        //   parameterTypeName,
-        //   this.convertParameterTypeExpression(parameterTypeExpression)
-        // )
-      }
-    }
-    for (const [name, { regexps, locationLink }] of Object.entries(propsByName)) {
-      const parameterType = makeParameterType(name, regexps)
-      parameterTypeLinks.push({ parameterType, locationLink })
-    }
-    return parameterTypeLinks
-  },
 
   snippetParameters: {
     int: { type: 'int', name: 'i' },
@@ -138,16 +121,6 @@ export const csharpLanguage: Language = {
 `,
 }
 
-function convertExpression(expression: string) {
-  const match = expression.match(/^(@)?"(.*)"$/)
-  if (!match) throw new Error(`Could not match ${expression}`)
-  if (match[1] === '@') {
-    return new RegExp(unescapeVerbatimString(match[2]))
-  } else {
-    return unescapeString(match[2])
-  }
-}
-
 // C# verbatim strings escape " as "". Unescape "" back to ".
 // https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/tokens/verbatim
 function unescapeVerbatimString(s: string): string {
@@ -157,13 +130,4 @@ function unescapeVerbatimString(s: string): string {
 // TODO(@aslakhellesoy) not sure if this is correct.
 function unescapeString(s: string): string {
   return s.replace(/\\\\/g, '\\')
-}
-
-type ParameterTypeLinkProps = {
-  regexps: StringOrRegExp[]
-  locationLink: LocationLink
-}
-
-function syntaxNode(match: TreeSitterQueryMatch, name: string): TreeSitterSyntaxNode | undefined {
-  return match.captures.find((c) => c.name === name)?.node
 }
