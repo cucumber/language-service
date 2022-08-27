@@ -80,11 +80,11 @@
     "tree-sitter-python": "0.20.1"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "^8.4.0",
+    "@cucumber/cucumber": "^8.5.2",
     "@cucumber/message-streams": "^4.0.1",
     "@types/glob": "8.0.0",
     "@types/mocha": "9.1.1",
-    "@types/node": "18.0.4",
+    "@types/node": "18.7.13",
     "@typescript-eslint/eslint-plugin": "5.36.1",
     "@typescript-eslint/parser": "5.36.1",
     "eslint": "8.23.0",
