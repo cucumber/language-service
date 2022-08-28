@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [0.32.0] - 2022-08-27
 ### Fixed
-- Recognize parameter types using array for `regexp` ([#67](https://github.com/cucumber/language-service/issues/67) [#86](https://github.com/cucumber/language-service/pull/86))
+- Recognize parameter types using array for `regexp` ([#67](https://github.com/cucumber/language-service/issues/67), [#86](https://github.com/cucumber/language-service/pull/86))
 - Support escaped single and double quotes in TypeScript and Ruby ([#66](https://github.com/cucumber/language-service/issues/66), [#85](https://github.com/cucumber/language-service/pull/85))
 - Highlight `Background` keyword ([#78](https://github.com/cucumber/language-service/pull/78))
 
