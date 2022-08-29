@@ -11,3 +11,9 @@ ParameterType(
   regexp:      /\d{4}-\d{2}-\d{2}/,
   transformer: ->(s) { Date.parse(s) }
 )
+
+ParameterType(
+  name:        'planet',
+  regexp:      ['jupiter', 'mars', 'tellus'],
+  transformer: ->(s) { s }
+)

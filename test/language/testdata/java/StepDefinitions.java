@@ -9,11 +9,19 @@ public class StepDefinitions {
     void a_date(Date date) {
     }
 
+    @Given("a {planet}"  )
+    void a_date(Date date) {
+    }
+
     @Given("^a regexp$"  )
     void a_regexp() {
     }
 
     @Given("an {undefined-parameter}"  )
-    void a_date(Date date) {
+    void an_undefined_parameter(Date date) {
+    }
+
+    @Given("the bee's knees"  )
+    void the_bees_knees(Date date) {
     }
 }

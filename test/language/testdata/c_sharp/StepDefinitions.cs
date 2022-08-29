@@ -15,6 +15,11 @@ namespace StepDefinitions
 		{
 		}
 
+		[Given("a {planet}")]
+		public void APlanet(string planet)
+		{
+		}
+
 		[Given(@"^a regexp$")]
 		public void ARegexp()
 		{
@@ -22,6 +27,11 @@ namespace StepDefinitions
 
 		[Given("an {undefined-parameter}")]
 		public void AnUndefinedParameter(Date date)
+		{
+		}
+
+		[Given("the bee's knees")]
+		public void TheBeesKnees()
 		{
 		}
 	}

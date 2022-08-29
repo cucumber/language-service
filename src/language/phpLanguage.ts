@@ -1,7 +1,19 @@
-import { buildParameterTypeLinksFromMatches } from './helpers.js'
 import { Language } from './types.js'
 
 export const phpLanguage: Language = {
+  toParameterTypeName() {
+    throw new Error('Unsupported operation')
+  },
+  toParameterTypeRegExps() {
+    throw new Error('Unsupported operation')
+  },
+  toStepDefinitionExpression(node) {
+    // match multiline comment
+    const text = node.text
+    const match = text.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
+    if (!match) throw new Error(`Could not match ${text}`)
+    return new RegExp(match[2].replace(/@(Given |When |Then )/, '').trim())
+  },
   // Empty array because Behat does not support Cucumber Expressions
   defineParameterTypeQueries: [],
   defineStepDefinitionQueries: [
@@ -12,20 +24,6 @@ export const phpLanguage: Language = {
 ) @root
 `,
   ],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  convertParameterTypeExpression(expression) {
-    throw new Error('Unsupported operation')
-  },
-  convertStepDefinitionExpression(expression) {
-    // match multiline comment
-    const match = expression.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
-    if (!match) throw new Error(`Could not match ${expression}`)
-    return new RegExp(match[2].replace(/@(Given |When |Then )/, '').trim())
-  },
-  buildParameterTypeLinks(matches) {
-    return buildParameterTypeLinksFromMatches(matches)
-  },
-
   snippetParameters: {
     int: { type: 'int', name: 'i' },
     float: { type: 'float', name: 'f' },

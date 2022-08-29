@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.32.0] - 2022-08-27
+### Fixed
+- Recognize parameter types using array for `regexp` ([#67](https://github.com/cucumber/language-service/issues/67), [#86](https://github.com/cucumber/language-service/pull/86))
+- Support escaped single and double quotes in TypeScript and Ruby ([#66](https://github.com/cucumber/language-service/issues/66), [#85](https://github.com/cucumber/language-service/pull/85))
+- Highlight `Background` keyword ([#78](https://github.com/cucumber/language-service/pull/78))
+
 ## [0.31.0] - 2022-07-14
 ### Added
 - Basic Python Support via behave ([#69](https://github.com/cucumber/language-service/pull/69))
@@ -244,7 +250,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.31.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.32.0...HEAD
+[0.32.0]: https://github.com/cucumber/language-service/compare/v0.31.0...v0.32.0
 [0.31.0]: https://github.com/cucumber/language-service/compare/v0.30.0...v0.31.0
 [0.30.0]: https://github.com/cucumber/language-service/compare/v0.29.0...v0.30.0
 [0.29.0]: https://github.com/cucumber/language-service/compare/v0.28.0...v0.29.0

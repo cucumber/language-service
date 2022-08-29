@@ -13,6 +13,7 @@ and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
   - [x] C#
   - [x] PHP
   - [x] Ruby
+  - [ ] [Rust](https://github.com/cucumber/language-service/issues/82)
   - [ ] [JavaScript](https://github.com/cucumber/language-service/issues/42)
   - [ ] [Python](https://github.com/cucumber/language-service/issues/49)
 - [x] Go to step definition

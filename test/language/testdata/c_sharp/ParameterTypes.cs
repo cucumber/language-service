@@ -3,6 +3,7 @@ using BddWithSpecFlow.GeekPizza.Web.DataAccess;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TechTalk.SpecFlow;
 using uuid = System.String;
+using planet = System.String;
 using date = System.DateOnly;
 
 namespace BddWithSpecFlow.GeekPizza.Specs.Support
@@ -18,13 +19,19 @@ namespace BddWithSpecFlow.GeekPizza.Specs.Support
           return s
         }
 
+        [StepArgumentTransformation(@"(jupiter|mars|tellus)")]
+        public planet ConvertPlanet(string s)
+        {
+          return s
+        }
+
         [StepArgumentTransformation(@"\d{4}-\d{2}-\d{2}")]
         public date ConvertDate(string s)
         {
           return s
         }
 
-        // Define some additional parameter types for c_sharp specific tests. 
+        // Define some additional parameter types for c_sharp specific tests.
         [StepArgumentTransformation]
         public WithoutExpression ConvertWithoutExpression(string s) {
             return new WithoutExpression(s)
