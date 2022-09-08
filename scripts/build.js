@@ -12,8 +12,8 @@ const languages = [
   },
   {
     npm: 'tree-sitter-typescript',
-    dir: 'typescript',
-    wasm: 'typescript',
+    dir: 'tsx',
+    wasm: 'tsx',
   },
   {
     npm: 'tree-sitter-c-sharp',

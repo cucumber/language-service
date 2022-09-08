@@ -27,7 +27,7 @@ export class NodeParserAdapter implements ParserAdapter {
       case 'java':
         this.parser.setLanguage(Java)
         break
-      case 'typescript':
+      case 'tsx':
         this.parser.setLanguage(TypeScript.typescript)
         break
       case 'c_sharp':
