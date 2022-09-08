@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 ### Added
-- Add support for `.tsx` ([#90](https://github.com/cucumber/language-service/pull/90))
+- Add support for `.tsx` ([#87](https://github.com/cucumber/language-service/issues/87) [#90](https://github.com/cucumber/language-service/pull/90))
 
 ## [0.32.0] - 2022-08-27
 ### Fixed
