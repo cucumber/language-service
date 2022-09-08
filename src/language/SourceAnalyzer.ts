@@ -31,7 +31,10 @@ export class SourceAnalyzer {
       try {
         tree = this.parse(source)
       } catch (err) {
-        err.message += `\nuri: ${source.uri}`
+        err.message += `
+uri: ${source.uri}
+language: ${source.languageName}
+`
         this.errors.push(err)
         continue
       }

@@ -10,6 +10,7 @@ and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
 - Languages
   - [x] Java
   - [x] TypeScript
+  - [x] TypeScript JSX (TSX)
   - [x] C#
   - [x] PHP
   - [x] Ruby
