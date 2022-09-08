@@ -3,12 +3,12 @@ import { javaLanguage } from './javaLanguage.js'
 import { phpLanguage } from './phpLanguage.js'
 import { pythonLanguage } from './pythonLanguage.js'
 import { rubyLanguage } from './rubyLanguage.js'
+import { tsxLanguage } from './tsxLanguage.js'
 import { Language, LanguageName } from './types.js'
-import { typescriptLanguage } from './typescriptLanguage.js'
 
 const languageByName: Record<LanguageName, Language> = {
   java: javaLanguage,
-  typescript: typescriptLanguage,
+  tsx: tsxLanguage,
   c_sharp: csharpLanguage,
   php: phpLanguage,
   ruby: rubyLanguage,

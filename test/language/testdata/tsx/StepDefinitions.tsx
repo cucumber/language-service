@@ -1,5 +1,8 @@
 import { Given } from '@cucumber/cucumber'
 import assert from 'assert'
+import React from 'react'
+
+const dummyTsx = <span>Hello</span>
 
 Given('a {uuid}', async function (uuid: string) {
   assert(uuid)

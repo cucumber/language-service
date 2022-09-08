@@ -10,12 +10,7 @@ import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.
 import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
 
 // List languages that support Cucumber Expressions here
-const cucumberExpressionsSupport: Set<LanguageName> = new Set([
-  'c_sharp',
-  'java',
-  'ruby',
-  'typescript',
-])
+const cucumberExpressionsSupport: Set<LanguageName> = new Set(['c_sharp', 'java', 'ruby', 'tsx'])
 
 function defineContract(makeParserAdapter: () => ParserAdapter) {
   let expressionBuilder: ExpressionBuilder

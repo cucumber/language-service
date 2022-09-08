@@ -4,7 +4,7 @@ import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterTy
 import { childrenToString, filter, NO_QUOTES, NO_SLASHES } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
-export const typescriptLanguage: Language = {
+export const tsxLanguage: Language = {
   toParameterTypeName(node) {
     return childrenToString(node, NO_QUOTES)
   },

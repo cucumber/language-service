@@ -21,7 +21,7 @@ describe('getGenerateSnippetCodeAction', () => {
       'step_definitions/steps.ts',
       true,
       undefined,
-      'typescript',
+      'tsx',
       new ParameterTypeRegistry()
     )
     const expectedAction: CodeAction = {
@@ -111,7 +111,7 @@ Given('I have {int} cukes', (int: number) => {
       'step_definitions/steps.ts',
       false,
       undefined,
-      'typescript',
+      'tsx',
       new ParameterTypeRegistry()
     )
     const expectedAction: CodeAction = {
