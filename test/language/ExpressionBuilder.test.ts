@@ -15,7 +15,7 @@ const cucumberExpressionsSupport: Set<LanguageName> = new Set(['c_sharp', 'java'
 function defineContract(makeParserAdapter: () => ParserAdapter) {
   let expressionBuilder: ExpressionBuilder
   beforeEach(async () => {
-    const parserAdpater = await makeParserAdapter()
+    const parserAdpater = makeParserAdapter()
     await parserAdpater.init()
     expressionBuilder = new ExpressionBuilder(parserAdpater)
   })
