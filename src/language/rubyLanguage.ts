@@ -1,8 +1,8 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
-import { childrenToString, filter, NO_QUOTES, NO_SLASHES } from './helpers.js'
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import { childrenToString, filter, NO_QUOTES } from './helpers.js'
+import { Language, NodePredicate, TreeSitterSyntaxNode } from './types.js'
 
 export const rubyLanguage: Language = {
   toParameterTypeName(node) {
@@ -114,6 +114,8 @@ function toRegExps(node: TreeSitterSyntaxNode | null): RegExps {
       throw new Error(`Unexpected type: ${node.type}`)
   }
 }
+
+export const NO_SLASHES: NodePredicate = (child) => child.type !== '/'
 
 export function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
   switch (node.type) {
