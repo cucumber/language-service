@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Add support for `.tsx` ([#87](https://github.com/cucumber/language-service/issues/87) [#90](https://github.com/cucumber/language-service/pull/90))
 
+### Fixed
+- RegExp flags in Step Definitions are preserved ([#91](https://github.com/cucumber/language-service/issues/91#issuecomment-1242243037) [#92](https://github.com/cucumber/language-service/pull/92))
+
 ## [0.32.0] - 2022-08-27
 ### Fixed
 - Recognize parameter types using array for `regexp` ([#67](https://github.com/cucumber/language-service/issues/67), [#86](https://github.com/cucumber/language-service/pull/86))
