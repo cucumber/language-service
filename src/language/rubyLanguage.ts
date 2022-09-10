@@ -1,8 +1,8 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
-import { childrenToString, filter, NO_QUOTES, NO_SLASHES } from './helpers.js'
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import { childrenToString, filter, NO_QUOTES } from './helpers.js'
+import { Language, NodePredicate, TreeSitterSyntaxNode } from './types.js'
 
 export const rubyLanguage: Language = {
   toParameterTypeName(node) {
@@ -115,10 +115,23 @@ function toRegExps(node: TreeSitterSyntaxNode | null): RegExps {
   }
 }
 
-function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
+export const NO_SLASHES: NodePredicate = (child) => child.type !== '/'
+
+export function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
   switch (node.type) {
-    case 'regex':
-      return new RegExp(unescapeString(childrenToString(node, NO_SLASHES)))
+    case 'regex': {
+      let flags = ''
+      let flag: string
+      const s = node.text
+      for (let i = s.length - 1; (flag = s[i]) !== '/'; i--) {
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags
+        // https://ruby-doc.org/core-3.1.2/doc/regexp_rdoc.html#label-Options
+        if (flag === 'i' || flag == 'o') {
+          flags = `${flags}${flag}`
+        }
+      }
+      return new RegExp(unescapeString(childrenToString(node, NO_SLASHES)), flags)
+    }
     case 'string':
       return unescapeString(childrenToString(node, NO_QUOTES))
     default:

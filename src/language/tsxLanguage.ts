@@ -1,7 +1,7 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
-import { childrenToString, filter, NO_QUOTES, NO_SLASHES } from './helpers.js'
+import { childrenToString, filter, NO_QUOTES } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const tsxLanguage: Language = {
@@ -117,10 +117,22 @@ function toRegExps(node: TreeSitterSyntaxNode | null): RegExps {
   }
 }
 
-function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
+export function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
   switch (node.type) {
-    case 'regex':
-      return new RegExp(unescapeString(childrenToString(node, NO_SLASHES)))
+    case 'regex': {
+      let flags = ''
+      let flag: string
+      const s = node.text
+      for (let i = s.length - 1; (flag = s[i]) !== '/'; i--) {
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags
+        flags = `${flags}${flag}`
+      }
+      const source = node.children
+        .filter((child) => child.type === 'regex_pattern')
+        .map((node) => node.text)
+        .join('')
+      return new RegExp(unescapeString(source), flags)
+    }
     case 'string':
       return unescapeString(childrenToString(node, NO_QUOTES))
     default:

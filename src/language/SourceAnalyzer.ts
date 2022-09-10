@@ -1,10 +1,16 @@
+import { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
+import { LocationLink } from 'vscode-languageserver-types'
+
+import { createLocationLink, makeParameterType, syntaxNode } from './helpers.js'
 import { getLanguage } from './languages.js'
 import {
   Language,
   LanguageName,
+  ParameterTypeLink,
   ParserAdapter,
   Source,
   TreeSitterQueryMatch,
+  TreeSitterSyntaxNode,
   TreeSitterTree,
 } from './types.js'
 
@@ -23,7 +29,72 @@ export class SourceAnalyzer {
     private readonly sources: readonly Source<LanguageName>[]
   ) {}
 
-  getSourceMatches(getQueryStrings: GetQueryStrings): Map<Language, readonly SourceMatch[]> {
+  eachParameterTypeLink(callback: (parameterTypeLink: ParameterTypeLink) => void) {
+    const parameterTypeMatches = this.getSourceMatches(
+      (language: Language) => language.defineParameterTypeQueries
+    )
+    for (const [, sourceMatches] of parameterTypeMatches.entries()) {
+      const propsByName: Record<string, ParameterTypeLinkProps> = {}
+      for (const { source, match } of sourceMatches) {
+        const nameNode = syntaxNode(match, 'name')
+        const rootNode = syntaxNode(match, 'root')
+        const expressionNode = syntaxNode(match, 'expression')
+        if (nameNode && rootNode) {
+          const language = getLanguage(source.languageName)
+
+          const parameterTypeName = language.toParameterTypeName(nameNode)
+          const regExps = language.toParameterTypeRegExps(expressionNode)
+          const selectionNode = expressionNode || nameNode
+          const locationLink = createLocationLink(rootNode, selectionNode, source.uri)
+          const props: ParameterTypeLinkProps = (propsByName[parameterTypeName] = propsByName[
+            parameterTypeName
+          ] || { locationLink, regexpsList: [] })
+          props.regexpsList.push(regExps)
+        }
+      }
+      for (const [name, { regexpsList, locationLink }] of Object.entries(propsByName)) {
+        const regexps: StringOrRegExp[] = regexpsList.reduce<StringOrRegExp[]>((prev, current) => {
+          if (Array.isArray(current)) {
+            return prev.concat(...current)
+          } else {
+            return prev.concat(current)
+          }
+        }, [])
+        const parameterType = makeParameterType(name, regexps)
+        const parameterTypeLink: ParameterTypeLink = { parameterType, locationLink }
+        callback(parameterTypeLink)
+      }
+    }
+  }
+
+  eachStepDefinitionExpression(
+    callback: (
+      stepDefinitionExpression: StringOrRegExp,
+      rootNode: TreeSitterSyntaxNode,
+      expressionNode: TreeSitterSyntaxNode,
+      source: Source<LanguageName>
+    ) => void
+  ) {
+    const stepDefinitionMatches = this.getSourceMatches(
+      (language: Language) => language.defineStepDefinitionQueries
+    )
+
+    for (const [, sourceMatches] of stepDefinitionMatches.entries()) {
+      for (const { source, match } of sourceMatches) {
+        const expressionNode = syntaxNode(match, 'expression')
+        const rootNode = syntaxNode(match, 'root')
+        if (expressionNode && rootNode) {
+          const language = getLanguage(source.languageName)
+          const stepDefinitionExpression = language.toStepDefinitionExpression(expressionNode)
+          callback(stepDefinitionExpression, rootNode, expressionNode, source)
+        }
+      }
+    }
+  }
+
+  private getSourceMatches(
+    getQueryStrings: GetQueryStrings
+  ): Map<Language, readonly SourceMatch[]> {
     const result = new Map<Language, SourceMatch[]>()
     for (const source of this.sources) {
       this.parserAdapter.setLanguageName(source.languageName)
@@ -65,4 +136,9 @@ language: ${source.languageName}
     }
     return tree
   }
+}
+
+type ParameterTypeLinkProps = {
+  regexpsList: RegExps[]
+  locationLink: LocationLink
 }

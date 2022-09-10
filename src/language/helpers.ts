@@ -59,7 +59,6 @@ export function childrenToString(node: TreeSitterSyntaxNode, stringNodes: NodePr
 }
 
 export const NO_QUOTES: NodePredicate = (child) => child.type !== '"' && child.type !== "'"
-export const NO_SLASHES: NodePredicate = (child) => child.type !== '/'
 
 export function filter(
   node: TreeSitterSyntaxNode,
