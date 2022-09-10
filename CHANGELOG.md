@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.33.0] - 2022-09-10
 ### Added
 - Add support for `.tsx` ([#87](https://github.com/cucumber/language-service/issues/87) [#90](https://github.com/cucumber/language-service/pull/90))
 
@@ -256,7 +257,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.32.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v0.33.0...HEAD
+[0.33.0]: https://github.com/cucumber/language-service/compare/v0.32.0...v0.33.0
 [0.32.0]: https://github.com/cucumber/language-service/compare/v0.31.0...v0.32.0
 [0.31.0]: https://github.com/cucumber/language-service/compare/v0.30.0...v0.31.0
 [0.30.0]: https://github.com/cucumber/language-service/compare/v0.29.0...v0.30.0
