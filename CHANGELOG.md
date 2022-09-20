@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [0.33.0] - 2022-09-10
 ### Added
 - Add support for `.tsx` ([#87](https://github.com/cucumber/language-service/issues/87) [#90](https://github.com/cucumber/language-service/pull/90))
+- Fixed `And`/`But` detection in TypeScript ([#95](https://github.com/cucumber/language-service/pull/95))
 
 ### Fixed
 - RegExp flags in Step Definitions are preserved ([#91](https://github.com/cucumber/language-service/issues/91#issuecomment-1242243037) [#92](https://github.com/cucumber/language-service/pull/92))
