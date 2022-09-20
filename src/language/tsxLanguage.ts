@@ -78,7 +78,7 @@ export const tsxLanguage: Language = {
       (regex) @expression
     ]
   )
-  (#match? @function-name "Given|When|Then")
+  (#match? @function-name "Given|When|Then|And|But|StepDefinition")
 ) @root
 `,
   ],
