@@ -115,17 +115,16 @@ export function getGherkinSemanticTokens(
           const args = expression.match(step.text)
           if (args) {
             for (const arg of args) {
-              if (arg.group.start === undefined)
-                throw new Error(`Incomplete group: ${JSON.stringify(arg.group)}`)
-
-              const character = step.location.column - 1 + step.keyword.length + arg.group.start
-              arr = makeToken(
-                step.location.line - 1,
-                character,
-                arg.group.value,
-                SemanticTokenTypes.parameter,
-                arr
-              )
+              if (arg.group.start) {
+                const character = step.location.column - 1 + step.keyword.length + arg.group.start
+                arr = makeToken(
+                  step.location.line - 1,
+                  character,
+                  arg.group.value,
+                  SemanticTokenTypes.parameter,
+                  arr
+                )
+              }
             }
             break
           }
