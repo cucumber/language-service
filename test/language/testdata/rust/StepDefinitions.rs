@@ -17,7 +17,7 @@ fn a_date(world: &mut StepDefinitions,date: chrono::DateTime) {}
 fn a_regexp(world: &mut StepDefinitions) {}
 
 #[given(expr = "an {undefined-parameter}")]
-fn an_undefined_parameter(world: &mut StepDefinitions, date: chrono::DateTime)
+fn an_undefined_parameter(world: &mut StepDefinitions, date: chrono::DateTime) {}
 
 #[given("the bee's knees")]
 fn the_bees_knees(world: &mut StepDefinitions) {}
