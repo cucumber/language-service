@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.0.0] - 2022-10-05
 ### Added
 - Support for [Cucumber Rust](https://github.com/cucumber-rs/cucumber) ([#82](https://github.com/cucumber/language-service/issues/82), [#99](https://github.com/cucumber/language-service/pull/99))
 
@@ -263,7 +264,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v0.33.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/cucumber/language-service/compare/v0.33.0...v1.0.0
 [0.33.0]: https://github.com/cucumber/language-service/compare/v0.32.0...v0.33.0
 [0.32.0]: https://github.com/cucumber/language-service/compare/v0.31.0...v0.32.0
 [0.31.0]: https://github.com/cucumber/language-service/compare/v0.30.0...v0.31.0
