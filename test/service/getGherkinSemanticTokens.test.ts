@@ -1,4 +1,8 @@
-import { CucumberExpression, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
+import {
+  CucumberExpression,
+  ParameterTypeRegistry,
+  RegularExpression,
+} from '@cucumber/cucumber-expressions'
 import assert from 'assert'
 import { SemanticTokenTypes, uinteger } from 'vscode-languageserver-types'
 
@@ -29,6 +33,7 @@ Feature: a
     And a table
       | a  | bbb |
       | cc |  dd |
+    And I should be on the map
 
   Scenario Outline: c
     Given a <foo> and <bar>
@@ -37,12 +42,20 @@ Feature: a
       | foo | bar |
       | a   | b   |
 `
-    const expression = new CucumberExpression(
+    const parameterTypeRegistry = new ParameterTypeRegistry()
+    const cucumberExpression = new CucumberExpression(
       'I have {int} cukes in my {word}',
-      new ParameterTypeRegistry()
+      parameterTypeRegistry
+    )
+    const regularExpression = new RegularExpression(
+      /^I should( not)? be on the map$/,
+      parameterTypeRegistry
     )
 
-    const semanticTokens = getGherkinSemanticTokens(gherkinSource, [expression])
+    const semanticTokens = getGherkinSemanticTokens(gherkinSource, [
+      cucumberExpression,
+      regularExpression,
+    ])
     const actual = tokenize(gherkinSource, semanticTokens.data)
     const expected: TokenWithType[] = [
       ['@foo', SemanticTokenTypes.type],
@@ -64,6 +77,7 @@ Feature: a
       ['bbb', SemanticTokenTypes.string],
       ['cc', SemanticTokenTypes.string],
       ['dd', SemanticTokenTypes.string],
+      ['And ', SemanticTokenTypes.keyword],
       ['Scenario Outline', SemanticTokenTypes.keyword],
       ['Given ', SemanticTokenTypes.keyword],
       ['<foo>', SemanticTokenTypes.variable],
