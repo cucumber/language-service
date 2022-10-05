@@ -11,6 +11,8 @@ import Python from 'tree-sitter-python'
 // @ts-ignore
 import Ruby from 'tree-sitter-ruby'
 // @ts-ignore
+import Rust from 'tree-sitter-rust'
+// @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
 import { LanguageName, ParserAdapter } from '../language/types.js'
@@ -41,6 +43,9 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'python':
         this.parser.setLanguage(Python)
+        break
+      case 'rust':
+        this.parser.setLanguage(Rust)
         break
       default:
         throw new Error(`Unsupported language: ${languageName}`)
