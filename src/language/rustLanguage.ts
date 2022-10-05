@@ -32,22 +32,28 @@ export const rustLanguage: Language = {
   (meta_item 
     (identifier) @meta-name
     arguments: (meta_arguments
-        [
-          ((meta_item
-          	(identifier) @name-key
+      [
+        (
+          (meta_item
+            (identifier) @name-key
             value: (string_literal) @name
-          )(meta_item
-          	(identifier) @value-key
+          )
+          (meta_item
+            (identifier) @value-key
             value: (string_literal) @expression
-          ))
-          ((meta_item
-          	(identifier) @value-key
+          )
+        )
+        (
+          (meta_item
+            (identifier) @value-key
             value: (string_literal) @expression
-          )(meta_item
-          	(identifier) @name-key
+          )
+          (meta_item
+            (identifier) @name-key
             value: (string_literal) @name
-          ))
-        ]
+          )
+        )
+      ]
     )
   )
   (#eq? @meta-name "param")
