@@ -1,4 +1,5 @@
 import assert from 'assert'
+import { DocumentSymbol } from 'vscode-languageserver-types'
 
 import { getGherkinDocumentFeatureSymbol } from '../../src/service/getGherkinDocumentFeatureSymbol.js'
 
@@ -15,47 +16,210 @@ describe('getGherkinDocumentFeatureSymbol', () => {
         Scenario: rs2
     `
     const symbol = getGherkinDocumentFeatureSymbol(gherkinSource)
-    // Remove the properties we're not interested in
-    const json = JSON.stringify(
-      symbol,
-      (key, value) => (['range', 'selectionRange', 'kind'].includes(key) ? undefined : value),
-      2
-    )
-    const smallerSymbol = JSON.parse(json)
 
-    assert.deepStrictEqual(smallerSymbol, {
+    const expected: DocumentSymbol = {
       name: 'Feature: f',
+      range: {
+        start: {
+          line: 1,
+          character: 13,
+        },
+        end: {
+          line: 1,
+          character: 14,
+        },
+      },
+      selectionRange: {
+        start: {
+          line: 1,
+          character: 13,
+        },
+        end: {
+          line: 1,
+          character: 14,
+        },
+      },
+      kind: 12,
       children: [
         {
           name: 'Background: fb',
+          range: {
+            start: {
+              line: 2,
+              character: 18,
+            },
+            end: {
+              line: 2,
+              character: 20,
+            },
+          },
+          selectionRange: {
+            start: {
+              line: 2,
+              character: 18,
+            },
+            end: {
+              line: 2,
+              character: 20,
+            },
+          },
+          kind: 12,
           children: [],
         },
         {
           name: 'Scenario: s1',
+          range: {
+            start: {
+              line: 3,
+              character: 16,
+            },
+            end: {
+              line: 3,
+              character: 18,
+            },
+          },
+          selectionRange: {
+            start: {
+              line: 3,
+              character: 16,
+            },
+            end: {
+              line: 3,
+              character: 18,
+            },
+          },
+          kind: 12,
           children: [],
         },
         {
           name: 'Scenario: s2',
+          range: {
+            start: {
+              line: 4,
+              character: 16,
+            },
+            end: {
+              line: 4,
+              character: 18,
+            },
+          },
+          selectionRange: {
+            start: {
+              line: 4,
+              character: 16,
+            },
+            end: {
+              line: 4,
+              character: 18,
+            },
+          },
+          kind: 12,
           children: [],
         },
         {
           name: 'Rule: r',
+          range: {
+            start: {
+              line: 5,
+              character: 12,
+            },
+            end: {
+              line: 5,
+              character: 13,
+            },
+          },
+          selectionRange: {
+            start: {
+              line: 5,
+              character: 12,
+            },
+            end: {
+              line: 5,
+              character: 13,
+            },
+          },
+          kind: 12,
           children: [
             {
               name: 'Background: rb',
+              range: {
+                start: {
+                  line: 6,
+                  character: 20,
+                },
+                end: {
+                  line: 6,
+                  character: 22,
+                },
+              },
+              selectionRange: {
+                start: {
+                  line: 6,
+                  character: 20,
+                },
+                end: {
+                  line: 6,
+                  character: 22,
+                },
+              },
+              kind: 12,
               children: [],
             },
             {
               name: 'Scenario: rs1',
+              range: {
+                start: {
+                  line: 7,
+                  character: 18,
+                },
+                end: {
+                  line: 7,
+                  character: 21,
+                },
+              },
+              selectionRange: {
+                start: {
+                  line: 7,
+                  character: 18,
+                },
+                end: {
+                  line: 7,
+                  character: 21,
+                },
+              },
+              kind: 12,
               children: [],
             },
             {
               name: 'Scenario: rs2',
+              range: {
+                start: {
+                  line: 8,
+                  character: 18,
+                },
+                end: {
+                  line: 8,
+                  character: 21,
+                },
+              },
+              selectionRange: {
+                start: {
+                  line: 8,
+                  character: 18,
+                },
+                end: {
+                  line: 8,
+                  character: 21,
+                },
+              },
+              kind: 12,
               children: [],
             },
           ],
         },
       ],
-    })
+    }
+
+    assert.deepStrictEqual(symbol, expected)
   })
 })
