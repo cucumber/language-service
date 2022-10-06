@@ -8,10 +8,7 @@ type SymbolsKey = 'feature' | 'parent'
 type Symbols = Partial<Record<SymbolsKey, DocumentSymbol>>
 
 export function getGherkinDocumentFeatureSymbol(gherkinSource: string): DocumentSymbol | null {
-  const { gherkinDocument, error } = parseGherkinDocument(gherkinSource)
-  if (error) {
-    console.error(error)
-  }
+  const { gherkinDocument } = parseGherkinDocument(gherkinSource)
   if (!gherkinDocument) {
     return null
   }
@@ -28,7 +25,7 @@ export function getGherkinDocumentFeatureSymbol(gherkinSource: string): Document
         name,
         range,
         selectionRange: range,
-        kind: SymbolKind.Function,
+        kind: SymbolKind.Namespace,
         children: [],
       }
       return { ...symbols, feature: sym, parent: sym }

@@ -39,7 +39,7 @@ describe('getGherkinDocumentFeatureSymbol', () => {
           character: 14,
         },
       },
-      kind: 12,
+      kind: 3,
       children: [
         {
           name: 'Background: fb',
