@@ -137,6 +137,10 @@ export function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
     case 'string':
       return unescapeString(childrenToString(node, NO_QUOTES))
     case 'template_string':
+      if (node.children.length > 0) {
+        // template literal with substitutions. Can't handle those. Return a regexp that matches nothing.
+        return /$^/
+      }
       return node.text.slice(1, node.text.length - 1)
     default:
       throw new Error(`Unexpected type: ${node.type}`)
