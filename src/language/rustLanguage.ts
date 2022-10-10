@@ -64,7 +64,7 @@ export const rustLanguage: Language = {
   ],
   defineStepDefinitionQueries: [
     `
-(attribute_item 
+(source_file (attribute_item 
   (meta_item 
     (
     	(identifier) @meta-name 
@@ -81,9 +81,10 @@ export const rustLanguage: Language = {
         ]
       )
     )
-  ) @root
+  )  
   (#match? @meta-name "given|when|then")
 )
+(function_item) ) @root
 `,
   ],
 
@@ -101,10 +102,10 @@ export const rustLanguage: Language = {
     '': { type: 'String', name: 'arg' },
   },
   defaultSnippetTemplate: `
-    #[{{ keyword }}(expr = "{{ expression }}")]
-    fn {{ #underscore }}{{ expression }}{{ /underscore }}(world: &mut TheWorld, {{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}: {{ type }}{{ /parameters }}) {
-        // {{ blurb }}
-    }
+#[{{ #lowercase }}{{ keyword }}{{ /lowercase }}(expr = "{{ expression }}")]
+fn {{ #lowercase }}{{ #underscore }}{{ expression }}{{ /underscore }}{{ /lowercase }}(world: &mut TheWorld, {{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}: {{ type }}{{ /parameters }}) {
+    // {{ blurb }}
+}
 `,
 }
 
