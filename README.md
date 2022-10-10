@@ -20,8 +20,7 @@ and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
 - [x] Go to step definition
 - [x] Generate step definition
 - [x] Code completion
-  - [x] Steps
-  - [ ] Generic Gherkin keywords
+- [x] Document symbols (Display document outline tree)
 - [x] Formatting / pretty printing
 - [x] Syntax highlighting
 - [x] Syntax validation (underline undefined steps)

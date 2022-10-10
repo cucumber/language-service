@@ -1,6 +1,7 @@
 export * from './getGenerateSnippetCodeAction.js'
 export * from './getGherkinCompletionItems.js'
 export * from './getGherkinDiagnostics.js'
+export * from './getGherkinDocumentFeatureSymbol.js'
 export * from './getGherkinFormattingEdits.js'
 export * from './getGherkinSemanticTokens.js'
 export * from './getStepDefinitionLocationLinks.js'
