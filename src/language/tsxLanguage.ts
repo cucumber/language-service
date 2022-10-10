@@ -2,6 +2,7 @@ import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
 import { childrenToString, filter, NO_QUOTES } from './helpers.js'
+import { NO_EXPRESSION } from './SourceAnalyzer.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const tsxLanguage: Language = {
@@ -138,8 +139,8 @@ export function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
       return unescapeString(childrenToString(node, NO_QUOTES))
     case 'template_string':
       if (node.children.length > 0) {
-        // template literal with substitutions. Can't handle those. Return a regexp that matches nothing.
-        return /$^/
+        // template literal with substitutions. Can't handle those.
+        return NO_EXPRESSION
       }
       return node.text.slice(1, node.text.length - 1)
     default:

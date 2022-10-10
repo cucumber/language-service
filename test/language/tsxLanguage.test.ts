@@ -1,5 +1,6 @@
 import assert from 'assert'
 
+import { NO_EXPRESSION } from '../../src/language/SourceAnalyzer.js'
 import { toStringOrRegExp } from '../../src/language/tsxLanguage.js'
 import { TreeSitterSyntaxNode } from '../../src/language/types.js'
 
@@ -43,7 +44,7 @@ describe('tsxLanguage', () => {
     assert.deepStrictEqual(result, 'hello there')
   })
 
-  it('should generate nothing from template literals with substitution', () => {
+  it('should generate a regexp that matches nothing from template literals with substitution', () => {
     const node: TreeSitterSyntaxNode = {
       type: 'template_string',
       text: '`hello there`',
@@ -68,6 +69,6 @@ describe('tsxLanguage', () => {
       ],
     }
     const result = toStringOrRegExp(node)
-    assert.deepStrictEqual(result, /$^/)
+    assert.deepStrictEqual(result, NO_EXPRESSION)
   })
 })
