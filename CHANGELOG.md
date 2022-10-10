@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Add support for [document symbols](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_documentSymbol) ([#98](https://github.com/cucumber/language-service/issues/98), [#106](https://github.com/cucumber/language-service/pull/106))
 - (Java) Recognise regexps with `(?i)`, with the caveat that the resulting JavaScript `RegExp` is *not* case insensitive ([#100](https://github.com/cucumber/language-service/issues/100), [#108](https://github.com/cucumber/language-service/pull/108))
+- (TypeScript) Add support for template literals without subsitutions. ([#101](https://github.com/cucumber/language-service/issues/101), [#107](https://github.com/cucumber/language-service/pull/107))
 
 ## [1.0.1] - 2022-10-10
 
@@ -325,6 +326,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [0.3.0]: https://github.com/cucumber/language-service/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/cucumber/language-service/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/cucumber/language-service/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/cucumber/language-service/tree/v0.1.0
-0...v0.1.1
 [0.1.0]: https://github.com/cucumber/language-service/tree/v0.1.0

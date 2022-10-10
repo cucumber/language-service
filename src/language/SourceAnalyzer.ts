@@ -20,6 +20,8 @@ export type SourceMatch = {
   match: TreeSitterQueryMatch
 }
 
+export const NO_EXPRESSION = ''
+
 export class SourceAnalyzer {
   private readonly errors: Error[] = []
   private readonly treeByContent = new Map<Source<LanguageName>, TreeSitterTree>()
@@ -86,7 +88,9 @@ export class SourceAnalyzer {
         if (expressionNode && rootNode) {
           const language = getLanguage(source.languageName)
           const stepDefinitionExpression = language.toStepDefinitionExpression(expressionNode)
-          callback(stepDefinitionExpression, rootNode, expressionNode, source)
+          if (stepDefinitionExpression !== NO_EXPRESSION) {
+            callback(stepDefinitionExpression, rootNode, expressionNode, source)
+          }
         }
       }
     }

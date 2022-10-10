@@ -2,6 +2,7 @@ import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
 import { childrenToString, filter, NO_QUOTES } from './helpers.js'
+import { NO_EXPRESSION } from './SourceAnalyzer.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const tsxLanguage: Language = {
@@ -76,6 +77,7 @@ export const tsxLanguage: Language = {
     [
       (string) @expression
       (regex) @expression
+      (template_string) @expression
     ]
   )
   (#match? @function-name "Given|When|Then")
@@ -135,6 +137,12 @@ export function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
     }
     case 'string':
       return unescapeString(childrenToString(node, NO_QUOTES))
+    case 'template_string':
+      if (node.children.length > 0) {
+        // template literal with substitutions. Can't handle those.
+        return NO_EXPRESSION
+      }
+      return node.text.slice(1, node.text.length - 1)
     default:
       throw new Error(`Unexpected type: ${node.type}`)
   }
