@@ -52,7 +52,7 @@ describe('tsxLanguage', () => {
       endPosition: { row: 0, column: 21 },
       children: [
         {
-          type: 'template_subsitution',
+          type: 'template_substitution',
           text: '${there}',
           startPosition: { row: 0, column: 12 },
           endPosition: { row: 0, column: 20 },
