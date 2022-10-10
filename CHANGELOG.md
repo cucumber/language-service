@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Add support for [document symbols](https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_documentSymbol) ([#98](https://github.com/cucumber/language-service/issues/98), [#106](https://github.com/cucumber/language-service/pull/106))
+- (Java) Recognise regexps with `(?i)`, with the caveat that the resulting JavaScript `RegExp` is *not* case insensitive ([#100](https://github.com/cucumber/language-service/issues/100), [#108](https://github.com/cucumber/language-service/pull/108))
 
 ## [1.0.1] - 2022-10-10
 
