@@ -5,7 +5,7 @@ import { TreeSitterSyntaxNode } from '../../src/language/types.js'
 
 describe('rubyLanguage', () => {
   it('should preserve regexp flags in step definitions', () => {
-    const regex: TreeSitterSyntaxNode = {
+    const node: TreeSitterSyntaxNode = {
       type: 'regex',
       text: '/^a regexp$/i',
       startPosition: { row: 0, column: 6 },
@@ -20,7 +20,7 @@ describe('rubyLanguage', () => {
         },
       ],
     }
-    const result = toStringOrRegExp(regex)
+    const result = toStringOrRegExp(node)
     assert.deepStrictEqual(result, /^a regexp$/i)
   })
 })

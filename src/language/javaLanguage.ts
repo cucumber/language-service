@@ -116,9 +116,10 @@ export const javaLanguage: Language = {
 `,
 }
 
-function stringLiteral(node: TreeSitterSyntaxNode | null): string {
+export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
   if (node === null) throw new Error('node cannot be null')
-  return unescapeString(node.text.slice(1, -1))
+  const string = node.text.slice(1, -1)
+  return unescapeString(string.replace('(?i)', ''))
 }
 
 // Java escapes \ as \\. Turn \\ back to \.
