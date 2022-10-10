@@ -103,7 +103,7 @@ export const rustLanguage: Language = {
   },
   defaultSnippetTemplate: `
 #[{{ #lowercase }}{{ keyword }}{{ /lowercase }}(expr = "{{ expression }}")]
-fn {{ #underscore }}{{ expression }}{{ /underscore }}(world: &mut TheWorld, {{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}: {{ type }}{{ /parameters }}) {
+fn {{ #lowercase }}{{ #underscore }}{{ expression }}{{ /underscore }}{{ /lowercase }}(world: &mut TheWorld, {{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}: {{ type }}{{ /parameters }}) {
     // {{ blurb }}
 }
 `,
