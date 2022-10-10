@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { DocumentSymbol } from 'vscode-languageserver-types'
+import { DocumentSymbol, SymbolKind } from 'vscode-languageserver-types'
 
 import { getGherkinDocumentFeatureSymbol } from '../../src/service/getGherkinDocumentFeatureSymbol.js'
 
@@ -39,7 +39,7 @@ describe('getGherkinDocumentFeatureSymbol', () => {
           character: 14,
         },
       },
-      kind: 3,
+      kind: SymbolKind.File,
       children: [
         {
           name: 'Background: fb',
@@ -63,7 +63,7 @@ describe('getGherkinDocumentFeatureSymbol', () => {
               character: 20,
             },
           },
-          kind: 12,
+          kind: SymbolKind.Constructor,
           children: [],
         },
         {
@@ -88,7 +88,7 @@ describe('getGherkinDocumentFeatureSymbol', () => {
               character: 18,
             },
           },
-          kind: 12,
+          kind: SymbolKind.Event,
           children: [],
         },
         {
@@ -113,7 +113,7 @@ describe('getGherkinDocumentFeatureSymbol', () => {
               character: 18,
             },
           },
-          kind: 12,
+          kind: SymbolKind.Event,
           children: [],
         },
         {
@@ -138,7 +138,7 @@ describe('getGherkinDocumentFeatureSymbol', () => {
               character: 13,
             },
           },
-          kind: 12,
+          kind: SymbolKind.Interface,
           children: [
             {
               name: 'Background: rb',
@@ -162,7 +162,7 @@ describe('getGherkinDocumentFeatureSymbol', () => {
                   character: 22,
                 },
               },
-              kind: 12,
+              kind: SymbolKind.Constructor,
               children: [],
             },
             {
@@ -187,7 +187,7 @@ describe('getGherkinDocumentFeatureSymbol', () => {
                   character: 21,
                 },
               },
-              kind: 12,
+              kind: SymbolKind.Event,
               children: [],
             },
             {
@@ -212,7 +212,7 @@ describe('getGherkinDocumentFeatureSymbol', () => {
                   character: 21,
                 },
               },
-              kind: 12,
+              kind: SymbolKind.Event,
               children: [],
             },
           ],

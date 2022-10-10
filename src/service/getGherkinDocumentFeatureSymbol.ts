@@ -25,7 +25,7 @@ export function getGherkinDocumentFeatureSymbol(gherkinSource: string): Document
         name,
         range,
         selectionRange: range,
-        kind: SymbolKind.Namespace,
+        kind: SymbolKind.File,
         children: [],
       }
       return { ...symbols, feature: sym, parent: sym }
@@ -39,7 +39,7 @@ export function getGherkinDocumentFeatureSymbol(gherkinSource: string): Document
         name,
         range,
         selectionRange: range,
-        kind: SymbolKind.Function,
+        kind: SymbolKind.Interface,
         children: [],
       }
       symbols.parent?.children?.push(sym)
@@ -54,7 +54,7 @@ export function getGherkinDocumentFeatureSymbol(gherkinSource: string): Document
         name,
         range,
         selectionRange: range,
-        kind: SymbolKind.Function,
+        kind: SymbolKind.Constructor,
         children: [],
       }
       symbols.parent?.children?.push(sym)
@@ -69,7 +69,7 @@ export function getGherkinDocumentFeatureSymbol(gherkinSource: string): Document
         name,
         range,
         selectionRange: range,
-        kind: SymbolKind.Function,
+        kind: SymbolKind.Event,
         children: [],
       }
       symbols.parent?.children?.push(sym)
