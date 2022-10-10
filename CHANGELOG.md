@@ -7,8 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-### Fixes
-- Fix rust snippet fn name to lowercase ([#103](https://github.com/cucumber/language-service/issues/103), [#104](https://github.com/cucumber/language-service/pull/104))
+## [1.0.1] - 2022-10-10
 
 ## [1.0.0] - 2022-10-05
 ### Added
@@ -267,7 +266,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/cucumber/language-service/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/cucumber/language-service/compare/v0.33.0...v1.0.0
 [0.33.0]: https://github.com/cucumber/language-service/compare/v0.32.0...v0.33.0
 [0.32.0]: https://github.com/cucumber/language-service/compare/v0.31.0...v0.32.0
@@ -318,4 +318,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 [0.3.0]: https://github.com/cucumber/language-service/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/cucumber/language-service/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/cucumber/language-service/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/cucumber/language-service/tree/v0.1.0
+0...v0.1.1
 [0.1.0]: https://github.com/cucumber/language-service/tree/v0.1.0
