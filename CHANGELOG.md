@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+- Added context to python snippet to properly support `behave`
+- Added `ParameterType` support to the python language implementation. This is currently supported via `cuke4behave`.
 
 ## [1.1.1] - 2022-10-11
 ### Fixed
