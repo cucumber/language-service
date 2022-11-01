@@ -85,7 +85,7 @@
     "@cucumber/message-streams": "^4.0.1",
     "@types/glob": "8.0.0",
     "@types/mocha": "10.0.0",
-    "@types/node": "18.11.8",
+    "@types/node": "18.11.9",
     "@types/react": "18.0.24",
     "@typescript-eslint/eslint-plugin": "5.42.0",
     "@typescript-eslint/parser": "5.42.0",
