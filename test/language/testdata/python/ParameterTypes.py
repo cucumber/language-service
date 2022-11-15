@@ -1,4 +1,5 @@
 from datetime import datetime
+from cucumber_expressions.parameter_type import ParameterType
 
 ParameterType(
     name="uuid",
