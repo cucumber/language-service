@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.2.0] - 2022-11-18
 ### Added
 - Added context to python snippet to properly support `behave`
 - Added `ParameterType` support to the python language implementation. This is currently supported via [cuke4behave](http://gitlab.com/cuke4behave/cuke4behave)
@@ -282,7 +283,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/cucumber/language-service/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/cucumber/language-service/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/cucumber/language-service/compare/v1.0.1...v1.1.0
 [1.0.1]: https://github.com/cucumber/language-service/compare/v1.0.0...v1.0.1
