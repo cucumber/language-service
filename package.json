@@ -57,9 +57,9 @@
   },
   "homepage": "https://github.com/cucumber/language-service#readme",
   "dependencies": {
-    "@cucumber/cucumber-expressions": "^16.0.0",
-    "@cucumber/gherkin": "^25.0.0",
-    "@cucumber/gherkin-utils": "^8.0.0",
+    "@cucumber/cucumber-expressions": "^16.0.1",
+    "@cucumber/gherkin": "^25.0.2",
+    "@cucumber/gherkin-utils": "^8.0.1",
     "@cucumber/messages": "^20.0.0",
     "@types/js-search": "1.4.0",
     "@types/mustache": "4.2.1",
@@ -67,7 +67,7 @@
     "js-search": "2.0.0",
     "mustache": "4.2.0",
     "vscode-languageserver-types": "3.17.2",
-    "web-tree-sitter": "^0.20.7"
+    "web-tree-sitter": "0.20.7"
   },
   "optionalDependencies": {
     "tree-sitter": "0.20.1",
@@ -81,7 +81,7 @@
     "tree-sitter-typescript": "0.20.1"
   },
   "devDependencies": {
-    "@cucumber/cucumber": "^8.6.0",
+    "@cucumber/cucumber": "^8.8.0",
     "@cucumber/message-streams": "^4.0.1",
     "@types/glob": "8.0.0",
     "@types/mocha": "10.0.0",
