@@ -13,6 +13,7 @@ import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.
 const cucumberExpressionsSupport: Set<LanguageName> = new Set([
   'c_sharp',
   'java',
+  'python',
   'ruby',
   'rust',
   'tsx',
@@ -79,7 +80,6 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
           : (expression as RegularExpression).regexp
       )
       const errors = result.errors.map((e) => e.message)
-
       if (cucumberExpressionsSupport.has(languageName)) {
         assert.deepStrictEqual(expressions, [
           'a {uuid}',
