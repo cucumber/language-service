@@ -74,7 +74,6 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
             link.targetSelectionRange.end.character <= link.targetRange.end.character
         )
       }
-      debugger
       const expressions = result.expressionLinks.map(({ expression }) =>
         expression instanceof CucumberExpression
           ? expression.source
