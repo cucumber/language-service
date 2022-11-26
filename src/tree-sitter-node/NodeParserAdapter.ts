@@ -5,8 +5,6 @@ import Csharp from 'tree-sitter-c-sharp'
 // @ts-ignore
 import Java from 'tree-sitter-java'
 // @ts-ignore
-import JavaScript from 'tree-sitter-javascript'
-// @ts-ignore
 import Php from 'tree-sitter-php'
 // @ts-ignore
 import Python from 'tree-sitter-python'
@@ -32,6 +30,7 @@ export class NodeParserAdapter implements ParserAdapter {
         this.parser.setLanguage(Java)
         break
       case 'tsx':
+      case 'javascript':
         this.parser.setLanguage(TypeScript.typescript)
         break
       case 'c_sharp':
@@ -48,9 +47,6 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'rust':
         this.parser.setLanguage(Rust)
-        break
-      case 'javascript':
-        this.parser.setLanguage(JavaScript)
         break
       default:
         throw new Error(`Unsupported language: ${languageName}`)

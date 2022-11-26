@@ -96,7 +96,7 @@ export const javascriptLanguage: Language = {
     short: { type: 'number' },
     long: { type: 'number' },
     biginteger: { type: 'BigInt', name: 'bigInt' },
-    '': { type: 'object', name: 'arg' },
+    '': { type: 'unknown', name: 'arg' },
   },
 
   defaultSnippetTemplate: `
