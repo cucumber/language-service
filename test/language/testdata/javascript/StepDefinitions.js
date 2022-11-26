@@ -1,8 +1,8 @@
 import { Given } from '@cucumber/cucumber'
 import assert from 'assert'
-//import React from 'react'
+import React from 'react'
 
-//const dummyJsx = <span>Hello</span>
+const dummyJsx = <span>Hello</span>
 
 Given('a {uuid}', async function (uuid) {
   assert(uuid)
