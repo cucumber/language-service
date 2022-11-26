@@ -15,7 +15,7 @@ and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
   - [x] PHP
   - [x] Ruby
   - [x] Rust
-  - [ ] [JavaScript](https://github.com/cucumber/language-service/issues/42)
+  - [x] JavaScript
   - [ ] [Python](https://github.com/cucumber/language-service/issues/49)
 - [x] Go to step definition
 - [x] Generate step definition

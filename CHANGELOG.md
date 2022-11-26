@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+###Added
+- Added support for JavaScript - [PR](https://github.com/cucumber/language-service/pull/115)
 
 ## [1.2.0] - 2022-11-18
 ### Added
