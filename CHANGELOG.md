@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ###Added
 - Added support for JavaScript - [PR](https://github.com/cucumber/language-service/pull/115)
 
+## [1.3.0] - 2022-11-28
+### Added
+- Upgraded `cucumber-expressions`, with new `builtin` accessor on parameter types.
+
 ## [1.2.0] - 2022-11-18
 ### Added
 - Added context to python snippet to properly support `behave`
@@ -285,7 +289,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/cucumber/language-service/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/cucumber/language-service/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/cucumber/language-service/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/cucumber/language-service/compare/v1.0.1...v1.1.0
