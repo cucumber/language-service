@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Upgraded `cucumber-expressions`, with new `builtin` accessor on parameter types.
+
 ## [1.2.0] - 2022-11-18
 ### Added
 - Added context to python snippet to properly support `behave`
