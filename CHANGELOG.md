@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+- Fixes a regression in the python language implementation for regexes
 
 ## [1.3.0] - 2022-11-28
 ### Added
