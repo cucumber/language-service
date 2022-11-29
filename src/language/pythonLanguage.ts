@@ -105,6 +105,8 @@ function stringLiteral(node: TreeSitterSyntaxNode) {
 function isRegex(cleanWord: string) {
   const startsWithSlash = cleanWord.startsWith('/')
   const namedGroupMatch = /\?P/
+  const specialCharsMatch = /\(|\)|\.|\*|\\|\|/
   const containsNamedGroups = namedGroupMatch.test(cleanWord)
-  return startsWithSlash || containsNamedGroups
+  const containsSpecialChars = specialCharsMatch.test(cleanWord)
+  return startsWithSlash || containsNamedGroups || containsSpecialChars
 }
