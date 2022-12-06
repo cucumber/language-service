@@ -29,9 +29,7 @@ export const pythonLanguage: Language = {
     // a wider array of regex features than javascript
     // a singular way of communicating regex consistent
     // across languages is necessary
-    return isRegex(node.text.slice(1, -1))
-      ? RegExp(cleanRegex(node.text.slice(1, -1).split('?P').join('')))
-      : node.text.slice(1, -1)
+    return toRegexStep(node.text)
   },
   defineParameterTypeQueries: [
     `(call
@@ -95,14 +93,18 @@ function cleanRegex(regexString: string) {
       return regexString
   }
 }
-
+export function toRegexStep(step: string) {
+  return isRegex(step.slice(1, -1))
+    ? RegExp(cleanRegex(step.slice(1, -1).split('?P').join('')))
+    : step.slice(1, -1)
+}
 function stringLiteral(node: TreeSitterSyntaxNode) {
   const isFString = node.text.startsWith('f')
   const cleanWord = isFString ? node.text.slice(1).slice(1, -1) : node.text.slice(1, -1)
   return cleanWord
 }
 
-function isRegex(cleanWord: string) {
+export function isRegex(cleanWord: string) {
   const startsWithSlash = cleanWord.startsWith('/')
   const namedGroupMatch = /\?P/
   const specialCharsMatch = /\(|\)|\.|\*|\\|\|/
