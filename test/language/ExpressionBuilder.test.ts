@@ -13,6 +13,7 @@ import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.
 const cucumberExpressionsSupport: Set<LanguageName> = new Set([
   'c_sharp',
   'java',
+  'javascript',
   'python',
   'ruby',
   'rust',
@@ -73,7 +74,6 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
             link.targetSelectionRange.end.character <= link.targetRange.end.character
         )
       }
-
       const expressions = result.expressionLinks.map(({ expression }) =>
         expression instanceof CucumberExpression
           ? expression.source
