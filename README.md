@@ -8,15 +8,16 @@ and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
 ## Supported features
 
 - Languages
+  - [x] C#
   - [x] Java
+  - [x] JavaScript
   - [x] TypeScript
   - [x] TypeScript JSX (TSX)
-  - [x] C#
   - [x] PHP
+  - [x] Python
   - [x] Ruby
   - [x] Rust
-  - [x] JavaScript
-  - [ ] [Python](https://github.com/cucumber/language-service/issues/49)
+  - [ ] [Go](https://github.com/cucumber/language-service/issues/72)
 - [x] Go to step definition
 - [x] Generate step definition
 - [x] Code completion
