@@ -1,5 +1,6 @@
 import { csharpLanguage } from './csharpLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
+import { javascriptLanguage } from './javascriptLanguage.js'
 import { phpLanguage } from './phpLanguage.js'
 import { pythonLanguage } from './pythonLanguage.js'
 import { rubyLanguage } from './rubyLanguage.js'
@@ -15,6 +16,7 @@ const languageByName: Record<LanguageName, Language> = {
   ruby: rubyLanguage,
   rust: rustLanguage,
   python: pythonLanguage,
+  javascript: javascriptLanguage,
 }
 
 export function getLanguage(languageName: LanguageName): Language {
