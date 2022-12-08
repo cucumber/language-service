@@ -2,14 +2,6 @@ import WasmParser from 'web-tree-sitter'
 
 import { LanguageName, LanguageNames, ParserAdapter } from '../language/types.js'
 
-type LanguageToWasmMap = {
-  [key in LanguageName]?: Exclude<LanguageName, key>
-}
-
-const languageNameToWasmNameMap: LanguageToWasmMap = {
-  javascript: 'tsx',
-}
-
 export class WasmParserAdapter implements ParserAdapter {
   public parser: WasmParser
   private languages: Record<LanguageName, WasmParser.Language>
@@ -22,10 +14,16 @@ export class WasmParserAdapter implements ParserAdapter {
 
     const languages = await Promise.all(
       LanguageNames.map((languageName) => {
-        const mapToDifferentWasm = languageNameToWasmNameMap[languageName]
-        if (mapToDifferentWasm !== undefined) languageName = mapToDifferentWasm
+        let wasmName: LanguageName
+        switch (languageName) {
+          case 'javascript':
+            wasmName = 'tsx'
+            break
+          default:
+            wasmName = languageName
+        }
 
-        const wasmUrl = `${this.wasmBaseUrl}/${languageName}.wasm`
+        const wasmUrl = `${this.wasmBaseUrl}/${wasmName}.wasm`
         try {
           return WasmParser.Language.load(wasmUrl)
         } catch (err) {
