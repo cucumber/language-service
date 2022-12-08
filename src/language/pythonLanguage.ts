@@ -8,7 +8,7 @@ export const pythonLanguage: Language = {
       case 'string': {
         return stringLiteral(node)
       }
-      case 'concatednated_string': {
+      case 'concatenated_string': {
         return stringLiteral(node)
       }
       case 'identifier': {
@@ -20,16 +20,15 @@ export const pythonLanguage: Language = {
     }
   },
   toParameterTypeRegExps(node: TreeSitterSyntaxNode) {
-    return RegExp(cleanRegex(stringLiteral(node)))
+    return RegExp(cleanRegExp(stringLiteral(node)))
   },
   toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp {
-    // this removes the head and tail apostrophes
-    // remove python named capture groups.
+    // This removes the head and tail apostrophes.
     // TODO: This should be temporary. Python supports
     // a wider array of regex features than javascript
     // a singular way of communicating regex consistent
     // across languages is necessary
-    return toRegexStep(node.text)
+    return toStringOrRegExp(node.text)
   },
   defineParameterTypeQueries: [
     `(call
@@ -54,13 +53,13 @@ export const pythonLanguage: Language = {
   defineStepDefinitionQueries: [
     `
     (decorated_definition
-        (decorator
-            (call
-                function: (identifier) @method
-                arguments: (argument_list (string) @expression)
-            )
+      (decorator
+        (call
+          function: (identifier) @method
+          arguments: (argument_list (string) @expression)
         )
-        (#match? @method "(given|when|then)")
+      )
+      (#match? @method "(given|when|then)")
     ) @root
 `,
   ],
@@ -84,27 +83,28 @@ export const pythonLanguage: Language = {
       # Please convert to use regular expressions, as Behave does not currently support Cucumber Expressions`,
 }
 
-function cleanRegex(regexString: string) {
-  const startsWith = regexString[0]
+function cleanRegExp(regExpString: string): string {
+  const startsWith = regExpString[0]
   switch (startsWith) {
     case '/':
-      return regexString.slice(1, -1)
+      return regExpString.slice(1, -1)
     default:
-      return regexString
+      return regExpString
   }
 }
-export function toRegexStep(step: string) {
-  return isRegex(step.slice(1, -1))
-    ? RegExp(cleanRegex(step.slice(1, -1).split('?P').join('')))
+export function toStringOrRegExp(step: string): StringOrRegExp {
+  return isRegExp(step.slice(1, -1))
+    ? RegExp(cleanRegExp(step.slice(1, -1).split('?P').join('')))
     : step.slice(1, -1)
 }
-function stringLiteral(node: TreeSitterSyntaxNode) {
+
+function stringLiteral(node: TreeSitterSyntaxNode): string {
   const isFString = node.text.startsWith('f')
   const cleanWord = isFString ? node.text.slice(1).slice(1, -1) : node.text.slice(1, -1)
   return cleanWord
 }
 
-export function isRegex(cleanWord: string) {
+export function isRegExp(cleanWord: string): boolean {
   const startsWithSlash = cleanWord.startsWith('/')
   const namedGroupMatch = /\?P/
   const specialCharsMatch = /\(|\)|\.|\*|\\|\|/
