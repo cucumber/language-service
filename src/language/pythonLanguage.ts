@@ -20,7 +20,20 @@ export const pythonLanguage: Language = {
     }
   },
   toParameterTypeRegExps(node: TreeSitterSyntaxNode) {
-    return RegExp(cleanRegExp(stringLiteral(node)))
+    switch (node.type) {
+      case 'string': {
+        return RegExp(cleanRegExp(stringLiteral(node)))
+      }
+      case 'concatenated_string': {
+        return RegExp(cleanRegExp(stringLiteral(node)))
+      }
+      case 'identifier': {
+        return RegExp(cleanRegExp(stringLiteral(node)))
+      }
+      default: {
+        throw new Error(`Unsupported node type ${node.type}`)
+      }
+    }
   },
   toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp {
     // This removes the head and tail apostrophes.
@@ -101,7 +114,14 @@ export function toStringOrRegExp(step: string): StringOrRegExp {
 function stringLiteral(node: TreeSitterSyntaxNode): string {
   const isFString = node.text.startsWith('f')
   const cleanWord = isFString ? node.text.slice(1).slice(1, -1) : node.text.slice(1, -1)
-  return cleanWord
+  const postSplitCleanWord = cleanWord
+    .split('\\\n')
+    .join('')
+    .split('|')
+    .map((x) => x.replace(/\"/g, ''))
+    .map((x) => x.trim())
+    .join('|')
+  return postSplitCleanWord
 }
 
 export function isRegExp(cleanWord: string): boolean {
