@@ -6,10 +6,10 @@ export const pythonLanguage: Language = {
   toParameterTypeName(node: TreeSitterSyntaxNode) {
     switch (node.type) {
       case 'string': {
-        return stringLiteral(node)
+        return stringLiteral(node.text)
       }
       case 'concatenated_string': {
-        return stringLiteral(node)
+        return concatStringLiteral(node.text)
       }
       case 'identifier': {
         return node.text
@@ -22,13 +22,13 @@ export const pythonLanguage: Language = {
   toParameterTypeRegExps(node: TreeSitterSyntaxNode) {
     switch (node.type) {
       case 'string': {
-        return RegExp(cleanRegExp(stringLiteral(node)))
+        return RegExp(cleanRegExp(stringLiteral(node.text)))
       }
       case 'concatenated_string': {
-        return RegExp(cleanRegExp(stringLiteral(node)))
+        return RegExp(cleanRegExp(concatStringLiteral(node.text)))
       }
       case 'identifier': {
-        return RegExp(cleanRegExp(stringLiteral(node)))
+        return RegExp(cleanRegExp(stringLiteral(node.text)))
       }
       default: {
         throw new Error(`Unsupported node type ${node.type}`)
@@ -110,18 +110,21 @@ export function toStringOrRegExp(step: string): StringOrRegExp {
     ? RegExp(cleanRegExp(step.slice(1, -1).split('?P').join('')))
     : step.slice(1, -1)
 }
-
-function stringLiteral(node: TreeSitterSyntaxNode): string {
-  const isFString = node.text.startsWith('f')
-  const cleanWord = isFString ? node.text.slice(1).slice(1, -1) : node.text.slice(1, -1)
+export function concatStringLiteral(text: string): string {
+  const isFString = text.startsWith('f')
+  const cleanWord = isFString ? text.slice(1) : text
   const postSplitCleanWord = cleanWord
     .split('\\\n')
-    .join('')
-    .split('|')
-    .map((x) => x.replace(/\"/g, ''))
+    .map((x) => x.replace(/"/g, ''))
     .map((x) => x.trim())
-    .join('|')
+    .join('')
   return postSplitCleanWord
+}
+
+export function stringLiteral(text: string): string {
+  const isFString = text.startsWith('f')
+  const cleanWord = isFString ? text.slice(1).slice(1, -1) : text.slice(1, -1)
+  return cleanWord
 }
 
 export function isRegExp(cleanWord: string): boolean {
