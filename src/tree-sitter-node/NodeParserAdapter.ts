@@ -3,6 +3,8 @@ import Parser, { Query } from 'tree-sitter'
 // @ts-ignore
 import Csharp from 'tree-sitter-c-sharp'
 // @ts-ignore
+import Go from 'tree-sitter-go'
+// @ts-ignore
 import Java from 'tree-sitter-java'
 // @ts-ignore
 import Php from 'tree-sitter-php'
@@ -47,6 +49,9 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'rust':
         this.parser.setLanguage(Rust)
+        break
+      case 'go':
+        this.parser.setLanguage(Go)
         break
       default:
         throw new Error(`Unsupported language: ${languageName}`)

@@ -44,6 +44,7 @@ export const LanguageNames = [
   'ruby',
   'rust',
   'javascript',
+  'go',
 ] as const
 export type LanguageName = typeof LanguageNames[number]
 
