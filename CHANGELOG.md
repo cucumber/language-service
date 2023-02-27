@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+- Added support for Go - [#72](https://github.com/cucumber/language-service/issues/72), [#130](https://github.com/cucumber/language-service/pull/130)
+
 ## [1.4.0] - 2022-12-08
 ### Added
 - Added support for JavaScript - [#42](https://github.com/cucumber/language-service/issues/42), [#115](https://github.com/cucumber/language-service/pull/115), [#120](https://github.com/cucumber/language-service/pull/120)
