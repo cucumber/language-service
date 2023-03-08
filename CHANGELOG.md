@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- (Python) There was a bug in how long concatenated strings were handled for multi-line regexes
 
 ## [1.4.0] - 2022-12-08
 ### Added
