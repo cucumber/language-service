@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- (Python) There was a bug in how long concatenated strings were handled for multi-line regexes
 
 ### Added
 - Added support for Go - [#72](https://github.com/cucumber/language-service/issues/72), [#130](https://github.com/cucumber/language-service/pull/130)
