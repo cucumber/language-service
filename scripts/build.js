@@ -40,6 +40,11 @@ const languages = [
     dir: '',
     wasm: 'rust',
   },
+  {
+    npm: 'tree-sitter-go',
+    dir: '',
+    wasm: 'go',
+  },
 ]
 
 // Build wasm parsers for supported languages

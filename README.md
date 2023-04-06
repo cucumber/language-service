@@ -17,7 +17,7 @@ and [Cucumber Monaco](https://github.com/cucumber/monaco#readme).
   - [x] Python
   - [x] Ruby
   - [x] Rust
-  - [ ] [Go](https://github.com/cucumber/language-service/issues/72)
+  - [x] Go
 - [x] Go to step definition
 - [x] Generate step definition
 - [x] Code completion

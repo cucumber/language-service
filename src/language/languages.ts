@@ -1,4 +1,5 @@
 import { csharpLanguage } from './csharpLanguage.js'
+import { goLanguage } from './goLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
 import { javascriptLanguage } from './javascriptLanguage.js'
 import { phpLanguage } from './phpLanguage.js'
@@ -17,6 +18,7 @@ const languageByName: Record<LanguageName, Language> = {
   rust: rustLanguage,
   python: pythonLanguage,
   javascript: javascriptLanguage,
+  go: goLanguage,
 }
 
 export function getLanguage(languageName: LanguageName): Language {
