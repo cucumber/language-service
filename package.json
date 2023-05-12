@@ -64,7 +64,7 @@
     "@types/js-search": "1.4.0",
     "@types/mustache": "4.2.2",
     "fuse.js": "6.6.2",
-    "js-search": "2.0.0",
+    "js-search": "2.0.1",
     "mustache": "4.2.0",
     "vscode-languageserver-types": "3.17.3",
     "web-tree-sitter": "0.20.8"
