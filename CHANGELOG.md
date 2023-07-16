@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.4.1] - 2023-07-16
 ### Fixed
 - (Python) There was a bug in how long concatenated strings were handled for multi-line regexes
 - Updated TreeSitter and numerous other dependencies to promote runtime compatibility with Electron 14.
@@ -297,7 +299,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/cucumber/language-service/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/cucumber/language-service/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/cucumber/language-service/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/cucumber/language-service/compare/v1.1.1...v1.2.0
