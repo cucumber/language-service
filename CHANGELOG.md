@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 - (Python) There was a bug in how long concatenated strings were handled for multi-line regexes
+- Updated TreeSitter and numerous other dependencies to promote runtime compatibility with Electron 14.
 
 ## [1.4.0] - 2022-12-08
 ### Added
