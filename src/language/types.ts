@@ -45,7 +45,7 @@ export const LanguageNames = [
   'rust',
   'javascript',
 ] as const
-export type LanguageName = typeof LanguageNames[number]
+export type LanguageName = (typeof LanguageNames)[number]
 
 export type Source<L> = Readonly<{
   readonly languageName: L
