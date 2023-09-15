@@ -58,7 +58,7 @@
   "homepage": "https://github.com/cucumber/language-service#readme",
   "dependencies": {
     "@cucumber/cucumber-expressions": "^16.1.0",
-    "@cucumber/gherkin": "^26.0.0",
+    "@cucumber/gherkin": "^27.0.0",
     "@cucumber/gherkin-utils": "^8.0.2",
     "@cucumber/messages": "^22.0.0",
     "@types/js-search": "1.4.0",
