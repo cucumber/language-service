@@ -62,7 +62,7 @@
     "@cucumber/gherkin-utils": "^8.0.2",
     "@cucumber/messages": "^22.0.0",
     "@types/js-search": "1.4.1",
-    "@types/mustache": "4.2.2",
+    "@types/mustache": "4.2.3",
     "fuse.js": "6.6.2",
     "js-search": "2.0.1",
     "mustache": "4.2.0",
