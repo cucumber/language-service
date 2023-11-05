@@ -1,5 +1,6 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 
+import { functionNames } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const pythonLanguage: Language = {
@@ -72,7 +73,7 @@ export const pythonLanguage: Language = {
           arguments: (argument_list (string) @expression)
         )
       )
-      (#match? @method "(given|when|then)")
+      (#match? @method "(${functionNames.toLowerCase()})")
     ) @root
 `,
   ],

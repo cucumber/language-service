@@ -1,7 +1,7 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { RegExps } from '@cucumber/cucumber-expressions'
 
-import { childrenToString, filter, NO_QUOTES } from './helpers.js'
+import { childrenToString, filter, functionNames, NO_QUOTES } from './helpers.js'
 import { NO_EXPRESSION } from './SourceAnalyzer.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
@@ -80,7 +80,7 @@ export const tsxLanguage: Language = {
       (template_string) @expression
     ]
   )
-  (#match? @function-name "Given|When|Then")
+  (#match? @function-name "${functionNames}")
 ) @root
 `,
   ],

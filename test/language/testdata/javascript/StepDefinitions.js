@@ -2,6 +2,8 @@ import { Given } from '@cucumber/cucumber'
 import assert from 'assert'
 import React from 'react'
 
+const Gegeven = Given;
+
 const dummyJsx = <span>Hello</span>
 
 Given('a {uuid}', async function (uuid) {
@@ -24,6 +26,6 @@ Given('an {undefined-parameter}', async function (date) {
   assert(date)
 })
 
-Given("the bee's knees", async function () {
+Gegeven("the bee's knees", async function () {
   assert(true)
 })

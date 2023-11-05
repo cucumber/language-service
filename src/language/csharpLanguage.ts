@@ -1,6 +1,6 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 
-import { childrenToString, NO_QUOTES } from './helpers.js'
+import { childrenToString, functionNames, NO_QUOTES } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const csharpLanguage: Language = {
@@ -77,7 +77,7 @@ export const csharpLanguage: Language = {
       )
     )
   )
-  (#match? @annotation-name "Given|When|Then|And|But|StepDefinition")
+  (#match? @annotation-name "${functionNames}|And|But|StepDefinition")
 ) @root
 `,
     `
@@ -92,7 +92,7 @@ export const csharpLanguage: Language = {
       )
     )
   )
-  (#match? @annotation-name "Given|When|Then|And|But|StepDefinition")
+  (#match? @annotation-name "${functionNames}|And|But|StepDefinition")
 ) @root
 `,
   ],

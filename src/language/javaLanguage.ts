@@ -1,3 +1,4 @@
+import { functionNames } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const javaLanguage: Language = {
@@ -90,7 +91,7 @@ export const javaLanguage: Language = {
       )
     )
   )
-  (#match? @annotation-name "Given|When|Then")
+  (#match? @annotation-name "${functionNames}")
 ) @root
 `,
   ],
