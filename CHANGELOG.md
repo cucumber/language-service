@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- (Python) Unexpected spaces and commas in generated step definitions [#160](https://github.com/cucumber/language-service/issues/160)
+
 ## [1.4.1] - 2023-07-16
 ### Fixed
 - (Python) There was a bug in how long concatenated strings were handled for multi-line regexes
