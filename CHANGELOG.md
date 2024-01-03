@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - (Rust) Line continuation characters in rust step definition patterns ([#179](https://github.com/cucumber/language-service/pull/179))
 - (Python) Unexpected spaces and commas in generated step definitions [#160](https://github.com/cucumber/language-service/issues/160)
 
+### Added
+- (Python) Support for u-strings with step definition patterns ([#173](https://github.com/cucumber/language-service/pull/173))
+
 ## [1.4.1] - 2023-07-16
 ### Fixed
 - (Python) There was a bug in how long concatenated strings were handled for multi-line regexes
