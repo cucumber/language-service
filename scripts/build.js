@@ -54,6 +54,13 @@ if (!fs.existsSync(treeSitterCli)) {
   for (const { npm, dir, wasm } of languages) {
     const module = path.join('node_modules', npm, dir)
 
+    if (!fs.existsSync(module)) {
+      console.error(
+        `Module ${module} does not exist. This is likely due to an installation and/or build failure of the module. Please check the logs.`
+      )
+      process.exit(1)
+    }
+
     let command
     if (process.env.CI) {
       console.log(`Compiling ${module}`)
