@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- (Rust) Support for r# raw strings with step definition patterns ([#176](https://github.com/cucumber/language-service/pull/176))
 
 ### Fixed
 - (Python) Unexpected spaces and commas in generated step definitions [#160](https://github.com/cucumber/language-service/issues/160)
