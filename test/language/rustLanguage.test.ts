@@ -69,14 +69,19 @@ describe('rustLanguage', () => {
         expected: '"Two spaces  before continuation"',
       },
       {
-        // Ends with escape character
-        input: '"Escaped backslash \\"',
-        expected: '"Escaped backslash \\"',
-      },
-      {
         // Line continuation with extra space
         input: '"this \\ line \\\nshould too"',
         expected: '"this \\ line should too"',
+      },
+      {
+        // Ends with line continuation
+        input: '"Ends with continuation\\\n"',
+        expected: '"Ends with continuation"',
+      },
+      {
+        // Ends with line continuation and whitespace
+        input: '"Ends with continuation and whitespace\\\n "',
+        expected: '"Ends with continuation and whitespace"',
       },
     ]
 
@@ -91,6 +96,11 @@ describe('rustLanguage', () => {
         // Space after continuation but before new line
         input: '"Space after continuation \\ \n  but before new line"',
         expected: '"Space after continuation \\ \n  but before new line"',
+      },
+      {
+        // Ends with escape character
+        input: '"Escaped backslash \\"',
+        expected: '"Escaped backslash \\"',
       },
     ]
 
