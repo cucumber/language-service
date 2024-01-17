@@ -106,9 +106,14 @@ function cleanRegExp(regExpString: string): string {
   }
 }
 export function toStringOrRegExp(step: string): StringOrRegExp {
-  return isRegExp(step.slice(1, -1))
-    ? RegExp(cleanRegExp(step.slice(1, -1).split('?P').join('')))
-    : step.slice(1, -1)
+  // Remove explicit 'u' unicode prefix
+  const isUString = step.startsWith('u')
+  const stepText = isUString ? step.slice(1) : step
+
+  const strippedStepText = stepText.slice(1, -1)
+  return isRegExp(strippedStepText)
+    ? RegExp(cleanRegExp(strippedStepText.split('?P').join('')))
+    : strippedStepText
 }
 export function concatStringLiteral(text: string): string {
   const isFString = text.startsWith('f')
