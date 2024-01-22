@@ -29,7 +29,7 @@ jobs:
       - name: set git core.autocrlf to 'input'
         run: git config --global core.autocrlf input
       - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - uses: mymindstorm/setup-emsdk@v13
+      - uses: mymindstorm/setup-emsdk@v14
         if: ${{ matrix.os != 'windows-latest' }}
         with:
           # See https://github.com/tree-sitter/tree-sitter/blob/master/cli/emscripten-version
