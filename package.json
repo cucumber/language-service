@@ -80,7 +80,7 @@
     "tree-sitter-python": "0.20.4",
     "tree-sitter-ruby": "0.19.0",
     "tree-sitter-rust": "0.20.1",
-    "tree-sitter-typescript": "0.20.3"
+    "tree-sitter-typescript": "0.20.4"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^10.0.0",
