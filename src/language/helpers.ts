@@ -79,8 +79,8 @@ function flatten(node: TreeSitterSyntaxNode): TreeSitterSyntaxNode[] {
 
 /**
  *
- * This constant represents a list of regular expressions
- * that should be stripped from the content of a file.
+ * This constant represents a record of language names that contain lists
+ * of regular expressions that should be stripped from the content of a file.
  */
 export const BLACKLISTED_EXPRESSIONS: {
   [key in LanguageName]: RegExp[]
