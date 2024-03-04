@@ -1,7 +1,12 @@
 import { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { LocationLink } from 'vscode-languageserver-types'
 
-import { createLocationLink, makeParameterType, syntaxNode } from './helpers.js'
+import {
+  createLocationLink,
+  makeParameterType,
+  stripBlacklistedExpressions,
+  syntaxNode,
+} from './helpers.js'
 import { getLanguage } from './languages.js'
 import {
   Language,
@@ -136,7 +141,10 @@ language: ${source.languageName}
   private parse(source: Source<LanguageName>): TreeSitterTree {
     let tree: TreeSitterTree | undefined = this.treeByContent.get(source)
     if (!tree) {
-      this.treeByContent.set(source, (tree = this.parserAdapter.parser.parse(source.content)))
+      // This is currently necessary since the tree-sitter parser currently errors on certain expressions
+      const content = stripBlacklistedExpressions(source.content)
+      tree = this.parserAdapter.parser.parse(content)
+      this.treeByContent.set(source, tree)
     }
     return tree
   }

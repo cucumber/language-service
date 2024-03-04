@@ -70,3 +70,51 @@ export function filter(
 function flatten(node: TreeSitterSyntaxNode): TreeSitterSyntaxNode[] {
   return node.children.reduce((r, o) => [...r, ...flatten(o)], [node])
 }
+
+/**
+ *
+ * This constant represents a list of regular expressions
+ * that should be stripped from the content of a file.
+ */
+export const BLACKLISTED_EXPRESSIONS: RegExp[] = [
+  /*
+   * This regular expression matches sequences of decorators applied to a class,
+   * potentially including type parameters and arguments.
+   * The regex supports matching these patterns preceding
+   * an optionally exported class definition.
+   */
+  /(@(\w+)(?:<[^>]+>)?\s*(?:\([^)]*\))?\s*)*(?=\s*(export)*\s+class)/g,
+]
+
+/**
+ *
+ * Strips blacklisted expressions from the given content.
+ *
+ * @param content The content to strip blacklisted expressions from.
+ *
+ * @returns The content with blacklisted expressions stripped.
+ *
+ * @example
+ *
+ * ```typescript
+ * const content =
+ *  "@decorator\n" ++
+ *  "export class Foo {\n" ++
+ *  "@decorator\n" ++
+ *  "public bar() { }\n" ++
+ *  "}"
+ *
+ * const strippedContent = stripBlacklistedExpressions(content)
+ * console.log(strippedContent)
+ *
+ * // Output:
+ * "export class Foo {\n" ++
+ * "@decorator\n" ++
+ * "public bar() { }\n" ++
+ * "}"
+ *
+ * ```
+ */
+export function stripBlacklistedExpressions(content: string): string {
+  return BLACKLISTED_EXPRESSIONS.reduce((acc, regExp) => acc.replace(regExp, ''), content)
+}
