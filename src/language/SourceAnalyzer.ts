@@ -142,7 +142,7 @@ language: ${source.languageName}
     let tree: TreeSitterTree | undefined = this.treeByContent.get(source)
     if (!tree) {
       // This is currently necessary since the tree-sitter parser currently errors on certain expressions
-      const content = stripBlacklistedExpressions(source.content)
+      const content = stripBlacklistedExpressions(source.content, source.languageName)
       tree = this.parserAdapter.parser.parse(content)
       this.treeByContent.set(source, tree)
     }

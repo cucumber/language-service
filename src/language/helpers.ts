@@ -1,7 +1,13 @@
 import { ParameterType, RegExps } from '@cucumber/cucumber-expressions'
 import { DocumentUri, LocationLink, Range } from 'vscode-languageserver-types'
 
-import { Link, NodePredicate, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types'
+import {
+  LanguageName,
+  Link,
+  NodePredicate,
+  TreeSitterQueryMatch,
+  TreeSitterSyntaxNode,
+} from './types'
 
 export function syntaxNode(match: TreeSitterQueryMatch, name: string): TreeSitterSyntaxNode | null {
   const nodes = syntaxNodes(match, name)
@@ -76,21 +82,33 @@ function flatten(node: TreeSitterSyntaxNode): TreeSitterSyntaxNode[] {
  * This constant represents a list of regular expressions
  * that should be stripped from the content of a file.
  */
-export const BLACKLISTED_EXPRESSIONS: RegExp[] = [
-  /*
-   * This regular expression matches sequences of decorators applied to a class,
-   * potentially including type parameters and arguments.
-   * The regex supports matching these patterns preceding
-   * an optionally exported class definition.
-   */
-  /(@(\w+)(?:<[^>]+>)?\s*(?:\([^)]*\))?\s*)*(?=\s*(export)*\s+class)/g,
-]
+export const BLACKLISTED_EXPRESSIONS: {
+  [key in LanguageName]: RegExp[]
+} = {
+  tsx: [
+    /*
+     * This regular expression matches sequences of decorators applied to a class,
+     * potentially including type parameters and arguments.
+     * The regex supports matching these patterns preceding
+     * an optionally exported class definition.
+     */
+    /(@(\w+)(?:<[^>]+>)?\s*(?:\([^)]*\))?\s*)*(?=\s*(export)*\s+class)/g,
+  ],
+  java: [],
+  c_sharp: [],
+  php: [],
+  python: [],
+  ruby: [],
+  rust: [],
+  javascript: [],
+}
 
 /**
  *
  * Strips blacklisted expressions from the given content.
  *
  * @param content The content to strip blacklisted expressions from.
+ * @param languageName The name of the language to use for stripping.
  *
  * @returns The content with blacklisted expressions stripped.
  *
@@ -104,7 +122,7 @@ export const BLACKLISTED_EXPRESSIONS: RegExp[] = [
  *  "public bar() { }\n" ++
  *  "}"
  *
- * const strippedContent = stripBlacklistedExpressions(content)
+ * const strippedContent = stripBlacklistedExpressions(content, 'tsx')
  * console.log(strippedContent)
  *
  * // Output:
@@ -115,6 +133,9 @@ export const BLACKLISTED_EXPRESSIONS: RegExp[] = [
  *
  * ```
  */
-export function stripBlacklistedExpressions(content: string): string {
-  return BLACKLISTED_EXPRESSIONS.reduce((acc, regExp) => acc.replace(regExp, ''), content)
+export function stripBlacklistedExpressions(content: string, languageName: LanguageName): string {
+  return BLACKLISTED_EXPRESSIONS[languageName].reduce(
+    (acc, regExp) => acc.replace(regExp, ''),
+    content
+  )
 }
