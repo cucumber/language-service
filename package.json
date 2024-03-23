@@ -38,7 +38,7 @@
     "eslint-fix": "eslint --ext ts --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts --max-warnings 0 src test",
     "upgrade": "npm-check-updates --upgrade",
-    "prepare": "husky install && node scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist"
+    "prepare": "husky && node scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist"
   },
   "repository": {
     "type": "git",
