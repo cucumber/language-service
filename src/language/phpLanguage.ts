@@ -1,3 +1,4 @@
+import { functionNames } from './helpers.js'
 import { Language } from './types.js'
 
 export const phpLanguage: Language = {
@@ -20,7 +21,7 @@ export const phpLanguage: Language = {
     `
 (
   (comment)+ @expression
-  (#match? @expression "Given|When|Then")
+  (#match? @expression "${functionNames}")
 ) @root
 `,
   ],

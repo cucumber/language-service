@@ -1,3 +1,4 @@
+import { functionNames } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const rustLanguage: Language = {
@@ -82,7 +83,7 @@ export const rustLanguage: Language = {
       )
     )
   )  
-  (#match? @meta-name "given|when|then")
+  (#match? @meta-name "${functionNames.toLowerCase()}")
 )
 (function_item) ) @root
 `,
