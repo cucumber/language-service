@@ -50,18 +50,52 @@ export const pythonLanguage: Language = {
           name: (identifier) @name-key
           value: (string) @name
           (#eq? @name-key "name")
-        )?
+        )
         (keyword_argument
           name: (identifier) @regexp-key
           value: (string) @expression
           (#eq? @regexp-key "regexp")
-        )?
+        )
+    ))@root`,
+    `(call
+      arguments: (argument_list
+        (keyword_argument
+          name: (identifier) @name-key
+          value: (string) @name
+          (#eq? @name-key "name")
+        )
         (keyword_argument
           name: (identifier) @regexp-key
           value: (concatenated_string) @expression
           (#eq? @regexp-key "regexp")
-        )?
-     ))@root`,
+        )
+    ))@root`,
+    `(call
+      arguments: (argument_list
+          (keyword_argument
+          name: (identifier) @regexp-key
+          value: (string) @expression
+          (#eq? @regexp-key "regexp")
+        )
+        (keyword_argument
+          name: (identifier) @name-key
+          value: (string) @name
+          (#eq? @name-key "name")
+        )
+    ))@root`,
+    `(call
+      arguments: (argument_list
+        (keyword_argument
+          name: (identifier) @regexp-key
+          value: (concatenated_string) @expression
+          (#eq? @regexp-key "regexp")
+        )
+        (keyword_argument
+          name: (identifier) @name-key
+          value: (string) @name
+          (#eq? @name-key "name")
+        )
+    ))@root`,
   ],
   defineStepDefinitionQueries: [
     `
