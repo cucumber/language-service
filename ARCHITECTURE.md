@@ -13,35 +13,14 @@ The Extraction API provides data structures that are passed as input to the Lang
 The Extraction API is used to extract information from Gherkin Documents and Step Definitions. It generates data structures
 that are consumed by the Language Service API.
 
-```
-+--------------------+       +---------------+
-| Java/Ruby/         |       | Gherkin       |
-| TypeScript/        |       | source code   |
-| JavaScript/etc..   |       +-------+-------+
-| source code        |               |
-+----------+---------+               |
-           |                         |
-+----------v---------+       +-------v--------+
-|    tree-sitter     |       | Gherkin Parser |
-+----------+---------+       +-------+--------+
-           |                         |
-+----------v---------+       +-------v-------+
-|    Expressions     |       | Gherkin Steps |
-+----------+---------+       +-------+-------+
-           |                         |
-           +-------------+-----------+
-                         |
-               +---------v--------+
-               | buildSuggestions |
-               +---------+--------+
-                         |
-                  +------v------+
-                  | Suggestions |
-                  +------+------+
-                         |
-                 +-------v-------+
-                 |     Index     |
-                 +-------^-------+
+```mermaid
+graph TD
+    A[Glue source code\nJava/Ruby/TypeScript/JavaScript/etc.] -->|tree-sitter| B[Expressions]
+    C[Gherkin source code] -->|Gherkin Parser| D[Gherkin Steps]
+    B --> E[buildSuggestions]
+    D --> E
+    E --> F[Suggestions]
+    F --> G[Index]
 ```
 
 [Cucumber Expressions](https://github.com/cucumber/cucumber-expressions/#readme) and Regular Expressions are extracted
