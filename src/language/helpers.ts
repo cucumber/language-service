@@ -1,4 +1,5 @@
 import { ParameterType, RegExps } from '@cucumber/cucumber-expressions'
+import { dialects } from '@cucumber/gherkin'
 import { DocumentUri, LocationLink, Range } from 'vscode-languageserver-types'
 
 import { Link, NodePredicate, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types'
@@ -70,3 +71,9 @@ export function filter(
 function flatten(node: TreeSitterSyntaxNode): TreeSitterSyntaxNode[] {
   return node.children.reduce((r, o) => [...r, ...flatten(o)], [node])
 }
+
+export const functionNames = Object.values(dialects)
+  .flatMap((dialect) => [...dialect.given, ...dialect.when, ...dialect.then])
+  .map((keyword) => keyword.trim())
+  .filter((keyword) => keyword !== '*')
+  .join('|')

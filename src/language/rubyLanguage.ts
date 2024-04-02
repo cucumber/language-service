@@ -1,7 +1,7 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
-import { childrenToString, filter, NO_QUOTES } from './helpers.js'
+import { childrenToString, filter, functionNames, NO_QUOTES } from './helpers.js'
 import { Language, NodePredicate, TreeSitterSyntaxNode } from './types.js'
 
 export const rubyLanguage: Language = {
@@ -76,7 +76,7 @@ export const rubyLanguage: Language = {
       (regex) @expression
     ]
   )
-  (#match? @method "(Given|When|Then)$")
+  (#match? @method "(${functionNames})$")
 ) @root
 `,
   ],
