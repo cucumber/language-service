@@ -1,7 +1,7 @@
 import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
 import { readFile } from 'fs/promises'
-import glob from 'glob'
+import { glob } from 'glob'
 import { basename, resolve } from 'path'
 
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'

@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
+- (Python) Fix index failures from partial parameter type matches ([#196](https://github.com/cucumber/language-service/pull/196))
+- (Rust) Support for r# raw strings with step definition patterns ([#176](https://github.com/cucumber/language-service/pull/176))
+- (Rust) Line continuation characters in rust step definition patterns ([#179](https://github.com/cucumber/language-service/pull/179))
+- (Python) Unexpected spaces and commas in generated step definitions [#160](https://github.com/cucumber/language-service/issues/160)
+
+### Added
+- (Python) Support for u-strings with step definition patterns ([#173](https://github.com/cucumber/language-service/pull/173))
+
+## [1.4.1] - 2023-07-16
+### Fixed
 - (Python) There was a bug in how long concatenated strings were handled for multi-line regexes
+- Updated TreeSitter and numerous other dependencies to promote runtime compatibility with Electron 14.
 
 ### Added
 - Added support for Go - [#72](https://github.com/cucumber/language-service/issues/72), [#130](https://github.com/cucumber/language-service/pull/130)
@@ -299,7 +310,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.4.1...HEAD
+[1.4.1]: https://github.com/cucumber/language-service/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/cucumber/language-service/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/cucumber/language-service/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/cucumber/language-service/compare/v1.1.1...v1.2.0

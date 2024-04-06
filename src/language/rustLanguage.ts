@@ -109,13 +109,21 @@ fn {{ #lowercase }}{{ #underscore }}{{ expression }}{{ /underscore }}{{ /lowerca
 `,
 }
 
-function stringLiteral(node: TreeSitterSyntaxNode | null): string {
+export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
   if (node === null) throw new Error('node cannot be null')
-  if (node.text[0] === 'r') return unescapeString(node.text.slice(2, -1))
-  return unescapeString(node.text.slice(1, -1))
+
+  let result
+  if (node.text.startsWith('r#')) result = unescapeString(node.text.slice(3, -2))
+  else if (node.text.startsWith('r')) result = unescapeString(node.text.slice(2, -1))
+  else result = unescapeString(node.text.slice(1, -1))
+
+  return stripLineContinuation(result)
 }
 
-// rust
+export function stripLineContinuation(s: string): string {
+  return s.replace(/\\\n\s*/g, '')
+}
+
 function unescapeString(s: string): string {
   return s.replace(/\\\\/g, '\\')
 }

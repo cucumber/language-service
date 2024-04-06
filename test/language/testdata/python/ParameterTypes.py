@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from cucumber_expressions.parameter_type import ParameterType
 
 ParameterType(
@@ -9,12 +10,12 @@ ParameterType(
 
 ParameterType(
     name="date",
-    regexp="/\d{4}-\d{2}-\d{2}/",
     transformer=lambda x: datetime.datetime(x),
+    regexp="/\d{4}-\d{2}-\d{2}/",
 )
 
 ParameterType(
-    name="planet",
-    regexp="jupiter|mars|tellus",
     transformer=lambda x: x,
+    regexp="jupiter|mars|tellus",
+    name="planet",
 )
