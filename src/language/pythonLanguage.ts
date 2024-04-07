@@ -106,7 +106,7 @@ export const pythonLanguage: Language = {
           arguments: (argument_list (string) @expression)
         )
       )
-      (#match? @method "(given|when|then)")
+      (#match? @method "(given|when|then|step)")
     ) @root
 `,
   ],

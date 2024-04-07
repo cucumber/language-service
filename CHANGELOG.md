@@ -8,12 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Fixed
 - (Python) Fix index failures from partial parameter type matches ([#196](https://github.com/cucumber/language-service/pull/196))
+- (Python) Unexpected spaces and commas in generated step definitions ([#160](https://github.com/cucumber/language-service/issues/160))
 - (Rust) Support for r# raw strings with step definition patterns ([#176](https://github.com/cucumber/language-service/pull/176))
 - (Rust) Line continuation characters in rust step definition patterns ([#179](https://github.com/cucumber/language-service/pull/179))
-- (Python) Unexpected spaces and commas in generated step definitions ([#160](https://github.com/cucumber/language-service/issues/160))
 
 ### Added
 - (Python) Support for u-strings with step definition patterns ([#173](https://github.com/cucumber/language-service/pull/173))
+- (Python) Support for behave's generic step definition decorator ([#200](https://github.com/cucumber/language-service/pull/200))
 - (Go) Support for Godog step definitions ([#130](https://github.com/cucumber/language-service/pull/130))
 
 ## [1.4.1] - 2023-07-16
