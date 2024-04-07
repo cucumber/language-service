@@ -10,18 +10,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - (Python) Fix index failures from partial parameter type matches ([#196](https://github.com/cucumber/language-service/pull/196))
 - (Rust) Support for r# raw strings with step definition patterns ([#176](https://github.com/cucumber/language-service/pull/176))
 - (Rust) Line continuation characters in rust step definition patterns ([#179](https://github.com/cucumber/language-service/pull/179))
-- (Python) Unexpected spaces and commas in generated step definitions [#160](https://github.com/cucumber/language-service/issues/160)
+- (Python) Unexpected spaces and commas in generated step definitions ([#160](https://github.com/cucumber/language-service/issues/160))
 
 ### Added
 - (Python) Support for u-strings with step definition patterns ([#173](https://github.com/cucumber/language-service/pull/173))
+- (Go) Support for Godog step definitions ([#130](https://github.com/cucumber/language-service/pull/130))
 
 ## [1.4.1] - 2023-07-16
 ### Fixed
 - (Python) There was a bug in how long concatenated strings were handled for multi-line regexes
 - Updated TreeSitter and numerous other dependencies to promote runtime compatibility with Electron 14.
-
-### Added
-- Added support for Go - [#72](https://github.com/cucumber/language-service/issues/72), [#130](https://github.com/cucumber/language-service/pull/130)
 
 ## [1.4.0] - 2022-12-08
 ### Added

@@ -22,7 +22,7 @@ import { stepDefinitionSnippet } from './snippet/stepDefinitionSnippet.js'
  * @param link where the snippet should be added
  * @param relativePath the relative path from the workspace root
  * @param createFile true if link.targetUri does not exist
- * @param mustacheTemplate template to generae the snippet
+ * @param mustacheTemplate template to generate the snippet
  * @param languageName the name of the language we're generating for
  * @param registry parameter types
  */

@@ -1,54 +1,48 @@
+import { StringOrRegExp } from '@cucumber/cucumber-expressions'
+
+import { unsupportedOperation } from './helpers.js'
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const goLanguage: Language = {
-  toParameterTypeName() {
-    throw new Error('Unsupported operation')
-    // switch (node.type) {
-    //   case 'raw_string_literal': {
-    //     return stringLiteral(node)
-    //   }
-    //   case 'string_literal': {
-    //     return stringLiteral(node)
-    //   }
-    //   case 'identifier': {
-    //     return node.text
-    //   }
-    //   default: {
-    //     throw new Error(`Unsupported node type ${node.type}`)
-    //   }
-    // }
-  },
-  toParameterTypeRegExps(node) {
-    return stringLiteral(node)
-  },
-  toStepDefinitionExpression(node) {
+  toParameterTypeName: unsupportedOperation,
+  toParameterTypeRegExps: unsupportedOperation,
+  toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp {
     const text = stringLiteral(node)
     const hasRegExpAnchors = text[0] == '^' || text[text.length - 1] == '$'
     return hasRegExpAnchors ? new RegExp(text) : text
   },
-
-  // Empty array because Go does not support Cucumber Expressions
+  // Empty array as Godog does not support Cucumber Expressions
   defineParameterTypeQueries: [],
   defineStepDefinitionQueries: [
-    `
-(function_declaration
-  body: (block
-    (call_expression
-      function: (selector_expression
-        field: (field_identifier) @annotation-name
-      )
-      arguments: (argument_list
-        [
-          (raw_string_literal) @expression
-        ]
-      )
-    )
-  )
-  (#match? @annotation-name "Step")
-) @root
-`,
+    `(function_declaration
+      body: (block
+        (expression_statement
+          (call_expression
+            function: (selector_expression
+              field: (field_identifier) @annotation-name
+            )
+            arguments: (argument_list
+              [
+                (raw_string_literal) @expression
+              ]
+            )
+            (#match? @annotation-name "Given|When|Then|Step")))))@root
+    `,
+    `(function_declaration
+      body: (block
+        (expression_statement
+          (call_expression
+            function: (selector_expression
+              field: (field_identifier) @annotation-name
+            )
+            arguments: (argument_list
+              [
+                (interpreted_string_literal) @expression
+              ]
+            )
+            (#match? @annotation-name "Given|When|Then|Step")))))@root
+    `,
   ],
-
   snippetParameters: {
     int: { type: 'int', name: 'i' },
     float: { type: 'float', name: 'f' },
@@ -63,16 +57,12 @@ export const goLanguage: Language = {
     '': { type: 'string', name: 'arg' },
   },
   defaultSnippetTemplate: `
-#[{{ #lowercase }}{{ keyword }}{{ /lowercase }}(expr = "{{ expression }}")]
-func {{ #lowercase }}{{ expression }}{{ /lowercase }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }} {{ type }}{{ /parameters }}) {
-    // {{ blurb }}
-}
+  // Generated with Cucumber Expressions syntax, which are not supported by Godog. Convert to Regular Expressions.
+  ctx.{{ keyword }}(\`{{ expression }}\`, <stepFunc>)
 `,
 }
 
-function stringLiteral(node: TreeSitterSyntaxNode | null): string {
+export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
   if (node === null) throw new Error('node cannot be null')
-  if (node.text[0] === 'r') return node.text.slice(2, -1)
-  const value = node.text.slice(1, -1)
-  return value
+  return node.text.slice(1, -1)
 }

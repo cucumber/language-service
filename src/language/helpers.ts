@@ -70,3 +70,7 @@ export function filter(
 function flatten(node: TreeSitterSyntaxNode): TreeSitterSyntaxNode[] {
   return node.children.reduce((r, o) => [...r, ...flatten(o)], [node])
 }
+
+export function unsupportedOperation(): never {
+  throw new Error('Unsupported operation')
+}

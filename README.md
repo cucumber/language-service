@@ -4,7 +4,7 @@
   Cucumber Language Service
 </h1>
 <p align="center">
-  <b>Cucumber language services used by <a href="https://github.com/cucumber/language-server#readme">Cucumber Language Server</a> and <a href="https://github.com/cucumber/monaco#readme">Cucumber Monaco</a>.</b>
+  <b>Cucumber language services used by <a href="https://github.com/cucumber/language-server#readme">Cucumber Language Server</a> and <a href="https://github.com/cucumber/monaco#readme">Cucumber Monaco</a></b>
 </p>
 
 <p align="center">

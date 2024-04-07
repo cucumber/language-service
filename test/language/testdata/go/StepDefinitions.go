@@ -6,6 +6,6 @@ import (
 
 func a_regexp() {}
 
-func InitializeScenario(sc *godog.ScenarioContext) {
-	sc.Step(`^a regexp$`, a_regexp)
+func InitializeScenario(ctx *godog.ScenarioContext) {
+	ctx.Given(`^a regexp$`, a_regexp)
 }
