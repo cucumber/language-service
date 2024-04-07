@@ -1,12 +1,9 @@
+import { unsupportedOperation } from './helpers.js'
 import { Language } from './types.js'
 
 export const phpLanguage: Language = {
-  toParameterTypeName() {
-    throw new Error('Unsupported operation')
-  },
-  toParameterTypeRegExps() {
-    throw new Error('Unsupported operation')
-  },
+  toParameterTypeName: unsupportedOperation,
+  toParameterTypeRegExps: unsupportedOperation,
   toStepDefinitionExpression(node) {
     // match multiline comment
     const text = node.text
