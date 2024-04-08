@@ -55,6 +55,12 @@
     "url": "https://github.com/cucumber/language-service/issues"
   },
   "homepage": "https://github.com/cucumber/language-service#readme",
+  "contributors": [
+    "Binh Duc Tran <binhtran432k@gmail.com>",
+    "Kieran Ryan <kierankilkenny@gmail.com>",
+    "M.P. Korstanje <rien.korstanje@gmail.com>",
+    "Miro <miroslav.sommer@gmail.com>"
+  ],
   "lint-staged": {
     "{src,test}/**/*.ts": "npm run eslint-fix"
   },

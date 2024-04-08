@@ -11,11 +11,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - (Python) Unexpected spaces and commas in generated step definitions ([#160](https://github.com/cucumber/language-service/issues/160))
 - (Rust) Support for r# raw strings with step definition patterns ([#176](https://github.com/cucumber/language-service/pull/176))
 - (Rust) Line continuation characters in rust step definition patterns ([#179](https://github.com/cucumber/language-service/pull/179))
+- Prevent formatting introducing trailing whitespace on headings ([gherkin-utils#35](https://github.com/cucumber/gherkin-utils/pull/35))
+- Prevent formatting removing trailing comments ([gherkin-utils#38](https://github.com/cucumber/gherkin-utils/pull/41))
+- Format table widths with full-width characters ([gherkin-utils#53](https://github.com/cucumber/gherkin-utils/pull/53))
+- Verbose alternation in optional error message ([cucumber-expressions#260](https://github.com/cucumber/cucumber-expressions/pull/260), [cucumber-expressions#253](https://github.com/cucumber/cucumber-expressions/pull/253))
 
 ### Added
 - (Python) Support for u-strings with step definition patterns ([#173](https://github.com/cucumber/language-service/pull/173))
 - (Python) Support for behave's generic step definition decorator ([#200](https://github.com/cucumber/language-service/pull/200))
 - (Go) Support for Godog step definitions ([#130](https://github.com/cucumber/language-service/pull/130))
+- Malaysian localisation and translations for "Rule" in Vietnamese, Irish, Danish, Dutch ([gherkin v27.0.0](https://github.com/cucumber/gherkin/releases/tag/v27.0.0), [gherkin v28.0.0](https://github.com/cucumber/gherkin/releases/tag/v28.0.0))
 
 ## [1.4.1] - 2023-07-16
 ### Fixed
