@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.5.0] - 2024-04-08
+### Added
+- (Python) Support for u-strings with step definition patterns ([#173](https://github.com/cucumber/language-service/pull/173))
+- (Python) Support for behave's generic step definition decorator ([#200](https://github.com/cucumber/language-service/pull/200))
+- (Go) Support for Godog step definitions ([#130](https://github.com/cucumber/language-service/pull/130))
+- Malaysian localisation and translations for "Rule" in Vietnamese, Irish, Danish, Dutch ([gherkin v27.0.0](https://github.com/cucumber/gherkin/releases/tag/v27.0.0), [gherkin v28.0.0](https://github.com/cucumber/gherkin/releases/tag/v28.0.0))
+
 ### Fixed
 - (Python) Fix index failures from partial parameter type matches ([#196](https://github.com/cucumber/language-service/pull/196))
 - (Python) Unexpected spaces and commas in generated step definitions ([#160](https://github.com/cucumber/language-service/issues/160))
@@ -15,12 +23,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Prevent formatting removing trailing comments ([gherkin-utils#38](https://github.com/cucumber/gherkin-utils/pull/41))
 - Format table widths with full-width characters ([gherkin-utils#53](https://github.com/cucumber/gherkin-utils/pull/53))
 - Verbose alternation in optional error message ([cucumber-expressions#260](https://github.com/cucumber/cucumber-expressions/pull/260), [cucumber-expressions#253](https://github.com/cucumber/cucumber-expressions/pull/253))
-
-### Added
-- (Python) Support for u-strings with step definition patterns ([#173](https://github.com/cucumber/language-service/pull/173))
-- (Python) Support for behave's generic step definition decorator ([#200](https://github.com/cucumber/language-service/pull/200))
-- (Go) Support for Godog step definitions ([#130](https://github.com/cucumber/language-service/pull/130))
-- Malaysian localisation and translations for "Rule" in Vietnamese, Irish, Danish, Dutch ([gherkin v27.0.0](https://github.com/cucumber/gherkin/releases/tag/v27.0.0), [gherkin v28.0.0](https://github.com/cucumber/gherkin/releases/tag/v28.0.0))
 
 ## [1.4.1] - 2023-07-16
 ### Fixed
@@ -314,7 +316,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.4.1...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.5.0...HEAD
+[1.5.0]: https://github.com/cucumber/language-service/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/cucumber/language-service/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/cucumber/language-service/compare/v1.3.0...v1.4.0
 [1.3.0]: https://github.com/cucumber/language-service/compare/v1.2.0...v1.3.0
