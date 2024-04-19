@@ -1,6 +1,6 @@
 {
   "name": "@cucumber/language-service",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Cucumber Language Service",
   "type": "module",
   "main": "dist/cjs/src/index.js",
@@ -55,6 +55,12 @@
     "url": "https://github.com/cucumber/language-service/issues"
   },
   "homepage": "https://github.com/cucumber/language-service#readme",
+  "contributors": [
+    "Binh Duc Tran <binhtran432k@gmail.com>",
+    "Kieran Ryan <kierankilkenny@gmail.com>",
+    "M.P. Korstanje <rien.korstanje@gmail.com>",
+    "Miro <miroslav.sommer@gmail.com>"
+  ],
   "lint-staged": {
     "{src,test}/**/*.ts": "npm run eslint-fix"
   },
@@ -75,6 +81,7 @@
     "tree-sitter": "0.20.6",
     "tree-sitter-c-sharp": "0.20.0",
     "tree-sitter-cli": "0.20.8",
+    "tree-sitter-go": "0.20.0",
     "tree-sitter-java": "0.20.2",
     "tree-sitter-php": "0.20.0",
     "tree-sitter-python": "0.20.4",
@@ -87,10 +94,10 @@
     "@cucumber/message-streams": "^4.0.1",
     "@types/glob": "8.1.0",
     "@types/mocha": "10.0.6",
-    "@types/node": "20.12.2",
-    "@types/react": "18.2.73",
-    "@typescript-eslint/eslint-plugin": "7.4.0",
-    "@typescript-eslint/parser": "7.4.0",
+    "@types/node": "20.12.5",
+    "@types/react": "18.2.74",
+    "@typescript-eslint/eslint-plugin": "7.5.0",
+    "@typescript-eslint/parser": "7.5.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-import": "2.29.1",
@@ -107,7 +114,7 @@
     "react": "18.2.0",
     "ts-node": "10.9.2",
     "txtgen": "3.0.2",
-    "typescript": "5.4.3"
+    "typescript": "5.4.4"
   },
   "peerDependencies": {
     "web-tree-sitter": "^0.20.7"

@@ -1,10 +1,8 @@
 """Port of givens for testdata."""
-from behave import given
-import datetime
-import re
+from behave import step, given, when, then
 
 
-@given("a {uuid}")
+@step("a {uuid}")
 def step_given(context, uuid):
     assert uuid
 
@@ -14,12 +12,12 @@ def step_date(context, date):
     assert date
 
 
-@given("a {planet}")
+@when("a {planet}")
 def step_planet(context, planet):
     assert planet
 
 
-@given("an {undefined-parameter}")
+@then("an {undefined-parameter}")
 def step_undef(context, planet):
     assert planet
 
