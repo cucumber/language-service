@@ -7,3 +7,4 @@
     - https://code.visualstudio.com/api/extension-guides/virtual-workspaces
     - https://github.com/microsoft/language-server-protocol/issues/1264
     - https://github.com/NTaylorMullen/LSPVirtualDocuments/blob/master/Documents/FileSystemSpec.md
+- [ ] Singular way of communicating regex consistent across languages
