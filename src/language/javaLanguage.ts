@@ -90,7 +90,7 @@ export const javaLanguage: Language = {
       )
     )
   )
-  (#match? @annotation-name "Given|When|Then")
+  (#match? @annotation-name "Given|When|Then|And|But")
 ) @root
 `,
   ],

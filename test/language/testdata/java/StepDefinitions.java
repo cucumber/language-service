@@ -5,19 +5,19 @@ public class StepDefinitions {
     void a_uuid(String uuid) {
     }
 
-    @Given("a {date}"  )
+    @When("a {date}"  )
     void a_date(Date date) {
     }
 
-    @Given("a {planet}"  )
+    @Then("a {planet}"  )
     void a_date(Date date) {
     }
 
-    @Given("^a regexp$"  )
+    @And("^a regexp$"  )
     void a_regexp() {
     }
 
-    @Given("an {undefined-parameter}"  )
+    @But("an {undefined-parameter}"  )
     void an_undefined_parameter(Date date) {
     }
 
