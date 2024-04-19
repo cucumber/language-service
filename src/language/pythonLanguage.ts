@@ -1,9 +1,9 @@
-import { StringOrRegExp } from '@cucumber/cucumber-expressions'
+import { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
 
 import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const pythonLanguage: Language = {
-  toParameterTypeName(node: TreeSitterSyntaxNode) {
+  toParameterTypeName(node: TreeSitterSyntaxNode): string {
     switch (node.type) {
       case 'string': {
         return stringLiteral(node.text)
@@ -19,7 +19,7 @@ export const pythonLanguage: Language = {
       }
     }
   },
-  toParameterTypeRegExps(node: TreeSitterSyntaxNode) {
+  toParameterTypeRegExps(node: TreeSitterSyntaxNode): RegExps {
     switch (node.type) {
       case 'string':
       case 'identifier': {
@@ -34,11 +34,6 @@ export const pythonLanguage: Language = {
     }
   },
   toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp {
-    // This removes the head and tail apostrophes.
-    // TODO: This should be temporary. Python supports
-    // a wider array of regex features than javascript
-    // a singular way of communicating regex consistent
-    // across languages is necessary
     return toStringOrRegExp(node.text)
   },
   defineParameterTypeQueries: [
@@ -54,7 +49,7 @@ export const pythonLanguage: Language = {
           value: (string) @expression
           (#eq? @regexp-key "regexp")
         )
-    ))@root`,
+    )) @root`,
     `(call
       arguments: (argument_list
         (keyword_argument
@@ -67,7 +62,7 @@ export const pythonLanguage: Language = {
           value: (concatenated_string) @expression
           (#eq? @regexp-key "regexp")
         )
-    ))@root`,
+    )) @root`,
     `(call
       arguments: (argument_list
           (keyword_argument
@@ -80,7 +75,7 @@ export const pythonLanguage: Language = {
           value: (string) @name
           (#eq? @name-key "name")
         )
-    ))@root`,
+    )) @root`,
     `(call
       arguments: (argument_list
         (keyword_argument
@@ -93,11 +88,10 @@ export const pythonLanguage: Language = {
           value: (string) @name
           (#eq? @name-key "name")
         )
-    ))@root`,
+    )) @root`,
   ],
   defineStepDefinitionQueries: [
-    `
-    (decorated_definition
+    `(decorated_definition
       (decorator
         (call
           function: (identifier) @method
@@ -105,8 +99,7 @@ export const pythonLanguage: Language = {
         )
       )
       (#match? @method "(given|when|then)")
-    ) @root
-`,
+    ) @root`,
   ],
   snippetParameters: {
     int: { type: 'int' },
@@ -129,17 +122,10 @@ def step_{{ #lowercase }}{{ keyword }}{{ /lowercase }}(context{{ #parameters }},
 }
 
 function cleanRegExp(regExpString: string): string {
-  const startsWith = regExpString[0]
-  switch (startsWith) {
-    case '/':
-      return regExpString.slice(1, -1)
-    default:
-      return regExpString
-  }
+  return regExpString.startsWith('/') ? regExpString.slice(1, -1) : regExpString
 }
 
 export function toStringOrRegExp(step: string): StringOrRegExp {
-  // Remove explicit unicode prefix
   const stepText = removePrefix(step, 'u')
   const strippedStepText = stepText.slice(1, -1)
   return isRegExp(strippedStepText)
@@ -148,18 +134,15 @@ export function toStringOrRegExp(step: string): StringOrRegExp {
 }
 
 export function concatStringLiteral(text: string): string {
-  const cleanWord = removePrefix(text, 'f')
-  const postSplitCleanWord = cleanWord
+  return removePrefix(text, 'f')
     .split('\\\n')
     .map((x) => x.replace(/"/g, ''))
     .map((x) => x.trim())
     .join('')
-  return postSplitCleanWord
 }
 
 export function stringLiteral(text: string): string {
-  const cleanWord = removePrefix(text, 'f')
-  return cleanWord.slice(1, -1)
+  return removePrefix(text, 'f').slice(1, -1)
 }
 
 export function isRegExp(cleanWord: string): boolean {
