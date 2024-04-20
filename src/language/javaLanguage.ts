@@ -18,9 +18,12 @@ export const javaLanguage: Language = {
     return stringLiteral(node)
   },
   toStepDefinitionExpression(node) {
-    const text = stringLiteral(node)
-    const hasRegExpAnchors = text[0] == '^' || text[text.length - 1] == '$'
-    return hasRegExpAnchors ? new RegExp(text) : text
+    if (node.type === 'string_literal') {
+      const text = stringLiteral(node)
+      const hasRegExpAnchors = text[0] == '^' || text[text.length - 1] == '$'
+      return hasRegExpAnchors ? new RegExp(text) : text
+    }
+    return collectStringFragments(node).join('')
   },
 
   defineParameterTypeQueries: [
@@ -78,23 +81,33 @@ export const javaLanguage: Language = {
 `,
   ],
   defineStepDefinitionQueries: [
-    `
-(method_declaration 
-  (modifiers 
-    (annotation 
-      name: (identifier) @annotation-name 
-      arguments: (annotation_argument_list
-        [
-          (string_literal) @expression
-        ]
+    `(method_declaration 
+      (modifiers 
+        (annotation 
+          name: (identifier) @annotation-name 
+          arguments: (annotation_argument_list
+            [
+              (string_literal) @expression
+            ]
+          )
+        )
       )
-    )
-  )
-  (#match? @annotation-name "Given|When|Then|And|But")
-) @root
-`,
+      (#match? @annotation-name "Given|When|Then|And|But")
+    ) @root`,
+    `(method_declaration 
+      (modifiers 
+        (annotation 
+          name: (identifier) @annotation-name 
+          arguments: (annotation_argument_list
+            [
+              (binary_expression) @expression
+            ]
+          )
+        )
+      )
+      (#match? @annotation-name "Given|When|Then|And|But")
+    ) @root`,
   ],
-
   snippetParameters: {
     int: { type: 'int', name: 'i' },
     float: { type: 'float', name: 'f' },
@@ -125,4 +138,13 @@ export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
 // Java escapes \ as \\. Turn \\ back to \.
 function unescapeString(s: string): string {
   return s.replace(/\\\\/g, '\\')
+}
+function collectStringFragments(node: TreeSitterSyntaxNode): string[] {
+  if (node.type === 'string_fragment') {
+    return [unescapeString(node.text.replace('(?i)', ''))]
+  }
+  if (node.type === 'binary_expression' || node.type === 'string_literal') {
+    return node.children.flatMap(collectStringFragments)
+  }
+  return []
 }
