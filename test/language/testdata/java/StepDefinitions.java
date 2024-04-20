@@ -1,27 +1,33 @@
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.But;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.Then;
 
 public class StepDefinitions {
-    @Given("a {uuid}"  )
-    void a_uuid(String uuid) {
+    @Given("a {uuid}")
+        void a_uuid(String uuid) {
     }
 
-    @Given("a {date}"  )
-    void a_date(Date date) {
+    @When("a {date}")
+        void a_date(Date date) {
     }
 
-    @Given("a {planet}"  )
-    void a_date(Date date) {
+    @Then("a {planet}")
+        void a_date(Date date) {
     }
 
-    @Given("^a regexp$"  )
-    void a_regexp() {
+    @And("^a regexp$")
+        void a_regexp() {
     }
 
-    @Given("an {undefined-parameter}"  )
-    void an_undefined_parameter(Date date) {
+    @But("an {undefined-parameter}")
+        void an_undefined_parameter(Date date) {
     }
 
-    @Given("the bee's knees"  )
-    void the_bees_knees(Date date) {
+    @Given(
+        "the " + "bee's "
+        + "knees")
+        void the_bees_knees(Date date) {
     }
 }
