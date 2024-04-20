@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- (Java) Detect step definition patterns with concatenated strings ([#202](https://github.com/cucumber/language-service/pull/202))
+- (Java) Support `@And` and `@But` step definition annotations ([#202](https://github.com/cucumber/language-service/pull/202))
 
 ## [1.5.0] - 2024-04-08
 ### Added
