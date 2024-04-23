@@ -34,6 +34,7 @@ export const pythonLanguage: Language = {
     }
   },
   toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp {
+    // TODO: Handle binary operators (`+`) with strings
     return toStringOrRegExp(node.text)
   },
   defineParameterTypeQueries: [
@@ -99,6 +100,41 @@ export const pythonLanguage: Language = {
         )
       )
       (#match? @method "(given|when|then|step)")
+    ) @root`,
+    // pytest-bdd
+    `(decorator
+      (call
+        function: (identifier) @annotation-name
+        arguments: (argument_list
+          (call
+            function: (attribute) @parser
+            arguments: (argument_list
+              [
+                (string) @expression
+              ]
+            )
+          )
+        )
+      )
+      (#match? @annotation-name "given|when|then|step")
+      (#match? @parser "parser")
+    ) @root`,
+    `(decorator
+      (call
+        function: (identifier) @annotation-name
+        arguments: (argument_list
+          (call
+            function: (attribute) @parser
+            arguments: (argument_list
+              [
+                (binary_operator) @expression
+              ]
+            )
+          )
+        )
+      )
+      (#match? @annotation-name "given|when|then|step")
+      (#match? @parser "parser")
     ) @root`,
   ],
   snippetParameters: {
