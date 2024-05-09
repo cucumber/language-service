@@ -94,7 +94,7 @@
     "@cucumber/message-streams": "^4.0.1",
     "@types/glob": "8.1.0",
     "@types/mocha": "10.0.6",
-    "@types/node": "20.12.5",
+    "@types/node": "20.12.11",
     "@types/react": "18.2.74",
     "@typescript-eslint/eslint-plugin": "7.5.0",
     "@typescript-eslint/parser": "7.5.0",
