@@ -143,15 +143,62 @@ describe('getGherkinDiagnostics', () => {
     assert.deepStrictEqual(diagnostics, expectedDiagnostics)
   })
 
-  it('does not return warning diagnostic for undefined step in Scenario Outline', () => {
-    const diagnostics = getGherkinDiagnostics(
-      `Feature: Hello
-  Scenario: Hi
-    Given an undefined step
+  it('returns diagnostic for undefined step with unreferenced parameter in Scenario Outline', () => {
+    const noExamples = `Feature:
+      Scenario Outline:
+        Given a <parameter>`
+    const noTableHeader = `Feature:
+      Scenario Outline:
+        Given a <parameter>
+        Examples:`
+    const noTableBody = `Feature:
+      Scenario Outline:
+        Given a <parameter>
+        Examples:
+          | parameter |`
 
-    Examples: Hello
-`,
-      []
+    for (const document of [noExamples, noTableHeader, noTableBody]) {
+      const diagnostics = getGherkinDiagnostics(document, [])
+      const expectedDiagnostics: Diagnostic[] = [
+        {
+          code: 'cucumber.undefined-step',
+          codeDescription: {
+            href: 'https://cucumber.io/docs/cucumber/step-definitions/',
+          },
+          data: {
+            snippetKeyword: 'Given ',
+            stepText: 'a <parameter>',
+          },
+          message: 'Undefined step: a <parameter>',
+          range: {
+            end: {
+              character: 27,
+              line: 2,
+            },
+            start: {
+              character: 14,
+              line: 2,
+            },
+          },
+          severity: 2,
+          source: 'Cucumber',
+        },
+      ]
+      assert.deepStrictEqual(diagnostics, expectedDiagnostics)
+    }
+  })
+
+  it('returns no diagnostics with valid parameter match in Scenario Outline', () => {
+    const diagnostics = getGherkinDiagnostics(
+      `Feature:
+        Scenario Outline:
+          Given a <state> <entity>
+  
+          Examples:
+            | parameter | state   | entity | other  |
+            | unused    | defined | step   | unused |
+      `,
+      [new CucumberExpression('a defined step', new ParameterTypeRegistry())]
     )
     const expectedDiagnostics: Diagnostic[] = []
     assert.deepStrictEqual(diagnostics, expectedDiagnostics)
