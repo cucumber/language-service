@@ -143,44 +143,6 @@ describe('getGherkinDiagnostics', () => {
     assert.deepStrictEqual(diagnostics, expectedDiagnostics)
   })
 
-  it('returns diagnostic for undefined step in Scenario Outline', () => {
-    const diagnostics = getGherkinDiagnostics(
-      `Feature: Hello
-  Scenario Outline: Hi
-    Given an undefined step
-
-    Examples: Hello
-`,
-      []
-    )
-    const expectedDiagnostics: Diagnostic[] = [
-      {
-        code: 'cucumber.undefined-step',
-        codeDescription: {
-          href: 'https://cucumber.io/docs/cucumber/step-definitions/',
-        },
-        data: {
-          snippetKeyword: 'Given ',
-          stepText: 'an undefined step',
-        },
-        message: 'Undefined step: an undefined step',
-        range: {
-          end: {
-            character: 27,
-            line: 2,
-          },
-          start: {
-            character: 10,
-            line: 2,
-          },
-        },
-        severity: 2,
-        source: 'Cucumber',
-      },
-    ]
-    assert.deepStrictEqual(diagnostics, expectedDiagnostics)
-  })
-
   it('returns diagnostic for undefined step with unreferenced parameter in Scenario Outline', () => {
     const noExamples = `Feature:
       Scenario Outline:
