@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.6.0] - 2024-05-12
 ### Added
 - Diagnostics for marking steps as undefined in scenario outlines ([#210](https://github.com/cucumber/language-service/pull/210))
 
@@ -323,7 +325,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.5.1...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.6.0...HEAD
+[1.6.0]: https://github.com/cucumber/language-service/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/cucumber/language-service/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/cucumber/language-service/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/cucumber/language-service/compare/v1.4.0...v1.4.1
