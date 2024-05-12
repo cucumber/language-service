@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Diagnostics for marking steps as undefined in scenario outlines
+- Diagnostics for marking steps as undefined in scenario outlines ([#210](https://github.com/cucumber/language-service/pull/210))
 
 ## [1.5.1] - 2024-04-20
 ### Fixed

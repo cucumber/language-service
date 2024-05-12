@@ -210,11 +210,11 @@ describe('getGherkinDiagnostics', () => {
           message: 'Undefined step: a <parameter>',
           range: {
             end: {
-              character: 25,
+              character: 27,
               line: 2,
             },
             start: {
-              character: 12,
+              character: 14,
               line: 2,
             },
           },
