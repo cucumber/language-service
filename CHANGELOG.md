@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Syntax highlighting for comments (`#`) ([#212](https://github.com/cucumber/language-service/pull/212))
 
+### Fixed
+- (Ruby) Support `And` and `But` step definition annotations ([#211](https://github.com/cucumber/language-service/pull/211))
+
 ## [1.6.0] - 2024-05-12
 ### Added
 - Diagnostics for marking steps as undefined in scenario outlines ([#210](https://github.com/cucumber/language-service/pull/210))
