@@ -98,7 +98,7 @@ export const pythonLanguage: Language = {
           arguments: (argument_list (string) @expression)
         )
       )
-      (#match? @method "(given|when|then|step)")
+      (#match? @method "(given|when|then|step|Given|When|Then|Step)")
     ) @root`,
   ],
   snippetParameters: {
