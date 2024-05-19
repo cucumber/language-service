@@ -14,11 +14,12 @@ export const semanticTokenTypes: SemanticTokenTypes[] = [
   SemanticTokenTypes.type, // @tags and DocString ```type
   SemanticTokenTypes.variable, // step <placeholder>
   SemanticTokenTypes.property, // examples table header row
+  SemanticTokenTypes.comment, // # comments
 ]
 
 const indexByType = Object.fromEntries(semanticTokenTypes.map((type, index) => [type, index]))
 
-// https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_semanticTokens
+// https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_semanticTokens
 export function getGherkinSemanticTokens(
   gherkinSource: string,
   expressions: readonly Expression[]
@@ -170,9 +171,45 @@ export function getGherkinSemanticTokens(
       inExamples = false
       return arr
     },
+    comment(comment, arr) {
+      return makeLocationToken(comment.location, comment.text, SemanticTokenTypes.comment, arr)
+    },
   })
 
+  // Order tokens by positive relative line numbers. Required as table rows
+  // are processed before comments. Without this ordering, table rows can
+  // have negative relative line numbers, which is not supported by the
+  // Language Server Protocol.
+  const orderedData = orderRelativeTokenPositions(data)
+
   return {
-    data,
+    data: orderedData,
   }
+}
+
+function orderRelativeTokenPositions(data: number[]): number[] {
+  // Create tokens and convert relative line numbers to absolute
+  const tokens = []
+  let line = 0
+  for (let tokenStartIndex = 0; tokenStartIndex < data.length; tokenStartIndex += 5) {
+    line += data[tokenStartIndex]
+    tokens.push([
+      line,
+      data[tokenStartIndex + 1],
+      data[tokenStartIndex + 2],
+      data[tokenStartIndex + 3],
+      data[tokenStartIndex + 4],
+    ])
+  }
+
+  // Sort tokens by line number
+  tokens.sort((a, b) => a[0] - b[0])
+
+  // Convert absolute line numbers back to relative
+  for (let i = tokens.length - 1; i > 0; i--) {
+    tokens[i][0] -= tokens[i - 1][0]
+  }
+
+  // Flatten the array
+  return tokens.flat()
 }
