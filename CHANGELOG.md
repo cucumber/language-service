@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- Syntax highlighting for comments (`#`)
+- Syntax highlighting for comments (`#`) ([#212](https://github.com/cucumber/language-service/pull/212))
 
 ## [1.6.0] - 2024-05-12
 ### Added
