@@ -23,13 +23,13 @@ def step_undef(context, planet):
     assert planet
 
 
-@given("/^a regexp$/")
+@Step("/^a regexp$/")
 def step_re(context, expression):
     """Test Re."""
     assert expression
 
 
-@given("the bee's knees")
+@Given("the bee's knees")
 def step_bees(context, expression):
     """Test Re."""
     assert expression
