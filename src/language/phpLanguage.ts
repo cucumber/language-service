@@ -17,7 +17,7 @@ export const phpLanguage: Language = {
     `
 (
   (comment)+ @expression
-  (#match? @expression "Given|When|Then")
+  (#match? @expression "@(Given|When|Then)")
 ) @root
 `,
   ],
