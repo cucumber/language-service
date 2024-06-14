@@ -42,6 +42,34 @@ export const goLanguage: Language = {
             )
             (#match? @annotation-name "Given|When|Then|Step")))))@root
     `,
+    `(method_declaration
+      body: (block
+        (expression_statement
+          (call_expression
+            function: (selector_expression
+              field: (field_identifier) @annotation-name
+            )
+            arguments: (argument_list
+              [
+                (raw_string_literal) @expression
+              ]
+            )
+            (#match? @annotation-name "Given|When|Then|Step")))))@root
+    `,
+    `(method_declaration
+      body: (block
+        (expression_statement
+          (call_expression
+            function: (selector_expression
+              field: (field_identifier) @annotation-name
+            )
+            arguments: (argument_list
+              [
+                (interpreted_string_literal) @expression
+              ]
+            )
+            (#match? @annotation-name "Given|When|Then|Step")))))@root
+    `,
   ],
   snippetParameters: {
     int: { type: 'int', name: 'i' },
