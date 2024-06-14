@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Syntax highlighting for comments (`#`) ([#212](https://github.com/cucumber/language-service/pull/212))
+
 ### Fixed
 - (Ruby) Support `And` and `But` step definition annotations ([#211](https://github.com/cucumber/language-service/pull/211))
 - (Python) Title variants of Behave's decorators (`Step`, `Given`, `When`, `Then`) ([#213](https://github.com/cucumber/language-service/pull/213))
