@@ -19,8 +19,13 @@ export function getGherkinDiagnostics(
     error instanceof Errors.CompositeParserException ? error.errors : error ? [error] : []
   for (const error of errors) {
     if (error instanceof Errors.GherkinException) {
-      const line = error.location.line - 1
-      const character = error.location.column !== undefined ? error.location.column - 1 : 0
+      let line = error.location.line - 1
+      let character = error.location.column !== undefined ? error.location.column - 1 : 0
+      if (line >= lines.length) {
+        // EOF issue, e.g. something is not properly terminated
+        line = lines.length - 1
+        character = lines[line].length
+      }
       const diagnostic: Diagnostic = {
         severity: DiagnosticSeverity.Error,
         range: {
