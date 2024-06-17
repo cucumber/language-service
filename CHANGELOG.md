@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - (Python) Title variants of Behave's decorators (`Step`, `Given`, `When`, `Then`) ([#213](https://github.com/cucumber/language-service/pull/213))
 - (PHP) Scoped query to match annotations only (`@Given`) ([#214](https://github.com/cucumber/language-service/pull/214))
 - (Go) Find godog step definitions within `method_declaration` ([#215](https://github.com/cucumber/language-service/pull/215))
+- Exception thrown for unterminated docstrings ([#216](https://github.com/cucumber/language-service/pull/216))
 
 ### Removed
 - Dropped support for end-of-life Node version 16 ([#224](https://github.com/cucumber/language-service/pull/224))
