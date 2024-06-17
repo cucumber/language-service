@@ -203,4 +203,32 @@ describe('getGherkinDiagnostics', () => {
     const expectedDiagnostics: Diagnostic[] = []
     assert.deepStrictEqual(diagnostics, expectedDiagnostics)
   })
+
+  it('returns diagnostic for incomplete docstring', () => {
+    const diagnostics = getGherkinDiagnostics(
+      `Feature: Hello
+  Scenario: Hi
+    Given a defined step
+      """`,
+      [new CucumberExpression('a defined step', new ParameterTypeRegistry())]
+    )
+    const expectedDiagnostics: Diagnostic[] = [
+      {
+        message: '(5:0): unexpected end of file, expected: #DocStringSeparator, #Other',
+        range: {
+          start: {
+            line: 3,
+            character: 9,
+          },
+          end: {
+            line: 3,
+            character: 9,
+          },
+        },
+        severity: DiagnosticSeverity.Error,
+        source: 'Cucumber',
+      },
+    ]
+    assert.deepStrictEqual(diagnostics, expectedDiagnostics)
+  })
 })
