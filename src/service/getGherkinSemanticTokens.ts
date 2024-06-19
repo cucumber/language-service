@@ -16,6 +16,14 @@ export const semanticTokenTypes: SemanticTokenTypes[] = [
   SemanticTokenTypes.property, // examples table header row
 ]
 
+type Token = {
+  character: number
+  length: number
+  typeIndex: number
+}
+// Each index in the array is a line. Each line may have a number of tokens. If the line has no tokens, it can be undefined
+type TokenLines = Readonly<Array<Token[] | undefined>>
+
 const indexByType = Object.fromEntries(semanticTokenTypes.map((type, index) => [type, index]))
 
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_semanticTokens
@@ -30,14 +38,12 @@ export function getGherkinSemanticTokens(
     }
   }
   const lines = gherkinSource.split(/\r?\n/)
-  let lastLineNumber = 0
-  let lastCharacter = 0
 
   function makeLocationToken(
     location: messages.Location,
     token: string,
     type: SemanticTokenTypes,
-    data: readonly number[]
+    data: TokenLines
   ) {
     const lineNumber = location.line - 1
     if (location.column === undefined)
@@ -51,21 +57,21 @@ export function getGherkinSemanticTokens(
     character: number,
     token: string,
     type: SemanticTokenTypes,
-    data: readonly number[]
+    data: TokenLines
   ) {
-    const charDelta = lineNumber === lastLineNumber ? character - lastCharacter : character
-    lastCharacter = character
-    const lineOffset = lineNumber - lastLineNumber
-    lastLineNumber = lineNumber
-    const length = token.length
-    const typeIndex = indexByType[type]
-    return data.concat([lineOffset, charDelta, length, typeIndex, 0])
+    const copy = [...data]
+    copy[lineNumber] = (copy[lineNumber] ?? []).concat({
+      typeIndex: indexByType[type],
+      length: token.length,
+      character,
+    })
+    return copy
   }
 
   let inScenarioOutline = false
   let inExamples = false
 
-  const data = walkGherkinDocument<number[]>(gherkinDocument, [], {
+  const tokenLines = walkGherkinDocument<TokenLines>(gherkinDocument, [], {
     tag(tag, arr) {
       return makeLocationToken(tag.location, tag.name, SemanticTokenTypes.type, arr)
     },
@@ -172,7 +178,34 @@ export function getGherkinSemanticTokens(
     },
   })
 
+  const data = makeData(tokenLines)
+
   return {
     data,
   }
+}
+
+function makeData(lines: TokenLines): number[] {
+  let lastLineNumber = 0
+  let lastCharacter = 0
+  const data: number[] = []
+  for (let lineNumber = 0; lineNumber < lines.length; lineNumber++) {
+    const line = lines[lineNumber]
+    if (!line) continue
+
+    for (const token of line) {
+      const charDelta =
+        lineNumber === lastLineNumber ? token.character - lastCharacter : token.character
+      lastCharacter = token.character
+      const lineOffset = lineNumber - lastLineNumber
+      lastLineNumber = lineNumber
+
+      data.push(lineOffset)
+      data.push(charDelta)
+      data.push(token.length)
+      data.push(token.typeIndex)
+      data.push(0)
+    }
+  }
+  return data
 }
