@@ -11,5 +11,12 @@ class StepDefinitions
     {
         // Given
     }
-}
 
+    /**
+     * @Given ^I test this change$
+     */
+    public function test_changes()
+    {
+        // Given
+    }
+}
