@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- (Javascript) Support for compiled cjs style step definitions ([#222](https://github.com/cucumber/language-service/pull/222))
+
 ### Fixed
 - (Ruby) Support `And` and `But` step definition annotations ([#211](https://github.com/cucumber/language-service/pull/211))
 - (Python) Title variants of Behave's decorators (`Step`, `Given`, `When`, `Then`) ([#213](https://github.com/cucumber/language-service/pull/213))
