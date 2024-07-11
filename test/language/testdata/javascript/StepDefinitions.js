@@ -1,4 +1,4 @@
-import { Given } from '@cucumber/cucumber'
+import cucumber, { Given } from '@cucumber/cucumber'
 import assert from 'assert'
 import React from 'react'
 
@@ -25,5 +25,9 @@ Given('an {undefined-parameter}', async function (date) {
 })
 
 Given("the bee's knees", async function () {
+  assert(true)
+})
+
+;(0, cucumber.Given)('a compiled format', async function () {
   assert(true)
 })

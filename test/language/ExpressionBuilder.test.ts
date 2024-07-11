@@ -87,6 +87,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
           'a {planet}',
           /^a regexp$/,
           "the bee's knees",
+          ...(languageName === 'javascript' ? ['a compiled format'] : []),
         ])
         assert.deepStrictEqual(errors, [
           'There is already a parameter type with name int',
