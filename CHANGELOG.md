@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - (PHP) Scoped query to match annotations only (`@Given`) ([#214](https://github.com/cucumber/language-service/pull/214))
 - (Go) Find godog step definitions within `method_declaration` ([#215](https://github.com/cucumber/language-service/pull/215))
 
+### Removed
+- Dropped support for end-of-life Node version 16 ([#224](https://github.com/cucumber/language-service/pull/224))
+
 ## [1.6.0] - 2024-05-12
 ### Added
 - Diagnostics for marking steps as undefined in scenario outlines ([#210](https://github.com/cucumber/language-service/pull/210))

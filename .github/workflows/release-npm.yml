@@ -17,10 +17,11 @@ jobs:
           version: 2.0.24
       - uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '18'
           cache: 'npm'
           cache-dependency-path: package-lock.json
-      - run: npm install-test
+      - run: npm ci
+      - run: npm run test
       - uses: cucumber/action-publish-npm@v1.1.1
         with:
           npm-token: ${{ secrets.NPM_TOKEN }}
