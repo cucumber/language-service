@@ -58,6 +58,7 @@ Feature: a
     ])
     const actual = tokenize(gherkinSource, semanticTokens.data)
     const expected: TokenWithType[] = [
+      ['# some comment', SemanticTokenTypes.comment],
       ['@foo', SemanticTokenTypes.type],
       ['@bar', SemanticTokenTypes.type],
       ['Feature', SemanticTokenTypes.keyword],
