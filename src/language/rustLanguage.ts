@@ -27,67 +27,53 @@ export const rustLanguage: Language = {
   },
 
   defineParameterTypeQueries: [
-    `
-(attribute_item 
-  (meta_item 
-    (identifier) @meta-name
-    arguments: (meta_arguments
-      [
-        (
-          (meta_item
-            (identifier) @name-key
-            value: (string_literal) @name
-          )
-          (meta_item
-            (identifier) @value-key
-            value: (string_literal) @expression
-          )
+    `(attribute_item 
+      (attribute
+        (identifier) @meta-name
+        arguments: (token_tree
+          [
+            (
+              (identifier) @name-key
+              (string_literal) @name
+              (identifier) @value-key
+              (string_literal) @expression
+            )
+            (
+              (identifier) @value-key
+              (string_literal) @expression
+              (identifier) @name-key
+              (string_literal) @name
+            )
+          ]
         )
-        (
-          (meta_item
-            (identifier) @value-key
-            value: (string_literal) @expression
-          )
-          (meta_item
-            (identifier) @name-key
-            value: (string_literal) @name
-          )
-        )
-      ]
-    )
-  )
-  (#eq? @meta-name "param")
-  (#eq? @name-key "name")
-  (#eq? @value-key "regex")
-) @root
-`,
+      )
+      (#eq? @meta-name "param")
+      (#eq? @name-key "name")
+      (#eq? @value-key "regex")
+    ) @root
+    `,
   ],
   defineStepDefinitionQueries: [
-    `
-(source_file (attribute_item 
-  (meta_item 
-    (
-    	(identifier) @meta-name 
-      arguments: (meta_arguments
-        [
-          (string_literal) @expression
-          (meta_item
-            value: (string_literal) @expression)
-          (meta_item
-            (identifier)
-            value: (string_literal) @expression)
-          (meta_item
-            value: (raw_string_literal) @expression)
-        ]
+    `(source_file 
+      (attribute_item 
+        (attribute 
+          (
+            (identifier) @meta-name 
+            arguments: (token_tree
+              [
+                (string_literal) @expression
+                (identifier)
+                (string_literal) @expression
+                (raw_string_literal) @expression
+              ]
+            )
+          )
+        )  
+        (#match? @meta-name "given|when|then")
       )
-    )
-  )  
-  (#match? @meta-name "given|when|then")
-)
-(function_item) ) @root
-`,
+      (function_item) ) @root
+    `,
   ],
-
   snippetParameters: {
     int: { type: 'i32', name: 'i' },
     float: { type: 'f32', name: 'f' },
