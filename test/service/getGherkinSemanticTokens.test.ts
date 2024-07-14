@@ -90,6 +90,35 @@ Feature: a
     ]
     assert.deepStrictEqual(actual, expected)
   })
+
+  it('ignores whitespace for scenario outlines', () => {
+    // Note that 'When' step uses two spaces, to align the text with 'Given'
+    const gherkinSource = `
+Feature: making drinks
+  Scenario Outline:
+    Given a <ingredient>
+    When  I make <drink>
+    Examples:
+      | ingredient | drink       |
+      | apple      | apple juice |
+`
+    const semanticTokens = getGherkinSemanticTokens(gherkinSource, [])
+    const actual = tokenize(gherkinSource, semanticTokens.data)
+    const expected: TokenWithType[] = [
+      ['Feature', SemanticTokenTypes.keyword],
+      ['Scenario Outline', SemanticTokenTypes.keyword],
+      ['Given ', SemanticTokenTypes.keyword],
+      ['<ingredient>', SemanticTokenTypes.variable],
+      ['When ', SemanticTokenTypes.keyword],
+      ['<drink>', SemanticTokenTypes.variable],
+      ['Examples', SemanticTokenTypes.keyword],
+      ['ingredient', SemanticTokenTypes.property],
+      ['drink', SemanticTokenTypes.property],
+      ['apple', SemanticTokenTypes.string],
+      ['apple juice', SemanticTokenTypes.string],
+    ]
+    assert.deepStrictEqual(actual, expected)
+  })
 })
 
 // See https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_semanticTokens
