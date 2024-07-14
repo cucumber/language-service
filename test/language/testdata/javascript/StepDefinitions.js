@@ -24,7 +24,7 @@ Given('an {undefined-parameter}', async function (date) {
   assert(date)
 })
 
-Given("the bee's knees", async function () {
+;(0, Given)("the bee's knees", async function () {
   assert(true)
 })
 
