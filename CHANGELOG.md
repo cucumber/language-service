@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
-- Leading spaces breaks syntax highlighting for scenario outline ([#219](https://github.com/cucumber/language-service/pull/219))
+- Parameter highlighting for scenario outline steps with leading spaces ([#219](https://github.com/cucumber/language-service/pull/219))
 - (Ruby) Support `And` and `But` step definition annotations ([#211](https://github.com/cucumber/language-service/pull/211))
 - (Python) Title variants of Behave's decorators (`Step`, `Given`, `When`, `Then`) ([#213](https://github.com/cucumber/language-service/pull/213))
 - (PHP) Scoped query to match annotations only (`@Given`) ([#214](https://github.com/cucumber/language-service/pull/214))

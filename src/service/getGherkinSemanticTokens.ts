@@ -99,11 +99,11 @@ export function getGherkinSemanticTokens(
       arr = makeLocationToken(step.location, step.keyword, SemanticTokenTypes.keyword, arr)
       if (inScenarioOutline) {
         const regexp = /(<[^>]+>)/g
-        let match: RegExpExecArray | null = null
         const line = step.location.line - 1
         const startOfText = lines[line].indexOf(step.text)
+
+        let match: RegExpExecArray | null
         while ((match = regexp.exec(step.text)) !== null) {
-          const line = step.location.line - 1
           const character = startOfText + match.index
           arr = makeToken(line, character, match[0], SemanticTokenTypes.variable, arr)
         }
