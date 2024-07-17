@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - (Javascript) Support for compiled cjs style step definitions ([#222](https://github.com/cucumber/language-service/pull/222))
+- Adds buildSuggestionFromCucumberExpression and buildSuggestionsFromRegularExpression to index([#227](https://github.com/cucumber/language-service/pull/227))
 
 ### Fixed
 - Parameter highlighting for scenario outline steps with leading spaces ([#219](https://github.com/cucumber/language-service/pull/219))
