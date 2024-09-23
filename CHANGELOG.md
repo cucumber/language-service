@@ -6,11 +6,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- (Javascript) Support for compiled cjs style step definitions ([#222](https://github.com/cucumber/language-service/pull/222))
+- Exposed `buildSuggestionFromCucumberExpression` and `buildSuggestionsFromRegularExpression` in `index.ts` ([#227](https://github.com/cucumber/language-service/pull/227))
+
 ### Fixed
+- Parameter highlighting for scenario outline steps with leading spaces ([#219](https://github.com/cucumber/language-service/pull/219))
 - (Ruby) Support `And` and `But` step definition annotations ([#211](https://github.com/cucumber/language-service/pull/211))
 - (Python) Title variants of Behave's decorators (`Step`, `Given`, `When`, `Then`) ([#213](https://github.com/cucumber/language-service/pull/213))
 - (PHP) Scoped query to match annotations only (`@Given`) ([#214](https://github.com/cucumber/language-service/pull/214))
 - (Go) Find godog step definitions within `method_declaration` ([#215](https://github.com/cucumber/language-service/pull/215))
+
+### Removed
+- Dropped support for end-of-life Node version 16 ([#224](https://github.com/cucumber/language-service/pull/224))
 
 ## [1.6.0] - 2024-05-12
 ### Added
