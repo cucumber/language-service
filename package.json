@@ -74,7 +74,7 @@
     "js-search": "2.0.1",
     "mustache": "4.2.0",
     "vscode-languageserver-types": "3.17.5",
-    "web-tree-sitter": "0.20.8"
+    "web-tree-sitter": "0.24.6"
   },
   "optionalDependencies": {
     "tree-sitter": "0.20.6",
@@ -115,6 +115,6 @@
     "typescript": "5.4.5"
   },
   "peerDependencies": {
-    "web-tree-sitter": "^0.20.7"
+    "web-tree-sitter": "^0.24.0"
   }
 }
