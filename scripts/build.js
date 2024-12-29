@@ -22,7 +22,7 @@ const languages = [
   },
   {
     npm: 'tree-sitter-php',
-    dir: '',
+    dir: 'php',
     wasm: 'php',
   },
   {
