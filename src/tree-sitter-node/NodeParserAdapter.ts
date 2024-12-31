@@ -39,7 +39,7 @@ export class NodeParserAdapter implements ParserAdapter {
         this.parser.setLanguage(Csharp)
         break
       case 'php':
-        this.parser.setLanguage(Php)
+        this.parser.setLanguage(Php.php)
         break
       case 'ruby':
         this.parser.setLanguage(Ruby)
