@@ -29,7 +29,9 @@ jobs:
       - uses: mymindstorm/setup-emsdk@v14
         if: ${{ matrix.os != 'windows-latest' }}
         with:
-          # See https://github.com/tree-sitter/tree-sitter/blob/master/cli/emscripten-version
+          # See https://github.com/tree-sitter/tree-sitter/blob/v0.24.6/cli/loader/emscripten-version
+          # (choose the Git tag that corresponds to the version of web-tree-sitter specified in package.json) 
+          # Should be kept in sync with .github/workflows/release-npm.yml
           version: 3.1.64
       - name: with Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
         uses: actions/setup-node@v4
