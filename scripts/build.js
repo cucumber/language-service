@@ -22,7 +22,7 @@ const languages = [
   },
   {
     npm: 'tree-sitter-php',
-    dir: '',
+    dir: 'php',
     wasm: 'php',
   },
   {
@@ -69,11 +69,11 @@ if (!fs.existsSync(treeSitterCli)) {
     let command
     if (process.env.CI) {
       console.log(`Compiling ${module}`)
-      command = `node_modules/.bin/tree-sitter build-wasm ${module}`
+      command = `node_modules/.bin/tree-sitter build ${module} --wasm`
     } else {
       console.log(`Compiling ${module} inside docker`)
       // https://github.com/tree-sitter/tree-sitter/issues/1560
-      command = `node_modules/.bin/tree-sitter build-wasm ${module} --docker`
+      command = `node_modules/.bin/tree-sitter build ${module} --wasm --docker`
     }
     exec(command, (err) => {
       if (err) {
