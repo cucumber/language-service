@@ -6,6 +6,12 @@
   "main": "dist/cjs/src/index.js",
   "module": "dist/esm/src/index.js",
   "types": "dist/esm/src/index.d.ts",
+  "engines": {
+    "node": "18 || 20 || 22 || >=23"
+  },
+  "enginesTested": {
+    "node": "18 || 20 || 22 || 23"
+  },
   "exports": {
     ".": {
       "import": "./dist/esm/src/index.js",
