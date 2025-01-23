@@ -45,6 +45,11 @@ const languages = [
     dir: '',
     wasm: 'go',
   },
+  {
+    npm: 'tree-sitter-scala',
+    dir: '',
+    wasm: 'scala',
+  },
 ]
 
 // Build wasm parsers for supported languages
@@ -69,11 +74,19 @@ if (!fs.existsSync(treeSitterCli)) {
     let command
     if (process.env.CI) {
       console.log(`Compiling ${module}`)
-      command = `node_modules/.bin/tree-sitter build-wasm ${module}`
+      if (module.endsWith('tree-sitter-php')) {
+        command = `node_modules/.bin/tree-sitter build --wasm ${module}/php`
+      } else {
+        command = `node_modules/.bin/tree-sitter build --wasm ${module}`
+      }
     } else {
       console.log(`Compiling ${module} inside docker`)
       // https://github.com/tree-sitter/tree-sitter/issues/1560
-      command = `node_modules/.bin/tree-sitter build-wasm ${module} --docker`
+      if (module.endsWith('tree-sitter-php')) {
+        command = `node_modules/.bin/tree-sitter build --wasm ${module}/php --docker`
+      } else {
+        command = `node_modules/.bin/tree-sitter build --wasm ${module} --docker`
+      }
     }
     exec(command, (err) => {
       if (err) {
