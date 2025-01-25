@@ -59,7 +59,7 @@ export const csharpLanguage: Language = {
           )?
         )
       )
-      type: (identifier) @name
+      returns: (identifier) @name
       (#eq? @attribute-name "StepArgumentTransformation")
     ) @root
     `,

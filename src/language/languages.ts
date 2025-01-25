@@ -6,6 +6,7 @@ import { phpLanguage } from './phpLanguage.js'
 import { pythonLanguage } from './pythonLanguage.js'
 import { rubyLanguage } from './rubyLanguage.js'
 import { rustLanguage } from './rustLanguage.js'
+import { scalaLanguage } from './scalaLanguage.js'
 import { tsxLanguage } from './tsxLanguage.js'
 import { Language, LanguageName } from './types.js'
 
@@ -19,6 +20,7 @@ const languageByName: Record<LanguageName, Language> = {
   python: pythonLanguage,
   javascript: javascriptLanguage,
   go: goLanguage,
+  scala: scalaLanguage,
 }
 
 export function getLanguage(languageName: LanguageName): Language {

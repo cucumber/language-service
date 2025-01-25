@@ -18,6 +18,7 @@ const cucumberExpressionsSupport: Set<LanguageName> = new Set([
   'ruby',
   'rust',
   'tsx',
+  'scala',
 ])
 
 function defineContract(makeParserAdapter: () => ParserAdapter) {
