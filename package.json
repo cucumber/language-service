@@ -6,6 +6,12 @@
   "main": "dist/cjs/src/index.js",
   "module": "dist/esm/src/index.js",
   "types": "dist/esm/src/index.d.ts",
+  "engines": {
+    "node": "18 || 20 || 22 || >=23"
+  },
+  "enginesTested": {
+    "node": "18 || 20 || 22 || 23"
+  },
   "exports": {
     ".": {
       "import": "./dist/esm/src/index.js",
@@ -74,19 +80,19 @@
     "js-search": "2.0.1",
     "mustache": "4.2.0",
     "vscode-languageserver-types": "3.17.5",
-    "web-tree-sitter": "0.20.8"
+    "web-tree-sitter": "0.24.6"
   },
   "optionalDependencies": {
-    "tree-sitter": "0.20.6",
-    "tree-sitter-c-sharp": "0.20.0",
-    "tree-sitter-cli": "0.20.8",
-    "tree-sitter-go": "0.20.0",
-    "tree-sitter-java": "0.20.2",
-    "tree-sitter-php": "0.20.0",
-    "tree-sitter-python": "0.20.4",
-    "tree-sitter-ruby": "0.19.0",
-    "tree-sitter-rust": "0.20.4",
-    "tree-sitter-typescript": "0.20.5"
+    "tree-sitter": "0.21.1",
+    "tree-sitter-c-sharp": "0.23.1",
+    "tree-sitter-cli": "0.24.6",
+    "tree-sitter-go": "0.23.4",
+    "tree-sitter-java": "0.23.5",
+    "tree-sitter-php": "0.23.11",
+    "tree-sitter-python": "0.23.4",
+    "tree-sitter-ruby": "0.23.1",
+    "tree-sitter-rust": "0.23.1",
+    "tree-sitter-typescript": "0.23.2"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^10.0.0",
@@ -115,6 +121,6 @@
     "typescript": "5.4.5"
   },
   "peerDependencies": {
-    "web-tree-sitter": "^0.20.7"
+    "web-tree-sitter": "^0.24.6"
   }
 }

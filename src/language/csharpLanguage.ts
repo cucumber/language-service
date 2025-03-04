@@ -52,14 +52,14 @@ export const csharpLanguage: Language = {
           (attribute_argument_list
             (attribute_argument
               [
-                (verbatim_string_literal) 
+                (verbatim_string_literal)
                 (string_literal)
               ] @expression
             )
           )?
         )
       )
-      type: (identifier) @name
+      returns: (identifier) @name
       (#eq? @attribute-name "StepArgumentTransformation")
     ) @root
     `,

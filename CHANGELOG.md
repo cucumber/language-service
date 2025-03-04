@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- Added support for Node versions 20, 22 and 23 ([#235](https://github.com/cucumber/language-service/pull/235))
 - (Javascript) Support for compiled cjs style step definitions ([#222](https://github.com/cucumber/language-service/pull/222))
 - Exposed `buildSuggestionFromCucumberExpression` and `buildSuggestionsFromRegularExpression` in `index.ts` ([#227](https://github.com/cucumber/language-service/pull/227))
 
