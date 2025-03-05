@@ -76,7 +76,7 @@
     "@cucumber/messages": "^24.0.0",
     "@types/js-search": "1.4.4",
     "@types/mustache": "4.2.5",
-    "fuse.js": "7.0.0",
+    "fuse.js": "7.1.0",
     "js-search": "2.0.1",
     "mustache": "4.2.0",
     "vscode-languageserver-types": "3.17.5",
