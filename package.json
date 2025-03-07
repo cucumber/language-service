@@ -70,7 +70,7 @@
     "{src,test}/**/*.ts": "npm run eslint-fix"
   },
   "dependencies": {
-    "@cucumber/cucumber-expressions": "^17.0.0",
+    "@cucumber/cucumber-expressions": "^18.0.0",
     "@cucumber/gherkin": "^28.0.0",
     "@cucumber/gherkin-utils": "^9.0.0",
     "@cucumber/messages": "^24.0.0",
