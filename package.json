@@ -109,7 +109,7 @@
     "eslint-plugin-n": "17.17.0",
     "eslint-plugin-prettier": "5.2.6",
     "eslint-plugin-simple-import-sort": "12.1.1",
-    "glob": "11.0.1",
+    "glob": "11.0.2",
     "husky": "9.1.7",
     "lint-staged": "^15.2.0",
     "mocha": "11.1.0",
