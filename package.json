@@ -117,7 +117,7 @@
     "prettier": "3.5.3",
     "react": "19.1.0",
     "ts-node": "10.9.2",
-    "txtgen": "3.0.2",
+    "txtgen": "3.0.7",
     "typescript": "5.4.5"
   },
   "peerDependencies": {
