@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
+- (Python) Support the pypi-parse step definition matcher used by behave and pytest-bdd ([#236](https://github.com/cucumber/language-service/pull/236))
 - Added behat arg detection ([#228](https://github.com/cucumber/language-service/pull/228))
 - Added support for Node versions 20, 22 and 23 ([#235](https://github.com/cucumber/language-service/pull/235))
 - (Javascript) Support for compiled cjs style step definitions ([#222](https://github.com/cucumber/language-service/pull/222))
