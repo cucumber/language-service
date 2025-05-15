@@ -14,6 +14,7 @@ export const semanticTokenTypes: SemanticTokenTypes[] = [
   SemanticTokenTypes.type, // @tags and DocString ```type
   SemanticTokenTypes.variable, // step <placeholder>
   SemanticTokenTypes.property, // examples table header row
+  SemanticTokenTypes.comment, // # comments
 ]
 
 type Token = {
@@ -26,7 +27,7 @@ type TokenLines = Readonly<Array<Token[] | undefined>>
 
 const indexByType = Object.fromEntries(semanticTokenTypes.map((type, index) => [type, index]))
 
-// https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#textDocument_semanticTokens
+// https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_semanticTokens
 export function getGherkinSemanticTokens(
   gherkinSource: string,
   expressions: readonly Expression[]
@@ -172,6 +173,9 @@ export function getGherkinSemanticTokens(
       }
       inExamples = false
       return arr
+    },
+    comment(comment, arr) {
+      return makeLocationToken(comment.location, comment.text, SemanticTokenTypes.comment, arr)
     },
   })
 
