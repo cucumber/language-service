@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [1.7.0] - 2025-05-18
 ### Added
 - Syntax highlighting for comments (`#`) ([#245](https://github.com/cucumber/language-service/pull/245))
 - (Python) Support the pypi-parse step definition matcher used by behave and pytest-bdd ([#236](https://github.com/cucumber/language-service/pull/236))
@@ -343,7 +345,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/cucumber/language-service/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/cucumber/language-service/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/cucumber/language-service/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/cucumber/language-service/compare/v1.4.1...v1.5.0
