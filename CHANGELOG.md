@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Syntax highlighting for `Feature`, `Rule` `Scenario`, and `Scenario Outline` keywords ([#249](https://github.com/cucumber/language-service/pull/249))
+
 ## [1.7.0] - 2025-05-18
 ### Added
 - Syntax highlighting for comments (`#`) ([#245](https://github.com/cucumber/language-service/pull/245))
