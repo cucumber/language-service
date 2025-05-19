@@ -114,26 +114,27 @@ export function getGherkinSemanticTokens(
           const character = startOfText + match.index
           arr = makeToken(line, character, match[0], SemanticTokenTypes.variable, arr)
         }
-      } else {
-        for (const expression of expressions) {
-          const args = expression.match(step.text)
-          if (args) {
-            for (const arg of args) {
-              if (arg.group.start) {
-                const character = step.location.column - 1 + step.keyword.length + arg.group.start
-                arr = makeToken(
-                  step.location.line - 1,
-                  character,
-                  arg.group.value,
-                  SemanticTokenTypes.parameter,
-                  arr
-                )
-              }
+      }
+
+      for (const expression of expressions) {
+        const args = expression.match(step.text)
+        if (args) {
+          for (const arg of args) {
+            if (arg.group.start) {
+              const character = step.location.column - 1 + step.keyword.length + arg.group.start
+              arr = makeToken(
+                step.location.line - 1,
+                character,
+                arg.group.value,
+                SemanticTokenTypes.parameter,
+                arr
+              )
             }
-            break
           }
+          break
         }
       }
+
       return arr
     },
     docString(docString, arr) {
