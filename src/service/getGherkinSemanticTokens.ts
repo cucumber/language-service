@@ -8,7 +8,10 @@ import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 // The default vs theme can only highlight certain tokens. See the list of those tokens in
 // https://microsoft.github.io/monaco-editor/monarch.html
 export const semanticTokenTypes: SemanticTokenTypes[] = [
-  SemanticTokenTypes.keyword, // Feature, Scenario, Given etc
+  SemanticTokenTypes.keyword, // Background, Given, When, Then, etc.
+  SemanticTokenTypes.namespace, // Feature keyword
+  SemanticTokenTypes.class, // Rule keyword
+  SemanticTokenTypes.function, // Scenario keyword
   SemanticTokenTypes.parameter, // step parameters
   SemanticTokenTypes.string, // DocString content and ``` delimiter, table cells (except example table header rows)
   SemanticTokenTypes.type, // @tags and DocString ```type
@@ -77,10 +80,10 @@ export function getGherkinSemanticTokens(
       return makeLocationToken(tag.location, tag.name, SemanticTokenTypes.type, arr)
     },
     feature(feature, arr) {
-      return makeLocationToken(feature.location, feature.keyword, SemanticTokenTypes.keyword, arr)
+      return makeLocationToken(feature.location, feature.keyword, SemanticTokenTypes.namespace, arr)
     },
     rule(rule, arr) {
-      return makeLocationToken(rule.location, rule.keyword, SemanticTokenTypes.keyword, arr)
+      return makeLocationToken(rule.location, rule.keyword, SemanticTokenTypes.class, arr)
     },
     background(background, arr) {
       return makeLocationToken(
@@ -92,7 +95,12 @@ export function getGherkinSemanticTokens(
     },
     scenario(scenario, arr) {
       inScenarioOutline = (scenario.examples || []).length > 0
-      return makeLocationToken(scenario.location, scenario.keyword, SemanticTokenTypes.keyword, arr)
+      return makeLocationToken(
+        scenario.location,
+        scenario.keyword,
+        SemanticTokenTypes.function,
+        arr
+      )
     },
     examples(examples, arr) {
       inExamples = true
