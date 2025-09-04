@@ -17,7 +17,7 @@ jobs:
           # (choose the Git tag that corresponds to the version of web-tree-sitter specified in package.json)
           # Should be kept in sync with .github/workflows/test-javascript.yml
           version: 3.1.64
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: '22'
           cache: 'npm'

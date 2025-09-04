@@ -34,7 +34,7 @@ jobs:
           # Should be kept in sync with .github/workflows/release-npm.yml
           version: 3.1.64
       - name: with Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
