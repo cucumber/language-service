@@ -3,5 +3,14 @@
   "extends": [
     "github>cucumber/renovate-config",
     ":automergeMajor"
+  ],
+  "packageRules": [
+    {
+      "description": "Merge all tree sitter updates",
+      "matchPackageNames": [
+        "tree-sitter-*"
+      ],
+      "groupName": "tree-sitter"
+    }
   ]
 }
