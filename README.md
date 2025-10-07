@@ -43,6 +43,7 @@
   - Python
   - Ruby
   - Rust
+  - Scala
   - TypeScript
   - TypeScript JSX (TSX)
 - 🗂 Document symbols (Display document outline tree)

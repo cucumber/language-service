@@ -7,8 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-### Fixed
+### Added
+- Add Scala support ([#237](https://github.com/cucumber/language-service/issues/237))
 
+### Fixed
 - Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
 
 ## [1.7.0] - 2025-05-18

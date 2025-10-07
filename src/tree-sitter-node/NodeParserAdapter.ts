@@ -15,6 +15,8 @@ import Ruby from 'tree-sitter-ruby'
 // @ts-ignore
 import Rust from 'tree-sitter-rust'
 // @ts-ignore
+import Scala from 'tree-sitter-scala'
+// @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
 import { LanguageName, ParserAdapter } from '../language/types.js'
@@ -52,6 +54,9 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'go':
         this.parser.setLanguage(Go)
+        break
+      case 'scala':
+        this.parser.setLanguage(Scala)
         break
       default:
         throw new Error(`Unsupported language: ${languageName}`)
