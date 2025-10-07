@@ -8,7 +8,9 @@
     {
       "description": "Merge all tree sitter updates",
       "matchPackageNames": [
-        "tree-sitter-*"
+        "tree-sitter",
+        "tree-sitter-*",
+        "web-tree-sitter"
       ],
       "groupName": "tree-sitter"
     }
