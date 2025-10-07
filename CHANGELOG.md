@@ -6,7 +6,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+### Fixed
+
+- Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
+
+## [1.7.0] - 2025-05-18
 ### Added
+- Syntax highlighting for comments (`#`) ([#245](https://github.com/cucumber/language-service/pull/245))
+- (Python) Support the pypi-parse step definition matcher used by behave and pytest-bdd ([#236](https://github.com/cucumber/language-service/pull/236))
+- Added behat arg detection ([#228](https://github.com/cucumber/language-service/pull/228))
+- Added support for Node versions 20, 22 and 23 ([#235](https://github.com/cucumber/language-service/pull/235))
 - (Javascript) Support for compiled cjs style step definitions ([#222](https://github.com/cucumber/language-service/pull/222))
 - Exposed `buildSuggestionFromCucumberExpression` and `buildSuggestionsFromRegularExpression` in `index.ts` ([#227](https://github.com/cucumber/language-service/pull/227))
 
@@ -16,6 +26,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - (Python) Title variants of Behave's decorators (`Step`, `Given`, `When`, `Then`) ([#213](https://github.com/cucumber/language-service/pull/213))
 - (PHP) Scoped query to match annotations only (`@Given`) ([#214](https://github.com/cucumber/language-service/pull/214))
 - (Go) Find godog step definitions within `method_declaration` ([#215](https://github.com/cucumber/language-service/pull/215))
+- Exception thrown for unterminated docstrings ([#216](https://github.com/cucumber/language-service/pull/216))
 
 ### Removed
 - Dropped support for end-of-life Node version 16 ([#224](https://github.com/cucumber/language-service/pull/224))
@@ -338,7 +349,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v1.7.0...HEAD
+[1.7.0]: https://github.com/cucumber/language-service/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/cucumber/language-service/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/cucumber/language-service/compare/v1.5.0...v1.5.1
 [1.5.0]: https://github.com/cucumber/language-service/compare/v1.4.1...v1.5.0

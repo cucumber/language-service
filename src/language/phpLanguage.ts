@@ -9,7 +9,7 @@ export const phpLanguage: Language = {
     const text = node.text
     const match = text.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
     if (!match) throw new Error(`Could not match ${text}`)
-    return new RegExp(match[2].replace(/@(Given |When |Then )/, '').trim())
+    return behatifyStep(match[2])
   },
   // Empty array because Behat does not support Cucumber Expressions
   defineParameterTypeQueries: [],
@@ -43,4 +43,30 @@ export const phpLanguage: Language = {
         // {{ blurb }}
     }
 `,
+}
+
+export function behatifyStep(step: string): RegExp {
+  const stepText = stripIdentifier(step)
+  if (stepText.startsWith('/')) {
+    return cleanRegExp(stepText)
+  } else if (/:[A-Za-z_][\w_]+/.test(stepText)) {
+    return argToRegex(stepText)
+  }
+
+  return RegExp(stepText)
+}
+
+function stripIdentifier(text: string): string {
+  return text.replace(/@(Given |When |Then )/, '').trim()
+}
+
+function cleanRegExp(re: string): RegExp {
+  const [body, modifier] = re.slice(1).split('/')
+
+  return RegExp(body, modifier)
+}
+
+function argToRegex(text: string): RegExp {
+  // arg must be a valid php variable name, see https://www.php.net/manual/en/language.variables.basics.php
+  return RegExp(text.replace(/:[A-Za-z_][\w_]+/g, '([\\S]+|"[^"]+")'))
 }

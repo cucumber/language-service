@@ -4,24 +4,28 @@ on:
   push:
     branches: [release/*]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   publish-npm:
     name: Publish NPM module
     runs-on: ubuntu-latest
     environment: Release
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - uses: actions/checkout@v5
       - uses: mymindstorm/setup-emsdk@v14
         with:
-          # See https://github.com/tree-sitter/tree-sitter/blob/master/cli/emscripten-version
-          version: 2.0.24
-      - uses: actions/setup-node@v4
+          # See https://github.com/tree-sitter/tree-sitter/blob/v0.24.6/cli/loader/emscripten-version
+          # (choose the Git tag that corresponds to the version of web-tree-sitter specified in package.json)
+          # Should be kept in sync with .github/workflows/test-javascript.yml
+          version: 3.1.64
+      - uses: actions/setup-node@v5
         with:
-          node-version: '18'
+          node-version: '24.x'
           cache: 'npm'
           cache-dependency-path: package-lock.json
-      - run: npm ci
-      - run: npm run test
-      - uses: cucumber/action-publish-npm@v1.1.1
-        with:
-          npm-token: ${{ secrets.NPM_TOKEN }}
+          registry-url: 'https://registry.npmjs.org'
+      - run: npm install-ci-test
+      - run: npm publish

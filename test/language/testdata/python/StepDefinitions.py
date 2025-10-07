@@ -1,35 +1,40 @@
-"""Port of givens for testdata."""
-
 from behave import step, given, when, then
+from pytest_bdd import parsers
+from pytest_bdd.parsers import parse
 
 
-@step("a {uuid}")
+@step(parse("a {uuid}"))
 def step_given(context, uuid):
+    """Test PyPi parser syntax"""
     assert uuid
 
 
-@given("a {date}")
+custom_types = {}
+@given(parsers.parse("a {date}", custom_types))
 def step_date(context, date):
+    """Test extra parameter types"""
     assert date
 
 
-@when("a {planet}")
+@when(parse("a " + "{planet}"))
 def step_planet(context, planet):
+    """Test string concatenation"""
     assert planet
 
 
-@then("an {undefined-parameter}")
+@then(parsers.parse("an {undefined-parameter}"))
 def step_undef(context, planet):
+    """Test undefined parameter type"""
     assert planet
 
 
-@Step("/^a regexp$/")
+@when("/^a regexp$/")
 def step_re(context, expression):
-    """Test Re."""
+    """Test regular expression"""
     assert expression
 
 
-@Given("the bee's knees")
+@then("the " + "bee's knees")
 def step_bees(context, expression):
-    """Test Re."""
+    """Test string concatenation"""
     assert expression

@@ -58,6 +58,7 @@ Feature: a
     ])
     const actual = tokenize(gherkinSource, semanticTokens.data)
     const expected: TokenWithType[] = [
+      ['# some comment', SemanticTokenTypes.comment],
       ['@foo', SemanticTokenTypes.type],
       ['@bar', SemanticTokenTypes.type],
       ['Feature', SemanticTokenTypes.keyword],
@@ -116,6 +117,47 @@ Feature: making drinks
       ['drink', SemanticTokenTypes.property],
       ['apple', SemanticTokenTypes.string],
       ['apple juice', SemanticTokenTypes.string],
+    ]
+    assert.deepStrictEqual(actual, expected)
+  })
+
+  it('applies parameter token for scenario outline', () => {
+    const gherkinSource = `
+Feature: a
+  Scenario: a
+    Given I have "string" parameter
+
+  Scenario Outline: a
+    Given I have "string" parameter
+    And I have "<variable>" parameter
+
+    Examples:
+      | variable |
+      | value    |
+`
+
+    const parameterTypeRegistry = new ParameterTypeRegistry()
+    const cucumberExpression = new CucumberExpression(
+      'I have {string} parameter',
+      parameterTypeRegistry
+    )
+
+    const semanticTokens = getGherkinSemanticTokens(gherkinSource, [cucumberExpression])
+    const actual = tokenize(gherkinSource, semanticTokens.data)
+    const expected: TokenWithType[] = [
+      ['Feature', SemanticTokenTypes.keyword],
+      ['Scenario', SemanticTokenTypes.keyword],
+      ['Given ', SemanticTokenTypes.keyword],
+      ['"string"', SemanticTokenTypes.parameter],
+      ['Scenario Outline', SemanticTokenTypes.keyword],
+      ['Given ', SemanticTokenTypes.keyword],
+      ['"string"', SemanticTokenTypes.parameter],
+      ['And ', SemanticTokenTypes.keyword],
+      ['<variable>', SemanticTokenTypes.variable],
+      ['"<variable>"', SemanticTokenTypes.parameter],
+      ['Examples', SemanticTokenTypes.keyword],
+      ['variable', SemanticTokenTypes.property],
+      ['value', SemanticTokenTypes.string],
     ]
     assert.deepStrictEqual(actual, expected)
   })

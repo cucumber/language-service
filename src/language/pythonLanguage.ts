@@ -34,6 +34,9 @@ export const pythonLanguage: Language = {
     }
   },
   toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp {
+    if (node.type === 'binary_operator') {
+      return collectStringFragments(node).join('')
+    }
     return toStringOrRegExp(node.text)
   },
   defineParameterTypeQueries: [
@@ -95,10 +98,33 @@ export const pythonLanguage: Language = {
       (decorator
         (call
           function: (identifier) @method
-          arguments: (argument_list (string) @expression)
+          arguments: (argument_list [
+            (string) @expression
+            (binary_operator) @expression
+            ])
         )
       )
-      (#match? @method "(given|when|then|step|Given|When|Then|Step)")
+      (#match? @method "(given|when|then|step)")
+    ) @root`,
+    // pypi parse
+    `(decorator
+      (call
+        function: (identifier) @matcher
+        arguments: (argument_list
+          (call
+            function: [
+              (identifier) @parser
+              (attribute
+                attribute: (identifier) @parser)
+            ]
+            arguments: (argument_list
+              ((_)+ @expression)
+            )
+          )
+        )
+      )
+      (#match? @matcher "given|when|then|step")
+      (#match? @parser "parse")
     ) @root`,
   ],
   snippetParameters: {
@@ -156,4 +182,14 @@ export function isRegExp(cleanWord: string): boolean {
 
 function removePrefix(text: string, prefix: string): string {
   return text.startsWith(prefix) ? text.slice(1) : text
+}
+
+function collectStringFragments(node: TreeSitterSyntaxNode): string[] {
+  if (node.type === 'string') {
+    return [stringLiteral(node.text)]
+  }
+  if (node.type === 'binary_operator') {
+    return node.children.flatMap(collectStringFragments)
+  }
+  return []
 }
