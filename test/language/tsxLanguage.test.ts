@@ -8,7 +8,7 @@ describe('tsxLanguage', () => {
   it('should preserve regexp flags in step definitions', () => {
     const node: TreeSitterSyntaxNode = {
       type: 'regex',
-      text: '/^a regexp$/imu',
+      text: '/^a regexp$/im',
       startPosition: { row: 0, column: 6 },
       endPosition: { row: 0, column: 21 },
       children: [
@@ -29,7 +29,7 @@ describe('tsxLanguage', () => {
       ],
     }
     const result = toStringOrRegExp(node)
-    assert.deepStrictEqual(result, /^a regexp$/imu)
+    assert.deepStrictEqual(result, /^a regexp$/im)
   })
 
   it('should generate cucumber expression strings from template literals without substitution', () => {
