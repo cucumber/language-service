@@ -1,3 +1,4 @@
+import { clojureLanguage } from './clojureLanguage.js'
 import { csharpLanguage } from './csharpLanguage.js'
 import { goLanguage } from './goLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
@@ -21,6 +22,7 @@ const languageByName: Record<LanguageName, Language> = {
   javascript: javascriptLanguage,
   go: goLanguage,
   scala: scalaLanguage,
+  clojure: clojureLanguage,
 }
 
 export function getLanguage(languageName: LanguageName): Language {

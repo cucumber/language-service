@@ -93,7 +93,8 @@
     "tree-sitter-ruby": "0.23.1",
     "tree-sitter-rust": "0.23.1",
     "tree-sitter-scala": "^0.23.4",
-    "tree-sitter-typescript": "0.23.2"
+    "tree-sitter-typescript": "0.23.2",
+    "tree-sitter-clojure": "github:GGayton/tree-sitter-clojure"
   },
   "devDependencies": {
     "@cucumber/cucumber": "^12.0.0",
