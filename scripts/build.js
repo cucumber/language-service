@@ -50,6 +50,11 @@ const languages = [
     dir: '',
     wasm: 'scala',
   },
+  {
+    npm: 'tree-sitter-clojure',
+    dir: '',
+    wasm: 'clojure'
+  }
 ]
 
 // Build wasm parsers for supported languages
