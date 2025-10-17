@@ -46,6 +46,7 @@
   - Scala
   - TypeScript
   - TypeScript JSX (TSX)
+  - Clojure
 - 🗂 Document symbols (Display document outline tree)
 
 ## Install

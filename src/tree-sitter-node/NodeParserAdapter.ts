@@ -3,6 +3,8 @@ import Parser, { Query } from 'tree-sitter'
 // @ts-ignore
 import Csharp from 'tree-sitter-c-sharp'
 // @ts-ignore
+import Clojure from 'tree-sitter-clojure'
+// @ts-ignore
 import Go from 'tree-sitter-go'
 // @ts-ignore
 import Java from 'tree-sitter-java'
@@ -57,6 +59,9 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'scala':
         this.parser.setLanguage(Scala)
+        break
+      case 'clojure':
+        this.parser.setLanguage(Clojure)
         break
       default:
         throw new Error(`Unsupported language: ${languageName}`)

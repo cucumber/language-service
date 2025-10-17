@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Add Scala support ([#237](https://github.com/cucumber/language-service/issues/237))
+- Add Clojure support ([#271](https://github.com/cucumber/language-service/pull/271))
 
 ### Fixed
 - Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
