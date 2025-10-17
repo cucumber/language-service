@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
+- support doc comments for php ([#253](https://github.com/cucumber/language-service/pull/253))
 
 ## [1.7.0] - 2025-05-18
 ### Added
