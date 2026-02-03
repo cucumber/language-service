@@ -18,7 +18,7 @@ export function makeParameterType(name: string, regexps: RegExps) {
   return new ParameterType(name, regexps, Object, (arg) => arg, true, false)
 }
 
-export function sortLinks<L extends Link>(links: L[]): readonly L[] {
+export function sortLinks<L extends Link>(links: L[]): L[] {
   return links.sort((a, b) => {
     const pathComparison = a.locationLink.targetUri.localeCompare(b.locationLink.targetUri)
     if (pathComparison !== 0) return pathComparison

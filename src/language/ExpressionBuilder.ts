@@ -67,4 +67,43 @@ export class ExpressionBuilder {
       registry,
     }
   }
+
+  // update existing result with new sources
+  rebuild(
+    existingResult: ExpressionBuilderResult,
+    sources: readonly Source<LanguageName>[]
+  ): ExpressionBuilderResult {
+    const errors: Error[] = []
+    const registry = existingResult.registry
+    const expressionFactory = new ExpressionFactory(registry)
+
+    const sourceAnalyser = new SourceAnalyzer(this.parserAdapter, sources)
+
+    // TODO: we cant currently override existing parameter type as it raises an error
+    // const parameterTypeLinks: ParameterTypeLink[] = []
+    // sourceAnalyser.eachParameterTypeLink((parameterTypeLink) => {
+    //   defineParameterType(parameterTypeLink.parameterType)
+    //   parameterTypeLinks.push(parameterTypeLink)
+    // })
+
+    // extract to private method
+    sourceAnalyser.eachStepDefinitionExpression(
+      (stepDefinitionExpression, rootNode, expressionNode, source) => {
+        try {
+          const expression = expressionFactory.createExpression(stepDefinitionExpression)
+          const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
+          existingResult.expressionLinks.push({ expression, locationLink })
+        } catch (err) {
+          errors.push(err)
+        }
+      }
+    )
+
+    return {
+      expressionLinks: sortLinks(existingResult.expressionLinks),
+      parameterTypeLinks: sortLinks(existingResult.parameterTypeLinks),
+      errors: sourceAnalyser.getErrors().concat(errors),
+      registry,
+    }
+  }
 }
