@@ -17,9 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          # docker/setup-docker-action doesn't work on macos-latest
-          # https://github.com/docker/setup-docker-action/tree/bca5e4d3e252bb47ebed85515713050e55f7eb15?tab=readme-ov-file#about
-          - macos-15-intel
+          - macos-latest
           - ubuntu-latest
           - windows-latest
         node-version:
@@ -29,8 +27,8 @@ jobs:
       - name: set git core.autocrlf to 'input'
         run: git config --global core.autocrlf input
       - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5.0.1
-      # Required to build tree sitter
       - uses: docker/setup-docker-action@v4.7.0
+        if: ${{ matrix.os == 'ubuntu-latest' }}
       - name: with Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
         uses: actions/setup-node@v5
         with:
@@ -38,7 +36,8 @@ jobs:
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - run: npm ci
-        if: ${{ matrix.os != 'windows-latest' }}
+        if: ${{ matrix.os == 'ubuntu-latest' }}
       - run: npm ci --no-optional
+        if: ${{ matrix.os != 'ubuntu-latest' }}
       - run: npm test
       - run: npm run eslint
