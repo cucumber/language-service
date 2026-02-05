@@ -41,28 +41,33 @@ export class ExpressionBuilder {
 
     const sourceAnalyser = new SourceAnalyzer(this.parserAdapter, sources)
 
-    const parameterTypeLinks: ParameterTypeLink[] = []
-    sourceAnalyser.eachParameterTypeLink((parameterTypeLink) => {
+    const parameterTypeLinks: Map<string, ParameterTypeLink[]> = new Map()
+    sourceAnalyser.eachParameterTypeLink((parameterTypeLink, source) => {
       defineParameterType(parameterTypeLink.parameterType)
-      parameterTypeLinks.push(parameterTypeLink)
+      parameterTypeLinks.get(source.uri)?.push(parameterTypeLink)
+      if (!parameterTypeLinks.get(source.uri)) {
+        parameterTypeLinks.set(source.uri, [parameterTypeLink])
+      }
     })
 
-    const expressionLinks: ExpressionLink[] = []
+    const expressionLinks: Map<string, ExpressionLink[]> = new Map()
     sourceAnalyser.eachStepDefinitionExpression(
       (stepDefinitionExpression, rootNode, expressionNode, source) => {
         try {
           const expression = expressionFactory.createExpression(stepDefinitionExpression)
           const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
-          expressionLinks.push({ expression, locationLink })
-        } catch (err) {
-          errors.push(err)
-        }
+          expressionLinks.get(source.uri)?.push({ expression, locationLink })
+          if (!expressionLinks.get(source.uri)) {
+            expressionLinks.set(source.uri, [{ expression, locationLink }])
+          }
+      } catch (err) {
+        errors.push(err)
       }
-    )
+    })
 
     return {
-      expressionLinks: sortLinks(expressionLinks),
-      parameterTypeLinks: sortLinks(parameterTypeLinks),
+      expressionLinks,
+      parameterTypeLinks,
       errors: sourceAnalyser.getErrors().concat(errors),
       registry,
     }
@@ -87,12 +92,20 @@ export class ExpressionBuilder {
     // })
 
     // extract to private method
+    
+    const cleared = new Map<string, boolean>()
     sourceAnalyser.eachStepDefinitionExpression(
       (stepDefinitionExpression, rootNode, expressionNode, source) => {
+        
         try {
           const expression = expressionFactory.createExpression(stepDefinitionExpression)
           const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
-          existingResult.expressionLinks.push({ expression, locationLink })
+          // clear the existing expression links for this source
+          if (!cleared.get(source.uri)) {
+            existingResult.expressionLinks.set(source.uri, [])
+            cleared.set(source.uri, true)
+          }
+          existingResult.expressionLinks.get(source.uri)?.push({ expression, locationLink })
         } catch (err) {
           errors.push(err)
         }
@@ -100,8 +113,8 @@ export class ExpressionBuilder {
     )
 
     return {
-      expressionLinks: sortLinks(existingResult.expressionLinks),
-      parameterTypeLinks: sortLinks(existingResult.parameterTypeLinks),
+      expressionLinks: existingResult.expressionLinks,
+      parameterTypeLinks: existingResult.parameterTypeLinks,
       errors: sourceAnalyser.getErrors().concat(errors),
       registry,
     }

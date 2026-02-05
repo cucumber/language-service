@@ -31,7 +31,7 @@ export class SourceAnalyzer {
     private readonly sources: readonly Source<LanguageName>[]
   ) {}
 
-  eachParameterTypeLink(callback: (parameterTypeLink: ParameterTypeLink) => void) {
+  eachParameterTypeLink(callback: (parameterTypeLink: ParameterTypeLink, source: Source<LanguageName>) => void) {
     const parameterTypeMatches = this.getSourceMatches(
       (language: Language) => language.defineParameterTypeQueries
     )
@@ -50,11 +50,11 @@ export class SourceAnalyzer {
           const locationLink = createLocationLink(rootNode, selectionNode, source.uri)
           const props: ParameterTypeLinkProps = (propsByName[parameterTypeName] = propsByName[
             parameterTypeName
-          ] || { locationLink, regexpsList: [] })
+          ] || { locationLink, regexpsList: [], source })
           props.regexpsList.push(regExps)
         }
       }
-      for (const [name, { regexpsList, locationLink }] of Object.entries(propsByName)) {
+      for (const [name, { regexpsList, locationLink, source }] of Object.entries(propsByName)) {
         const regexps: StringOrRegExp[] = regexpsList.reduce<StringOrRegExp[]>((prev, current) => {
           if (Array.isArray(current)) {
             return prev.concat(...current)
@@ -64,7 +64,7 @@ export class SourceAnalyzer {
         }, [])
         const parameterType = makeParameterType(name, regexps)
         const parameterTypeLink: ParameterTypeLink = { parameterType, locationLink }
-        callback(parameterTypeLink)
+        callback(parameterTypeLink, source)
       }
     }
   }
@@ -143,6 +143,7 @@ language: ${source.languageName}
 }
 
 type ParameterTypeLinkProps = {
+  source: Source<LanguageName>
   regexpsList: RegExps[]
   locationLink: LocationLink
 }
