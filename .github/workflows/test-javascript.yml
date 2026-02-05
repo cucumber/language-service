@@ -26,7 +26,7 @@ jobs:
       - name: set git core.autocrlf to 'input'
         run: git config --global core.autocrlf input
       - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5
-      - uses: mymindstorm/setup-emsdk@v14
+      - uses: mymindstorm/setup-emsdk@6ab9eb1bda2574c4ddb79809fc9247783eaf9021 # v14
         if: ${{ matrix.os != 'windows-latest' }}
         with:
           # See https://github.com/tree-sitter/tree-sitter/blob/v0.24.6/cli/loader/emscripten-version
@@ -34,7 +34,7 @@ jobs:
           # Should be kept in sync with .github/workflows/release-npm.yml
           version: 3.1.64
       - name: with Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'

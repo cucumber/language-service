@@ -14,14 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     environment: Release
     steps:
-      - uses: actions/checkout@v5
-      - uses: mymindstorm/setup-emsdk@v14
+      - uses: actions/checkout@93cb6efe18208431cddfb8368fd83d5badbf9bfd # v5
+      - uses: mymindstorm/setup-emsdk@6ab9eb1bda2574c4ddb79809fc9247783eaf9021 # v14
         with:
           # See https://github.com/tree-sitter/tree-sitter/blob/v0.24.6/cli/loader/emscripten-version
           # (choose the Git tag that corresponds to the version of web-tree-sitter specified in package.json)
           # Should be kept in sync with .github/workflows/test-javascript.yml
           version: 3.1.64
-      - uses: actions/setup-node@v5
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           node-version: '24.x'
           cache: 'npm'
