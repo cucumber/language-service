@@ -22,7 +22,8 @@ jobs:
           - macos-15-intel
           - ubuntu-latest
           - windows-latest
-        node-version: ['24.x']
+        node-version:
+          - '24.x'
 
     steps:
       - name: set git core.autocrlf to 'input'
