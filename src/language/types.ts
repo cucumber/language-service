@@ -68,6 +68,7 @@ export type Language = Readonly<{
 }>
 
 export type ExpressionBuilderResult = Readonly<{
+  readonly newExpressionLinks: Map<string, ExpressionLink[]>
   readonly expressionLinks: Map<string, ExpressionLink[]>
   readonly parameterTypeLinks: Map<string, ParameterTypeLink[]>
   readonly errors: Error[]

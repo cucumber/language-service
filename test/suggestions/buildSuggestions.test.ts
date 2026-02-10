@@ -162,6 +162,6 @@ function assertSuggestions(
   expectedSuggestions: Suggestion[],
   maxChoices = 10
 ) {
-  const suggestions = buildSuggestions(parameterTypeRegistry, stepTexts, expressions, maxChoices)
+  const suggestions = buildSuggestions(parameterTypeRegistry, stepTexts, expressions, new Map(), true, maxChoices)
   assert.deepStrictEqual(suggestions, expectedSuggestions)
 }

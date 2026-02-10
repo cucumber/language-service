@@ -66,6 +66,7 @@ export class ExpressionBuilder {
     })
 
     return {
+      newExpressionLinks: new Map(), // during initial build keep empty
       expressionLinks,
       parameterTypeLinks,
       errors: sourceAnalyser.getErrors().concat(errors),
@@ -81,17 +82,17 @@ export class ExpressionBuilder {
     const errors: Error[] = []
     const registry = existingResult.registry
     const expressionFactory = new ExpressionFactory(registry)
+    const newExpressionLinks: Map<string, ExpressionLink[]> = new Map()
 
     const sourceAnalyser = new SourceAnalyzer(this.parserAdapter, sources)
 
     // TODO: we cant currently override existing parameter type as it raises an error
+    // We could catch the error and ignore it
     // const parameterTypeLinks: ParameterTypeLink[] = []
     // sourceAnalyser.eachParameterTypeLink((parameterTypeLink) => {
     //   defineParameterType(parameterTypeLink.parameterType)
     //   parameterTypeLinks.push(parameterTypeLink)
     // })
-
-    // extract to private method
     
     const cleared = new Map<string, boolean>()
     sourceAnalyser.eachStepDefinitionExpression(
@@ -103,9 +104,11 @@ export class ExpressionBuilder {
           // clear the existing expression links for this source
           if (!cleared.get(source.uri)) {
             existingResult.expressionLinks.set(source.uri, [])
+            newExpressionLinks.set(source.uri, [])
             cleared.set(source.uri, true)
           }
           existingResult.expressionLinks.get(source.uri)?.push({ expression, locationLink })
+          newExpressionLinks.get(source.uri)?.push({ expression, locationLink })
         } catch (err) {
           errors.push(err)
         }
@@ -113,6 +116,7 @@ export class ExpressionBuilder {
     )
 
     return {
+      newExpressionLinks,
       expressionLinks: existingResult.expressionLinks,
       parameterTypeLinks: existingResult.parameterTypeLinks,
       errors: sourceAnalyser.getErrors().concat(errors),

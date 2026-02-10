@@ -64,7 +64,7 @@ export class MessagesBuilder {
 
   build(): MessagesBuilderResult {
     return {
-      suggestions: buildSuggestions(this.parameterTypeRegistry, new Set(this.stepTexts), this.expressions),
+      suggestions: Array.from(buildSuggestions(this.parameterTypeRegistry, new Set(this.stepTexts), this.expressions, new Map(), false).values()),
       expressions: this.expressions,
     }
   }

@@ -22,10 +22,10 @@ export function buildSuggestions(
   registry: ParameterTypeRegistry,
   stepTexts: Set<string>,
   expressions: readonly Expression[],
+  suggestions: Map<string, Suggestion>,
+  addUnmatchedStepTexts = true,
   maxChoices = 10
-): readonly Suggestion[] {
-  let suggestions: Suggestion[] = []
-
+): Map<string, Suggestion> {
   const parameterChoiceSets: Record<string, Set<string>> = {}
   const unmatchedStepTexts = new Set(stepTexts)
   for (const expression of expressions) {
@@ -57,23 +57,34 @@ export function buildSuggestions(
 
   for (const expression of expressions) {
     if (expression instanceof CucumberExpression) {
-      suggestions = suggestions.concat(
-        buildSuggestionFromCucumberExpression(expression, registry, parameterChoices)
+      const suggestion = buildSuggestionFromCucumberExpression(
+        expression,
+        registry,
+        parameterChoices
       )
+      suggestions.set(suggestion.label, suggestion)
     }
     if (expression instanceof RegularExpression) {
-      suggestions = suggestions.concat(
-        buildSuggestionsFromRegularExpression(expression, registry, stepTexts, parameterChoices)
+      const suggests = buildSuggestionsFromRegularExpression(
+        expression,
+        registry,
+        stepTexts,
+        parameterChoices
       )
+      for (const suggestion of suggests) {
+        suggestions.set(suggestion.label, suggestion)
+      }
     }
   }
 
-  for (const stepText of unmatchedStepTexts) {
-    suggestions.push({
-      label: stepText,
-      segments: [stepText],
-      matched: false,
-    })
+  if (addUnmatchedStepTexts) {
+    for (const stepText of unmatchedStepTexts) {
+      suggestions.set(stepText, {
+        label: stepText,
+        segments: [stepText],
+        matched: false,
+      })
+    }
   }
-  return suggestions.sort((a, b) => a.label.localeCompare(b.label))
+  return suggestions
 }
