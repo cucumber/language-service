@@ -4,7 +4,7 @@ import {
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 
-import { createLocationLink, makeParameterType, sortLinks } from './helpers.js'
+import { createLocationLink, makeParameterType } from './helpers.js'
 import { SourceAnalyzer } from './SourceAnalyzer.js'
 import {
   ExpressionBuilderResult,
@@ -60,10 +60,11 @@ export class ExpressionBuilder {
           if (!expressionLinks.get(source.uri)) {
             expressionLinks.set(source.uri, [{ expression, locationLink }])
           }
-      } catch (err) {
-        errors.push(err)
+        } catch (err) {
+          errors.push(err)
+        }
       }
-    })
+    )
 
     return {
       newExpressionLinks: new Map(), // during initial build keep empty
@@ -93,11 +94,10 @@ export class ExpressionBuilder {
     //   defineParameterType(parameterTypeLink.parameterType)
     //   parameterTypeLinks.push(parameterTypeLink)
     // })
-    
+
     const cleared = new Map<string, boolean>()
     sourceAnalyser.eachStepDefinitionExpression(
       (stepDefinitionExpression, rootNode, expressionNode, source) => {
-        
         try {
           const expression = expressionFactory.createExpression(stepDefinitionExpression)
           const locationLink = createLocationLink(rootNode, expressionNode, source.uri)

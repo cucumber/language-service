@@ -37,9 +37,9 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         const sources = await loadSources(dir, languageName)
         const result = expressionBuilder.build(sources, [])
 
-        const regexpStrings = Array.from(result.parameterTypeLinks.values()).flat().find(
-          (l) => l.parameterType.name === 'WithoutExpression'
-        )?.parameterType?.regexpStrings
+        const regexpStrings = Array.from(result.parameterTypeLinks.values())
+          .flat()
+          .find((l) => l.parameterType.name === 'WithoutExpression')?.parameterType?.regexpStrings
         assert.deepStrictEqual(regexpStrings, ['.*'])
       })
 
@@ -47,9 +47,9 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         const sources = await loadSources(dir, languageName)
         const result = expressionBuilder.build(sources, [])
 
-        const regexpStrings = Array.from(result.parameterTypeLinks.values()).flat().find(
-          (l) => l.parameterType.name === 'DateTime'
-        )?.parameterType?.regexpStrings
+        const regexpStrings = Array.from(result.parameterTypeLinks.values())
+          .flat()
+          .find((l) => l.parameterType.name === 'DateTime')?.parameterType?.regexpStrings
         assert.deepStrictEqual(regexpStrings, ['today', 'tomorrow', '(.*) days later'])
       })
     }
@@ -65,7 +65,9 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
       ])
 
       // verify that the targetSelectionRange is inside the targetRange
-      for (const link of Array.from(result.expressionLinks.values()).flat().map((l) => l.locationLink)) {
+      for (const link of Array.from(result.expressionLinks.values())
+        .flat()
+        .map((l) => l.locationLink)) {
         assert(
           link.targetSelectionRange.start.line > link.targetRange.start.line ||
             link.targetSelectionRange.start.character >= link.targetRange.start.character
@@ -75,11 +77,13 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
             link.targetSelectionRange.end.character <= link.targetRange.end.character
         )
       }
-      const expressions = Array.from(result.expressionLinks.values()).flat().map(({ expression }) =>
-        expression instanceof CucumberExpression
-          ? expression.source
-          : (expression as RegularExpression).regexp
-      )
+      const expressions = Array.from(result.expressionLinks.values())
+        .flat()
+        .map(({ expression }) =>
+          expression instanceof CucumberExpression
+            ? expression.source
+            : (expression as RegularExpression).regexp
+        )
       const errors = result.errors.map((e) => e.message)
       if (cucumberExpressionsSupport.has(languageName)) {
         assert.deepStrictEqual(expressions, [

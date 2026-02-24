@@ -31,7 +31,9 @@ export class SourceAnalyzer {
     private readonly sources: readonly Source<LanguageName>[]
   ) {}
 
-  eachParameterTypeLink(callback: (parameterTypeLink: ParameterTypeLink, source: Source<LanguageName>) => void) {
+  eachParameterTypeLink(
+    callback: (parameterTypeLink: ParameterTypeLink, source: Source<LanguageName>) => void
+  ) {
     const parameterTypeMatches = this.getSourceMatches(
       (language: Language) => language.defineParameterTypeQueries
     )

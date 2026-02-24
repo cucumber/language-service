@@ -64,7 +64,15 @@ export class MessagesBuilder {
 
   build(): MessagesBuilderResult {
     return {
-      suggestions: Array.from(buildSuggestions(this.parameterTypeRegistry, new Set(this.stepTexts), this.expressions, new Map(), false).values()),
+      suggestions: Array.from(
+        buildSuggestions(
+          this.parameterTypeRegistry,
+          new Set(this.stepTexts),
+          this.expressions,
+          new Map(),
+          false
+        ).values()
+      ).sort((a, b) => a.label.localeCompare(b.label)),
       expressions: this.expressions,
     }
   }

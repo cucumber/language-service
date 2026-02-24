@@ -162,6 +162,15 @@ function assertSuggestions(
   expectedSuggestions: Suggestion[],
   maxChoices = 10
 ) {
-  const suggestions = buildSuggestions(parameterTypeRegistry, stepTexts, expressions, new Map(), true, maxChoices)
+  const suggestions = Array.from(
+    buildSuggestions(
+      parameterTypeRegistry,
+      stepTexts,
+      expressions,
+      new Map(),
+      true,
+      maxChoices
+    ).values()
+  ).sort((a, b) => a.label.localeCompare(b.label))
   assert.deepStrictEqual(suggestions, expectedSuggestions)
 }

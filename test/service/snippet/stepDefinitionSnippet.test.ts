@@ -30,7 +30,10 @@ describe('stepDefinitionSnippet', () => {
       }
       const result = expressionBuilder.build([source], [])
       if (Array.from(result.expressionLinks.values()).flat().length === 1) {
-        assert.strictEqual(Array.from(result.expressionLinks.values()).flat()[0].expression.source, '{int} is not {int}')
+        assert.strictEqual(
+          Array.from(result.expressionLinks.values()).flat()[0].expression.source,
+          '{int} is not {int}'
+        )
       }
       console.log(`### Manually verify that this is valid ${languageName}:`)
       console.log(snippet)
