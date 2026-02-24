@@ -37,8 +37,8 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         const sources = await loadSources(dir, languageName)
         const result = expressionBuilder.build(sources, [])
 
-        const regexpStrings = Array.from(result.parameterTypeLinks.values())
-          .flat()
+        const regexpStrings = expressionBuilder
+          .parameterTypeLinks(result)
           .find((l) => l.parameterType.name === 'WithoutExpression')?.parameterType?.regexpStrings
         assert.deepStrictEqual(regexpStrings, ['.*'])
       })
@@ -47,8 +47,8 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         const sources = await loadSources(dir, languageName)
         const result = expressionBuilder.build(sources, [])
 
-        const regexpStrings = Array.from(result.parameterTypeLinks.values())
-          .flat()
+        const regexpStrings = expressionBuilder
+          .parameterTypeLinks(result)
           .find((l) => l.parameterType.name === 'DateTime')?.parameterType?.regexpStrings
         assert.deepStrictEqual(regexpStrings, ['today', 'tomorrow', '(.*) days later'])
       })
@@ -65,9 +65,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
       ])
 
       // verify that the targetSelectionRange is inside the targetRange
-      for (const link of Array.from(result.expressionLinks.values())
-        .flat()
-        .map((l) => l.locationLink)) {
+      for (const link of expressionBuilder.expressionLinks(result).map((l) => l.locationLink)) {
         assert(
           link.targetSelectionRange.start.line > link.targetRange.start.line ||
             link.targetSelectionRange.start.character >= link.targetRange.start.character
@@ -77,8 +75,8 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
             link.targetSelectionRange.end.character <= link.targetRange.end.character
         )
       }
-      const expressions = Array.from(result.expressionLinks.values())
-        .flat()
+      const expressions = expressionBuilder
+        .expressionLinks(result)
         .map(({ expression }) =>
           expression instanceof CucumberExpression
             ? expression.source
@@ -106,7 +104,7 @@ Please register a ParameterType for 'undefined-parameter'`,
 
         // Verify that the extracted expressions actually work
         let matched = false
-        for (const expressionLink of Array.from(result.expressionLinks.values()).flat()) {
+        for (const expressionLink of expressionBuilder.expressionLinks(result)) {
           const match = expressionLink.expression.match('a 2020-12-24')
           if (match) {
             assert.strictEqual(match[0].getValue(undefined), '2020-12-24')

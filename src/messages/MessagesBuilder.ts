@@ -7,7 +7,7 @@ import {
 import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
 
 import { extractStepTexts } from '../gherkin/extractStepTexts.js'
-import { buildSuggestions } from '../suggestions/buildSuggestions.js'
+import { buildSuggestions, sortedSuggestions } from '../suggestions/buildSuggestions.js'
 import { Suggestion } from '../suggestions/types.js'
 
 export type MessagesBuilderResult = {
@@ -64,15 +64,15 @@ export class MessagesBuilder {
 
   build(): MessagesBuilderResult {
     return {
-      suggestions: Array.from(
+      suggestions: sortedSuggestions(
         buildSuggestions(
           this.parameterTypeRegistry,
           new Set(this.stepTexts),
           this.expressions,
           new Map(),
           false
-        ).values()
-      ).sort((a, b) => a.label.localeCompare(b.label)),
+        )
+      ),
       expressions: this.expressions,
     }
   }

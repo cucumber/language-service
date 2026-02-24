@@ -29,9 +29,9 @@ describe('stepDefinitionSnippet', () => {
         content: snippet,
       }
       const result = expressionBuilder.build([source], [])
-      if (Array.from(result.expressionLinks.values()).flat().length === 1) {
+      if (expressionBuilder.expressionLinks(result).length === 1) {
         assert.strictEqual(
-          Array.from(result.expressionLinks.values()).flat()[0].expression.source,
+          expressionBuilder.expressionLinks(result)[0].expression.source,
           '{int} is not {int}'
         )
       }

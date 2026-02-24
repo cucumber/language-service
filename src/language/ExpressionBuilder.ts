@@ -44,10 +44,10 @@ export class ExpressionBuilder {
     const parameterTypeLinks: Map<string, ParameterTypeLink[]> = new Map()
     sourceAnalyser.eachParameterTypeLink((parameterTypeLink, source) => {
       defineParameterType(parameterTypeLink.parameterType)
-      parameterTypeLinks.get(source.uri)?.push(parameterTypeLink)
-      if (!parameterTypeLinks.get(source.uri)) {
-        parameterTypeLinks.set(source.uri, [parameterTypeLink])
+      if (!parameterTypeLinks.has(source.uri)) {
+        parameterTypeLinks.set(source.uri, [])
       }
+      parameterTypeLinks.get(source.uri)?.push(parameterTypeLink)
     })
 
     const expressionLinks: Map<string, ExpressionLink[]> = new Map()
@@ -56,10 +56,10 @@ export class ExpressionBuilder {
         try {
           const expression = expressionFactory.createExpression(stepDefinitionExpression)
           const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
-          expressionLinks.get(source.uri)?.push({ expression, locationLink })
-          if (!expressionLinks.get(source.uri)) {
-            expressionLinks.set(source.uri, [{ expression, locationLink }])
+          if (!expressionLinks.has(source.uri)) {
+            expressionLinks.set(source.uri, [])
           }
+          expressionLinks.get(source.uri)?.push({ expression, locationLink })
         } catch (err) {
           errors.push(err)
         }
@@ -75,7 +75,12 @@ export class ExpressionBuilder {
     }
   }
 
-  // update existing result with new sources
+  /**
+   * Rebuilds the expression builder result with new sources
+   * @param existingResult - The existing expression builder result
+   * @param sources - The new sources to update the expression builder result with
+   * @returns The updated expression builder result
+   */
   rebuild(
     existingResult: ExpressionBuilderResult,
     sources: readonly Source<LanguageName>[]
@@ -87,13 +92,20 @@ export class ExpressionBuilder {
 
     const sourceAnalyser = new SourceAnalyzer(this.parserAdapter, sources)
 
-    // TODO: we cant currently override existing parameter type as it raises an error
-    // We could catch the error and ignore it
-    // const parameterTypeLinks: ParameterTypeLink[] = []
-    // sourceAnalyser.eachParameterTypeLink((parameterTypeLink) => {
-    //   defineParameterType(parameterTypeLink.parameterType)
-    //   parameterTypeLinks.push(parameterTypeLink)
-    // })
+    // redefine is not allowed, so we ignore the error
+    function defineParameterType(parameterType: ParameterType<unknown>) {
+      try {
+        registry.defineParameterType(parameterType)
+      } catch (err) {
+        // ignore error
+      }
+    }
+
+    const parameterTypeLinks: ParameterTypeLink[] = []
+    sourceAnalyser.eachParameterTypeLink((parameterTypeLink) => {
+      defineParameterType(parameterTypeLink.parameterType)
+      parameterTypeLinks.push(parameterTypeLink)
+    })
 
     const cleared = new Map<string, boolean>()
     sourceAnalyser.eachStepDefinitionExpression(
@@ -122,5 +134,13 @@ export class ExpressionBuilder {
       errors: sourceAnalyser.getErrors().concat(errors),
       registry,
     }
+  }
+
+  parameterTypeLinks(existingResult: ExpressionBuilderResult): ParameterTypeLink[] {
+    return Array.from(existingResult.parameterTypeLinks.values()).flat()
+  }
+
+  expressionLinks(existingResult: ExpressionBuilderResult): ExpressionLink[] {
+    return Array.from(existingResult.expressionLinks.values()).flat()
   }
 }
