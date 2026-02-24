@@ -89,7 +89,7 @@ export function buildSuggestions(
   return suggestions
 }
 
-export function sortedSuggestions(suggestions: Map<string, Suggestion>): Suggestion[] {
+export function sortSuggestions(suggestions: Map<string, Suggestion>): Suggestion[] {
   return Array.from(suggestions.values()).sort((a, b) => {
     return a.label.localeCompare(b.label)
   })
