@@ -7,10 +7,10 @@
   "module": "dist/esm/src/index.js",
   "types": "dist/esm/src/index.d.ts",
   "engines": {
-    "node": "18 || 20 || 22 || >=23"
+    "node": "18 || 20 || 22 || >=23 || >=24"
   },
   "enginesTested": {
-    "node": "18 || 20 || 22 || 23"
+    "node": "18 || 20 || 22 || 23 || 24"
   },
   "exports": {
     ".": {

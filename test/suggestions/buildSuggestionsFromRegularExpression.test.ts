@@ -20,7 +20,7 @@ describe('buildSuggestionsFromRegularExpression', () => {
     const actual = buildSuggestionsFromRegularExpression(
       expression,
       registry,
-      ['I have 4 cukes'],
+      new Set(['I have 4 cukes']),
       {}
     )
     assert.deepStrictEqual(actual, [expected])
@@ -33,9 +33,14 @@ describe('buildSuggestionsFromRegularExpression', () => {
       label: 'I have (\\d+) cukes',
       matched: true,
     }
-    const actual = buildSuggestionsFromRegularExpression(expression, registry, ['I have 4 cukes'], {
-      '-?\\d+|\\d+': ['12'],
-    })
+    const actual = buildSuggestionsFromRegularExpression(
+      expression,
+      registry,
+      new Set(['I have 4 cukes']),
+      {
+        '-?\\d+|\\d+': ['12'],
+      }
+    )
     assert.deepStrictEqual(actual, [expected])
   })
 
@@ -49,7 +54,7 @@ describe('buildSuggestionsFromRegularExpression', () => {
     const actual = buildSuggestionsFromRegularExpression(
       expression,
       registry,
-      ['the price of a "lemon" is 34c'],
+      new Set(['the price of a "lemon" is 34c']),
       {}
     )
     assert.deepStrictEqual(actual, [expected])
