@@ -1,7 +1,15 @@
 import { ParameterType, RegExps } from '@cucumber/cucumber-expressions'
 import { DocumentUri, LocationLink, Range } from 'vscode-languageserver-types'
 
-import { Link, NodePredicate, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types'
+import {
+  ExpressionBuilderResult,
+  ExpressionLink,
+  Link,
+  NodePredicate,
+  ParameterTypeLink,
+  TreeSitterQueryMatch,
+  TreeSitterSyntaxNode,
+} from './types'
 
 export function syntaxNode(match: TreeSitterQueryMatch, name: string): TreeSitterSyntaxNode | null {
   const nodes = syntaxNodes(match, name)
@@ -24,6 +32,14 @@ export function sortLinks<L extends Link>(links: L[]): L[] {
     if (pathComparison !== 0) return pathComparison
     return a.locationLink.targetRange.start.line - b.locationLink.targetRange.start.line
   })
+}
+
+export function parameterTypeLinks(existingResult: ExpressionBuilderResult): ParameterTypeLink[] {
+  return sortLinks(Array.from(existingResult.parameterTypeLinks.values()).flat())
+}
+
+export function expressionLinks(existingResult: ExpressionBuilderResult): ExpressionLink[] {
+  return sortLinks(Array.from(existingResult.expressionLinks.values()).flat())
 }
 
 export function createLocationLink(

@@ -4,7 +4,7 @@ import {
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 
-import { createLocationLink, makeParameterType, sortLinks } from './helpers.js'
+import { createLocationLink, makeParameterType } from './helpers.js'
 import { SourceAnalyzer } from './SourceAnalyzer.js'
 import {
   ExpressionBuilderResult,
@@ -134,13 +134,5 @@ export class ExpressionBuilder {
       errors: sourceAnalyser.getErrors().concat(errors),
       registry,
     }
-  }
-
-  parameterTypeLinks(existingResult: ExpressionBuilderResult): ParameterTypeLink[] {
-    return sortLinks(Array.from(existingResult.parameterTypeLinks.values()).flat())
-  }
-
-  expressionLinks(existingResult: ExpressionBuilderResult): ExpressionLink[] {
-    return sortLinks(Array.from(existingResult.expressionLinks.values()).flat())
   }
 }

@@ -1,5 +1,6 @@
 import { CucumberExpressionGenerator, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
+import { expressionLinks } from 'src/language/helpers.js'
 
 import { ExpressionBuilder } from '../../../src/language/ExpressionBuilder.js'
 import { getLanguage } from '../../../src/language/languages.js'
@@ -29,11 +30,8 @@ describe('stepDefinitionSnippet', () => {
         content: snippet,
       }
       const result = expressionBuilder.build([source], [])
-      if (expressionBuilder.expressionLinks(result).length === 1) {
-        assert.strictEqual(
-          expressionBuilder.expressionLinks(result)[0].expression.source,
-          '{int} is not {int}'
-        )
+      if (expressionLinks(result).length === 1) {
+        assert.strictEqual(expressionLinks(result)[0].expression.source, '{int} is not {int}')
       }
       console.log(`### Manually verify that this is valid ${languageName}:`)
       console.log(snippet)
