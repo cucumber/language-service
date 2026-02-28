@@ -70,10 +70,10 @@
     "{src,test}/**/*.ts": "npm run eslint-fix"
   },
   "dependencies": {
-    "@cucumber/cucumber-expressions": "^18.0.0",
-    "@cucumber/gherkin": "^35.0.0",
-    "@cucumber/gherkin-utils": "^10.0.0",
-    "@cucumber/messages": "^30.0.0",
+    "@cucumber/cucumber-expressions": "^19.0.0",
+    "@cucumber/gherkin": "^38.0.0",
+    "@cucumber/gherkin-utils": "^11.0.0",
+    "@cucumber/messages": "^32.0.0",
     "@types/js-search": "1.4.4",
     "@types/mustache": "4.2.6",
     "fuse.js": "7.1.0",
