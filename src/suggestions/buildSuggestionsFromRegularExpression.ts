@@ -5,7 +5,7 @@ import { ParameterChoices, Suggestion, SuggestionSegment } from './types'
 export function buildSuggestionsFromRegularExpression(
   expression: RegularExpression,
   registry: ParameterTypeRegistry,
-  stepTexts: readonly string[],
+  stepTexts: Set<string>,
   parameterChoices: ParameterChoices
 ): readonly Suggestion[] {
   const segmentJsons = new Set<string>()

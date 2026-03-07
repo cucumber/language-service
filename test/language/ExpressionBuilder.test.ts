@@ -3,6 +3,7 @@ import assert from 'assert'
 import { readFile } from 'fs/promises'
 import { glob } from 'glob'
 import { basename, resolve } from 'path'
+import { expressionLinks, parameterTypeLinks } from 'src/language/helpers.js'
 
 import { ExpressionBuilder, LanguageName } from '../../src/index.js'
 import { ParserAdapter, Source } from '../../src/language/types.js'
@@ -37,7 +38,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         const sources = await loadSources(dir, languageName)
         const result = expressionBuilder.build(sources, [])
 
-        const regexpStrings = result.parameterTypeLinks.find(
+        const regexpStrings = parameterTypeLinks(result).find(
           (l) => l.parameterType.name === 'WithoutExpression'
         )?.parameterType?.regexpStrings
         assert.deepStrictEqual(regexpStrings, ['.*'])
@@ -47,7 +48,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         const sources = await loadSources(dir, languageName)
         const result = expressionBuilder.build(sources, [])
 
-        const regexpStrings = result.parameterTypeLinks.find(
+        const regexpStrings = parameterTypeLinks(result).find(
           (l) => l.parameterType.name === 'DateTime'
         )?.parameterType?.regexpStrings
         assert.deepStrictEqual(regexpStrings, ['today', 'tomorrow', '(.*) days later'])
@@ -65,7 +66,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
       ])
 
       // verify that the targetSelectionRange is inside the targetRange
-      for (const link of result.expressionLinks.map((l) => l.locationLink)) {
+      for (const link of expressionLinks(result).map((l) => l.locationLink)) {
         assert(
           link.targetSelectionRange.start.line > link.targetRange.start.line ||
             link.targetSelectionRange.start.character >= link.targetRange.start.character
@@ -75,7 +76,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
             link.targetSelectionRange.end.character <= link.targetRange.end.character
         )
       }
-      const expressions = result.expressionLinks.map(({ expression }) =>
+      const expressions = expressionLinks(result).map(({ expression }) =>
         expression instanceof CucumberExpression
           ? expression.source
           : (expression as RegularExpression).regexp
@@ -102,7 +103,7 @@ Please register a ParameterType for 'undefined-parameter'`,
 
         // Verify that the extracted expressions actually work
         let matched = false
-        for (const expressionLink of result.expressionLinks) {
+        for (const expressionLink of expressionLinks(result)) {
           const match = expressionLink.expression.match('a 2020-12-24')
           if (match) {
             assert.strictEqual(match[0].getValue(undefined), '2020-12-24')
