@@ -17,7 +17,7 @@ describe('buildSuggestions', () => {
 
     assertSuggestions(
       parameterTypeRegistry,
-      ['The nice song', 'The big boat'],
+      new Set(['The nice song', 'The big boat']),
       [e1, e2],
       [
         {
@@ -40,11 +40,11 @@ describe('buildSuggestions', () => {
     const expression = ef.createExpression('I have {int} cukes in/on my {word}')
     assertSuggestions(
       parameterTypeRegistry,
-      [
+      new Set([
         'I have 42 cukes in my belly',
         'I have 54 cukes on my table',
         'I have 54 cukes in my basket',
-      ],
+      ]),
       [expression],
       [
         {
@@ -69,7 +69,7 @@ describe('buildSuggestions', () => {
     const expression = ef.createExpression(/I have (\d\d) cukes in my "(belly|suitcase)"/)
     assertSuggestions(
       parameterTypeRegistry,
-      ['I have 42 cukes in my "belly"', 'I have 54 cukes in my "suitcase"'],
+      new Set(['I have 42 cukes in my "belly"', 'I have 54 cukes in my "suitcase"']),
       [expression],
       [
         {
@@ -87,7 +87,7 @@ describe('buildSuggestions', () => {
     const expression = ef.createExpression(/^the price of a "(.*?)" is (\d+)c$/)
     assertSuggestions(
       parameterTypeRegistry,
-      ['the price of a "lemon" is 34c', 'the price of a "pear" is 48c'],
+      new Set(['the price of a "lemon" is 34c', 'the price of a "pear" is 48c']),
       [expression],
       [
         {
@@ -105,12 +105,12 @@ describe('buildSuggestions', () => {
     const expression = ef.createExpression('I have {int} cukes in/on my {word}')
     assertSuggestions(
       parameterTypeRegistry,
-      [
+      new Set([
         'I have 42 cukes in my belly',
         'I have 54 cukes on my table',
         'I have 67 cukes in my belly',
         'I have 54 cukes in my basket',
-      ],
+      ]),
       [expression],
       [
         {
@@ -128,11 +128,11 @@ describe('buildSuggestions', () => {
 
     assertSuggestions(
       parameterTypeRegistry,
-      [
+      new Set([
         'I have 42 cukes in my belly',
         'I have 54 cukes on my table',
         'I have 54 cukes in my basket',
-      ],
+      ]),
       [],
       [
         {
@@ -157,11 +157,20 @@ describe('buildSuggestions', () => {
 
 function assertSuggestions(
   parameterTypeRegistry: ParameterTypeRegistry,
-  stepTexts: readonly string[],
+  stepTexts: Set<string>,
   expressions: readonly Expression[],
   expectedSuggestions: Suggestion[],
   maxChoices = 10
 ) {
-  const suggestions = buildSuggestions(parameterTypeRegistry, stepTexts, expressions, maxChoices)
+  const suggestions = Array.from(
+    buildSuggestions(
+      parameterTypeRegistry,
+      stepTexts,
+      expressions,
+      new Map(),
+      true,
+      maxChoices
+    ).values()
+  ).sort((a, b) => a.label.localeCompare(b.label))
   assert.deepStrictEqual(suggestions, expectedSuggestions)
 }
