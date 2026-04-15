@@ -222,4 +222,19 @@ describe('getGherkinDocumentFeatureSymbol', () => {
 
     assert.deepStrictEqual(symbol, expected)
   })
+
+  it('creates a document symbol from a .feature.md document', () => {
+    const mdgSource = `# Feature: Login
+
+## Scenario: Successful login
+* Given the user is on the login page
+`
+    const symbol = getGherkinDocumentFeatureSymbol(mdgSource, 'file:///x.feature.md')
+    assert.ok(symbol, 'expected a symbol')
+    assert.strictEqual(symbol!.name, 'Feature: Login')
+    assert.strictEqual(symbol!.kind, SymbolKind.File)
+    assert.strictEqual(symbol!.children!.length, 1)
+    assert.strictEqual(symbol!.children![0].name, 'Scenario: Successful login')
+    assert.strictEqual(symbol!.children![0].kind, SymbolKind.Event)
+  })
 })
