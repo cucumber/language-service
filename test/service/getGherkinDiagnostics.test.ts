@@ -204,6 +204,41 @@ describe('getGherkinDiagnostics', () => {
     assert.deepStrictEqual(diagnostics, expectedDiagnostics)
   })
 
+  it('returns no diagnostics for a valid .feature.md document when uri is provided', () => {
+    const mdgSource = `# Feature: Login
+
+## Scenario: Successful login
+* Given the user is on the login page
+* When the user enters valid credentials
+* Then the user should be logged in
+`
+    const registry = new ParameterTypeRegistry()
+    const expressions = [
+      new CucumberExpression('the user is on the login page', registry),
+      new CucumberExpression('the user enters valid credentials', registry),
+      new CucumberExpression('the user should be logged in', registry),
+    ]
+    const diagnostics = getGherkinDiagnostics(mdgSource, expressions, 'file:///x.feature.md')
+    assert.deepStrictEqual(diagnostics, [])
+  })
+
+  it('returns undefined-step diagnostic in a .feature.md document', () => {
+    const mdgSource = `# Feature: Login
+
+## Scenario: Hi
+* Given a defined step
+* And an undefined step
+`
+    const diagnostics = getGherkinDiagnostics(
+      mdgSource,
+      [new CucumberExpression('a defined step', new ParameterTypeRegistry())],
+      'file:///x.feature.md'
+    )
+    assert.strictEqual(diagnostics.length, 1)
+    assert.strictEqual(diagnostics[0].severity, DiagnosticSeverity.Warning)
+    assert.strictEqual(diagnostics[0].message, 'Undefined step: an undefined step')
+  })
+
   it('returns diagnostic for incomplete docstring', () => {
     const diagnostics = getGherkinDiagnostics(
       `Feature: Hello

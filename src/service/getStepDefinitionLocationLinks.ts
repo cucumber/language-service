@@ -6,9 +6,10 @@ import { getStepRange } from './helpers.js'
 export function getStepDefinitionLocationLinks(
   gherkinSource: string,
   position: Position,
-  expressionLinks: readonly ExpressionLink[]
+  expressionLinks: readonly ExpressionLink[],
+  uri?: string
 ): LocationLink[] {
-  const stepRange = getStepRange(gherkinSource, position)
+  const stepRange = getStepRange(gherkinSource, position, uri)
   if (!stepRange) return []
 
   const locationLinks: LocationLink[] = []
