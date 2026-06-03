@@ -79,7 +79,7 @@
     "fuse.js": "7.4.1",
     "js-search": "2.0.1",
     "mustache": "4.2.0",
-    "vscode-languageserver-types": "3.17.5",
+    "vscode-languageserver-types": "3.18.0",
     "web-tree-sitter": "^0.24.7"
   },
   "optionalDependencies": {
