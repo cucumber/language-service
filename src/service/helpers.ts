@@ -9,8 +9,12 @@ export type StepRange = {
   range: Range
 }
 
-export function getStepRange(gherkinSource: string, position: Position): StepRange | undefined {
-  const { gherkinDocument } = parseGherkinDocument(gherkinSource)
+export function getStepRange(
+  gherkinSource: string,
+  position: Position,
+  uri?: string
+): StepRange | undefined {
+  const { gherkinDocument } = parseGherkinDocument(gherkinSource, uri)
   if (!gherkinDocument) {
     return undefined
   }
