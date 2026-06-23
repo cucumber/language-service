@@ -2,6 +2,7 @@ import { csharpLanguage } from './csharpLanguage.js'
 import { goLanguage } from './goLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
 import { javascriptLanguage } from './javascriptLanguage.js'
+import { kotlinLanguage } from './kotlinLanguage.js'
 import { phpLanguage } from './phpLanguage.js'
 import { pythonLanguage } from './pythonLanguage.js'
 import { rubyLanguage } from './rubyLanguage.js'
@@ -21,6 +22,7 @@ const languageByName: Record<LanguageName, Language> = {
   javascript: javascriptLanguage,
   go: goLanguage,
   scala: scalaLanguage,
+  kotlin: kotlinLanguage,
 }
 
 export function getLanguage(languageName: LanguageName): Language {
