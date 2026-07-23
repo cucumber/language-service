@@ -1,7 +1,7 @@
 import { StringOrRegExp } from '@cucumber/cucumber-expressions'
 
-import { childrenToString, unsupportedOperation } from './helpers.js'
-import { Language, NodePredicate, TreeSitterSyntaxNode } from './types.js'
+import { unsupportedOperation } from './helpers.js'
+import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const clojureLanguage: Language = {
   toParameterTypeName: unsupportedOperation,
@@ -13,7 +13,14 @@ export const clojureLanguage: Language = {
         return new RegExp(text)
       }
       case 'str_lit': {
-        return stringLiteral(node)
+        const text = stringLiteral(node)
+        // If the string contains regex anchors or capture groups, treat as regex
+        const hasRegExpAnchors = text[0] == '^' || text[text.length - 1] == '$'
+        const hasCaptures = /\(.*\)/.test(text)
+        if (hasRegExpAnchors || hasCaptures) {
+          return new RegExp(text)
+        }
+        return text
       }
       default:
         throw new Error(`Unsupported node type: ${node.type}`)
@@ -54,10 +61,13 @@ export const clojureLanguage: Language = {
 `,
 }
 
-const NO_QUOTES: NodePredicate = (child) => child.type !== '"'
-
 export function stringLiteral(node: TreeSitterSyntaxNode): string {
-  return childrenToString(node, NO_QUOTES)
+  // str_lit text is like "expression" — strip the surrounding quotes
+  const text = node.text
+  if (text.startsWith('"') && text.endsWith('"')) {
+    return text.slice(1, -1)
+  }
+  return text
 }
 
 export function regexLiteral(node: TreeSitterSyntaxNode): string {
