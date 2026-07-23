@@ -111,7 +111,12 @@ Please register a ParameterType for 'undefined-parameter'`,
         }
         assert(matched, 'The generated expressions did not match parameter type {date}')
       } else {
-        assert.deepStrictEqual(expressions, [/^a regexp$/, /^I test this change$/])
+        assert.deepStrictEqual(
+          expressions,
+          languageName === 'clojure'
+            ? [/^a regexp$/, /^I test this change$/, /^something happened$/, /^another thing$/]
+            : [/^a regexp$/, /^I test this change$/]
+        )
         assert.deepStrictEqual(errors, ['There is already a parameter type with name int'])
       }
     })

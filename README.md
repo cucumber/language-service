@@ -36,6 +36,7 @@
 - 🌎 Gherkin localisation
 - 📖 Language support
   - C#
+  - Clojure
   - Go
   - Java
   - JavaScript

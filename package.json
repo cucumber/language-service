@@ -80,9 +80,10 @@
     "js-search": "2.0.1",
     "mustache": "4.2.0",
     "vscode-languageserver-types": "3.18.0",
-    "web-tree-sitter": "^0.24.7"
+    "web-tree-sitter": "^0.24.6"
   },
   "optionalDependencies": {
+    "@yogthos/tree-sitter-clojure": "0.0.14",
     "tree-sitter": "^0.21.1",
     "tree-sitter-c-sharp": "0.23.1",
     "tree-sitter-cli": "0.24.4",
