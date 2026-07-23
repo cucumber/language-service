@@ -124,5 +124,10 @@
   },
   "peerDependencies": {
     "web-tree-sitter": "^0.24.6"
+  },
+  "overrides": {
+    "@yogthos/tree-sitter-clojure": {
+      "tree-sitter": "$tree-sitter"
+    }
   }
 }
