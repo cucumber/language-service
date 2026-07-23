@@ -21,6 +21,11 @@ const languages = [
     wasm: 'c_sharp',
   },
   {
+    npm: '@yogthos/tree-sitter-clojure',
+    dir: '',
+    wasm: 'clojure',
+  },
+  {
     npm: 'tree-sitter-php',
     dir: 'php',
     wasm: 'php',

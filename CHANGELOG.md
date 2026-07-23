@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+- Add Clojure support ([309](https://github.com/cucumber/language-service/pull/309))
+
 ### Added
 - Add Scala support ([#237](https://github.com/cucumber/language-service/issues/237))
 
