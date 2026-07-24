@@ -50,6 +50,11 @@ const languages = [
     dir: '',
     wasm: 'scala',
   },
+  {
+    npm: 'tree-sitter-kotlin',
+    dir: '',
+    wasm: 'kotlin',
+  },
 ]
 
 // Build wasm parsers for supported languages
