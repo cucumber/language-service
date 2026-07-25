@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { exec } from 'child_process'
+import { exec, execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
@@ -24,6 +24,8 @@ const languages = [
     npm: '@yogthos/tree-sitter-clojure',
     dir: '',
     wasm: 'clojure',
+    // Regenerate parser to ensure ABI compatibility with tree-sitter@0.21.x
+    generate: true,
   },
   {
     npm: 'tree-sitter-php',
@@ -66,7 +68,7 @@ const treeSitterCli = path.join('node_modules', '.bin', 'tree-sitter')
 if (!fs.existsSync(treeSitterCli)) {
   console.info(`Skipping compilation of tree-sitter wasms - ${treeSitterCli} is not installed`)
 } else {
-  for (const { npm, dir, wasm } of languages) {
+  for (const { npm, dir, wasm, generate } of languages) {
     const module = path.join('node_modules', npm, dir)
 
     if (!fs.existsSync(module)) {
@@ -74,6 +76,19 @@ if (!fs.existsSync(treeSitterCli)) {
         `Module ${module} does not exist. This is likely due to an installation and/or build failure of the module. Please check the logs.`
       )
       process.exit(1)
+    }
+
+    // Regenerate parser.c to ensure ABI compatibility with tree-sitter-cli version
+    if (generate) {
+      const generateDir = path.join('node_modules', npm)
+      const treeSitterCliAbsolute = path.resolve(treeSitterCli)
+      console.log(`Regenerating parser for ${npm}`)
+      try {
+        execSync(`${treeSitterCliAbsolute} generate`, { cwd: generateDir, stdio: 'inherit' })
+      } catch (err) {
+        console.error(`Failed to regenerate parser for ${npm}: ${err.message}`)
+        process.exit(1)
+      }
     }
 
     let command

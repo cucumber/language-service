@@ -43,7 +43,7 @@
     "prepublishOnly": "npm run build",
     "eslint-fix": "eslint --ext ts --max-warnings 0 --fix src test",
     "eslint": "eslint --ext ts --max-warnings 0 src test",
-    "prepare": "husky && node scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist"
+    "prepare": "husky && node scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist && cd node_modules/@yogthos/tree-sitter-clojure && npx node-gyp rebuild"
   },
   "repository": {
     "type": "git",
