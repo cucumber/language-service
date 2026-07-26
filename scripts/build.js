@@ -85,6 +85,9 @@ if (!fs.existsSync(treeSitterCli)) {
       console.log(`Regenerating parser for ${npm}`)
       try {
         execSync(`${treeSitterCliAbsolute} generate`, { cwd: generateDir, stdio: 'inherit' })
+        // Rebuild native binding with the regenerated parser
+        console.log(`Rebuilding native binding for ${npm}`)
+        execSync('npx node-gyp rebuild', { cwd: generateDir, stdio: 'inherit' })
       } catch (err) {
         console.error(`Failed to regenerate parser for ${npm}: ${err.message}`)
         process.exit(1)
