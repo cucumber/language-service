@@ -6,6 +6,8 @@ class StepDefinitions
 {
     /**
      * @Given ^a regexp$
+     * 
+     * @return void
      */
     public function regexp()
     {

@@ -7,7 +7,7 @@ export const phpLanguage: Language = {
   toStepDefinitionExpression(node) {
     // match multiline comment
     const text = node.text
-    const match = text.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
+    const match = text.match(/@(Given |When |Then )(.*)/)
     if (!match) throw new Error(`Could not match ${text}`)
     return behatifyStep(match[2])
   },
@@ -36,9 +36,9 @@ export const phpLanguage: Language = {
   },
   defaultSnippetTemplate: `
     /**
-     * {{ keyword }} {{ expression }}
+     * @{{ keyword }} {{ expression }}
      */
-    public function {{ #camelize }}{{ expression }}{{ /camelize }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}{{ /parameters }})
+    public function {{ #camelize }}{{ expression }}{{ /camelize }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}\${{ name }}{{ /parameters }})
     {
         // {{ blurb }}
     }
