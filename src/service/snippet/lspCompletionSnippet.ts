@@ -3,7 +3,7 @@
  *
  * @param expression the expression to generate the snippet from
  */
-import { SuggestionSegments } from '../../suggestions/types.js'
+import type { SuggestionSegments } from '../../suggestions/types.js'
 
 export function lspCompletionSnippet(segments: SuggestionSegments): string {
   let n = 1

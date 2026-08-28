@@ -30,7 +30,14 @@
     "@typescript-eslint/no-non-null-assertion": "error",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "no-control-regex": "off"
+    "no-control-regex": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "fixStyle": "separate-type-imports"
+      }
+    ]
   },
   "overrides": [
     {

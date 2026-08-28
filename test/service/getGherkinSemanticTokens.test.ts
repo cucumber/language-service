@@ -4,7 +4,8 @@ import {
   RegularExpression,
 } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
-import { SemanticTokenTypes, uinteger } from 'vscode-languageserver-types'
+import type { uinteger } from 'vscode-languageserver-types'
+import { SemanticTokenTypes } from 'vscode-languageserver-types'
 
 import {
   getGherkinSemanticTokens,

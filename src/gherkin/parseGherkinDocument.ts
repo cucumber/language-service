@@ -1,5 +1,7 @@
-import { AstBuilder, Errors, GherkinClassicTokenMatcher, Parser } from '@cucumber/gherkin'
-import { GherkinDocument, IdGenerator } from '@cucumber/messages'
+import type { Errors } from '@cucumber/gherkin'
+import { AstBuilder, GherkinClassicTokenMatcher, Parser } from '@cucumber/gherkin'
+import type { GherkinDocument } from '@cucumber/messages'
+import { IdGenerator } from '@cucumber/messages'
 
 const uuidFn = IdGenerator.uuid()
 

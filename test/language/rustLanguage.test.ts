@@ -1,7 +1,7 @@
 import assert from 'assert'
 
 import { stringLiteral, stripLineContinuation } from '../../src/language/rustLanguage.js'
-import { TreeSitterSyntaxNode } from '../../src/language/types.js'
+import type { TreeSitterSyntaxNode } from '../../src/language/types.js'
 
 describe('rustLanguage', () => {
   it('should extract string literal pattern', () => {

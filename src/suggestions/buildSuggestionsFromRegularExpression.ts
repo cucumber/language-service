@@ -1,6 +1,6 @@
-import { ParameterTypeRegistry, RegularExpression } from '@cucumber/cucumber-expressions'
+import type { ParameterTypeRegistry, RegularExpression } from '@cucumber/cucumber-expressions'
 
-import { ParameterChoices, Suggestion, SuggestionSegment } from './types'
+import type { ParameterChoices, Suggestion, SuggestionSegment } from './types'
 
 export function buildSuggestionsFromRegularExpression(
   expression: RegularExpression,

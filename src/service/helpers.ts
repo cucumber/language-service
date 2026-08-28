@@ -1,5 +1,6 @@
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import { Position, Range } from 'vscode-languageserver-types'
+import type { Position } from 'vscode-languageserver-types'
+import { Range } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 
