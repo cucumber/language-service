@@ -1,7 +1,7 @@
 import assert from 'assert'
 
 import { stringLiteral } from '../../src/language/javaLanguage.js'
-import { TreeSitterSyntaxNode } from '../../src/language/types.js'
+import type { TreeSitterSyntaxNode } from '../../src/language/types.js'
 
 describe('javaLanguage', () => {
   it('should remove (?i) from regexp strings', () => {

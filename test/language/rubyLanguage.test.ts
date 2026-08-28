@@ -1,7 +1,7 @@
 import assert from 'assert'
 
 import { toStringOrRegExp } from '../../src/language/rubyLanguage.js'
-import { TreeSitterSyntaxNode } from '../../src/language/types.js'
+import type { TreeSitterSyntaxNode } from '../../src/language/types.js'
 
 describe('rubyLanguage', () => {
   it('should preserve regexp flags in step definitions', () => {

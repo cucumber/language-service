@@ -1,6 +1,7 @@
 import { CucumberExpression, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
-import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
+import type { Diagnostic } from 'vscode-languageserver-types'
+import { DiagnosticSeverity } from 'vscode-languageserver-types'
 
 import { getGherkinDiagnostics } from '../../src/service/getGherkinDiagnostics.js'
 

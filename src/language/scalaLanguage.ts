@@ -1,4 +1,4 @@
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const scalaLanguage: Language = {
   toParameterTypeName(node) {

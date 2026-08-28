@@ -1,5 +1,5 @@
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import { GherkinDocument } from '@cucumber/messages'
+import type { GherkinDocument } from '@cucumber/messages'
 
 export function extractStepTexts(
   gherkinDocument: GherkinDocument,

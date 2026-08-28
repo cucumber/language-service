@@ -1,4 +1,4 @@
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const javaLanguage: Language = {
   toParameterTypeName(node) {

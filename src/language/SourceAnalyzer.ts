@@ -1,9 +1,9 @@
-import { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
-import { LocationLink } from 'vscode-languageserver-types'
+import type { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
+import type { LocationLink } from 'vscode-languageserver-types'
 
 import { createLocationLink, makeParameterType, syntaxNode } from './helpers.js'
 import { getLanguage } from './languages.js'
-import {
+import type {
   Language,
   LanguageName,
   ParameterTypeLink,

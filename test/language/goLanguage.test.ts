@@ -1,7 +1,7 @@
 import assert from 'assert'
 
 import { stringLiteral } from '../../src/language/goLanguage.js'
-import { TreeSitterSyntaxNode } from '../../src/language/types.js'
+import type { TreeSitterSyntaxNode } from '../../src/language/types.js'
 
 describe('goLanguage', () => {
   it('should remove enclosing string quotations and backticks', () => {

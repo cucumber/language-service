@@ -1,6 +1,7 @@
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
-import { DocumentSymbol, Position, Range, SymbolKind } from 'vscode-languageserver-types'
+import type * as messages from '@cucumber/messages'
+import type { DocumentSymbol } from 'vscode-languageserver-types'
+import { Position, Range, SymbolKind } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 

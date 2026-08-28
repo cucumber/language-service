@@ -1,5 +1,5 @@
-import { Suggestion } from '../suggestions/types.js'
-import { Index } from './types'
+import type { Suggestion } from '../suggestions/types.js'
+import type { Index } from './types'
 
 /**
  * A brute force (not very performant or fuzzy-search capable) index that matches permutation expressions with string.includes()
