@@ -76,7 +76,7 @@ export const rubyLanguage: Language = {
       (regex) @expression
     ]
   )
-  (#match? @method "(Given|When|Then|And|But)$")
+  (#match? @method "(Given|When|Then|And|But|step)$")
 ) @root
 `,
   ],
