@@ -7,8 +7,11 @@ import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 type SymbolsKey = 'feature' | 'parent'
 type Symbols = Partial<Record<SymbolsKey, DocumentSymbol>>
 
-export function getGherkinDocumentFeatureSymbol(gherkinSource: string): DocumentSymbol | null {
-  const { gherkinDocument } = parseGherkinDocument(gherkinSource)
+export function getGherkinDocumentFeatureSymbol(
+  gherkinSource: string,
+  uri?: string
+): DocumentSymbol | null {
+  const { gherkinDocument } = parseGherkinDocument(gherkinSource, uri)
   if (!gherkinDocument) {
     return null
   }

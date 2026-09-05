@@ -9,9 +9,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Add Scala support ([#237](https://github.com/cucumber/language-service/issues/237))
+- Support for Gherkin-in-Markdown (`.feature.md`) documents: `parseGherkinDocument` and all LSP service entry points (`getGherkinCompletionItems`, `getGherkinDiagnostics`, `getGherkinDocumentFeatureSymbol`, `getGherkinFormattingEdits`, `getGherkinSemanticTokens`, `getStepDefinitionLocationLinks`) now accept an optional `uri` argument; when it ends with `.feature.md`, the Markdown token matcher is used. Exposed a new `isMarkdownFeatureUri` helper.
 
 ### Fixed
 - Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
+- `getGherkinSemanticTokens` no longer throws on incomplete AST nodes produced by the Markdown matcher (missing keyword/name or column); the affected token is skipped instead.
+
+### Changed
+- `getGherkinFormattingEdits` returns no edits for `.feature.md` documents, since `pretty()` would rewrite them as classic Gherkin and destroy the Markdown layout.
 
 ## [1.7.0] - 2025-05-18
 ### Added
