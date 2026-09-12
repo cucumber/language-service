@@ -54,25 +54,26 @@ export const rustLanguage: Language = {
     `,
   ],
   defineStepDefinitionQueries: [
-    `(source_file 
-      (attribute_item 
-        (attribute 
-          (
-            (identifier) @meta-name 
-            arguments: (token_tree
-              [
-                (string_literal) @expression
-                (identifier)
-                (string_literal) @expression
-                (raw_string_literal) @expression
-              ]
-            )
+    `(
+      (attribute_item
+        (attribute
+          [(identifier) (scoped_identifier)] @meta-name
+          arguments: (token_tree
+            [
+              (string_literal) @expression
+              (identifier)
+              (string_literal) @expression
+              (raw_string_literal) @expression
+            ]
           )
-        )  
+        )
         (#match? @meta-name "given|when|then")
       )
-      (function_item) ) @root
-    `,
+      .
+      [(attribute_item) (line_comment) (block_comment)]*
+      .
+      (function_item) @root
+    )`,
   ],
   snippetParameters: {
     int: { type: 'i32', name: 'i' },
