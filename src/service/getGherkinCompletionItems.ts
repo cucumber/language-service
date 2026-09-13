@@ -1,11 +1,7 @@
-import {
-  CompletionItem,
-  CompletionItemKind,
-  InsertTextFormat,
-  Position,
-} from 'vscode-languageserver-types'
+import type { CompletionItem, Position } from 'vscode-languageserver-types'
+import { CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
 
-import { Index } from '../index/index.js'
+import type { Index } from '../index/index.js'
 import { getStepRange } from './helpers.js'
 import { lspCompletionSnippet } from './snippet/lspCompletionSnippet.js'
 

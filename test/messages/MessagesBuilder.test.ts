@@ -4,8 +4,8 @@ import fs from 'fs'
 import { pipeline as pipelineCb, Writable } from 'stream'
 import { promisify } from 'util'
 
-import { MessagesBuilderResult } from '../../src/messages/MessagesBuilder.js'
-import { Suggestion } from '../../src/suggestions/types.js'
+import type { MessagesBuilderResult } from '../../src/messages/MessagesBuilder.js'
+import type { Suggestion } from '../../src/suggestions/types.js'
 import { MessagesBuilderStream } from './MessagesBuilderStream.js'
 
 const pipeline = promisify(pipelineCb)

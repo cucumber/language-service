@@ -1,6 +1,6 @@
-import { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
+import type { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
 
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const pythonLanguage: Language = {
   toParameterTypeName(node: TreeSitterSyntaxNode): string {

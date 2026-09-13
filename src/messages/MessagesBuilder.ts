@@ -1,14 +1,15 @@
+import type { Expression } from '@cucumber/cucumber-expressions'
 import {
-  Expression,
   ExpressionFactory,
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
-import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
+import type { Envelope } from '@cucumber/messages'
+import { StepDefinitionPatternType } from '@cucumber/messages'
 
 import { extractStepTexts } from '../gherkin/extractStepTexts.js'
 import { buildSuggestions } from '../suggestions/buildSuggestions.js'
-import { Suggestion } from '../suggestions/types.js'
+import type { Suggestion } from '../suggestions/types.js'
 
 export type MessagesBuilderResult = {
   suggestions: readonly Suggestion[]

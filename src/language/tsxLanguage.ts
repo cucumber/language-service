@@ -1,9 +1,9 @@
-import { StringOrRegExp } from '@cucumber/cucumber-expressions'
-import { RegExps } from '@cucumber/cucumber-expressions'
+import type { StringOrRegExp } from '@cucumber/cucumber-expressions'
+import type { RegExps } from '@cucumber/cucumber-expressions'
 
 import { childrenToString, filter, NO_QUOTES } from './helpers.js'
 import { NO_EXPRESSION } from './SourceAnalyzer.js'
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const tsxLanguage: Language = {
   toParameterTypeName(node) {

@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { TextEdit } from 'vscode-languageserver-types'
+import type { TextEdit } from 'vscode-languageserver-types'
 
 import { getGherkinFormattingEdits } from '../../src/service/getGherkinFormattingEdits.js'
 

@@ -3,7 +3,8 @@ import assert from 'assert'
 
 import { ExpressionBuilder } from '../../../src/language/ExpressionBuilder.js'
 import { getLanguage } from '../../../src/language/languages.js'
-import { LanguageName, LanguageNames, Source } from '../../../src/language/types.js'
+import type { LanguageName, Source } from '../../../src/language/types.js'
+import { LanguageNames } from '../../../src/language/types.js'
 import { stepDefinitionSnippet } from '../../../src/service/snippet/stepDefinitionSnippet.js'
 import { NodeParserAdapter } from '../../../src/tree-sitter-node/NodeParserAdapter.js'
 

@@ -1,7 +1,7 @@
 import assert from 'assert'
 
 import { lspCompletionSnippet } from '../../../src/service/snippet/lspCompletionSnippet.js'
-import { SuggestionSegments } from '../../../src/suggestions/types.js'
+import type { SuggestionSegments } from '../../../src/suggestions/types.js'
 
 describe('lspCompletionSnippet', () => {
   it('converts segments to an LSP snippet', () => {

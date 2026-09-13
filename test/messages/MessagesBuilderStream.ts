@@ -1,5 +1,6 @@
-import { Envelope } from '@cucumber/messages'
-import { Transform, TransformCallback } from 'stream'
+import type { Envelope } from '@cucumber/messages'
+import type { TransformCallback } from 'stream'
+import { Transform } from 'stream'
 
 import { MessagesBuilder } from '../../src/messages/MessagesBuilder.js'
 

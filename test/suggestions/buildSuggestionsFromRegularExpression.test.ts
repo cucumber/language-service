@@ -2,7 +2,7 @@ import { ParameterTypeRegistry, RegularExpression } from '@cucumber/cucumber-exp
 import assert from 'assert'
 
 import { buildSuggestionsFromRegularExpression } from '../../src/suggestions/buildSuggestionsFromRegularExpression.js'
-import { Suggestion } from '../../src/suggestions/types.js'
+import type { Suggestion } from '../../src/suggestions/types.js'
 
 describe('buildSuggestionsFromRegularExpression', () => {
   let registry: ParameterTypeRegistry

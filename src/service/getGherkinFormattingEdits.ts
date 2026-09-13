@@ -1,5 +1,5 @@
 import { pretty } from '@cucumber/gherkin-utils'
-import { TextEdit } from 'vscode-languageserver-types'
+import type { TextEdit } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 

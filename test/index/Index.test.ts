@@ -1,8 +1,9 @@
 import assert from 'assert'
 import * as txtgen from 'txtgen'
 
-import { bruteForceIndex, fuseIndex, Index, jsSearchIndex } from '../../src/index/index.js'
-import { Suggestion } from '../../src/suggestions/types.js'
+import type { Index } from '../../src/index/index.js'
+import { bruteForceIndex, fuseIndex, jsSearchIndex } from '../../src/index/index.js'
+import type { Suggestion } from '../../src/suggestions/types.js'
 
 type BuildIndex = (suggestions: readonly Suggestion[]) => Index
 

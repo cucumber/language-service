@@ -1,5 +1,5 @@
 import { unsupportedOperation } from './helpers.js'
-import { Language } from './types.js'
+import type { Language } from './types.js'
 
 export const phpLanguage: Language = {
   toParameterTypeName: unsupportedOperation,

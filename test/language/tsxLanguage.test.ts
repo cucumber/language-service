@@ -2,7 +2,7 @@ import assert from 'assert'
 
 import { NO_EXPRESSION } from '../../src/language/SourceAnalyzer.js'
 import { toStringOrRegExp } from '../../src/language/tsxLanguage.js'
-import { TreeSitterSyntaxNode } from '../../src/language/types.js'
+import type { TreeSitterSyntaxNode } from '../../src/language/types.js'
 
 describe('tsxLanguage', () => {
   it('should preserve regexp flags in step definitions', () => {

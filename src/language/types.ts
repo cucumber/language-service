@@ -1,11 +1,11 @@
-import {
+import type {
   Expression,
   ParameterType,
   ParameterTypeRegistry,
   StringOrRegExp,
 } from '@cucumber/cucumber-expressions'
-import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
-import { DocumentUri, LocationLink } from 'vscode-languageserver-types'
+import type { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
+import type { DocumentUri, LocationLink } from 'vscode-languageserver-types'
 
 export type ParameterTypeName =
   | 'int'
