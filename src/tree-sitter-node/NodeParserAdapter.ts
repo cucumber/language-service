@@ -20,6 +20,7 @@ import Scala from 'tree-sitter-scala'
 import TypeScript from 'tree-sitter-typescript'
 
 import { LanguageName, ParserAdapter } from '../language/types.js'
+import Clojure from './clojureParser.js'
 
 export class NodeParserAdapter implements ParserAdapter {
   readonly parser = new Parser()
@@ -39,6 +40,10 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'c_sharp':
         this.parser.setLanguage(Csharp)
+        break
+      case 'clojure':
+        if (!Clojure) throw new Error('tree-sitter-clojure is not installed')
+        this.parser.setLanguage(Clojure)
         break
       case 'php':
         this.parser.setLanguage(Php.php)
