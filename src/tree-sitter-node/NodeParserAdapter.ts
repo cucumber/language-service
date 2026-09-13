@@ -7,6 +7,8 @@ import Go from 'tree-sitter-go'
 // @ts-ignore
 import Java from 'tree-sitter-java'
 // @ts-ignore
+import Kotlin from 'tree-sitter-kotlin'
+// @ts-ignore
 import Php from 'tree-sitter-php'
 // @ts-ignore
 import Python from 'tree-sitter-python'
@@ -57,6 +59,9 @@ export class NodeParserAdapter implements ParserAdapter {
         break
       case 'scala':
         this.parser.setLanguage(Scala)
+        break
+      case 'kotlin':
+        this.parser.setLanguage(Kotlin)
         break
       default:
         throw new Error(`Unsupported language: ${languageName}`)
