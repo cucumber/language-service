@@ -10,10 +10,11 @@ import { CONTAINS_PARAMETERS, diagnosticCodeUndefinedStep } from './constants.js
 // https://microsoft.github.io/language-server-protocol/specifications/specification-3-17/#diagnostic
 export function getGherkinDiagnostics(
   gherkinSource: string,
-  expressions: readonly Expression[]
+  expressions: readonly Expression[],
+  uri?: string
 ): Diagnostic[] {
   const lines = gherkinSource.split(/\r?\n/)
-  const { gherkinDocument, error } = parseGherkinDocument(gherkinSource)
+  const { gherkinDocument, error } = parseGherkinDocument(gherkinSource, uri)
   const diagnostics: Diagnostic[] = []
   const errors: Error[] =
     error instanceof Errors.CompositeParserException ? error.errors : error ? [error] : []

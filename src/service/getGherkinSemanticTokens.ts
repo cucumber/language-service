@@ -30,9 +30,10 @@ const indexByType = Object.fromEntries(semanticTokenTypes.map((type, index) => [
 // https://microsoft.github.io/language-server-protocol/specifications/lsp/3.17/specification/#textDocument_semanticTokens
 export function getGherkinSemanticTokens(
   gherkinSource: string,
-  expressions: readonly Expression[]
+  expressions: readonly Expression[],
+  uri?: string
 ): SemanticTokens {
-  const { gherkinDocument } = parseGherkinDocument(gherkinSource)
+  const { gherkinDocument } = parseGherkinDocument(gherkinSource, uri)
   if (!gherkinDocument) {
     return {
       data: [],
@@ -42,13 +43,17 @@ export function getGherkinSemanticTokens(
 
   function makeLocationToken(
     location: messages.Location,
-    token: string,
+    token: string | undefined,
     type: SemanticTokenTypes,
     data: TokenLines
   ) {
+    // The MDG parser in @cucumber/gherkin can produce nodes with missing
+    // keyword/name fields when the markdown structure does not match its
+    // expectations (e.g. tags placed before the `# Feature:` heading).
+    // Skip emitting a token rather than crashing — the rest of the document
+    // still gets highlighted.
+    if (token === undefined || location.column === undefined) return data
     const lineNumber = location.line - 1
-    if (location.column === undefined)
-      throw new Error(`Incomplete location: ${JSON.stringify(location)}`)
     const character = location.column - 1
     return makeToken(lineNumber, character, token, type, data)
   }
@@ -56,10 +61,11 @@ export function getGherkinSemanticTokens(
   function makeToken(
     lineNumber: number,
     character: number,
-    token: string,
+    token: string | undefined,
     type: SemanticTokenTypes,
     data: TokenLines
   ) {
+    if (token === undefined) return data
     const copy = [...data]
     copy[lineNumber] = (copy[lineNumber] ?? []).concat({
       typeIndex: indexByType[type],
