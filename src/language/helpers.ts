@@ -1,5 +1,5 @@
 import { ParameterType, RegExps } from '@cucumber/cucumber-expressions'
-import { DocumentUri, LocationLink, Range } from 'vscode-languageserver-types'
+import { DocumentUri, LocationLink, Position, Range } from 'vscode-languageserver-types'
 
 import { Link, NodePredicate, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types'
 
@@ -31,17 +31,23 @@ export function createLocationLink(
   selectionNode: TreeSitterSyntaxNode,
   targetUri: DocumentUri
 ) {
-  const targetRange: Range = Range.create(
-    rootNode.startPosition.row,
-    rootNode.startPosition.column,
-    rootNode.endPosition.row,
-    rootNode.endPosition.column
-  )
   const targetSelectionRange: Range = Range.create(
     selectionNode.startPosition.row,
     selectionNode.startPosition.column,
     selectionNode.endPosition.row,
     selectionNode.endPosition.column
+  )
+  // The selection may precede the root node (a Rust attribute precedes its fn),
+  // and LSP requires the selection range to be contained in the target range.
+  const rootRange: Range = Range.create(
+    rootNode.startPosition.row,
+    rootNode.startPosition.column,
+    rootNode.endPosition.row,
+    rootNode.endPosition.column
+  )
+  const targetRange: Range = Range.create(
+    min(rootRange.start, targetSelectionRange.start),
+    max(rootRange.end, targetSelectionRange.end)
   )
   const locationLink: LocationLink = {
     targetRange,
@@ -49,6 +55,14 @@ export function createLocationLink(
     targetUri,
   }
   return locationLink
+}
+
+function min(a: Position, b: Position): Position {
+  return a.line < b.line || (a.line === b.line && a.character < b.character) ? a : b
+}
+
+function max(a: Position, b: Position): Position {
+  return a.line > b.line || (a.line === b.line && a.character > b.character) ? a : b
 }
 
 export function childrenToString(node: TreeSitterSyntaxNode, stringNodes: NodePredicate) {

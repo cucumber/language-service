@@ -68,11 +68,13 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
       for (const link of result.expressionLinks.map((l) => l.locationLink)) {
         assert(
           link.targetSelectionRange.start.line > link.targetRange.start.line ||
-            link.targetSelectionRange.start.character >= link.targetRange.start.character
+            (link.targetSelectionRange.start.line === link.targetRange.start.line &&
+              link.targetSelectionRange.start.character >= link.targetRange.start.character)
         )
         assert(
           link.targetSelectionRange.end.line < link.targetRange.end.line ||
-            link.targetSelectionRange.end.character <= link.targetRange.end.character
+            (link.targetSelectionRange.end.line === link.targetRange.end.line &&
+              link.targetSelectionRange.end.character <= link.targetRange.end.character)
         )
       }
       const expressions = result.expressionLinks.map(({ expression }) =>
@@ -89,6 +91,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
           /^a regexp$/,
           "the bee's knees",
           ...(languageName === 'javascript' ? ['a compiled format'] : []),
+          ...(languageName === 'rust' ? ['a stacked step'] : []),
         ])
         assert.deepStrictEqual(errors, [
           'There is already a parameter type with name int',
