@@ -1,3 +1,4 @@
+import { clojureLanguage } from './clojureLanguage.js'
 import { csharpLanguage } from './csharpLanguage.js'
 import { goLanguage } from './goLanguage.js'
 import { javaLanguage } from './javaLanguage.js'
@@ -14,6 +15,7 @@ const languageByName: Record<LanguageName, Language> = {
   java: javaLanguage,
   tsx: tsxLanguage,
   c_sharp: csharpLanguage,
+  clojure: clojureLanguage,
   php: phpLanguage,
   ruby: rubyLanguage,
   rust: rustLanguage,

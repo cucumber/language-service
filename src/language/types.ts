@@ -39,6 +39,7 @@ export const LanguageNames = [
   'java',
   'tsx',
   'c_sharp',
+  'clojure',
   'php',
   'python',
   'ruby',
