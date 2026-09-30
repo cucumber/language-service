@@ -1,10 +1,14 @@
 import { unsupportedOperation } from './helpers.js'
-import { Language } from './types.js'
+import { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const phpLanguage: Language = {
   toParameterTypeName: unsupportedOperation,
   toParameterTypeRegExps: unsupportedOperation,
   toStepDefinitionExpression(node) {
+    if (node.type === 'string' || node.type === 'encapsed_string') {
+      return behatifyStep(stringContent(node))
+    }
+
     // match multiline comment
     const text = node.text
     const match = text.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
@@ -19,6 +23,30 @@ export const phpLanguage: Language = {
   (comment)+ @expression
   (#match? @expression "@(Given|When|Then)")
 ) @root
+`,
+    `
+(
+  (method_declaration
+    attributes: (attribute_list
+      (attribute_group
+        (attribute
+          (name) @attribute-name
+          parameters: (arguments (argument [(string) (encapsed_string)] @expression)))))
+  ) @root
+  (#match? @attribute-name "^(Given|When|Then|Step)$")
+)
+`,
+    `
+(
+  (method_declaration
+    attributes: (attribute_list
+      (attribute_group
+        (attribute
+          (qualified_name (name) @attribute-name)
+          parameters: (arguments (argument [(string) (encapsed_string)] @expression)))))
+  ) @root
+  (#match? @attribute-name "^(Given|When|Then|Step)$")
+)
 `,
   ],
   snippetParameters: {
@@ -57,7 +85,19 @@ export function behatifyStep(step: string): RegExp {
 }
 
 function stripIdentifier(text: string): string {
-  return text.replace(/@(Given |When |Then )/, '').trim()
+  return text.replace(/@(Given |When |Then |Step )/, '').trim()
+}
+
+function stringContent(node: TreeSitterSyntaxNode): string {
+  const content = node.children
+    .filter((child) => child.type === 'string_content')
+    .map((child) => child.text)
+    .join('')
+  if (content) {
+    return content
+  }
+
+  return node.text.slice(1, -1)
 }
 
 function cleanRegExp(re: string): RegExp {
