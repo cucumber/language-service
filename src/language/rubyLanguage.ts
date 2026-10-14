@@ -1,8 +1,8 @@
-import { StringOrRegExp } from '@cucumber/cucumber-expressions'
-import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
+import type { StringOrRegExp } from '@cucumber/cucumber-expressions'
+import type { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
 import { childrenToString, filter, NO_QUOTES } from './helpers.js'
-import { Language, NodePredicate, TreeSitterSyntaxNode } from './types.js'
+import type { Language, NodePredicate, TreeSitterSyntaxNode } from './types.js'
 
 export const rubyLanguage: Language = {
   toParameterTypeName(node) {

@@ -6,7 +6,7 @@ import {
 import assert from 'assert'
 
 import { buildSuggestionFromCucumberExpression } from '../../src/suggestions/buildSuggestionFromCucumberExpression.js'
-import { Suggestion } from '../../src/suggestions/types.js'
+import type { Suggestion } from '../../src/suggestions/types.js'
 
 describe('buildSuggestionFromCucumberExpression', () => {
   let registry: ParameterTypeRegistry

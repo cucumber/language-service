@@ -1,8 +1,9 @@
 import { CucumberExpression, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
-import { LocationLink, Range } from 'vscode-languageserver-types'
+import type { LocationLink } from 'vscode-languageserver-types'
+import { Range } from 'vscode-languageserver-types'
 
-import { ExpressionLink } from '../../src/language/types.js'
+import type { ExpressionLink } from '../../src/language/types.js'
 import { getStepDefinitionLocationLinks } from '../../src/service/getStepDefinitionLocationLinks.js'
 
 describe('getStepDefinitionLocationLinks', () => {

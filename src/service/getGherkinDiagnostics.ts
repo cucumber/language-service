@@ -1,8 +1,9 @@
-import { Expression } from '@cucumber/cucumber-expressions'
+import type { Expression } from '@cucumber/cucumber-expressions'
 import { dialects, Errors } from '@cucumber/gherkin'
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
-import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
+import type * as messages from '@cucumber/messages'
+import type { Diagnostic } from 'vscode-languageserver-types'
+import { DiagnosticSeverity } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 import { CONTAINS_PARAMETERS, diagnosticCodeUndefinedStep } from './constants.js'

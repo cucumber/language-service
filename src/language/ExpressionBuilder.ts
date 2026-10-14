@@ -1,12 +1,9 @@
-import {
-  ExpressionFactory,
-  ParameterType,
-  ParameterTypeRegistry,
-} from '@cucumber/cucumber-expressions'
+import type { ParameterType } from '@cucumber/cucumber-expressions'
+import { ExpressionFactory, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 
 import { createLocationLink, makeParameterType, sortLinks } from './helpers.js'
 import { SourceAnalyzer } from './SourceAnalyzer.js'
-import {
+import type {
   ExpressionBuilderResult,
   ExpressionLink,
   LanguageName,

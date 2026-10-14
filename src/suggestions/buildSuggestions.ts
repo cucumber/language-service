@@ -1,14 +1,10 @@
-import {
-  CucumberExpression,
-  Expression,
-  ParameterTypeRegistry,
-  RegularExpression,
-} from '@cucumber/cucumber-expressions'
+import type { Expression, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
+import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
 
 import { buildSuggestionFromCucumberExpression } from './buildSuggestionFromCucumberExpression.js'
 import { buildSuggestionsFromRegularExpression } from './buildSuggestionsFromRegularExpression.js'
 import { makeKey } from './helpers.js'
-import { Suggestion } from './types.js'
+import type { Suggestion } from './types.js'
 
 /**
  * Builds an array of {@link Suggestion} from steps and step definitions.

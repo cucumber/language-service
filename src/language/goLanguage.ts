@@ -1,7 +1,7 @@
-import { StringOrRegExp } from '@cucumber/cucumber-expressions'
+import type { StringOrRegExp } from '@cucumber/cucumber-expressions'
 
 import { unsupportedOperation } from './helpers.js'
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const goLanguage: Language = {
   toParameterTypeName: unsupportedOperation,

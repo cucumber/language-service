@@ -1,7 +1,7 @@
 import { Search } from 'js-search'
 
-import { Suggestion } from '../suggestions/types.js'
-import { Index } from './types.js'
+import type { Suggestion } from '../suggestions/types.js'
+import type { Index } from './types.js'
 
 type Doc = {
   id: number

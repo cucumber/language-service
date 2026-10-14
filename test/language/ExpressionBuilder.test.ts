@@ -1,11 +1,13 @@
-import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
+import type { RegularExpression } from '@cucumber/cucumber-expressions'
+import { CucumberExpression } from '@cucumber/cucumber-expressions'
 import assert from 'assert'
 import { readFile } from 'fs/promises'
 import { glob } from 'glob'
 import { basename, resolve } from 'path'
 
-import { ExpressionBuilder, LanguageName } from '../../src/index.js'
-import { ParserAdapter, Source } from '../../src/language/types.js'
+import type { LanguageName } from '../../src/index.js'
+import { ExpressionBuilder } from '../../src/index.js'
+import type { ParserAdapter, Source } from '../../src/language/types.js'
 import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
 import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
 

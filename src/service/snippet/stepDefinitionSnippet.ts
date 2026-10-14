@@ -1,7 +1,7 @@
-import { GeneratedExpression } from '@cucumber/cucumber-expressions'
+import type { GeneratedExpression } from '@cucumber/cucumber-expressions'
 import mustache from 'mustache'
 
-import { ParameterTypeName, SnippetParameters } from '../../language'
+import type { ParameterTypeName, SnippetParameters } from '../../language'
 
 type MustacheFunction = () => (text: string, render: (text: string) => string) => string
 

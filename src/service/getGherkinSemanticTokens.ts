@@ -1,7 +1,8 @@
-import { Expression } from '@cucumber/cucumber-expressions'
+import type { Expression } from '@cucumber/cucumber-expressions'
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
-import { SemanticTokens, SemanticTokenTypes } from 'vscode-languageserver-types'
+import type * as messages from '@cucumber/messages'
+import type { SemanticTokens } from 'vscode-languageserver-types'
+import { SemanticTokenTypes } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 

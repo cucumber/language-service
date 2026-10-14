@@ -1,13 +1,13 @@
-import {
+import type {
   CucumberExpression,
   Node,
-  NodeType,
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
+import { NodeType } from '@cucumber/cucumber-expressions'
 
 import { makeKey } from './helpers.js'
-import { ParameterChoices, Suggestion, SuggestionSegments } from './types.js'
+import type { ParameterChoices, Suggestion, SuggestionSegments } from './types.js'
 
 export function buildSuggestionFromCucumberExpression(
   expression: CucumberExpression,
