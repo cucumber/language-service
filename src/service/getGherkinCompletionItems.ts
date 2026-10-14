@@ -13,9 +13,10 @@ import { lspCompletionSnippet } from './snippet/lspCompletionSnippet.js'
 export function getGherkinCompletionItems(
   gherkinSource: string,
   position: Position,
-  index: Index
+  index: Index,
+  uri?: string
 ): readonly CompletionItem[] {
-  const stepRange = getStepRange(gherkinSource, position)
+  const stepRange = getStepRange(gherkinSource, position, uri)
   if (!stepRange) return []
   const suggestions = index(stepRange.stepText)
   // https://github.com/microsoft/language-server-protocol/issues/898#issuecomment-593968008

@@ -121,6 +121,23 @@ Feature: making drinks
     assert.deepStrictEqual(actual, expected)
   })
 
+  it('emits keyword tokens for a .feature.md document', () => {
+    const mdgSource = `# Feature: Login
+
+## Scenario: Successful login
+* Given the user is on the login page
+* When the user enters valid credentials
+* Then the user should be logged in
+`
+    const semanticTokens = getGherkinSemanticTokens(mdgSource, [], 'file:///x.feature.md')
+    const actual = tokenize(mdgSource, semanticTokens.data)
+    const keywords = actual
+      .filter(([, type]) => type === SemanticTokenTypes.keyword)
+      .map(([text]) => text.trim())
+    // The MDG matcher normalizes `*` bullets to the proper Given/When/Then keyword.
+    assert.deepStrictEqual(keywords, ['Feature', 'Scenario', 'Given', 'When', 'Then'])
+  })
+
   it('applies parameter token for scenario outline', () => {
     const gherkinSource = `
 Feature: a
