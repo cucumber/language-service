@@ -7,9 +7,9 @@ export const goLanguage: Language = {
   toParameterTypeName: unsupportedOperation,
   toParameterTypeRegExps: unsupportedOperation,
   toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp {
-    const text = stringLiteral(node)
+    const { text, flags } = leadingInlineFlags(stringLiteral(node))
     const hasRegExpAnchors = text[0] == '^' || text[text.length - 1] == '$'
-    return hasRegExpAnchors ? new RegExp(text) : text
+    return hasRegExpAnchors ? new RegExp(text, flags) : text
   },
   // Empty array as Godog does not support Cucumber Expressions
   defineParameterTypeQueries: [],
@@ -88,6 +88,16 @@ export const goLanguage: Language = {
   // Generated with Cucumber Expressions syntax, which are not supported by Godog. Convert to Regular Expressions.
   ctx.{{ keyword }}(\`{{ expression }}\`, <stepFunc>)
 `,
+}
+
+// Go sets regexp flags inline, with a leading group such as (?is), which JavaScript rejects.
+// i, m and s are JavaScript flags too. U (ungreedy) has none: dropping it changes what the
+// groups capture, not whether a step matches.
+function leadingInlineFlags(expression: string): { text: string; flags: string } {
+  const match = /^\(\?([imsU]+)\)/.exec(expression)
+  if (!match) return { text: expression, flags: '' }
+  const flags = [...new Set(match[1].replace(/U/g, ''))].join('')
+  return { text: expression.slice(match[0].length), flags }
 }
 
 export function stringLiteral(node: TreeSitterSyntaxNode | null): string {

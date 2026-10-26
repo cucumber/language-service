@@ -53,6 +53,26 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
         assert.deepStrictEqual(regexpStrings, ['today', 'tomorrow', '(.*) days later'])
       })
     }
+    if (languageName === 'go') {
+      it('reports an invalid step definition regexp and builds the others', async () => {
+        const uri = 'file:///features/steps_test.go'
+        const content = `package features
+
+func InitializeScenario(ctx *godog.ScenarioContext) {
+	ctx.Step(\`^I eat (?P<count>\\d+) cucumbers$\`, iEatCucumbers)
+	ctx.Step(\`^I am full$\`, iAmFull)
+}
+`
+        const result = expressionBuilder.build([{ languageName, uri, content }], [])
+
+        const expressions = result.expressionLinks.map(
+          ({ expression }) => (expression as RegularExpression).regexp
+        )
+        assert.deepStrictEqual(expressions, [/^I am full$/])
+        assert.strictEqual(result.errors.length, 1)
+        assert(result.errors[0].message.includes(uri), result.errors[0].message)
+      })
+    }
     // if (languageName !== 'c_sharp') continue
 
     it(`builds parameter types and expressions from ${languageName} source`, async () => {
