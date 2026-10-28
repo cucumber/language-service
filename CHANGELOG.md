@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
+- (Go) Support the leading inline flags `(?i)`, `(?m)` and `(?s)` of Godog step definitions. Accept `(?U)`, with the caveat that the resulting JavaScript `RegExp` is _not_ ungreedy ([#321](https://github.com/cucumber/language-service/pull/321))
+- Don't fail to index all step definitions when one has an invalid regular expression. Report it as an error instead. ([#321](https://github.com/cucumber/language-service/pull/321))
 
 ## [1.7.0] - 2025-05-18
 ### Added
