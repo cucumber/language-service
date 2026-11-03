@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
 
+### Removed
+- Dropped support for end-of-life Node versions 18 and 20
+
 ## [1.7.0] - 2025-05-18
 ### Added
 - Syntax highlighting for comments (`#`) ([#245](https://github.com/cucumber/language-service/pull/245))
