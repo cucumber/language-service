@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: set git core.autocrlf to 'input'
         run: git config --global core.autocrlf input
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - uses: mymindstorm/setup-emsdk@4528d102f7230f0e7b276855c01ea1159be0e984 # v16
@@ -37,7 +37,7 @@ jobs:
           # Should be kept in sync with .github/workflows/release-npm.yml
           version: 3.1.64
       - name: with Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
