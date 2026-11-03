@@ -41,8 +41,8 @@
     "test": "mocha && npm run test:cjs",
     "test:cjs": "npm run build:cjs && mocha --config .mocharc.cjs.cjs --recursive dist/cjs/test",
     "prepublishOnly": "npm run build",
-    "eslint-fix": "eslint --ext ts --max-warnings 0 --fix src test",
-    "eslint": "eslint --ext ts --max-warnings 0 src test",
+    "eslint-fix": "eslint --max-warnings 0 --fix src test",
+    "eslint": "eslint --max-warnings 0 src test",
     "prepare": "husky && node scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist"
   },
   "repository": {
@@ -80,7 +80,7 @@
     "js-search": "2.0.1",
     "mustache": "4.2.0",
     "vscode-languageserver-types": "3.18.5",
-    "web-tree-sitter": "^0.24.7"
+    "web-tree-sitter": "^0.24.6"
   },
   "optionalDependencies": {
     "tree-sitter": "^0.21.1",
@@ -98,6 +98,7 @@
   "devDependencies": {
     "@cucumber/cucumber": "^13.0.0",
     "@cucumber/message-streams": "^5.0.0",
+    "@eslint/js": "10.0.1",
     "@types/glob": "9.0.0",
     "@types/mocha": "10.0.10",
     "@types/node": "26.6.6",
@@ -106,11 +107,12 @@
     "@typescript-eslint/parser": "8.72.1",
     "eslint": "10.14.0",
     "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-import": "2.32.0",
+    "eslint-plugin-import-x": "4.17.1",
     "eslint-plugin-n": "18.5.0",
     "eslint-plugin-prettier": "5.5.7",
     "eslint-plugin-simple-import-sort": "14.0.0",
     "glob": "14.0.3",
+    "globals": "17.14.0",
     "husky": "9.1.7",
     "lint-staged": "^17.0.0",
     "mocha": "11.6.0",
