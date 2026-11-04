@@ -16,23 +16,13 @@
     ".": {
       "import": "./dist/esm/src/index.js",
       "require": "./dist/cjs/src/index.js"
-    },
-    "./node": {
-      "import": "./dist/esm/src/tree-sitter-node/NodeParserAdapter.js",
-      "require": "./dist/cjs/src/tree-sitter-node/NodeParserAdapter.js"
-    },
-    "./wasm": {
-      "import": "./dist/esm/src/tree-sitter-wasm/WasmParserAdapter.js",
-      "require": "./dist/cjs/src/tree-sitter-wasm/WasmParserAdapter.js"
     }
   },
   "files": [
     "dist/cjs/src",
     "dist/cjs/package.json",
     "dist/esm/src",
-    "dist/*.wasm",
-    "node",
-    "wasm"
+    "dist/*.wasm"
   ],
   "scripts": {
     "build:cjs": "tsc --build tsconfig.build-cjs.json && cp package.cjs.json dist/cjs/package.json",
@@ -82,19 +72,6 @@
     "vscode-languageserver-types": "3.18.5",
     "web-tree-sitter": "^0.24.6"
   },
-  "optionalDependencies": {
-    "tree-sitter": "^0.21.1",
-    "tree-sitter-c-sharp": "0.23.1",
-    "tree-sitter-cli": "0.24.4",
-    "tree-sitter-go": "0.23.4",
-    "tree-sitter-java": "0.23.4",
-    "tree-sitter-php": "0.23.11",
-    "tree-sitter-python": "0.23.4",
-    "tree-sitter-ruby": "0.23.1",
-    "tree-sitter-rust": "0.23.1",
-    "tree-sitter-scala": "^0.23.4",
-    "tree-sitter-typescript": "0.23.2"
-  },
   "devDependencies": {
     "@biomejs/biome": "2.6.4",
     "@cucumber/biome-config": "github:cucumber/biome-config#v0.6.0",
@@ -110,6 +87,16 @@
     "mocha": "11.6.0",
     "node-gyp": "^13.0.0",
     "react": "19.3.1",
+    "tree-sitter-c-sharp": "0.23.1",
+    "tree-sitter-cli": "0.24.4",
+    "tree-sitter-go": "0.23.4",
+    "tree-sitter-java": "0.23.4",
+    "tree-sitter-php": "0.23.11",
+    "tree-sitter-python": "0.23.4",
+    "tree-sitter-ruby": "0.23.1",
+    "tree-sitter-rust": "0.23.1",
+    "tree-sitter-scala": "^0.23.4",
+    "tree-sitter-typescript": "0.23.2",
     "ts-node": "10.9.2",
     "txtgen": "3.0.2",
     "typescript": "5.9.3"

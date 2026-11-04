@@ -1,13 +1,18 @@
 import assert from 'node:assert'
 import { CucumberExpressionGenerator, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
-
+import { WasmParserAdapter } from '../../../src/index.js'
 import { ExpressionBuilder } from '../../../src/language/ExpressionBuilder.js'
 import { getLanguage } from '../../../src/language/languages.js'
 import { type LanguageName, LanguageNames, type Source } from '../../../src/language/types.js'
 import { stepDefinitionSnippet } from '../../../src/service/snippet/stepDefinitionSnippet.js'
-import { NodeParserAdapter } from '../../../src/tree-sitter-node/NodeParserAdapter.js'
 
 describe('stepDefinitionSnippet', () => {
+  let parserAdapter: WasmParserAdapter
+  before(async () => {
+    parserAdapter = new WasmParserAdapter('dist')
+    await parserAdapter.init()
+  })
+
   for (const languageName of Object.values(LanguageNames)) {
     // if (languageName !== 'c_sharp') continue
     it(`generates a snippet for ${languageName}`, () => {
@@ -22,7 +27,7 @@ describe('stepDefinitionSnippet', () => {
         language.snippetParameters
       )
 
-      const expressionBuilder = new ExpressionBuilder(new NodeParserAdapter())
+      const expressionBuilder = new ExpressionBuilder(parserAdapter)
       const source: Source<LanguageName> = {
         uri: 'file:///tmp/test.x',
         languageName,
