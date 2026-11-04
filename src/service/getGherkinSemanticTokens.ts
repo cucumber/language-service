@@ -1,7 +1,7 @@
-import { Expression } from '@cucumber/cucumber-expressions'
+import type { Expression } from '@cucumber/cucumber-expressions'
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
-import { SemanticTokens, SemanticTokenTypes } from 'vscode-languageserver-types'
+import type { Location } from '@cucumber/messages'
+import { type SemanticTokens, SemanticTokenTypes } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 
@@ -41,14 +41,15 @@ export function getGherkinSemanticTokens(
   const lines = gherkinSource.split(/\r?\n/)
 
   function makeLocationToken(
-    location: messages.Location,
+    location: Location,
     token: string,
     type: SemanticTokenTypes,
     data: TokenLines
   ) {
     const lineNumber = location.line - 1
-    if (location.column === undefined)
+    if (location.column === undefined) {
       throw new Error(`Incomplete location: ${JSON.stringify(location)}`)
+    }
     const character = location.column - 1
     return makeToken(lineNumber, character, token, type, data)
   }
@@ -99,8 +100,9 @@ export function getGherkinSemanticTokens(
       return makeLocationToken(examples.location, examples.keyword, SemanticTokenTypes.keyword, arr)
     },
     step(step, arr) {
-      if (step.location.column === undefined)
+      if (step.location.column === undefined) {
         throw new Error(`Incomplete location: ${JSON.stringify(step.location)}`)
+      }
 
       inExamples = false
       arr = makeLocationToken(step.location, step.keyword, SemanticTokenTypes.keyword, arr)
@@ -109,10 +111,11 @@ export function getGherkinSemanticTokens(
         const line = step.location.line - 1
         const startOfText = lines[line].indexOf(step.text)
 
-        let match: RegExpExecArray | null
-        while ((match = regexp.exec(step.text)) !== null) {
+        let match = regexp.exec(step.text)
+        while (match !== null) {
           const character = startOfText + match.index
           arr = makeToken(line, character, match[0], SemanticTokenTypes.variable, arr)
+          match = regexp.exec(step.text)
         }
       }
 
@@ -145,8 +148,9 @@ export function getGherkinSemanticTokens(
         arr
       )
       if (docString.mediaType) {
-        if (docString.location.column === undefined)
+        if (docString.location.column === undefined) {
           throw new Error(`Incomplete location: ${JSON.stringify(docString.location)}`)
+        }
 
         const character = docString.location.column - 1 + docString.delimiter.length
         arr = makeToken(
@@ -160,7 +164,9 @@ export function getGherkinSemanticTokens(
       const maxLineNumber = docString.location.line + docString.content.split(/\r?\n/).length
       for (let lineNumber = docString.location.line; lineNumber <= maxLineNumber; lineNumber++) {
         const spaceContent = /^(\s*)(.*)$/.exec(lines[lineNumber])
-        if (spaceContent === null) throw new Error(`No match for ${lines[lineNumber]}`)
+        if (spaceContent === null) {
+          throw new Error(`No match for ${lines[lineNumber]}`)
+        }
         const startChar = spaceContent[1].length
         const token = spaceContent[2]
         arr = makeToken(lineNumber, startChar, token, SemanticTokenTypes.string, arr)
@@ -193,7 +199,9 @@ function makeData(lines: TokenLines): number[] {
   const data: number[] = []
   for (let lineNumber = 0; lineNumber < lines.length; lineNumber++) {
     const line = lines[lineNumber]
-    if (!line) continue
+    if (!line) {
+      continue
+    }
 
     for (const token of line) {
       const charDelta =

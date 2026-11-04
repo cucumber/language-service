@@ -41,8 +41,8 @@
     "test": "mocha && npm run test:cjs",
     "test:cjs": "npm run build:cjs && mocha --config .mocharc.cjs.cjs --recursive dist/cjs/test",
     "prepublishOnly": "npm run build",
-    "eslint-fix": "eslint --ext ts --max-warnings 0 --fix src test",
-    "eslint": "eslint --ext ts --max-warnings 0 src test",
+    "fix": "biome check --fix --error-on-warnings",
+    "lint": "biome check --error-on-warnings",
     "prepare": "husky && node scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist"
   },
   "repository": {
@@ -67,7 +67,7 @@
     "Miro <miroslav.sommer@gmail.com>"
   ],
   "lint-staged": {
-    "{src,test}/**/*.ts": "npm run eslint-fix"
+    "*": "biome check --fix --no-errors-on-unmatched --error-on-warnings"
   },
   "dependencies": {
     "@cucumber/cucumber-expressions": "^19.0.0",
@@ -80,7 +80,7 @@
     "js-search": "2.0.1",
     "mustache": "4.2.0",
     "vscode-languageserver-types": "3.18.5",
-    "web-tree-sitter": "^0.24.7"
+    "web-tree-sitter": "^0.24.6"
   },
   "optionalDependencies": {
     "tree-sitter": "^0.21.1",
@@ -96,26 +96,19 @@
     "tree-sitter-typescript": "0.23.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.6.4",
+    "@cucumber/biome-config": "github:cucumber/biome-config#v0.6.0",
     "@cucumber/cucumber": "^13.0.0",
     "@cucumber/message-streams": "^5.0.0",
     "@types/glob": "9.0.0",
     "@types/mocha": "10.0.10",
     "@types/node": "26.6.6",
     "@types/react": "19.3.0",
-    "@typescript-eslint/eslint-plugin": "7.18.0",
-    "@typescript-eslint/parser": "7.18.0",
-    "eslint": "8.57.1",
-    "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-n": "17.24.0",
-    "eslint-plugin-prettier": "5.5.7",
-    "eslint-plugin-simple-import-sort": "12.1.1",
     "glob": "14.0.3",
     "husky": "9.1.7",
     "lint-staged": "^17.0.0",
     "mocha": "11.6.0",
     "node-gyp": "^13.0.0",
-    "prettier": "3.9.10",
     "react": "19.3.1",
     "ts-node": "10.9.2",
     "txtgen": "3.0.2",

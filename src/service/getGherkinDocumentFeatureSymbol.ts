@@ -1,6 +1,6 @@
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
-import { DocumentSymbol, Position, Range, SymbolKind } from 'vscode-languageserver-types'
+import type { Location } from '@cucumber/messages'
+import { type DocumentSymbol, Position, Range, SymbolKind } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 
@@ -80,7 +80,7 @@ export function getGherkinDocumentFeatureSymbol(gherkinSource: string): Document
   return data.feature || null
 }
 
-function makeRange(location: messages.Location, prefix: string, name: string) {
+function makeRange(location: Location, prefix: string, name: string) {
   const line = location.line - 1
   const col = (location.column || 0) - 1
   return Range.create(

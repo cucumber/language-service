@@ -1,14 +1,14 @@
-import { StringOrRegExp } from '@cucumber/cucumber-expressions'
+import type { StringOrRegExp } from '@cucumber/cucumber-expressions'
 
 import { unsupportedOperation } from './helpers.js'
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const goLanguage: Language = {
   toParameterTypeName: unsupportedOperation,
   toParameterTypeRegExps: unsupportedOperation,
   toStepDefinitionExpression(node: TreeSitterSyntaxNode): StringOrRegExp {
     const text = stringLiteral(node)
-    const hasRegExpAnchors = text[0] == '^' || text[text.length - 1] == '$'
+    const hasRegExpAnchors = text[0] === '^' || text[text.length - 1] === '$'
     return hasRegExpAnchors ? new RegExp(text) : text
   },
   // Empty array as Godog does not support Cucumber Expressions
@@ -91,6 +91,8 @@ export const goLanguage: Language = {
 }
 
 export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
-  if (node === null) throw new Error('node cannot be null')
+  if (node === null) {
+    throw new Error('node cannot be null')
+  }
   return node.text.slice(1, -1)
 }

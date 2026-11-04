@@ -1,10 +1,10 @@
-import { ParameterTypeRegistry, RegularExpression } from '@cucumber/cucumber-expressions'
+import type { ParameterTypeRegistry, RegularExpression } from '@cucumber/cucumber-expressions'
 
-import { ParameterChoices, Suggestion, SuggestionSegment } from './types'
+import type { ParameterChoices, Suggestion, SuggestionSegment } from './types'
 
 export function buildSuggestionsFromRegularExpression(
   expression: RegularExpression,
-  registry: ParameterTypeRegistry,
+  _registry: ParameterTypeRegistry,
   stepTexts: readonly string[],
   parameterChoices: ParameterChoices
 ): readonly Suggestion[] {
@@ -27,7 +27,9 @@ export function buildSuggestionsFromRegularExpression(
         const parameterSegment = parameterChoices[key] || ['...']
         segments.push(parameterSegment)
 
-        if (arg.group.end !== undefined) index = arg.group.end
+        if (arg.group.end !== undefined) {
+          index = arg.group.end
+        }
       }
       const lastSegment = text.substring(index)
       if (lastSegment !== '') {
@@ -38,7 +40,7 @@ export function buildSuggestionsFromRegularExpression(
   }
   return [...segmentJsons].sort().map((s, n) => ({
     segments: JSON.parse(s) as SuggestionSegment[],
-    label: n == 0 ? expression.source : `${expression.source} (${n + 1})`,
+    label: n === 0 ? expression.source : `${expression.source} (${n + 1})`,
     matched: true,
   }))
 }

@@ -70,4 +70,4 @@ Here there are a number of properties to use:
 
 Please make sure all code is formatted before submitting a pull request
 
-    npm run eslint-fix
+    npm run fix

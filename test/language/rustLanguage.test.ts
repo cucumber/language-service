@@ -1,7 +1,7 @@
-import assert from 'assert'
+import assert from 'node:assert'
 
 import { stringLiteral, stripLineContinuation } from '../../src/language/rustLanguage.js'
-import { TreeSitterSyntaxNode } from '../../src/language/types.js'
+import type { TreeSitterSyntaxNode } from '../../src/language/types.js'
 
 describe('rustLanguage', () => {
   it('should extract string literal pattern', () => {
@@ -19,10 +19,8 @@ describe('rustLanguage', () => {
         expected: '^a regexp$',
       },
       {
-        // eslint-disable-next-line
-        input: 'r"^stream (\w+) field (\w+) is a key$"',
-        // eslint-disable-next-line
-        expected: '^stream (\w+) field (\w+) is a key$',
+        input: 'r"^stream (w+) field (w+) is a key$"',
+        expected: '^stream (w+) field (w+) is a key$',
       },
       {
         input: 'r#"I have cucumber in my belly"#',

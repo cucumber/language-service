@@ -1,4 +1,4 @@
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const scalaLanguage: Language = {
   toParameterTypeName(node) {
@@ -23,7 +23,7 @@ export const scalaLanguage: Language = {
   toStepDefinitionExpression(node) {
     if (node.type === 'string') {
       const text = stringLiteral(node)
-      const hasRegExpAnchors = text[0] == '^' || text[text.length - 1] == '$'
+      const hasRegExpAnchors = text[0] === '^' || text[text.length - 1] === '$'
       return hasRegExpAnchors ? new RegExp(text) : text
     }
     throw new Error(`Unsupported node type ${node.type}`)
@@ -76,7 +76,9 @@ export const scalaLanguage: Language = {
 }
 
 export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
-  if (node === null) throw new Error('node cannot be null')
+  if (node === null) {
+    throw new Error('node cannot be null')
+  }
   if (node.text.startsWith('"""')) {
     const x = node.text.slice(3, -3)
     console.log(x)

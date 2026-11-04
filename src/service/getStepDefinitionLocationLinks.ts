@@ -1,6 +1,6 @@
-import { LocationLink, Position } from 'vscode-languageserver-types'
+import type { LocationLink, Position } from 'vscode-languageserver-types'
 
-import { ExpressionLink } from '../language/types.js'
+import type { ExpressionLink } from '../language/types.js'
 import { getStepRange } from './helpers.js'
 
 export function getStepDefinitionLocationLinks(
@@ -9,7 +9,9 @@ export function getStepDefinitionLocationLinks(
   expressionLinks: readonly ExpressionLink[]
 ): LocationLink[] {
   const stepRange = getStepRange(gherkinSource, position)
-  if (!stepRange) return []
+  if (!stepRange) {
+    return []
+  }
 
   const locationLinks: LocationLink[] = []
   for (const expressionLink of expressionLinks) {

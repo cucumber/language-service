@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js'
 
-import { Suggestion } from '../suggestions/types.js'
-import { Index } from './types.js'
+import type { Suggestion } from '../suggestions/types.js'
+import type { Index } from './types.js'
 
 type Doc = {
   text: string
@@ -25,7 +25,9 @@ export function fuseIndex(suggestions: readonly Suggestion[]): Index {
   })
 
   return (text) => {
-    if (!text) return []
+    if (!text) {
+      return []
+    }
     const results = fuse.search(text, { limit: 10 })
     return results.map((result) => suggestions[result.refIndex])
   }

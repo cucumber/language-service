@@ -1,5 +1,5 @@
-import { AstBuilder, Errors, GherkinClassicTokenMatcher, Parser } from '@cucumber/gherkin'
-import { GherkinDocument, IdGenerator } from '@cucumber/messages'
+import { AstBuilder, type Errors, GherkinClassicTokenMatcher, Parser } from '@cucumber/gherkin'
+import { type GherkinDocument, IdGenerator } from '@cucumber/messages'
 
 const uuidFn = IdGenerator.uuid()
 
@@ -33,7 +33,7 @@ export function parseGherkinDocument(gherkinSource: string): ParseResult {
 
       try {
         builder.endRule()
-      } catch (ignore) {
+      } catch (_ignore) {
         // no-op
       }
     }

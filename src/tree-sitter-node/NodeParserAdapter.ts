@@ -19,7 +19,7 @@ import Scala from 'tree-sitter-scala'
 // @ts-ignore
 import TypeScript from 'tree-sitter-typescript'
 
-import { LanguageName, ParserAdapter } from '../language/types.js'
+import type { LanguageName, ParserAdapter } from '../language/types.js'
 
 export class NodeParserAdapter implements ParserAdapter {
   readonly parser = new Parser()

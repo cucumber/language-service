@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import { exec } from 'child_process'
-import fs from 'fs'
-import path from 'path'
+import { exec } from 'node:child_process'
+import fs from 'node:fs'
+import path from 'node:path'
 
 const languages = [
   {
@@ -90,16 +90,18 @@ if (!fs.existsSync(treeSitterCli)) {
     }
     exec(command, (err) => {
       if (err) {
-        console.error('Failed to build wasm for ' + module + ': ' + err.message)
+        console.error(`Failed to build wasm for ${module}: ${err.message}`)
         process.exit(1)
       } else {
         const output = `tree-sitter-${wasm}.wasm`
         const newPath = `${distDir}/${wasm}.wasm`
         fs.rename(output, newPath, (err) => {
           if (err) {
-            console.error('Failed to copy built parser: ' + err.message)
+            console.error(`Failed to copy built parser: ${err.message}`)
             process.exit(1)
-          } else console.log(`Successfully compiled ${newPath}`)
+          } else {
+            console.log(`Successfully compiled ${newPath}`)
+          }
         })
       }
     })

@@ -1,5 +1,5 @@
-import assert from 'assert'
-import { DocumentSymbol, SymbolKind } from 'vscode-languageserver-types'
+import assert from 'node:assert'
+import { type DocumentSymbol, SymbolKind } from 'vscode-languageserver-types'
 
 import { getGherkinDocumentFeatureSymbol } from '../../src/service/getGherkinDocumentFeatureSymbol.js'
 

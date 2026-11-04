@@ -1,5 +1,5 @@
-import { Suggestion } from '../suggestions/types.js'
-import { Index } from './types'
+import type { Suggestion } from '../suggestions/types.js'
+import type { Index } from './types'
 
 /**
  * A brute force (not very performant or fuzzy-search capable) index that matches permutation expressions with string.includes()
@@ -8,7 +8,9 @@ import { Index } from './types'
  */
 export function bruteForceIndex(suggestions: readonly Suggestion[]): Index {
   return (text) => {
-    if (!text) return []
+    if (!text) {
+      return []
+    }
     const predicate = (segment: string) => segment.toLowerCase().includes(text.toLowerCase())
     return suggestions.filter((permutationExpression) => matches(permutationExpression, predicate))
   }

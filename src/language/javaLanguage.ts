@@ -1,4 +1,4 @@
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const javaLanguage: Language = {
   toParameterTypeName(node) {
@@ -20,7 +20,7 @@ export const javaLanguage: Language = {
   toStepDefinitionExpression(node) {
     if (node.type === 'string_literal') {
       const text = stringLiteral(node)
-      const hasRegExpAnchors = text[0] == '^' || text[text.length - 1] == '$'
+      const hasRegExpAnchors = text[0] === '^' || text[text.length - 1] === '$'
       return hasRegExpAnchors ? new RegExp(text) : text
     }
     return collectStringFragments(node).join('')
@@ -130,7 +130,9 @@ export const javaLanguage: Language = {
 }
 
 export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
-  if (node === null) throw new Error('node cannot be null')
+  if (node === null) {
+    throw new Error('node cannot be null')
+  }
   const string = node.text.slice(1, -1)
   return unescapeString(string.replace('(?i)', ''))
 }

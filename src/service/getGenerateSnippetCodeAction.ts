@@ -1,17 +1,20 @@
-import { CucumberExpressionGenerator, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
 import {
-  CodeAction,
+  CucumberExpressionGenerator,
+  type ParameterTypeRegistry,
+} from '@cucumber/cucumber-expressions'
+import {
+  type CodeAction,
   CodeActionKind,
   CreateFile,
-  Diagnostic,
-  LocationLink,
+  type Diagnostic,
+  type LocationLink,
   TextDocumentEdit,
   TextEdit,
   VersionedTextDocumentIdentifier,
 } from 'vscode-languageserver-types'
 
 import { getLanguage } from '../language/languages.js'
-import { LanguageName } from '../language/types.js'
+import type { LanguageName } from '../language/types.js'
 import { diagnosticCodeUndefinedStep } from './constants.js'
 import { stepDefinitionSnippet } from './snippet/stepDefinitionSnippet.js'
 

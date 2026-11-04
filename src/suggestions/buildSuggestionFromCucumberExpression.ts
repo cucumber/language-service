@@ -1,13 +1,13 @@
 import {
-  CucumberExpression,
-  Node,
+  type CucumberExpression,
+  type Node,
   NodeType,
-  ParameterType,
-  ParameterTypeRegistry,
+  type ParameterType,
+  type ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 
 import { makeKey } from './helpers.js'
-import { ParameterChoices, Suggestion, SuggestionSegments } from './types.js'
+import type { ParameterChoices, Suggestion, SuggestionSegments } from './types.js'
 
 export function buildSuggestionFromCucumberExpression(
   expression: CucumberExpression,
@@ -34,7 +34,9 @@ Please submit an issue at https://github.com/cucumber/language-service/issues
 type CompileResult = string | readonly CompileResult[]
 
 function flatten(cr: CompileResult): SuggestionSegments {
-  if (typeof cr === 'string') return [cr]
+  if (typeof cr === 'string') {
+    return [cr]
+  }
   return cr.reduce<SuggestionSegments>((prev, curr) => {
     const last = prev[prev.length - 1]
     if (typeof curr === 'string') {
@@ -45,9 +47,13 @@ function flatten(cr: CompileResult): SuggestionSegments {
       }
     } else {
       const x = curr.flatMap((e) => {
-        if (typeof e === 'string') return e
+        if (typeof e === 'string') {
+          return e
+        }
         const e0 = e[0]
-        if (!(typeof e0 === 'string')) throw new Error('Unexpected array: ' + JSON.stringify(e))
+        if (!(typeof e0 === 'string')) {
+          throw new Error(`Unexpected array: ${JSON.stringify(e)}`)
+        }
         return e0
       })
       return prev.concat([x])
@@ -80,7 +86,9 @@ function compile(
 }
 
 function compileOptional(node: Node): CompileResult {
-  if (node.nodes === undefined) throw new Error('No optional')
+  if (node.nodes === undefined) {
+    throw new Error('No optional')
+  }
   return [node.nodes.map((node) => node.text()).join('')]
 }
 
@@ -106,7 +114,9 @@ function compileParameter(
   parameterChoices: ParameterChoices
 ): CompileResult {
   const parameterType = registry.lookupByTypeName(node.text())
-  if (parameterType === undefined) throw new Error(`No parameter type named ${node.text()}`)
+  if (parameterType === undefined) {
+    throw new Error(`No parameter type named ${node.text()}`)
+  }
   const key = makeKey(parameterType)
   return parameterChoices[key] || defaultParameterChoices(parameterType) || ['']
 }

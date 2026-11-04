@@ -1,12 +1,13 @@
-import { ParameterType, RegExps } from '@cucumber/cucumber-expressions'
-import { DocumentUri, LocationLink, Range } from 'vscode-languageserver-types'
+import { ParameterType, type RegExps } from '@cucumber/cucumber-expressions'
+import { type DocumentUri, type LocationLink, Range } from 'vscode-languageserver-types'
 
-import { Link, NodePredicate, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types'
+import type { Link, NodePredicate, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types'
 
 export function syntaxNode(match: TreeSitterQueryMatch, name: string): TreeSitterSyntaxNode | null {
   const nodes = syntaxNodes(match, name)
-  if (nodes.length > 1)
+  if (nodes.length > 1) {
     throw new Error(`Expected exactly one node, but got ${nodes.map((node) => node.text)}`)
+  }
   return nodes[0] || null
 }
 
@@ -21,7 +22,9 @@ export function makeParameterType(name: string, regexps: RegExps) {
 export function sortLinks<L extends Link>(links: L[]): readonly L[] {
   return links.sort((a, b) => {
     const pathComparison = a.locationLink.targetUri.localeCompare(b.locationLink.targetUri)
-    if (pathComparison !== 0) return pathComparison
+    if (pathComparison !== 0) {
+      return pathComparison
+    }
     return a.locationLink.targetRange.start.line - b.locationLink.targetRange.start.line
   })
 }
@@ -68,7 +71,11 @@ export function filter(
 }
 
 function flatten(node: TreeSitterSyntaxNode): TreeSitterSyntaxNode[] {
-  return node.children.reduce((r, o) => [...r, ...flatten(o)], [node])
+  const result = [node]
+  for (const child of node.children) {
+    result.push(...flatten(child))
+  }
+  return result
 }
 
 export function unsupportedOperation(): never {
