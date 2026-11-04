@@ -30,9 +30,8 @@ If your contribution is to add support for a new programming language, follow th
    - If the Cucumber implementation does not support Cucumber Expressions, make `defineParameterTypeQueries` an empty array
 8. Add the name of the new language to the `LanguageNames` type
 9. Update `languageByName` in `src/language/language.ts`
-10. Add a new `case` statement in `src/tree-sitter-node/NodeParserAdapter.ts`
-11. Update `cucumberExpressionsSupport` in `test/language/ExpressionBuilder.test.ts` to include the new language if it supports Cucumber Expressions
-12. Run tests
+10. Update `cucumberExpressionsSupport` in `test/language/ExpressionBuilder.test.ts` to include the new language if it supports Cucumber Expressions
+11. Run tests
 
 As you are working on step 5-7 - use [tree-sitter playground](https://tree-sitter.github.io/tree-sitter/playground)
 to build your query. The queries _must have_ [capturing nodes](https://tree-sitter.github.io/tree-sitter/using-parsers#query-syntax):
