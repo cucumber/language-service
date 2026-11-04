@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - `WasmParserAdapter` is now exported from the main entry point, replacing the `/wasm` subpath ([#325](https://github.com/cucumber/language-service/pull/325))
+- BREAKING CHANGE: Switch to ESM ([#326](https://github.com/cucumber/language-service/pull/326))
 
 ### Fixed
 - Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
