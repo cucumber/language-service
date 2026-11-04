@@ -1,7 +1,7 @@
 import { ParameterType, type RegExps } from '@cucumber/cucumber-expressions'
 import { type DocumentUri, type LocationLink, Range } from 'vscode-languageserver-types'
 
-import type { Link, NodePredicate, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types'
+import type { Link, NodePredicate, TreeSitterQueryMatch, TreeSitterSyntaxNode } from './types.js'
 
 export function syntaxNode(match: TreeSitterQueryMatch, name: string): TreeSitterSyntaxNode | null {
   const nodes = syntaxNodes(match, name)
