@@ -8,7 +8,7 @@ import { rubyLanguage } from './rubyLanguage.js'
 import { rustLanguage } from './rustLanguage.js'
 import { scalaLanguage } from './scalaLanguage.js'
 import { tsxLanguage } from './tsxLanguage.js'
-import { Language, LanguageName } from './types.js'
+import type { Language, LanguageName } from './types.js'
 
 const languageByName: Record<LanguageName, Language> = {
   java: javaLanguage,

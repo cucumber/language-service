@@ -1,11 +1,11 @@
+import assert from 'node:assert'
+import fs from 'node:fs'
+import { pipeline as pipelineCb, Writable } from 'node:stream'
+import { promisify } from 'node:util'
 import { NdjsonToMessageStream } from '@cucumber/message-streams'
-import assert from 'assert'
-import fs from 'fs'
-import { pipeline as pipelineCb, Writable } from 'stream'
-import { promisify } from 'util'
 
-import { MessagesBuilderResult } from '../../src/messages/MessagesBuilder.js'
-import { Suggestion } from '../../src/suggestions/types.js'
+import type { MessagesBuilderResult } from '../../src/messages/MessagesBuilder.js'
+import type { Suggestion } from '../../src/suggestions/types.js'
 import { MessagesBuilderStream } from './MessagesBuilderStream.js'
 
 const pipeline = promisify(pipelineCb)
@@ -13,14 +13,14 @@ const pipeline = promisify(pipelineCb)
 describe('MessagesBuilder', () => {
   it('does not fail on duplicate parameter types', async () => {
     const readStream = fs.createReadStream(`test/messages/dupe-parameter-types.ndjson`, 'utf-8')
-    let receivedError
+    let receivedError: unknown
     await pipeline(
       readStream,
       new NdjsonToMessageStream(),
       new MessagesBuilderStream((err) => (receivedError = err)),
       new Writable({
         objectMode: true,
-        write(_result: MessagesBuilderResult, encoding, callback) {
+        write(_result: MessagesBuilderResult, _encoding, callback) {
           callback()
         },
       })
@@ -33,14 +33,14 @@ describe('MessagesBuilder', () => {
       `test/messages/syntax-error-cucumber-expression.ndjson`,
       'utf-8'
     )
-    let receivedError
+    let receivedError: unknown
     await pipeline(
       readStream,
       new NdjsonToMessageStream(),
       new MessagesBuilderStream((err) => (receivedError = err)),
       new Writable({
         objectMode: true,
-        write(_result: MessagesBuilderResult, encoding, callback) {
+        write(_result: MessagesBuilderResult, _encoding, callback) {
           callback()
         },
       })
@@ -57,7 +57,7 @@ describe('MessagesBuilder', () => {
       new MessagesBuilderStream(),
       new Writable({
         objectMode: true,
-        write(_result: MessagesBuilderResult, encoding, callback) {
+        write(_result: MessagesBuilderResult, _encoding, callback) {
           result = _result
           callback()
         },

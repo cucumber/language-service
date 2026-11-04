@@ -1,8 +1,8 @@
-import { StringOrRegExp } from '@cucumber/cucumber-expressions'
-import { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
+import type { StringOrRegExp } from '@cucumber/cucumber-expressions'
+import type { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 
 import { childrenToString, filter, NO_QUOTES } from './helpers.js'
-import { Language, NodePredicate, TreeSitterSyntaxNode } from './types.js'
+import type { Language, NodePredicate, TreeSitterSyntaxNode } from './types.js'
 
 export const rubyLanguage: Language = {
   toParameterTypeName(node) {
@@ -103,7 +103,9 @@ end
 }
 
 function toRegExps(node: TreeSitterSyntaxNode | null): RegExps {
-  if (node === null) throw new Error('node cannot be null')
+  if (node === null) {
+    throw new Error('node cannot be null')
+  }
   switch (node.type) {
     case 'regex':
     case 'string':
@@ -121,12 +123,12 @@ export function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
   switch (node.type) {
     case 'regex': {
       let flags = ''
-      let flag: string
       const s = node.text
-      for (let i = s.length - 1; (flag = s[i]) !== '/'; i--) {
+      for (let i = s.length - 1; s[i] !== '/'; i--) {
+        const flag = s[i]
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags
         // https://ruby-doc.org/core-3.1.2/doc/regexp_rdoc.html#label-Options
-        if (flag === 'i' || flag == 'o') {
+        if (flag === 'i' || flag === 'o') {
           flags = `${flags}${flag}`
         }
       }

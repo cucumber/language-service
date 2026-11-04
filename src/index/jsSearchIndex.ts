@@ -1,7 +1,7 @@
 import { Search } from 'js-search'
 
-import { Suggestion } from '../suggestions/types.js'
-import { Index } from './types.js'
+import type { Suggestion } from '../suggestions/types.js'
+import type { Index } from './types.js'
 
 type Doc = {
   id: number
@@ -23,7 +23,9 @@ export function jsSearchIndex(suggestions: readonly Suggestion[]): Index {
   search.addDocuments(docs)
 
   return (text) => {
-    if (!text) return []
+    if (!text) {
+      return []
+    }
     const results = search.search(text)
     return results.map((result: Doc) => suggestions[result.id])
   }

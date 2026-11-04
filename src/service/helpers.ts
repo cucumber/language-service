@@ -1,5 +1,5 @@
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import { Position, Range } from 'vscode-languageserver-types'
+import { type Position, Range } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 
@@ -14,9 +14,9 @@ export function getStepRange(gherkinSource: string, position: Position): StepRan
   if (!gherkinDocument) {
     return undefined
   }
-  let stepKeyword: string | undefined = undefined
-  let stepText: string | undefined = undefined
-  let range: Range | undefined = undefined
+  let stepKeyword: string | undefined
+  let stepText: string | undefined
+  let range: Range | undefined
   walkGherkinDocument(gherkinDocument, undefined, {
     step(step) {
       if (step.location.line === position.line + 1 && step.location.column !== undefined) {

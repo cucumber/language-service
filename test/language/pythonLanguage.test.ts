@@ -1,4 +1,4 @@
-import assert from 'assert'
+import assert from 'node:assert'
 
 import { concatStringLiteral, toStringOrRegExp } from '../../src/language/pythonLanguage.js'
 
@@ -6,13 +6,13 @@ describe('pythonLanguage', () => {
   it('should identify and return regexes correctly', () => {
     // NOTE these are strings that would look like from tree-sitter
     const regexes = ['"Something (.*)"', '"Catch them digits \\d+"']
-    regexes.forEach(function (regex) {
+    regexes.forEach((regex) => {
       assert(toStringOrRegExp(regex) instanceof RegExp)
     })
   })
   it('should identify normal strings and just return a string', () => {
     const nonregexes = ['"test"']
-    nonregexes.forEach(function (nonregex) {
+    nonregexes.forEach((nonregex) => {
       assert.strictEqual(toStringOrRegExp(nonregex), 'test')
     })
   })
@@ -25,7 +25,9 @@ describe('pythonLanguage', () => {
     ]
     const z = concatenatedStrings.map((x, i) => [x, expectedStrings[i]]) //use map to zip the concat with expected for assertion
     console.log(concatStringLiteral(expectedStrings[0]))
-    z.forEach((x) => assert.strictEqual(concatStringLiteral(x[0]), x[1]))
+    for (const x of z) {
+      assert.strictEqual(concatStringLiteral(x[0]), x[1])
+    }
   })
 
   it('should strip explicit unicode string prefix', () => {

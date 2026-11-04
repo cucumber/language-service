@@ -1,5 +1,5 @@
 import { tsxLanguage } from './tsxLanguage.js'
-import { Language } from './types.js'
+import type { Language } from './types.js'
 
 export const javascriptLanguage: Language = {
   ...tsxLanguage,

@@ -1,8 +1,8 @@
-import { Expression } from '@cucumber/cucumber-expressions'
+import type { Expression } from '@cucumber/cucumber-expressions'
 import { dialects, Errors } from '@cucumber/gherkin'
 import { walkGherkinDocument } from '@cucumber/gherkin-utils'
-import * as messages from '@cucumber/messages'
-import { Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
+import type { Examples, Step, TableCell } from '@cucumber/messages'
+import { type Diagnostic, DiagnosticSeverity } from 'vscode-languageserver-types'
 
 import { parseGherkinDocument } from '../gherkin/parseGherkinDocument.js'
 import { CONTAINS_PARAMETERS, diagnosticCodeUndefinedStep } from './constants.js'
@@ -54,7 +54,7 @@ export function getGherkinDiagnostics(
   const noStars = (keyword: string) => keyword !== '* '
   const codeKeywords = [...dialect.given, ...dialect.when, ...dialect.then].filter(noStars)
   let snippetKeyword = dialect.given.filter(noStars)[0]
-  let examples: readonly messages.Examples[]
+  let examples: readonly Examples[]
 
   return walkGherkinDocument<Diagnostic[]>(gherkinDocument, diagnostics, {
     scenario(scenario, diagnostics) {
@@ -74,11 +74,11 @@ export function getGherkinDiagnostics(
 }
 
 function getOutlineStepDiagnostics(
-  step: messages.Step,
+  step: Step,
   diagnostics: Diagnostic[],
   expressions: readonly Expression[],
   snippetKeyword: string,
-  examples: readonly messages.Examples[]
+  examples: readonly Examples[]
 ): Diagnostic[] {
   // Interpolate steps containing parameters
   if (CONTAINS_PARAMETERS.test(step.text)) {
@@ -102,7 +102,7 @@ function getOutlineStepDiagnostics(
 }
 
 function getStepDiagnostics(
-  step: messages.Step,
+  step: Step,
   diagnostics: Diagnostic[],
   expressions: readonly Expression[],
   snippetKeyword: string
@@ -125,7 +125,7 @@ function getStepDiagnostics(
 export function makeUndefinedStepDiagnostic(
   line: number,
   character: number,
-  stepKeyword: string,
+  _stepKeyword: string,
   stepText: string,
   snippetKeyword: string
 ): Diagnostic {
@@ -156,24 +156,26 @@ export function makeUndefinedStepDiagnostic(
 
 function isUndefined(stepText: string, expressions: readonly Expression[]): boolean {
   for (const expression of expressions) {
-    if (expression.match(stepText)) return false
+    if (expression.match(stepText)) {
+      return false
+    }
   }
   return true
 }
 
 function interpolate(
   name: string,
-  variableCells: readonly messages.TableCell[],
-  valueCells: readonly messages.TableCell[]
+  variableCells: readonly TableCell[],
+  valueCells: readonly TableCell[]
 ): string {
   variableCells.forEach((variableCell, n) => {
     const valueCell = valueCells[n]
-    const valuePattern = '<' + variableCell.value + '>'
+    const valuePattern = `<${variableCell.value}>`
     const escapedPattern = valuePattern.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&')
     const regexp = new RegExp(escapedPattern, 'g')
     // JS Specific - dollar sign needs to be escaped with another dollar sign
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#Specifying_a_string_as_a_parameter
-    const replacement = valueCell.value.replace(new RegExp('\\$', 'g'), '$$$$')
+    const replacement = valueCell.value.replace(/\$/g, '$$$$')
     name = name.replace(regexp, replacement)
   })
   return name

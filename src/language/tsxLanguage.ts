@@ -1,9 +1,8 @@
-import { StringOrRegExp } from '@cucumber/cucumber-expressions'
-import { RegExps } from '@cucumber/cucumber-expressions'
+import type { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
 
 import { childrenToString, filter, NO_QUOTES } from './helpers.js'
 import { NO_EXPRESSION } from './SourceAnalyzer.js'
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const tsxLanguage: Language = {
   toParameterTypeName(node) {
@@ -107,7 +106,9 @@ export const tsxLanguage: Language = {
 }
 
 function toRegExps(node: TreeSitterSyntaxNode | null): RegExps {
-  if (node === null) throw new Error('node cannot be null')
+  if (node === null) {
+    throw new Error('node cannot be null')
+  }
   switch (node.type) {
     case 'regex':
     case 'string':
@@ -123,9 +124,9 @@ export function toStringOrRegExp(node: TreeSitterSyntaxNode): StringOrRegExp {
   switch (node.type) {
     case 'regex': {
       let flags = ''
-      let flag: string
       const s = node.text
-      for (let i = s.length - 1; (flag = s[i]) !== '/'; i--) {
+      for (let i = s.length - 1; s[i] !== '/'; i--) {
+        const flag = s[i]
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#advanced_searching_with_flags
         flags = `${flags}${flag}`
       }

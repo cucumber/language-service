@@ -1,4 +1,4 @@
-const fs = require('fs')
+const fs = require('node:fs')
 const ignore = ['dist/cjs/test/language/testdata/**/*']
 if (!fs.existsSync('node_modules/tree-sitter-java')) {
   ignore.push('dist/cjs/test/language/ExpressionBuilder.test.*')

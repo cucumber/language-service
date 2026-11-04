@@ -1,4 +1,4 @@
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const rustLanguage: Language = {
   toParameterTypeName(node) {
@@ -22,7 +22,7 @@ export const rustLanguage: Language = {
   },
   toStepDefinitionExpression(node) {
     const text = stringLiteral(node)
-    const hasRegExpAnchors = text[0] == '^' || text[text.length - 1] == '$'
+    const hasRegExpAnchors = text[0] === '^' || text[text.length - 1] === '$'
     return hasRegExpAnchors ? new RegExp(text) : text
   },
 
@@ -96,12 +96,18 @@ fn {{ #lowercase }}{{ #underscore }}{{ expression }}{{ /underscore }}{{ /lowerca
 }
 
 export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
-  if (node === null) throw new Error('node cannot be null')
+  if (node === null) {
+    throw new Error('node cannot be null')
+  }
 
-  let result
-  if (node.text.startsWith('r#')) result = unescapeString(node.text.slice(3, -2))
-  else if (node.text.startsWith('r')) result = unescapeString(node.text.slice(2, -1))
-  else result = unescapeString(node.text.slice(1, -1))
+  let result: string
+  if (node.text.startsWith('r#')) {
+    result = unescapeString(node.text.slice(3, -2))
+  } else if (node.text.startsWith('r')) {
+    result = unescapeString(node.text.slice(2, -1))
+  } else {
+    result = unescapeString(node.text.slice(1, -1))
+  }
 
   return stripLineContinuation(result)
 }

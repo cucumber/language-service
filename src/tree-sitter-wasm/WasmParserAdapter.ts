@@ -1,6 +1,6 @@
 import WasmParser from 'web-tree-sitter'
 
-import { LanguageName, LanguageNames, ParserAdapter } from '../language/types.js'
+import { type LanguageName, LanguageNames, type ParserAdapter } from '../language/types.js'
 
 export class WasmParserAdapter implements ParserAdapter {
   public parser: WasmParser
@@ -28,6 +28,7 @@ export class WasmParserAdapter implements ParserAdapter {
           return WasmParser.Language.load(wasmUrl)
         } catch (err) {
           console.error(`Failed to load ${wasmUrl}: ${err.message}`)
+          return undefined
         }
       })
     )
