@@ -16,18 +16,13 @@
     ".": {
       "import": "./dist/esm/src/index.js",
       "require": "./dist/cjs/src/index.js"
-    },
-    "./wasm": {
-      "import": "./dist/esm/src/tree-sitter-wasm/WasmParserAdapter.js",
-      "require": "./dist/cjs/src/tree-sitter-wasm/WasmParserAdapter.js"
     }
   },
   "files": [
     "dist/cjs/src",
     "dist/cjs/package.json",
     "dist/esm/src",
-    "dist/*.wasm",
-    "wasm"
+    "dist/*.wasm"
   ],
   "scripts": {
     "build:cjs": "tsc --build tsconfig.build-cjs.json && cp package.cjs.json dist/cjs/package.json",

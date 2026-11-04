@@ -1,11 +1,10 @@
 import assert from 'node:assert'
 import { CucumberExpressionGenerator, ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
-
+import { WasmParserAdapter } from '../../../src/index.js'
 import { ExpressionBuilder } from '../../../src/language/ExpressionBuilder.js'
 import { getLanguage } from '../../../src/language/languages.js'
 import { type LanguageName, LanguageNames, type Source } from '../../../src/language/types.js'
 import { stepDefinitionSnippet } from '../../../src/service/snippet/stepDefinitionSnippet.js'
-import { WasmParserAdapter } from '../../../src/tree-sitter-wasm/WasmParserAdapter.js'
 
 describe('stepDefinitionSnippet', () => {
   let parserAdapter: WasmParserAdapter
