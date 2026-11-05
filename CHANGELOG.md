@@ -16,8 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
 
 ### Removed
-- Dropped support for end-of-life Node versions 18 and 20
-- Remove Node.js tree-sitter entry point ([#325](https://github.com/cucumber/language-service/pull/325))
+- BREAKING CHANGE: Dropped support for end-of-life Node versions 18 and 20
+- BREAKING CHANGE: Remove Node.js tree-sitter entry point ([#325](https://github.com/cucumber/language-service/pull/325))
 
 ## [1.7.0] - 2025-05-18
 ### Added
