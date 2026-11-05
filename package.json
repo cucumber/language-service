@@ -98,7 +98,7 @@
     "tree-sitter-typescript": "0.23.2",
     "ts-node": "10.9.2",
     "txtgen": "3.0.2",
-    "typescript": "5.9.3"
+    "typescript": "^6.0.3"
   },
   "peerDependencies": {
     "web-tree-sitter": "^0.24.6"
