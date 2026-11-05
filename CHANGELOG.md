@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+## [2.0.0] - 2026-11-05
 ### Added
 - Add Scala support ([#237](https://github.com/cucumber/language-service/issues/237))
 
@@ -357,7 +359,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/cucumber/language-service/compare/v1.7.0...v2.0.0
 [1.7.0]: https://github.com/cucumber/language-service/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/cucumber/language-service/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/cucumber/language-service/compare/v1.5.0...v1.5.1
