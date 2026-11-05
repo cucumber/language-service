@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Dropped support for end-of-life Node versions 18 and 20
 - Remove Node.js tree-sitter entry point ([#325](https://github.com/cucumber/language-service/pull/325))
 
+- Syntax highlighting for `Feature`, `Rule` `Scenario`, and `Scenario Outline` keywords ([#249](https://github.com/cucumber/language-service/pull/249))
+
 ## [1.7.0] - 2025-05-18
 ### Added
 - Syntax highlighting for comments (`#`) ([#245](https://github.com/cucumber/language-service/pull/245))

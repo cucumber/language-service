@@ -21,26 +21,27 @@ Feature: a
   This is a description
   and so is this
 
-  Background:
-    Given a repeating step
+  Rule:
+    Background:
+      Given a repeating step
 
-  Scenario: b
-    Given I have 42 cukes in my belly
-      """sometype
-     hello
-        world
-       """
-    And a table
-      | a  | bbb |
-      | cc |  dd |
-    And I should be on the map
+    Scenario: b
+      Given I have 42 cukes in my belly
+        """sometype
+      hello
+          world
+        """
+      And a table
+        | a  | bbb |
+        | cc |  dd |
+      And I should be on the map
 
-  Scenario Outline: c
-    Given a <foo> and <bar>
+    Scenario Outline: c
+      Given a <foo> and <bar>
 
-    Examples:
-      | foo | bar |
-      | a   | b   |
+      Examples:
+        | foo | bar |
+        | a   | b   |
 `
     const parameterTypeRegistry = new ParameterTypeRegistry()
     const cucumberExpression = new CucumberExpression(
@@ -61,10 +62,11 @@ Feature: a
       ['# some comment', SemanticTokenTypes.comment],
       ['@foo', SemanticTokenTypes.type],
       ['@bar', SemanticTokenTypes.type],
-      ['Feature', SemanticTokenTypes.keyword],
+      ['Feature', SemanticTokenTypes.namespace],
+      ['Rule', SemanticTokenTypes.class],
       ['Background', SemanticTokenTypes.keyword],
       ['Given ', SemanticTokenTypes.keyword],
-      ['Scenario', SemanticTokenTypes.keyword],
+      ['Scenario', SemanticTokenTypes.function],
       ['Given ', SemanticTokenTypes.keyword],
       ['42', SemanticTokenTypes.parameter],
       ['belly', SemanticTokenTypes.parameter],
@@ -79,7 +81,7 @@ Feature: a
       ['cc', SemanticTokenTypes.string],
       ['dd', SemanticTokenTypes.string],
       ['And ', SemanticTokenTypes.keyword],
-      ['Scenario Outline', SemanticTokenTypes.keyword],
+      ['Scenario Outline', SemanticTokenTypes.function],
       ['Given ', SemanticTokenTypes.keyword],
       ['<foo>', SemanticTokenTypes.variable],
       ['<bar>', SemanticTokenTypes.variable],
@@ -96,18 +98,20 @@ Feature: a
     // Note that 'When' step uses two spaces, to align the text with 'Given'
     const gherkinSource = `
 Feature: making drinks
-  Scenario Outline:
-    Given a <ingredient>
-    When  I make <drink>
-    Examples:
-      | ingredient | drink       |
-      | apple      | apple juice |
+  Rule:
+    Scenario Outline:
+      Given a <ingredient>
+      When  I make <drink>
+      Examples:
+        | ingredient | drink       |
+        | apple      | apple juice |
 `
     const semanticTokens = getGherkinSemanticTokens(gherkinSource, [])
     const actual = tokenize(gherkinSource, semanticTokens.data)
     const expected: TokenWithType[] = [
-      ['Feature', SemanticTokenTypes.keyword],
-      ['Scenario Outline', SemanticTokenTypes.keyword],
+      ['Feature', SemanticTokenTypes.namespace],
+      ['Rule', SemanticTokenTypes.class],
+      ['Scenario Outline', SemanticTokenTypes.function],
       ['Given ', SemanticTokenTypes.keyword],
       ['<ingredient>', SemanticTokenTypes.variable],
       ['When ', SemanticTokenTypes.keyword],
