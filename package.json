@@ -15,6 +15,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
+    },
+    "./wasm": {
+      "types": "./dist/WasmParserAdapter.d.ts",
+      "default": "./dist/WasmParserAdapter.js"
     }
   },
   "files": [
