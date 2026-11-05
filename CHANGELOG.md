@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Add Scala support ([#237](https://github.com/cucumber/language-service/issues/237))
 
 ### Changed
-- `WasmParserAdapter` is now exported from the main entry point, replacing the `/wasm` subpath ([#325](https://github.com/cucumber/language-service/pull/325))
 - BREAKING CHANGE: Switch to ESM ([#326](https://github.com/cucumber/language-service/pull/326))
 
 ### Fixed

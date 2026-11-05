@@ -4,8 +4,9 @@ import { basename, resolve } from 'node:path'
 import { CucumberExpression, type RegularExpression } from '@cucumber/cucumber-expressions'
 import { glob } from 'glob'
 
-import { ExpressionBuilder, type LanguageName, WasmParserAdapter } from '../../src/index.js'
+import { ExpressionBuilder, type LanguageName } from '../../src/index.js'
 import type { ParserAdapter, Source } from '../../src/language/types.js'
+import { WasmParserAdapter } from '../../src/WasmParserAdapter.js'
 
 // List languages that support Cucumber Expressions here
 const cucumberExpressionsSupport: Set<LanguageName> = new Set([
