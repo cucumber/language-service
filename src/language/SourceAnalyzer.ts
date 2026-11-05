@@ -138,7 +138,10 @@ language: ${source.languageName}
   private parse(source: Source<LanguageName>): TreeSitterTree {
     let tree: TreeSitterTree | undefined = this.treeByContent.get(source)
     if (!tree) {
-      tree = this.parserAdapter.parser.parse(source.content)
+      tree = this.parserAdapter.parser.parse(source.content) ?? undefined
+      if (!tree) {
+        throw new Error('Failed to parse source')
+      }
       this.treeByContent.set(source, tree)
     }
     return tree

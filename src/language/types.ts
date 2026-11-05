@@ -110,7 +110,7 @@ export interface ParserAdapter {
 //// optional tree-sitter module to be installed.
 
 export interface TreeSitterParser {
-  parse(input: string): TreeSitterTree
+  parse(input: string): TreeSitterTree | null
 }
 
 export type TreeSitterTree = Readonly<{

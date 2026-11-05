@@ -16,6 +16,7 @@ export const goLanguage: Language = {
   defineStepDefinitionQueries: [
     `(function_declaration
       body: (block
+        (statement_list
         (expression_statement
           (call_expression
             function: (selector_expression
@@ -26,10 +27,11 @@ export const goLanguage: Language = {
                 (raw_string_literal) @expression
               ]
             )
-            (#match? @annotation-name "Given|When|Then|Step")))))@root
+            (#match? @annotation-name "Given|When|Then|Step"))))))@root
     `,
     `(function_declaration
       body: (block
+        (statement_list
         (expression_statement
           (call_expression
             function: (selector_expression
@@ -40,10 +42,11 @@ export const goLanguage: Language = {
                 (interpreted_string_literal) @expression
               ]
             )
-            (#match? @annotation-name "Given|When|Then|Step")))))@root
+            (#match? @annotation-name "Given|When|Then|Step"))))))@root
     `,
     `(method_declaration
       body: (block
+        (statement_list
         (expression_statement
           (call_expression
             function: (selector_expression
@@ -54,10 +57,11 @@ export const goLanguage: Language = {
                 (raw_string_literal) @expression
               ]
             )
-            (#match? @annotation-name "Given|When|Then|Step")))))@root
+            (#match? @annotation-name "Given|When|Then|Step"))))))@root
     `,
     `(method_declaration
       body: (block
+        (statement_list
         (expression_statement
           (call_expression
             function: (selector_expression
@@ -68,7 +72,7 @@ export const goLanguage: Language = {
                 (interpreted_string_literal) @expression
               ]
             )
-            (#match? @annotation-name "Given|When|Then|Step")))))@root
+            (#match? @annotation-name "Given|When|Then|Step"))))))@root
     `,
   ],
   snippetParameters: {
