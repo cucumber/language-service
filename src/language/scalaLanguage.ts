@@ -34,9 +34,8 @@ export const scalaLanguage: Language = {
 (call_expression
   function: (identifier) @function-name
   arguments: (arguments
-   [
-      (string)+ @name
-   ]
+    . (string) @name
+    . (string) @expression
   )
   (#match? @function-name "ParameterType")
 ) @root
@@ -80,9 +79,7 @@ export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
     throw new Error('node cannot be null')
   }
   if (node.text.startsWith('"""')) {
-    const x = node.text.slice(3, -3)
-    console.log(x)
-    return x
+    return node.text.slice(3, -3)
   }
-  return node.text.slice(1, -1)
+  return node.text.slice(1, -1).replace(/\\\\/g, '\\')
 }

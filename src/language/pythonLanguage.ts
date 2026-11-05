@@ -118,7 +118,7 @@ export const pythonLanguage: Language = {
                 attribute: (identifier) @parser)
             ]
             arguments: (argument_list
-              ((_)+ @expression)
+              . (_) @expression
             )
           )
         )

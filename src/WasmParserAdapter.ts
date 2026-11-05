@@ -1,16 +1,16 @@
-import WasmParser from 'web-tree-sitter'
+import { Language, Parser, Query } from 'web-tree-sitter'
 
 import { type LanguageName, LanguageNames, type ParserAdapter } from './language/types.js'
 
 export class WasmParserAdapter implements ParserAdapter {
-  public parser: WasmParser
-  private languages: Record<LanguageName, WasmParser.Language>
+  public parser: Parser
+  private languages: Record<LanguageName, Language>
 
   constructor(private readonly wasmBaseUrl: string) {}
 
   async init() {
-    await WasmParser.init()
-    this.parser = new WasmParser()
+    await Parser.init()
+    this.parser = new Parser()
 
     const languages = await Promise.all(
       LanguageNames.map((languageName) => {
@@ -25,7 +25,7 @@ export class WasmParserAdapter implements ParserAdapter {
 
         const wasmUrl = `${this.wasmBaseUrl}/${wasmName}.wasm`
         try {
-          return WasmParser.Language.load(wasmUrl)
+          return Language.load(wasmUrl)
         } catch (err) {
           console.error(`Failed to load ${wasmUrl}: ${err.message}`)
           return undefined
@@ -39,7 +39,10 @@ export class WasmParserAdapter implements ParserAdapter {
   }
 
   query(source: string) {
-    return this.parser.getLanguage().query(source)
+    if (!this.parser.language) {
+      throw new Error('No language set on parser')
+    }
+    return new Query(this.parser.language, source)
   }
 
   setLanguageName(languageName: LanguageName) {
