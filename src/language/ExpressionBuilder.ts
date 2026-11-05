@@ -31,7 +31,7 @@ export class ExpressionBuilder {
       try {
         registry.defineParameterType(parameterType)
       } catch (err) {
-        errors.push(err)
+        errors.push(err as Error)
       }
     }
 
@@ -55,7 +55,7 @@ export class ExpressionBuilder {
           const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
           expressionLinks.push({ expression, locationLink })
         } catch (err) {
-          errors.push(err)
+          errors.push(err as Error)
         }
       }
     )

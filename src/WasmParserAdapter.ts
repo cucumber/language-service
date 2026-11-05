@@ -3,8 +3,8 @@ import { Language, Parser, Query } from 'web-tree-sitter'
 import { type LanguageName, LanguageNames, type ParserAdapter } from './language/types.js'
 
 export class WasmParserAdapter implements ParserAdapter {
-  public parser: Parser
-  private languages: Record<LanguageName, Language>
+  public parser!: Parser
+  private languages!: Record<LanguageName, Language>
 
   constructor(private readonly wasmBaseUrl: string) {}
 
@@ -27,7 +27,7 @@ export class WasmParserAdapter implements ParserAdapter {
         try {
           return Language.load(wasmUrl)
         } catch (err) {
-          console.error(`Failed to load ${wasmUrl}: ${err.message}`)
+          console.error(`Failed to load ${wasmUrl}: ${(err as Error).message}`)
           return undefined
         }
       })

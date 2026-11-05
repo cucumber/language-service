@@ -27,7 +27,7 @@ export function parseGherkinDocument(gherkinSource: string): ParseResult {
       if (gherkinDocument) {
         return {
           gherkinDocument,
-          error,
+          error: error as Errors.GherkinException,
         }
       }
 
@@ -39,7 +39,7 @@ export function parseGherkinDocument(gherkinSource: string): ParseResult {
     }
 
     return {
-      error,
+      error: error as Errors.GherkinException,
     }
   }
 }

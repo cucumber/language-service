@@ -22,7 +22,8 @@ export function buildSuggestionFromCucumberExpression(
       segments,
       matched: true,
     }
-  } catch (err) {
+  } catch (e) {
+    const err = e as Error
     err.message += `
 Unable to compile Cucumber Expression "${expression.source}"
 Please submit an issue at https://github.com/cucumber/language-service/issues

@@ -27,6 +27,6 @@ export function jsSearchIndex(suggestions: readonly Suggestion[]): Index {
       return []
     }
     const results = search.search(text)
-    return results.map((result: Doc) => suggestions[result.id])
+    return (results as Doc[]).map((result) => suggestions[result.id])
   }
 }
