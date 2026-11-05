@@ -2,9 +2,9 @@ import type {
   Expression,
   ParameterType,
   ParameterTypeRegistry,
+  RegExps,
   StringOrRegExp,
 } from '@cucumber/cucumber-expressions'
-import type { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
 import type { DocumentUri, LocationLink } from 'vscode-languageserver-types'
 
 export type ParameterTypeName =

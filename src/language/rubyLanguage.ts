@@ -1,5 +1,4 @@
-import type { StringOrRegExp } from '@cucumber/cucumber-expressions'
-import type { RegExps } from '@cucumber/cucumber-expressions/dist/cjs/src/ParameterType'
+import type { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
 
 import { childrenToString, filter, NO_QUOTES } from './helpers.js'
 import type { Language, NodePredicate, TreeSitterSyntaxNode } from './types.js'

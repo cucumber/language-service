@@ -3,9 +3,8 @@
   "version": "1.7.0",
   "description": "Cucumber Language Service",
   "type": "module",
-  "main": "dist/cjs/src/index.js",
-  "module": "dist/esm/src/index.js",
-  "types": "dist/esm/src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "engines": {
     "node": "22 || 24 || >=26"
   },
@@ -14,26 +13,22 @@
   },
   "exports": {
     ".": {
-      "import": "./dist/esm/src/index.js",
-      "require": "./dist/cjs/src/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "files": [
-    "dist/cjs/src",
-    "dist/cjs/package.json",
-    "dist/esm/src",
-    "dist/*.wasm"
+    "dist"
   ],
   "scripts": {
-    "build:cjs": "tsc --build tsconfig.build-cjs.json && cp package.cjs.json dist/cjs/package.json",
-    "build:esm": "tsc --build tsconfig.build-esm.json",
-    "build": "npm run build:cjs && npm run build:esm",
-    "test": "mocha && npm run test:cjs",
-    "test:cjs": "npm run build:cjs && mocha --config .mocharc.cjs.cjs --recursive dist/cjs/test",
-    "prepublishOnly": "npm run build",
+    "build": "tsc --project tsconfig.build.json",
     "fix": "biome check --fix --error-on-warnings",
     "lint": "biome check --error-on-warnings",
-    "prepare": "husky && node scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist"
+    "postbuild": "node -e \"require('.')\"",
+    "prepare": "husky && node scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist",
+    "prepublishOnly": "npm run build",
+    "pretest": "npm run build",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
