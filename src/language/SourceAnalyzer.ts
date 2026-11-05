@@ -107,7 +107,8 @@ export class SourceAnalyzer {
       let tree: TreeSitterTree
       try {
         tree = this.parse(source)
-      } catch (err) {
+      } catch (e) {
+        const err = e as Error
         err.message += `
 uri: ${source.uri}
 language: ${source.languageName}

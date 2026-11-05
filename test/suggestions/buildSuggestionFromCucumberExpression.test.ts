@@ -107,7 +107,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
         'assetType',
         /prefab|audio|image|spine|atlas/,
         null,
-        (s: keyof typeof AssetType) => AssetType[s],
+        (s: string) => AssetType[s as keyof typeof AssetType],
         true,
         false
       )

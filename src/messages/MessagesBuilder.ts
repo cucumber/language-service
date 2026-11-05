@@ -42,7 +42,7 @@ export class MessagesBuilder {
           )
         )
       } catch (err) {
-        errorHandler(err)
+        errorHandler(err as Error)
       }
     }
     if (envelope.stepDefinition) {
@@ -54,7 +54,7 @@ export class MessagesBuilder {
         const expression = this.expressionFactory.createExpression(expr)
         this.expressions.push(expression)
       } catch (err) {
-        errorHandler(err)
+        errorHandler(err as Error)
       }
     }
     if (envelope.gherkinDocument) {
