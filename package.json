@@ -99,7 +99,7 @@
     "tree-sitter-scala": "^0.24.0",
     "tree-sitter-typescript": "0.23.2",
     "ts-node": "10.9.2",
-    "txtgen": "3.0.2",
+    "txtgen": "3.0.7",
     "typescript": "^6.0.3"
   }
 }
