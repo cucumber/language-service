@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- (Go) Support the leading inline flags `(?i)`, `(?m)` and `(?s)` of Godog step definitions. Accept `(?U)`, with the caveat that the resulting JavaScript `RegExp` is _not_ ungreedy ([#321](https://github.com/cucumber/language-service/pull/321))
+- Don't fail to index all step definitions when one has an invalid regular expression. Report it as an error instead. ([#321](https://github.com/cucumber/language-service/pull/321))
+
 ## [2.0.0] - 2026-11-05
 ### Added
 - Add Scala support ([#237](https://github.com/cucumber/language-service/issues/237))
