@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Fixed
-- (Java) Treat concatenated step definition patterns with `^`/`$` anchors as regular expressions, and keep escape sequences such as `\\d` in concatenated strings
+- (Java) Treat concatenated step definition patterns with `^`/`$` anchors as regular expressions, and keep escape sequences such as `\\d` in concatenated strings ([#334](https://github.com/cucumber/language-service/pull/334))
 
 ## [2.0.0] - 2026-11-05
 ### Added
