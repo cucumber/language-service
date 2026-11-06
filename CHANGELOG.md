@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- (Java) Treat concatenated step definition patterns with `^`/`$` anchors as regular expressions, and keep escape sequences such as `\\d` in concatenated strings
 
 ## [2.0.0] - 2026-11-05
 ### Added

@@ -30,4 +30,8 @@ public class StepDefinitions {
         + "knees")
         void the_bees_knees(Date date) {
     }
+
+    @When("^a concatenated " + "regexp with (\\d+) items$")
+        void a_concatenated_regexp(int count) {
+    }
 }
