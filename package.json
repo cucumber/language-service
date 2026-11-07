@@ -98,7 +98,7 @@
     "tree-sitter-rust": "0.24.0",
     "tree-sitter-scala": "^0.24.0",
     "tree-sitter-typescript": "0.23.2",
-    "ts-node": "10.9.2",
+    "tsx": "4.23.15",
     "txtgen": "3.0.7",
     "typescript": "^7.0.0"
   }
