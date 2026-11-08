@@ -5,7 +5,7 @@ if (!fs.existsSync('dist/java.wasm')) {
   ignore.push('test/service/snippet/stepDefinitionSnippet.test.*')
 }
 module.exports = {
-  'node-option': ['loader=ts-node/esm'],
+  'node-option': ['import=tsx'],
   extension: ['ts'],
   recursive: true,
   ignore: ignore,
