@@ -89,7 +89,7 @@
     "node-gyp": "^13.0.0",
     "react": "19.3.1",
     "tree-sitter-c-sharp": "0.23.5",
-    "tree-sitter-cli": "0.27.1",
+    "tree-sitter-cli": "0.27.2",
     "tree-sitter-go": "0.25.0",
     "tree-sitter-java": "0.23.5",
     "tree-sitter-php": "0.24.2",
