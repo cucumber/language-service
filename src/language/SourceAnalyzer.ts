@@ -89,7 +89,18 @@ export class SourceAnalyzer {
         const rootNode = syntaxNode(match, 'root')
         if (expressionNode && rootNode) {
           const language = getLanguage(source.languageName)
-          const stepDefinitionExpression = language.toStepDefinitionExpression(expressionNode)
+          let stepDefinitionExpression: StringOrRegExp
+          try {
+            stepDefinitionExpression = language.toStepDefinitionExpression(expressionNode)
+          } catch (e) {
+            const err = e as Error
+            err.message += `
+uri: ${source.uri}
+language: ${source.languageName}
+`
+            this.errors.push(err)
+            continue
+          }
           if (stepDefinitionExpression !== NO_EXPRESSION) {
             callback(stepDefinitionExpression, rootNode, expressionNode, source)
           }
