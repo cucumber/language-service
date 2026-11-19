@@ -87,6 +87,7 @@ function defineContract(makeParserAdapter: () => ParserAdapter) {
           'a {planet}',
           /^a regexp$/,
           "the bee's knees",
+          ...(languageName === 'java' ? [/^a concatenated regexp with (\d+) items$/] : []),
           ...(languageName === 'javascript' ? ['a compiled format'] : []),
         ])
         assert.deepStrictEqual(errors, [

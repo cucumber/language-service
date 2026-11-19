@@ -18,12 +18,10 @@ export const javaLanguage: Language = {
     return stringLiteral(node)
   },
   toStepDefinitionExpression(node) {
-    if (node.type === 'string_literal') {
-      const text = stringLiteral(node)
-      const hasRegExpAnchors = text[0] === '^' || text[text.length - 1] === '$'
-      return hasRegExpAnchors ? new RegExp(text) : text
-    }
-    return collectStringFragments(node).join('')
+    const text =
+      node.type === 'string_literal' ? stringLiteral(node) : collectStringFragments(node).join('')
+    const hasRegExpAnchors = text[0] === '^' || text[text.length - 1] === '$'
+    return hasRegExpAnchors ? new RegExp(text) : text
   },
 
   defineParameterTypeQueries: [
@@ -144,6 +142,9 @@ function unescapeString(s: string): string {
 function collectStringFragments(node: TreeSitterSyntaxNode): string[] {
   if (node.type === 'string_fragment') {
     return [unescapeString(node.text.replace('(?i)', ''))]
+  }
+  if (node.type === 'escape_sequence') {
+    return [unescapeString(node.text)]
   }
   if (node.type === 'binary_expression' || node.type === 'string_literal') {
     return node.children.flatMap(collectStringFragments)
