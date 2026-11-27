@@ -6,9 +6,12 @@ class ParameterTypes {
         return uuid
     }
 
-    @ParameterType("\\d{4}-\\d{2}-\\d{2}")
-    fun date(date: String) = SimpleDateFormat("yyyy-MM-dd").parse(date)
+    @ParameterType(name = "date", value = "\\d{4}-\\d{2}-\\d{2}")
+    fun isoDate(date: String) = SimpleDateFormat("yyyy-MM-dd").parse(date)
 
-    @ParameterType("(jupiter|mars|tellus)")
-    fun planet(planet: String): String = planet
+    @ParameterType(value = "(jupiter|mars|tellus)", name = "planet")
+    fun celestialBody(planet: String): String = planet
+
+    @ParameterType("""[A-Z]\w+""")
+    fun shout(word: String): String = word
 }

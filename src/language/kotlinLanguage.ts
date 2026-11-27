@@ -36,13 +36,39 @@ export const kotlinLanguage: Language = {
         (user_type (identifier) @annotation-name)
         (value_arguments
           .
-          (value_argument [(string_literal) (multiline_string_literal)] @expression)
+          (value_argument . [(string_literal) (multiline_string_literal)] @expression)
         )
       )
     )
   )
   name: (identifier) @name
   (#eq? @annotation-name "ParameterType")
+) @root
+`,
+    `
+(function_declaration
+  (modifiers
+    (annotation
+      (constructor_invocation
+        (user_type (identifier) @annotation-name)
+        (value_arguments
+          [
+            (
+              (value_argument (identifier) @name-key [(string_literal) (multiline_string_literal)] @name)
+              (value_argument (identifier) @value-key [(string_literal) (multiline_string_literal)] @expression)
+            )
+            (
+              (value_argument (identifier) @value-key [(string_literal) (multiline_string_literal)] @expression)
+              (value_argument (identifier) @name-key [(string_literal) (multiline_string_literal)] @name)
+            )
+          ]
+        )
+      )
+    )
+  )
+  (#eq? @annotation-name "ParameterType")
+  (#eq? @name-key "name")
+  (#eq? @value-key "value")
 ) @root
 `,
   ],
@@ -55,12 +81,29 @@ export const kotlinLanguage: Language = {
         (user_type (identifier) @annotation-name)
         (value_arguments
           .
-          (value_argument [(string_literal) (multiline_string_literal)] @expression)
+          (value_argument . [(string_literal) (multiline_string_literal)] @expression)
         )
       )
     )
   )
   (#match? @annotation-name "^(Given|When|Then|And|But)$")
+) @root
+`,
+    `
+(function_declaration
+  (modifiers
+    (annotation
+      (constructor_invocation
+        (user_type (identifier) @annotation-name)
+        (value_arguments
+          .
+          (value_argument (identifier) @value-key [(string_literal) (multiline_string_literal)] @expression)
+        )
+      )
+    )
+  )
+  (#match? @annotation-name "^(Given|When|Then|And|But)$")
+  (#eq? @value-key "value")
 ) @root
 `,
   ],
