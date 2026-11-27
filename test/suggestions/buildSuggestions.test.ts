@@ -1,12 +1,12 @@
+import assert from 'node:assert'
 import {
-  Expression,
+  type Expression,
   ExpressionFactory,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
-import assert from 'assert'
 
 import { buildSuggestions } from '../../src/suggestions/buildSuggestions.js'
-import { Suggestion } from '../../src/suggestions/types.js'
+import type { Suggestion } from '../../src/suggestions/types.js'
 
 describe('buildSuggestions', () => {
   it('builds suggestions with choices', () => {

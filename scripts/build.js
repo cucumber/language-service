@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import { exec } from 'child_process'
-import fs from 'fs'
-import path from 'path'
+import { execFileSync } from 'node:child_process'
+import fs from 'node:fs'
+import path from 'node:path'
 
 const languages = [
   {
@@ -51,7 +51,7 @@ const languages = [
     wasm: 'scala',
   },
   {
-    npm: 'tree-sitter-kotlin',
+    npm: '@tree-sitter-grammars/tree-sitter-kotlin',
     dir: '',
     wasm: 'kotlin',
   },
@@ -76,37 +76,18 @@ if (!fs.existsSync(treeSitterCli)) {
       process.exit(1)
     }
 
-    let command
-    if (process.env.CI) {
-      console.log(`Compiling ${module}`)
-      if (module.endsWith('tree-sitter-php')) {
-        command = `node_modules/.bin/tree-sitter build --wasm ${module}/php`
-      } else {
-        command = `node_modules/.bin/tree-sitter build --wasm ${module}`
-      }
-    } else {
-      console.log(`Compiling ${module} inside docker`)
-      // https://github.com/tree-sitter/tree-sitter/issues/1560
-      if (module.endsWith('tree-sitter-php')) {
-        command = `node_modules/.bin/tree-sitter build --wasm ${module}/php --docker`
-      } else {
-        command = `node_modules/.bin/tree-sitter build --wasm ${module} --docker`
-      }
+    const grammarDir = module.endsWith('tree-sitter-php') ? path.join(module, 'php') : module
+    console.log(`Compiling ${grammarDir}`)
+    // Builds run sequentially because the CLI downloads wasi-sdk into a shared cache on first use,
+    // and concurrent builds race on extracting it
+    try {
+      execFileSync(treeSitterCli, ['build', '--wasm', grammarDir], { stdio: 'inherit' })
+    } catch (err) {
+      console.error(`Failed to build wasm for ${module}: ${err.message}`)
+      process.exit(1)
     }
-    exec(command, (err) => {
-      if (err) {
-        console.error('Failed to build wasm for ' + module + ': ' + err.message)
-        process.exit(1)
-      } else {
-        const output = `tree-sitter-${wasm}.wasm`
-        const newPath = `${distDir}/${wasm}.wasm`
-        fs.rename(output, newPath, (err) => {
-          if (err) {
-            console.error('Failed to copy built parser: ' + err.message)
-            process.exit(1)
-          } else console.log(`Successfully compiled ${newPath}`)
-        })
-      }
-    })
+    const newPath = `${distDir}/${wasm}.wasm`
+    fs.renameSync(`tree-sitter-${wasm}.wasm`, newPath)
+    console.log(`Successfully compiled ${newPath}`)
   }
 }

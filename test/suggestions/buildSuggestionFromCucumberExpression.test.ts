@@ -1,12 +1,12 @@
+import assert from 'node:assert'
 import {
   CucumberExpression,
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
-import assert from 'assert'
 
 import { buildSuggestionFromCucumberExpression } from '../../src/suggestions/buildSuggestionFromCucumberExpression.js'
-import { Suggestion } from '../../src/suggestions/types.js'
+import type { Suggestion } from '../../src/suggestions/types.js'
 
 describe('buildSuggestionFromCucumberExpression', () => {
   let registry: ParameterTypeRegistry
@@ -107,7 +107,7 @@ describe('buildSuggestionFromCucumberExpression', () => {
         'assetType',
         /prefab|audio|image|spine|atlas/,
         null,
-        (s: keyof typeof AssetType) => AssetType[s],
+        (s: string) => AssetType[s as keyof typeof AssetType],
         true,
         false
       )

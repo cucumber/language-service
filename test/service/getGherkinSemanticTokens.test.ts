@@ -1,10 +1,10 @@
+import assert from 'node:assert'
 import {
   CucumberExpression,
   ParameterTypeRegistry,
   RegularExpression,
 } from '@cucumber/cucumber-expressions'
-import assert from 'assert'
-import { SemanticTokenTypes, uinteger } from 'vscode-languageserver-types'
+import { SemanticTokenTypes, type uinteger } from 'vscode-languageserver-types'
 
 import {
   getGherkinSemanticTokens,

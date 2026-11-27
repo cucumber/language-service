@@ -6,12 +6,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add Kotlin support ([#304](https://github.com/cucumber/language-service/pull/304))
 
+
+## [2.0.0] - 2026-11-05
 ### Added
 - Add Scala support ([#237](https://github.com/cucumber/language-service/issues/237))
 
+### Changed
+- BREAKING CHANGE: Switch to ESM ([#326](https://github.com/cucumber/language-service/pull/326))
+
 ### Fixed
 - Missing `parameter:cucumber` token for Scenario Outline ([#246](https://github.com/cucumber/language-service/issues/246))
+
+### Removed
+- BREAKING CHANGE: Dropped support for end-of-life Node versions 18 and 20
+- BREAKING CHANGE: Remove Node.js tree-sitter entry point ([#325](https://github.com/cucumber/language-service/pull/325))
 
 ## [1.7.0] - 2025-05-18
 ### Added
@@ -351,7 +362,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ([#1732](https://github.com/cucumber/common/pull/1732)
 [aslakhellesoy](https://github.com/aslakhellesoy))
 
-[Unreleased]: https://github.com/cucumber/language-service/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/cucumber/language-service/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/cucumber/language-service/compare/v1.7.0...v2.0.0
 [1.7.0]: https://github.com/cucumber/language-service/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/cucumber/language-service/compare/v1.5.1...v1.6.0
 [1.5.1]: https://github.com/cucumber/language-service/compare/v1.5.0...v1.5.1

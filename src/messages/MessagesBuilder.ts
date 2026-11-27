@@ -1,14 +1,14 @@
 import {
-  Expression,
+  type Expression,
   ExpressionFactory,
   ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
-import { Envelope, StepDefinitionPatternType } from '@cucumber/messages'
+import { type Envelope, StepDefinitionPatternType } from '@cucumber/messages'
 
 import { extractStepTexts } from '../gherkin/extractStepTexts.js'
 import { buildSuggestions } from '../suggestions/buildSuggestions.js'
-import { Suggestion } from '../suggestions/types.js'
+import type { Suggestion } from '../suggestions/types.js'
 
 export type MessagesBuilderResult = {
   suggestions: readonly Suggestion[]
@@ -42,7 +42,7 @@ export class MessagesBuilder {
           )
         )
       } catch (err) {
-        errorHandler(err)
+        errorHandler(err as Error)
       }
     }
     if (envelope.stepDefinition) {
@@ -54,7 +54,7 @@ export class MessagesBuilder {
         const expression = this.expressionFactory.createExpression(expr)
         this.expressions.push(expression)
       } catch (err) {
-        errorHandler(err)
+        errorHandler(err as Error)
       }
     }
     if (envelope.gherkinDocument) {

@@ -1,12 +1,12 @@
 import {
   ExpressionFactory,
-  ParameterType,
+  type ParameterType,
   ParameterTypeRegistry,
 } from '@cucumber/cucumber-expressions'
 
 import { createLocationLink, makeParameterType, sortLinks } from './helpers.js'
 import { SourceAnalyzer } from './SourceAnalyzer.js'
-import {
+import type {
   ExpressionBuilderResult,
   ExpressionLink,
   LanguageName,
@@ -31,7 +31,7 @@ export class ExpressionBuilder {
       try {
         registry.defineParameterType(parameterType)
       } catch (err) {
-        errors.push(err)
+        errors.push(err as Error)
       }
     }
 
@@ -55,7 +55,7 @@ export class ExpressionBuilder {
           const locationLink = createLocationLink(rootNode, expressionNode, source.uri)
           expressionLinks.push({ expression, locationLink })
         } catch (err) {
-          errors.push(err)
+          errors.push(err as Error)
         }
       }
     )

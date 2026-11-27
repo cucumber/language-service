@@ -1,11 +1,11 @@
 import {
-  CompletionItem,
+  type CompletionItem,
   CompletionItemKind,
   InsertTextFormat,
-  Position,
+  type Position,
 } from 'vscode-languageserver-types'
 
-import { Index } from '../index/index.js'
+import type { Index } from '../index/index.js'
 import { getStepRange } from './helpers.js'
 import { lspCompletionSnippet } from './snippet/lspCompletionSnippet.js'
 
@@ -16,7 +16,9 @@ export function getGherkinCompletionItems(
   index: Index
 ): readonly CompletionItem[] {
   const stepRange = getStepRange(gherkinSource, position)
-  if (!stepRange) return []
+  if (!stepRange) {
+    return []
+  }
   const suggestions = index(stepRange.stepText)
   // https://github.com/microsoft/language-server-protocol/issues/898#issuecomment-593968008
   return suggestions.map((suggestion, i) => {

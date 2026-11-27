@@ -1,5 +1,5 @@
 import { unsupportedOperation } from './helpers.js'
-import { Language } from './types.js'
+import type { Language } from './types.js'
 
 export const phpLanguage: Language = {
   toParameterTypeName: unsupportedOperation,
@@ -8,7 +8,9 @@ export const phpLanguage: Language = {
     // match multiline comment
     const text = node.text
     const match = text.match(/^(\/\*\*[\s*]*)([\s\S]*)(\n[\s]*\*\/)/)
-    if (!match) throw new Error(`Could not match ${text}`)
+    if (!match) {
+      throw new Error(`Could not match ${text}`)
+    }
     return behatifyStep(match[2])
   },
   // Empty array because Behat does not support Cucumber Expressions

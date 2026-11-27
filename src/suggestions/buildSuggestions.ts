@@ -1,14 +1,14 @@
 import {
   CucumberExpression,
-  Expression,
-  ParameterTypeRegistry,
+  type Expression,
+  type ParameterTypeRegistry,
   RegularExpression,
 } from '@cucumber/cucumber-expressions'
 
 import { buildSuggestionFromCucumberExpression } from './buildSuggestionFromCucumberExpression.js'
 import { buildSuggestionsFromRegularExpression } from './buildSuggestionsFromRegularExpression.js'
 import { makeKey } from './helpers.js'
-import { Suggestion } from './types.js'
+import type { Suggestion } from './types.js'
 
 /**
  * Builds an array of {@link Suggestion} from steps and step definitions.
@@ -41,7 +41,9 @@ export function buildSuggestions(
           if (!choices) {
             parameterChoiceSets[key] = choices = new Set()
           }
-          if (arg.group.value !== undefined) choices.add(arg.group.value)
+          if (arg.group.value !== undefined) {
+            choices.add(arg.group.value)
+          }
         }
 
         unmatchedStepTexts.delete(text)

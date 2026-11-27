@@ -1,9 +1,13 @@
-import assert from 'assert'
-import { CompletionItem, CompletionItemKind, InsertTextFormat } from 'vscode-languageserver-types'
+import assert from 'node:assert'
+import {
+  type CompletionItem,
+  CompletionItemKind,
+  InsertTextFormat,
+} from 'vscode-languageserver-types'
 
 import { bruteForceIndex } from '../../src/index/index.js'
 import { getGherkinCompletionItems } from '../../src/service/getGherkinCompletionItems.js'
-import { Suggestion } from '../../src/suggestions/types.js'
+import type { Suggestion } from '../../src/suggestions/types.js'
 
 describe('getGherkinCompletionItems', () => {
   it('completes matched step', () => {

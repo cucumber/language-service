@@ -1,13 +1,12 @@
-import { CucumberExpression, RegularExpression } from '@cucumber/cucumber-expressions'
-import assert from 'assert'
-import { readFile } from 'fs/promises'
+import assert from 'node:assert'
+import { readFile } from 'node:fs/promises'
+import { basename, resolve } from 'node:path'
+import { CucumberExpression, type RegularExpression } from '@cucumber/cucumber-expressions'
 import { glob } from 'glob'
-import { basename, resolve } from 'path'
 
-import { ExpressionBuilder, LanguageName } from '../../src/index.js'
-import { ParserAdapter, Source } from '../../src/language/types.js'
-import { NodeParserAdapter } from '../../src/tree-sitter-node/NodeParserAdapter.js'
-import { WasmParserAdapter } from '../../src/tree-sitter-wasm/WasmParserAdapter.js'
+import { ExpressionBuilder, type LanguageName } from '../../src/index.js'
+import type { ParserAdapter, Source } from '../../src/language/types.js'
+import { WasmParserAdapter } from '../../src/WasmParserAdapter.js'
 
 // List languages that support Cucumber Expressions here
 const cucumberExpressionsSupport: Set<LanguageName> = new Set([
@@ -19,6 +18,7 @@ const cucumberExpressionsSupport: Set<LanguageName> = new Set([
   'rust',
   'tsx',
   'scala',
+  'kotlin',
 ])
 
 function defineContract(makeParserAdapter: () => ParserAdapter) {
@@ -134,10 +134,5 @@ async function loadSources(
 }
 
 describe('ExpressionBuilder', () => {
-  context('with NodeParserAdapter', () => {
-    defineContract(() => new NodeParserAdapter())
-  })
-  context('with WasmParserAdapter', () => {
-    defineContract(() => new WasmParserAdapter('dist'))
-  })
+  defineContract(() => new WasmParserAdapter('dist'))
 })

@@ -1,9 +1,9 @@
-import { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
-import { LocationLink } from 'vscode-languageserver-types'
+import type { RegExps, StringOrRegExp } from '@cucumber/cucumber-expressions'
+import type { LocationLink } from 'vscode-languageserver-types'
 
 import { createLocationLink, makeParameterType, syntaxNode } from './helpers.js'
 import { getLanguage } from './languages.js'
-import {
+import type {
   Language,
   LanguageName,
   ParameterTypeLink,
@@ -48,9 +48,11 @@ export class SourceAnalyzer {
           const regExps = language.toParameterTypeRegExps(expressionNode)
           const selectionNode = expressionNode || nameNode
           const locationLink = createLocationLink(rootNode, selectionNode, source.uri)
-          const props: ParameterTypeLinkProps = (propsByName[parameterTypeName] = propsByName[
-            parameterTypeName
-          ] || { locationLink, regexpsList: [] })
+          const props: ParameterTypeLinkProps = propsByName[parameterTypeName] || {
+            locationLink,
+            regexpsList: [],
+          }
+          propsByName[parameterTypeName] = props
           props.regexpsList.push(regExps)
         }
       }
@@ -105,7 +107,8 @@ export class SourceAnalyzer {
       let tree: TreeSitterTree
       try {
         tree = this.parse(source)
-      } catch (err) {
+      } catch (e) {
+        const err = e as Error
         err.message += `
 uri: ${source.uri}
 language: ${source.languageName}
@@ -136,7 +139,11 @@ language: ${source.languageName}
   private parse(source: Source<LanguageName>): TreeSitterTree {
     let tree: TreeSitterTree | undefined = this.treeByContent.get(source)
     if (!tree) {
-      this.treeByContent.set(source, (tree = this.parserAdapter.parser.parse(source.content)))
+      tree = this.parserAdapter.parser.parse(source.content) ?? undefined
+      if (!tree) {
+        throw new Error('Failed to parse source')
+      }
+      this.treeByContent.set(source, tree)
     }
     return tree
   }

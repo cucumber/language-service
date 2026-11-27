@@ -1,6 +1,6 @@
+import assert from 'node:assert'
 import { ParameterTypeRegistry } from '@cucumber/cucumber-expressions'
-import assert from 'assert'
-import { CodeAction, LocationLink, Range } from 'vscode-languageserver-types'
+import { type CodeAction, type LocationLink, Range } from 'vscode-languageserver-types'
 
 import { getGenerateSnippetCodeAction } from '../../src/service/getGenerateSnippetCodeAction.js'
 import { makeUndefinedStepDiagnostic } from '../../src/service/getGherkinDiagnostics.js'

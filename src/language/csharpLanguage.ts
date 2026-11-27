@@ -1,7 +1,7 @@
-import { StringOrRegExp } from '@cucumber/cucumber-expressions'
+import type { StringOrRegExp } from '@cucumber/cucumber-expressions'
 
 import { childrenToString, NO_QUOTES } from './helpers.js'
-import { Language, TreeSitterSyntaxNode } from './types.js'
+import type { Language, TreeSitterSyntaxNode } from './types.js'
 
 export const csharpLanguage: Language = {
   toParameterTypeName(node: TreeSitterSyntaxNode) {

@@ -1,49 +1,38 @@
 {
   "name": "@cucumber/language-service",
-  "version": "1.7.0",
+  "version": "2.0.0",
   "description": "Cucumber Language Service",
   "type": "module",
-  "main": "dist/cjs/src/index.js",
-  "module": "dist/esm/src/index.js",
-  "types": "dist/esm/src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "engines": {
-    "node": "18 || 20 || 22 || >=23"
+    "node": "22 || 24 || >=26"
   },
   "enginesTested": {
-    "node": "18 || 20 || 22 || 23"
+    "node": "22 || 24 || 26"
   },
   "exports": {
     ".": {
-      "import": "./dist/esm/src/index.js",
-      "require": "./dist/cjs/src/index.js"
-    },
-    "./node": {
-      "import": "./dist/esm/src/tree-sitter-node/NodeParserAdapter.js",
-      "require": "./dist/cjs/src/tree-sitter-node/NodeParserAdapter.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./wasm": {
-      "import": "./dist/esm/src/tree-sitter-wasm/WasmParserAdapter.js",
-      "require": "./dist/cjs/src/tree-sitter-wasm/WasmParserAdapter.js"
+      "types": "./dist/WasmParserAdapter.d.ts",
+      "default": "./dist/WasmParserAdapter.js"
     }
   },
   "files": [
-    "dist/cjs/src",
-    "dist/cjs/package.json",
-    "dist/esm/src",
-    "dist/*.wasm",
-    "node",
-    "wasm"
+    "dist"
   ],
   "scripts": {
-    "build:cjs": "tsc --build tsconfig.build-cjs.json && cp package.cjs.json dist/cjs/package.json",
-    "build:esm": "tsc --build tsconfig.build-esm.json",
-    "build": "npm run build:cjs && npm run build:esm",
-    "test": "mocha && npm run test:cjs",
-    "test:cjs": "npm run build:cjs && mocha --config .mocharc.cjs.cjs --recursive dist/cjs/test",
+    "build": "tsc --project tsconfig.build.json",
+    "fix": "biome check --fix --error-on-warnings",
+    "lint": "biome check --error-on-warnings",
+    "postbuild": "node -e \"require('.')\"",
+    "prepare": "husky && node scripts/build.js && cp node_modules/web-tree-sitter/web-tree-sitter.wasm dist",
     "prepublishOnly": "npm run build",
-    "eslint-fix": "eslint --ext ts --max-warnings 0 --fix src test",
-    "eslint": "eslint --ext ts --max-warnings 0 src test",
-    "prepare": "husky && node scripts/build.js && cp node_modules/web-tree-sitter/tree-sitter.wasm dist"
+    "pretest": "npm run build",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -62,67 +51,56 @@
   "homepage": "https://github.com/cucumber/language-service#readme",
   "contributors": [
     "Binh Duc Tran <binhtran432k@gmail.com>",
+    "David Goss (https://github.com/davidjgoss)",
     "Kieran Ryan <kierankilkenny@gmail.com>",
     "M.P. Korstanje <rien.korstanje@gmail.com>",
     "Miro <miroslav.sommer@gmail.com>"
   ],
   "lint-staged": {
-    "{src,test}/**/*.ts": "npm run eslint-fix"
+    "*": "biome check --fix --no-errors-on-unmatched --error-on-warnings"
   },
   "dependencies": {
-    "@cucumber/cucumber-expressions": "^19.0.0",
-    "@cucumber/gherkin": "^39.0.0",
-    "@cucumber/gherkin-utils": "^11.0.0",
-    "@cucumber/messages": "^33.0.0",
+    "@cucumber/cucumber-expressions": "^20.0.0",
+    "@cucumber/gherkin": "^43.0.0",
+    "@cucumber/gherkin-utils": "^12.0.0",
+    "@cucumber/messages": "^35.0.0",
     "@types/js-search": "1.4.4",
     "@types/mustache": "4.2.6",
-    "fuse.js": "7.4.2",
+    "fuse.js": "7.5.0",
     "js-search": "2.0.1",
     "mustache": "4.2.0",
-    "vscode-languageserver-types": "3.18.0",
-    "web-tree-sitter": "^0.24.7"
-  },
-  "optionalDependencies": {
-    "tree-sitter": "^0.21.1",
-    "tree-sitter-c-sharp": "0.23.1",
-    "tree-sitter-cli": "0.24.4",
-    "tree-sitter-go": "0.23.4",
-    "tree-sitter-java": "0.23.4",
-    "tree-sitter-php": "0.23.11",
-    "tree-sitter-python": "0.23.4",
-    "tree-sitter-ruby": "0.23.1",
-    "tree-sitter-rust": "0.23.1",
-    "tree-sitter-scala": "^0.23.4",
-    "tree-sitter-typescript": "0.23.2",
-    "tree-sitter-kotlin": "^0.3.8"
+    "vscode-languageserver-types": "3.18.6",
+    "web-tree-sitter": "^0.27.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.6.8",
+    "@cucumber/biome-config": "^0.8.0",
     "@cucumber/cucumber": "^13.0.0",
     "@cucumber/message-streams": "^5.0.0",
+    "@tree-sitter-grammars/tree-sitter-kotlin": "1.1.0",
+    "@tsconfig/recommended": "^1.0.13",
     "@types/glob": "9.0.0",
     "@types/mocha": "10.0.10",
-    "@types/node": "24.13.2",
-    "@types/react": "19.2.17",
-    "@typescript-eslint/eslint-plugin": "7.18.0",
-    "@typescript-eslint/parser": "7.18.0",
-    "eslint": "8.57.1",
-    "eslint-config-prettier": "10.1.8",
-    "eslint-plugin-import": "2.32.0",
-    "eslint-plugin-n": "17.24.0",
-    "eslint-plugin-prettier": "5.5.6",
-    "eslint-plugin-simple-import-sort": "12.1.1",
-    "glob": "13.0.6",
+    "@types/node": "^26.0.0",
+    "@types/react": "19.3.0",
+    "glob": "14.0.6",
     "husky": "9.1.7",
     "lint-staged": "^17.0.0",
-    "mocha": "11.6.0",
+    "mocha": "12.0.3",
     "node-gyp": "^13.0.0",
-    "prettier": "3.8.4",
-    "react": "19.2.7",
-    "ts-node": "10.9.2",
-    "txtgen": "3.0.2",
-    "typescript": "5.9.3"
-  },
-  "peerDependencies": {
-    "web-tree-sitter": "^0.24.6"
+    "react": "19.3.1",
+    "tree-sitter-c-sharp": "0.24.0",
+    "tree-sitter-cli": "0.27.2",
+    "tree-sitter-go": "0.25.0",
+    "tree-sitter-java": "0.23.5",
+    "tree-sitter-php": "0.24.2",
+    "tree-sitter-python": "0.25.0",
+    "tree-sitter-ruby": "0.23.1",
+    "tree-sitter-rust": "0.24.0",
+    "tree-sitter-scala": "^0.24.0",
+    "tree-sitter-typescript": "0.23.2",
+    "tsx": "4.23.15",
+    "txtgen": "3.0.7",
+    "typescript": "^7.0.0"
   }
 }
