@@ -34,6 +34,9 @@ describe('stepDefinitionSnippet', () => {
         content: snippet,
       }
       const result = expressionBuilder.build([source], [])
+      if (languageName === 'kotlin') {
+        assert.strictEqual(result.expressionLinks.length, 1, 'snippet should parse as one step')
+      }
       if (result.expressionLinks.length === 1) {
         assert.strictEqual(result.expressionLinks[0].expression.source, '{int} is not {int}')
       }
