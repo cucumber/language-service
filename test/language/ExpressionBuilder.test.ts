@@ -18,6 +18,7 @@ const cucumberExpressionsSupport: Set<LanguageName> = new Set([
   'rust',
   'tsx',
   'scala',
+  'kotlin',
 ])
 
 function defineContract(makeParserAdapter: () => ParserAdapter) {

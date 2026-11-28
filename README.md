@@ -39,6 +39,7 @@
   - Go
   - Java
   - JavaScript
+  - Kotlin
   - PHP
   - Python
   - Ruby

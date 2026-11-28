@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Added
+- Add Kotlin support ([#304](https://github.com/cucumber/language-service/pull/304))
 
 ## [2.0.0] - 2026-11-05
 ### Added
