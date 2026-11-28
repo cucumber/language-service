@@ -144,16 +144,19 @@ export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
   }
   const text = node.text
   if (text.length >= 6 && text.startsWith('"""') && text.endsWith('"""')) {
-    return text.slice(3, -3)
+    return text.slice(3, -3).replace('(?i)', '')
   }
   if (text.startsWith('"') && text.endsWith('"')) {
     // A single pass, so that an escaped backslash followed by a dollar sign is not read as one escape
-    return text.slice(1, -1).replace(/\\(u[0-9a-fA-F]{4}|.)/g, (match, escape: string) => {
-      if (escape.length === 5) {
-        return String.fromCharCode(Number.parseInt(escape.slice(1), 16))
-      }
-      return escapes[escape] ?? match
-    })
+    return text
+      .slice(1, -1)
+      .replace('(?i)', '')
+      .replace(/\\(u[0-9a-fA-F]{4}|.)/g, (match, escape: string) => {
+        if (escape.length === 5) {
+          return String.fromCharCode(Number.parseInt(escape.slice(1), 16))
+        }
+        return escapes[escape] ?? match
+      })
   }
   return text
 }
