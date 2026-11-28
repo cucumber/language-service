@@ -41,4 +41,17 @@ describe('stepDefinitionSnippet', () => {
       console.log(snippet)
     })
   }
+
+  it('escapes dollar signs in Kotlin snippets so they are not string templates', () => {
+    const registry = new ParameterTypeRegistry()
+    const generator = new CucumberExpressionGenerator(() => registry.parameterTypes)
+    const language = getLanguage('kotlin')
+    const snippet = stepDefinitionSnippet(
+      'Given ',
+      generator.generateExpressions('I have $money'),
+      language.defaultSnippetTemplate,
+      language.snippetParameters
+    )
+    assert.match(snippet, /@Given\("I have \\\$money"\)/)
+  })
 })

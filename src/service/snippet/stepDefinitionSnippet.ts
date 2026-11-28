@@ -15,6 +15,7 @@ type TemplateContext = {
   underscore: MustacheFunction
   capitalize: MustacheFunction
   lowercase: MustacheFunction
+  escapeDollars: MustacheFunction
 }
 
 type Parameter = {
@@ -49,6 +50,8 @@ const lowercase: MustacheFunction = () => (text, render) => {
   const rendered = render(text)
   return rendered[0].toLowerCase() + rendered.slice(1)
 }
+
+const escapeDollars: MustacheFunction = () => (text, render) => render(text).replaceAll('$', '\\$')
 
 const blurb = 'Write code here that turns the phrase above into concrete actions'
 
@@ -86,6 +89,7 @@ export function stepDefinitionSnippet(
     underscore,
     capitalize,
     lowercase,
+    escapeDollars,
   }
   return mustache.render(mustacheTemplate, context)
 }

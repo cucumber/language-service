@@ -5,7 +5,7 @@ import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
 class StepDefinitions {
-    @Given("a {uuid}")
+    @Given(timeout = 5, value = "a {uuid}")
     fun aUuid(uuid: String) {
     }
 
@@ -17,14 +17,14 @@ class StepDefinitions {
     fun aPlanet(planet: String) {
     }
 
-    @Then("^a regexp$")
+    @Then("^a regexp\$")
     fun aRegexp() {
     }
 
     @But("an {undefined-parameter}")
     fun anUndefinedParameter(x: Date) = Unit
 
-    @And("the bee's knees")
+    @And("the bee\'s knees")
     fun theBeesKnees() {
     }
 }

@@ -96,7 +96,6 @@ export const kotlinLanguage: Language = {
       (constructor_invocation
         (user_type (identifier) @annotation-name)
         (value_arguments
-          .
           (value_argument (identifier) @value-key [(string_literal) (multiline_string_literal)] @expression)
         )
       )
@@ -121,14 +120,25 @@ export const kotlinLanguage: Language = {
     '': { type: 'Any', name: 'arg' },
   },
   defaultSnippetTemplate: `
-    @{{ keyword }}("{{ expression }}")
+    @{{ keyword }}("{{ #escapeDollars }}{{ expression }}{{ /escapeDollars }}")
     fun {{ #underscore }}{{ expression }}{{ /underscore }}({{ #parameters }}{{ #seenParameter }}, {{ /seenParameter }}{{ name }}: {{ type }}{{ /parameters }}) {
         // {{ blurb }}
     }
 `,
 }
 
-function stringLiteral(node: TreeSitterSyntaxNode | null): string {
+const escapes: Record<string, string> = {
+  t: '\t',
+  b: '\b',
+  n: '\n',
+  r: '\r',
+  "'": "'",
+  '"': '"',
+  '\\': '\\',
+  $: '$',
+}
+
+export function stringLiteral(node: TreeSitterSyntaxNode | null): string {
   if (node === null) {
     throw new Error('node cannot be null')
   }
@@ -137,7 +147,13 @@ function stringLiteral(node: TreeSitterSyntaxNode | null): string {
     return text.slice(3, -3)
   }
   if (text.startsWith('"') && text.endsWith('"')) {
-    return text.slice(1, -1).replace(/\\\\/g, '\\')
+    // A single pass, so that an escaped backslash followed by a dollar sign is not read as one escape
+    return text.slice(1, -1).replace(/\\(u[0-9a-fA-F]{4}|.)/g, (match, escape: string) => {
+      if (escape.length === 5) {
+        return String.fromCharCode(Number.parseInt(escape.slice(1), 16))
+      }
+      return escapes[escape] ?? match
+    })
   }
   return text
 }
