@@ -9,7 +9,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - Add Kotlin support ([#304](https://github.com/cucumber/language-service/pull/304))
 
-
 ## [2.0.0] - 2026-11-05
 ### Added
 - Add Scala support ([#237](https://github.com/cucumber/language-service/issues/237))
